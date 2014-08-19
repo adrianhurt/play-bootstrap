@@ -1,0 +1,191 @@
+@(fooForm: Form[String])
+
+@import tags._
+@import b3.inline.fieldConstructor
+
+@fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+
+@main("Inline Form", tab = "inline") {
+
+	@b3.inline.form(routes.Application.inline) {
+		
+		<h1 class="page-header">Inline Form</h1>
+		<p class="lead">This page its an example to show how to use a inline form.</p>
+	
+		<div class="col-md-8">
+			<p>
+				Bootstrap 3 aligns inline controls with <code>vertical-align: middle</code>. But there are some cases,
+				like controls with <code>help-blocks</code>, that it doesn't fit very well. So that, you can easily
+				tweak it with a simple <code>vertical-align: top</code>. You can enable this tweak for this page by
+				clicking the button on the right.
+			</p>
+		</div>
+		<div class="col-md-4 tweak">
+			<button class="btn btn-xs btn-info apply-tweak" data-toggle="button">Apply tweak to this page</button>
+			@code {
+				.form-inline .form-group {
+					vertical-align: top;
+				}
+			}
+		</div>
+
+		<p>
+			First of all, you need to declare as implicit the inline field constructor.
+		</p>
+		@code {
+			@@implicitFieldConstructor = @@{ b3.inline.fieldConstructor }
+		}
+		<p>
+			Or simply:
+		</p>
+		@code {
+			@@import b3.inline.fieldConstructor
+		}
+		
+		<h3>Simple inputs</h3>
+		@bsExample {
+			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+			@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )
+			@b3.file( fooForm("foo"), '_label -> "File" )
+		}{
+			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+			@@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )
+			@@b3.file( fooForm("foo"), '_label -> "File" )
+		}
+
+		<h3>More options</h3>
+		@bsExample {
+			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b3.text( fooForm("foo"), '_label -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
+			@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+			@b3.text( fooForm("foo"), '_label -> None, 'placeholder -> "Without label" )
+			@b3.text( fooForm("foo"), '_label -> "A big text", 'placeholder -> "An awesome field...", 'class -> "form-control input-lg" )
+		}{
+			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b3.text( fooForm("foo"), '_label -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
+			@@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+			@@b3.text( fooForm("foo"), '_label -> None, 'placeholder -> "Without label" )
+			@@b3.text( fooForm("foo"), '_label -> "A big text", 'placeholder -> "An awesome field...", 'class -> "form-control input-lg" )
+		}
+
+
+		<h3>Textareas, checkboxes, radio buttons and selects</h3>
+		@bsExample {
+			@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'row -> 3 )
+			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox", 'checked -> true )
+			@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+			@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
+			@b3.select( fooForm("foo"), options = fruits, '_label -> "Multiple Select", 'multiple -> true )
+		}{
+			@@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'row -> 3 )
+			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox", 'checked -> true )
+			@@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+	
+			@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+			...
+			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
+			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Multiple Select", 'multiple -> true )
+		}
+
+		<h3>Disabled and readonly attributes</h3>
+		<p>Checkboxes, radio buttons and selects also support <code>readonly</code> attribute adding a <strong>hidden input</strong>.</p>
+		@bsExample {
+			@b3.text( fooForm("foo"), '_label -> "Disabled", 'placeholder -> "Disabled text...", 'disabled -> true )
+			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
+			@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+		}{
+			@@b3.text( fooForm("foo"), '_label -> "Disabled", 'placeholder -> "Disabled text...", 'disabled -> true )
+			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
+			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+		}
+
+		<h3>Validation states</h3>
+		@bsExample {
+			@b3.text( fooForm("foo"), '_label -> "Success", 'placeholder -> "Success text...", '_class -> "has-success" )
+			@b3.text( fooForm("foo"), '_label -> "Warning", 'placeholder -> "Warning text...", '_class -> "has-warning" )
+			@b3.text( fooForm("foo"), '_label -> "Error", 'placeholder -> "Error text...", '_class -> "has-error" )
+		}{
+			@@b3.text( fooForm("foo"), '_label -> "Success", 'placeholder -> "Success text...", '_class -> "has-success" )
+			@@b3.text( fooForm("foo"), '_label -> "Warning", 'placeholder -> "Warning text...", '_class -> "has-warning" )
+			@@b3.text( fooForm("foo"), '_label -> "Error", 'placeholder -> "Error text...", '_class -> "has-error" )
+		}
+
+		<h3>Customize them</h3>
+		@bsExample {
+			<div>
+				@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Success with icon", '_class -> "has-success has-feedback" ){ input =>
+					@input
+					<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+				}
+				@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Error with icon", '_class -> "has-error has-feedback" ){ input =>
+					@input
+					<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+				}
+			</div>
+			<div style="margin-top: 15px">
+				@b3.inputWrapped( "email", fooForm("foo"), '_label -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
+					<div class="input-group">
+						<span class="input-group-addon">@@</span>
+						@input
+					</div>	
+				}
+				@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+						@input
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default" tabindex="-1">Action</button>
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+					</div>	
+				}
+			</div>
+		}{
+			@@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Success text with icon", '_class -> "has-success has-feedback" ){ input =>
+			  @@input
+			  <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+			}
+			@@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Error text with icon", '_class -> "has-error has-feedback" ){ input =>
+			  @@input
+			  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			}
+			@@b3.inputWrapped( "email", fooForm("foo"), '_label -> "Simple input group", 'placeholder -> "Custom input group for email..." ) { input =>
+				<div class="input-group">
+					<span class="input-group-addon">@@</span>
+					@@input
+				</div>	
+			}
+			@@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+					@@input
+					<div class="input-group-btn">
+						<!-- Button and dropdown menu -->
+					</div>
+				</div>	
+			}
+		}
+
+		<h3>More helpers</h3>
+		@bsExample {
+			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		}{
+			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		}
+
+	}
+
+}

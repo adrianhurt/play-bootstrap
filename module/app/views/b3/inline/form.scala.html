@@ -1,0 +1,2 @@
+@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)
+@b3.form(action, b3.Args.withDefault(args, 'class -> "form-inline"):_*)(body)

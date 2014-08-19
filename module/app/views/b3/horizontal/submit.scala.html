@@ -1,0 +1,7 @@
+@(args: (Symbol,Any)*)(text: => Html)(implicit hfc: HorizontalFieldConstructor)
+<div class="row">
+	<div class="@hfc.colLabel"></div>
+	<div class="@hfc.colInput">
+		<button type="submit" @toHtmlArgs(args.toMap)>@text</button>
+	</div>
+</div>

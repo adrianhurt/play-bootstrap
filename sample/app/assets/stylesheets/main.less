@@ -1,0 +1,107 @@
+@nav-bg-color: #3264C8;
+@nav-bg-color-hover: lighten(@nav-bg-color, 5%);
+@nav-bg-color-active: lighten(@nav-bg-color, 15%);
+@nav-color: #eeeeee;
+@nav-color-hover: white;
+@nav-color-active: white;
+@bg-color: #fbfcfe;
+@footer-bg-color: lighten(@nav-bg-color, 45%);
+
+@code-bg-color: #FFFFF8;
+
+body {
+	padding-top: 60px;
+	background-color: @bg-color;
+}
+.navbar-default {
+	background-color: @nav-bg-color;
+	.navbar-brand {
+		color: @nav-color;
+		&:hover {
+			background-color: @nav-bg-color-hover;
+			color: white;
+		}
+		&.active {
+			background-color: @nav-bg-color-active;
+			color: @nav-color-active;
+		}
+	}
+	.navbar-nav {
+		& > li > a {
+			color: @nav-color;
+			&:hover {
+				background-color: @nav-bg-color-hover;
+				color: white;
+			}
+		}
+		& > .active > a, & > .active > a:hover, & > .active > a:focus {
+			background-color: @nav-bg-color-active;
+			color: @nav-color-active;
+		}
+	}
+	.navbar-right a {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+.container {
+	max-width: 960px;
+}
+.footer {
+	background-color: @footer-bg-color;
+	margin-top: 20px;
+	padding: 20px 0;
+	line-height: 15px;
+}
+
+h3, h4 {
+	margin-top: 35px;
+}
+h1 + h2, h2 + h3, h3 + h4 {
+	margin-top: 15px;
+}
+.highlight {
+	background-color: @code-bg-color;
+}
+pre code {
+	white-space: pre;
+}
+span.def {
+	color: #888;
+	font-size: 0.75em;
+	font-style: italic;
+	margin-left: 20px;
+}
+
+.tab-pane > .bs-example {
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.form-inline {
+	button.apply-tweak {
+		width: 100%;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+	.tweak .highlight {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		pre code {
+			color: #aaa;
+		}
+	}
+	&.align-top {
+		.form-group {
+			vertical-align: top;
+		}
+		.tweak .highlight pre code {
+			color: #d9534f;
+		}
+	}
+}
+
+i.fa-github {
+	vertical-align: middle;
+}

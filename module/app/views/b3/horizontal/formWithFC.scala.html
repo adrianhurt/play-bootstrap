@@ -1,0 +1,2 @@
+@(action: play.api.mvc.Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: (HorizontalFieldConstructor, Lang) => Html)(implicit lang: play.api.i18n.Lang)
+@form(action, args:_*)(body(fieldConstructor(colLabel, colInput), lang))

@@ -1,0 +1,5 @@
+@(label: String, args: (Symbol,Any)*)(text: => Html)
+<div class="form-group @args.toMap.get('_class)">
+	<label class="control-label">@label</label>
+	<p @toHtmlArgs(b3.Args.inner(args, 'class -> "form-control-static").toMap)>@text</p>
+</div>

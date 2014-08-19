@@ -1,0 +1,19 @@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+
+@argsMap = @{ args.toMap }
+@readonly = @{ ArgsMap.hasBool(argsMap, 'readonly) }
+@disabled = @{ readonly || ArgsMap.hasBool(argsMap, 'disabled) }
+
+@input(field, Args.withDefault(args, 'disabled -> disabled):_*) { (id, name, value, htmlArgs) =>
+	<div class="checkbox @if(disabled){disabled}">
+		<label for="@id">
+			<input type="checkbox" id="@id" name="@name" value="true" @if(value == Some("true")){checked} @toHtmlArgs(htmlArgs)>
+			@argsMap.get('_text)
+		</label>
+		@if(readonly) {
+			@value.map { v =>
+				<input type="hidden" name="@name" value="@v"/>
+			}
+		}
+	</div>
+}

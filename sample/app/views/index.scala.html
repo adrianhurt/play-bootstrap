@@ -1,0 +1,177 @@
+@(fooForm: Form[String])
+
+@import tags._
+@import b3.vertical.fieldConstructor
+
+@main("Play-Bootstrap3", tab = "index") {
+
+		<div class="starter-template">
+			<h1>Play-Bootstrap3</h1>
+			<p class="lead">Play Framework library for Bootstrap 3</p>
+		</div>
+		
+		<p>
+			This is a collection of input helpers and field constructors for
+			<a href="http://www.playframework.com" target="_blank">Play Framework 2</a> to render
+			<a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap 3</a> HTML code.
+		</p>
+		
+		
+		<h2>Features</h2>
+		
+		
+		<h3>Simple to use</h3>
+		<p>
+			It tries to follow the same rules that the helper library from Play Framework.
+		</p>
+		@code {
+			@@b3.form(routes.Application.login) {
+				@@b3.email( loginForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+				@@b3.password( loginForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+				@@b3.checkbox( loginForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+				@@b3.submit('class -> "btn btn-default"){ Sign in }
+			}
+		}
+		
+		
+		<h3>Horizontal, vertical or inline forms</h3>
+		<p>
+			There is a different field constructor for each kind of form. Normally, you will declare one of
+			them as default for each of your templates, but you can mix them if you want.
+		</p>
+		<ul class="nav nav-tabs" role="tablist">
+		  <li class="active"><a href="#vertical" role="tab" data-toggle="tab">Vertical</a></li>
+		  <li><a href="#horizontal" role="tab" data-toggle="tab">Horizontal</a></li>
+		  <li><a href="#inline" role="tab" data-toggle="tab">Inline</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active fade in" id="vertical">
+				@bsExample {
+					@b3.vertical.formWithFC(routes.Application.index) { case (vfc, lang) =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(vfc, lang)
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(vfc, lang)
+						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(vfc, lang)
+						@b3.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}{
+					@@b3.form(routes.Application.index) {
+						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}
+			</div>
+			<div class="tab-pane fade in" id="horizontal">
+				@bsExample {
+					@b3.horizontal.formWithFC(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(hfc, lang)
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(hfc, lang)
+						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(hfc, lang)
+						@b3.horizontal.submit('class -> "btn btn-default"){ Sign in }(hfc)
+					}
+				}{
+					@@b3.horizontal.form(routes.Application.index) {
+						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.horizontal.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}
+			</div>
+			<div class="tab-pane fade" id="inline">
+				@bsExample {
+					@b3.inline.formWithFC(routes.Application.index) { case (ifc, lang) =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
+						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
+						@b3.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}{
+					@@b3.inline.form(routes.Application.index) {
+						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}
+			</div>
+		</div>
+		
+		
+		<h3>Every helper you need</h3>
+		<p>
+			Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ...
+			You have the essential input helpers you could need. But this library is for the community,
+			so you can collaborate or ask for others.
+		</p>
+		
+		
+		<h3>Coherence and consistency</h3>
+		<h4>Boolean attributes</h4>
+		<p>
+			Sometimes the HTML syntax could be confusing. For example, all of the following codes are equivalent:
+		</p>
+		@code {
+			<input type="text" name="foo" disabled>
+			<input type="text" name="foo" disabled="true">
+			<input type="text" name="foo" disabled="false">
+			<input type="text" name="foo" disabled="blah">
+		}
+		<p>
+			For that reason, <code>b3</code> helpers will simply remove the attribute with false values and
+			put <code>"true"</code> value for true ones. So you can do:
+		</p>
+		@code {
+			@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
+		}
+		<h4>Readonly attribute for checkboxes, radio buttons and selects</h4>
+		<p>
+			Other frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute
+			for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
+			<code>&lt;input type="hidden"&gt;</code> if you need to send its value within your POST request. For
+			that cases, <code>b3</code> helpers for checkboxes, radio buttons and selects automatically add that
+			input for you.
+		</p>
+		<p>
+			Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers
+			will also add the <code>disabled</code> attribute in order to Bootstrap 3 will avoid their interactability.
+		</p>
+		
+		<h2>Installation</h2>
+		<p>
+			You only need to add it as a dependency in your <code>build.sbt</code> file. It is cross compiled
+			against Scala 2.10.4 and 2.11.0.
+		</p>
+		@code {
+			libraryDependencies ++= Seq(
+			  "com.adrianhurt" %% "play-bootstrap3" % "0.1"
+			)
+		}
+
+
+		<h2>Examples</h2>
+		<p>
+			This web is an example. You can see on the top menu an example of each kind of form
+			(<a href="/vertical">vertical</a>, <a href="/horizontal">horizontal</a>, <a href="/inline">inline</a>)
+			and one more for a single view with <a href="/mixed">differenent mixed forms</a>.
+		</p>
+		<p>
+			You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>.
+		</p>
+		
+		
+		<h2>Documentation</h2>
+		<p>
+			You can check the documentation <a href="/docs">here</a>.
+		</p>
+		
+		
+		<h2>Customization</h2>
+		<p>
+			This is a very simple library, and you have all the code on
+			<a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>. So you can use it as an inspiration
+			and create your own field constructors and/or helpers.
+		</p>
+		
+}

@@ -1,0 +1,7 @@
+@(label: String, args: (Symbol,Any)*)(text: => Html)(implicit hfc: HorizontalFieldConstructor)
+<div class="form-group @args.toMap.get('_class)">
+	<label class="control-label @hfc.colLabel">@label</label>
+	<div class="@hfc.colInput">
+		<p @toHtmlArgs(b3.Args.inner(args, 'class -> "form-control-static").toMap)>@text</p>
+	</div>
+</div>

@@ -1,0 +1,4 @@
+@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)
+<form action="@action.url" method="@action.method" @toHtmlArgs(Args.inner(args, 'role -> "form").toMap)>
+	@body
+</form>
