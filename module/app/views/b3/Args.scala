@@ -30,10 +30,10 @@ object Args {
   def inner(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) =
     default ++: args.filter(arg => !arg._1.name.startsWith("_") && arg._2 != false)
 }
-object ArgsMap {
 
+object ArgsMap {
   /**
    * Returns true only if the map contains an argument with that key and its value is true.
    */
-  def hasBool(argsMap: Map[Symbol, Any], key: Symbol) = argsMap.get(key).map(_ == true).getOrElse(false)
+  def isTrue(argsMap: Map[Symbol, Any], key: Symbol) = argsMap.get(key).map(_ == true).getOrElse(false)
 }

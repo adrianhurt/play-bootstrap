@@ -12,7 +12,7 @@
 	@b3.form(routes.Application.docs) {
 		
 		<h1 class="page-header">Documentation</h1>
-		<p class="lead">This page explains with more details each component.</p>
+		<p class="lead">This page explains each component in more details.</p>
 	
 		<h3>Field Constructors</h3>
 		<p>
@@ -51,8 +51,8 @@
 
 		<h4>Clear field constructor</h4>
 		<p>
-			This field constructor renders the input helpers directly. It is useful for some cases you need
-			the input without their corresponding <code>form-group</code>. However, although it is used for
+			This field constructor renders the input helpers directly. It is useful for those cases you need
+			the input without its corresponding <code>form-group</code>. However, although it is used for
 			specific cases, you can also declare it as the default field constructor within a template.
 		</p>
 		@code {
@@ -75,9 +75,9 @@
 			<code>_showConstraints</code> one specifies if the constraints should be shown.
 		</p>
 		@bsExample {
-			@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints...", 'disabled -> true )
+			@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
 		}{
-			@@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints...", 'disabled -> true )
+			@@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
 		}
 		<p>The previous example outputs the HTML:</p>
 		@code {
@@ -126,7 +126,7 @@
 		<h4>Forms with an specific <code>FieldConstructor</code></h4>
 		<p>
 			Every input helper will use the default <code>FieldConstructor</code> (the implicit one), unless you specify another.
-			To do this you can use the <code>formWithFC</code> helper. There is one for each type of form. Let's see an
+			To do this you can use the <code>formWithFC</code> helper. There is one for each type of form. Here is an
 			example of how to add an inline form within a view with a vertical form as default.
 		</p>
 		@code {
@@ -144,7 +144,7 @@
 
 		<p>
 			There are 4 different options to insert each type of form. Note that there is also one for a clear
-			<code>FieldConstructor</code> (it simply outputs the input helper wihout any more).
+			<code>FieldConstructor</code> (it simply outputs the input helper without any more).
 			So we have:
 		</p>
 		@code {
@@ -225,19 +225,9 @@
 	
 	
 		<h4>About <code>disabled</code> and <code>readonly</code> attributes</h4>
+		@docsReadonlyAttributes()
 		<p>
-			Both, the <code>disabled</code> and <code>readonly</code> attributes for an input prevent the user can modify it.
-			However, the <code>disabled</code> attribute means this input will NOT be sent within the POST request, whereas
-			the <code>readonly</code> one means it will.
-		</p>
-		<p>
-			Nevertheless, for <code>checkbox</code>, <code>radio</code> and <code>select</code> tags it doesn't happen. To
-			support the <code>readonly</code> attribute for these tags, the correspoding helpers have been adapted to behave
-			as it would be expected. To do that, when the <code>readonly</code> attribute appears the helper will:
-			<ul>
-				<li>add an additional <code>disabled</code> attribute</li>
-				<li>add an additional <code>&lt;input type="hidden"&gt;</code> with the desired value</li>
-			</ul>
+			You can see an example in the <a href="/readonly">Readonly Demo</a>.
 		</p>
 	
 	
@@ -363,8 +353,8 @@
 		}
 
 		<p>
-			It is also very useful for develop your own complex helpers based on this <code>b3.inputWrapped</code>.
-			For example, imagine you use in serveral places an <code>input-group</code> with <code>glyphicons</code>. Then
+			It is also very useful for developing your own complex helpers based on this <code>b3.inputWrapped</code>.
+			For example, imagine you use in several places an <code>input-group</code> with <code>glyphicons</code>. Then
 			you could create a new helper as:
 		</p>
 		@code {
@@ -504,7 +494,8 @@
 		<p>
 			It renders a static control to place within your form. It takes a <code>HTML</code> as parameter, so you can
 			render whatever you want. Actually, it is like a wrapper for a static <code>HTML</code>. There are two versions:
-			one for vertical forms and another one for horizontal forms. For inline forms it would be simply a senseless.
+			one for vertical forms and another one for horizontal forms. There is no version for inline forms due to you can
+			simply write whatever you want without any particular helper.
 		</p>
 		<h5><code>b3.vertical.static</code> <span class="def">@@(label: String, args: (Symbol,Any)*)(text: => Html)</span></h5>
 		@bsExample {

@@ -14,11 +14,29 @@
 		<p class="lead">This page its an example to show how to use a horizontal form.</p>
 
 		<p>
-			First of all, you need to declare as implicit the horizontal field constructor.
+			First of all, you need to declare the horizontal field constructor as implicit.
 			You have to specify its column widths for the <code>form-group</code>.
 		</p>
 		@code {
 			@@implicitFieldConstructor = @@{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+		}
+		
+		<p>
+			<strong>Tip:</strong> You could create your own default horizontal field constructor and
+			import it with something like:
+		</p>
+		@code {
+			@@import b3.horizontal.default.fieldConstructor
+		}
+		<p>
+			To do that, you only need to add a file with this content to your <code>views</code> folder
+			(<code>views/b3/horizontal/default/package.scala</code>):
+		</p>
+		@code {
+			package views.html.b3.horizontal
+			package object default {
+				implicit val fieldConstructor = views.html.b3.horizontal.fieldConstructor("col-md-2", "col-md-10")
+			}
 		}
 		
 		

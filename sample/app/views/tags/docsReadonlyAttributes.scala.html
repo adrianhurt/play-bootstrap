@@ -1,0 +1,18 @@
+@()
+<p>
+	Both the <code>disabled</code> and <code>readonly</code> attributes for an input prevent the user from modify it.
+	However, the <code>disabled</code> attribute means this input will NOT be sent within the POST request, whereas
+	the <code>readonly</code> one means it will.
+</p>
+<p>
+	Nevertheless, for <code>checkbox</code>, <code>radio</code> and <code>select</code> tags it doesn't happen. To
+	support the <code>readonly</code> attribute for these tags, the corresponding helpers have been adapted to behave
+	as would be expected. To do that, when the <code>readonly</code> attribute appears the helper will:
+	<ul>
+		<li>add an additional <code>disabled</code> attribute</li>
+		<li>add an additional <code>&lt;input type="hidden"&gt;</code> with the desired value</li>
+		<li>wraps them with in a div (with class <code>checkbox-group</code>, <code>radio-group</code> or <code>select-group</code>)</li>
+	</ul>
+	Note it only happens when the <code>readonly</code> attribute is present, even with a <em>false</em> value.
+	It is done to make it easier to modify its <code>readonly</code> behaviour using javascript.
+</p>

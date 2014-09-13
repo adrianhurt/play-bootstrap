@@ -12,17 +12,23 @@
 		
 		<p>
 			This is a collection of input helpers and field constructors for
-			<a href="http://www.playframework.com" target="_blank">Play Framework 2</a> to render
+			<a href="http://www.playframework.com" target="_blank">Play Framework 2.3</a> to render
 			<a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap 3</a> HTML code.
 		</p>
 		
+		<div id="github-buttons">
+			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap3&type=watch&count=true&size=large"
+				allowtransparency="true" frameborder="0" scrolling="0" width="160" height="30"></iframe>
+			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap3&type=fork&count=true&size=large"
+				allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+		</div>
 		
 		<h2>Features</h2>
 		
 		
 		<h3>Simple to use</h3>
 		<p>
-			It tries to follow the same rules that the helper library from Play Framework.
+			It tries to follow the same rules as the helper library from Play Framework.
 		</p>
 		@code {
 			@@b3.form(routes.Application.login) {
@@ -127,7 +133,7 @@
 		}
 		<h4>Readonly attribute for checkboxes, radio buttons and selects</h4>
 		<p>
-			Other frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute
+			Another frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute
 			for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
 			<code>&lt;input type="hidden"&gt;</code> if you need to send its value within your POST request. For
 			that cases, <code>b3</code> helpers for checkboxes, radio buttons and selects automatically add that
@@ -135,7 +141,7 @@
 		</p>
 		<p>
 			Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers
-			will also add the <code>disabled</code> attribute in order to Bootstrap 3 will avoid their interactability.
+			will also add the <code>disabled</code> attribute. Then, Bootstrap 3 will avoid their interactability.
 		</p>
 		
 		<h2>Installation</h2>
@@ -145,7 +151,18 @@
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
-			  "com.adrianhurt" %% "play-bootstrap3" % "0.1"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.1"
+			)
+		}
+		
+		<p>
+			If you want to use the latest snapshot, add the following instead:
+		</p>
+		@code {
+			resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+			
+			libraryDependencies ++= Seq(
+				"com.adrianhurt" %% "play-bootstrap3" % "0.2-SNAPSHOT"
 			)
 		}
 
@@ -154,7 +171,7 @@
 		<p>
 			This web is an example. You can see on the top menu an example of each kind of form
 			(<a href="/vertical">vertical</a>, <a href="/horizontal">horizontal</a>, <a href="/inline">inline</a>)
-			and one more for a single view with <a href="/mixed">differenent mixed forms</a>.
+			and one more for a single view with <a href="/mixed">different mixed forms</a>.
 		</p>
 		<p>
 			You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>.
@@ -170,8 +187,8 @@
 		<h2>Customization</h2>
 		<p>
 			This is a very simple library, and you have all the code on
-			<a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>. So you can use it as an inspiration
-			and create your own field constructors and/or helpers.
+			<a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>. So you can use it as
+			inspiration and create your own field constructors and/or helpers.
 		</p>
 		
 }

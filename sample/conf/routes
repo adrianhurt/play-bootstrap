@@ -8,6 +8,8 @@ GET     /vertical					controllers.Application.vertical
 GET     /horizontal					controllers.Application.horizontal
 GET     /inline						controllers.Application.inline
 GET     /mixed						controllers.Application.mixed
+GET     /readonly					controllers.Application.readonly
+POST    /readonly					controllers.Application.handleReadonly
 GET     /docs						controllers.Application.docs
 
 # Map static resources from the /public folder to the /assets URL path

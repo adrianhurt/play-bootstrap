@@ -30,6 +30,24 @@ object Application extends Controller {
   def horizontal = Action { Ok(views.html.horizontal(fooForm)) }
   def inline = Action { Ok(views.html.inline(fooForm)) }
   def mixed = Action { Ok(views.html.mixed(fooForm)) }
+
+  case class ReadonlyDemoData(text: String, checkbox: Boolean, radio: String, select: String)
+  val fooReadonlyForm = Form(
+    mapping(
+      "text" -> text,
+      "checkbox" -> boolean,
+      "radio" -> text,
+      "select" -> text
+    )(ReadonlyDemoData.apply)(ReadonlyDemoData.unapply)
+  )
+  def readonly = Action { Ok(views.html.readonly(fooReadonlyForm, None)) }
+  def handleReadonly = Action { implicit request =>
+    fooReadonlyForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(views.html.readonly(formWithErrors, None)),
+      data => Ok(views.html.readonly(fooReadonlyForm, Some(data)))
+    )
+  }
+
   def docs = Action { Ok(views.html.docs(fooForm)) }
 
 }

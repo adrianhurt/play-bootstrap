@@ -34,6 +34,7 @@
 						<li class="@("active".when(tab == "horizontal"))"><a href="@routes.Application.horizontal">Horizontal</a></li>
 						<li class="@("active".when(tab == "inline"))"><a href="@routes.Application.inline">Inline</a></li>
 						<li class="@("active".when(tab == "mixed"))"><a href="@routes.Application.mixed">Mixed</a></li>
+						<li class="@("active".when(tab == "readonly"))"><a href="@routes.Application.readonly">Readonly</a></li>
 						<li class="@("active".when(tab == "docs"))"><a href="@routes.Application.docs">Documentation</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -42,7 +43,7 @@
 				</div>
 			</div>
 		</div>
-		
+	
 		<div class="container">
 			@content
 		</div>

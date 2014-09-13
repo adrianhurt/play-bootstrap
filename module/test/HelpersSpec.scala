@@ -210,10 +210,21 @@ object HelpersSpec extends Specification {
     }
 
     "add support to readonly attribute" in {
-      val body = b3.checkbox.apply(boolField, 'readonly -> true, 'value -> true).body
-      body must contain("<div class=\"checkbox disabled\">")
-      body must contain("disabled=\"true\"")
-      body must contain("<input type=\"hidden\" name=\"foo\" value=\"true\"/>")
+      val bodyWithoutReadonly = b3.checkbox.apply(boolField, 'value -> true).body
+      bodyWithoutReadonly must contain("<div class=\"checkbox")
+      bodyWithoutReadonly must not contain ("checkbox-group")
+      bodyWithoutReadonly must not contain ("disabled")
+      bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
+
+      val bodyReadonlyFalse = b3.checkbox.apply(boolField, 'readonly -> false, 'value -> true).body
+      bodyReadonlyFalse must contain("<div class=\"checkbox checkbox-group")
+      bodyReadonlyFalse must not contain ("disabled=\"true\"")
+      bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"true\" disabled/>")
+
+      val bodyReadonlyTrue = b3.checkbox.apply(boolField, 'readonly -> true, 'value -> true).body
+      bodyReadonlyTrue must contain("<div class=\"checkbox checkbox-group disabled\">")
+      bodyReadonlyTrue must contain("disabled=\"true\"")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"true\" />")
     }
   }
 
@@ -257,10 +268,23 @@ object HelpersSpec extends Specification {
     }
 
     "add support to readonly attribute" in {
-      val body = b3.radio.apply(fooField, fruits, 'readonly -> true, 'value -> "B").body
-      body must contain("<div class=\"radio disabled\">")
-      body must contain("disabled=\"true\"")
-      body must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
+      val bodyWithoutReadonly = b3.radio.apply(fooField, fruits, 'value -> "B").body
+      bodyWithoutReadonly must not contain ("radio-group")
+      bodyWithoutReadonly must not contain ("disabled")
+      bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
+
+      val bodyReadonlyFalse = b3.radio.apply(fooField, fruits, 'readonly -> false, 'value -> "B").body
+      bodyReadonlyFalse must contain("<div class=\"radio-group\">")
+      bodyReadonlyFalse must not contain ("disabled=\"true\"")
+      bodyReadonlyFalse must contain("<div class=\"radio")
+      bodyReadonlyFalse must not contain ("<div class=\"radio disabled\"")
+      bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" disabled/>")
+
+      val bodyReadonlyTrue = b3.radio.apply(fooField, fruits, 'readonly -> true, 'value -> "B").body
+      bodyReadonlyTrue must contain("<div class=\"radio-group\">")
+      bodyReadonlyTrue must contain("disabled=\"true\"")
+      bodyReadonlyTrue must contain("<div class=\"radio disabled\"")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" />")
     }
   }
 
@@ -298,9 +322,20 @@ object HelpersSpec extends Specification {
     }
 
     "add support to readonly attribute" in {
-      val body = b3.select.apply(fooField, fruits, 'readonly -> true, 'value -> "B").body
-      body must contain("disabled=\"true\"")
-      body must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
+      val bodyWithoutReadonly = b3.select.apply(fooField, fruits, 'value -> "B").body
+      bodyWithoutReadonly must not contain ("<div class=\"select-group\">")
+      bodyWithoutReadonly must not contain ("disabled")
+      bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
+
+      val bodyReadonlyFalse = b3.select.apply(fooField, fruits, 'readonly -> false, 'value -> "B").body
+      bodyReadonlyFalse must contain("<div class=\"select-group\">")
+      bodyReadonlyFalse must not contain ("disabled=\"true\"")
+      bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" disabled/>")
+
+      val bodyReadonlyTrue = b3.select.apply(fooField, fruits, 'readonly -> true, 'value -> "B").body
+      bodyReadonlyTrue must contain("<div class=\"select-group\">")
+      bodyReadonlyTrue must contain("disabled=\"true\"")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" />")
     }
 
     "allow multiple" in {
