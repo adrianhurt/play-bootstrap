@@ -165,6 +165,16 @@
 				"com.adrianhurt" %% "play-bootstrap3" % "0.2-SNAPSHOT"
 			)
 		}
+		<p>
+			Note the <code>play-bootstrap3</code> has <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3</a>
+			and <a href="https://jquery.org" target="_blank">jQuery</a> as
+			<a href="http://www.webjars.org" target="_blank">WebJar</a> dependencies, so they are included automatically.
+			Specifically, it adds the following dependencies for you (from <em>02-SNAPSHOT</em>):
+		</p>
+		@code {
+			"org.webjars" % "jquery" % "2.1.1"
+			"org.webjars" % "bootstrap" % "3.2.0"
+		}
 
 
 		<h2>Examples</h2>
@@ -180,7 +190,7 @@
 			More examples:
 		</p>
 		<ul>
-			<li><a href="https://github.com/adrianhurt/play-multidomain-auth">Play Multidomain Auth</a></li>
+			<li><a href="https://github.com/adrianhurt/play-multidomain-auth" target="_blank">Play Multidomain Auth</a></li>
 		</ul>
 		
 		
