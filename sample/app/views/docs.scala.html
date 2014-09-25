@@ -410,12 +410,20 @@
 			// readonly -> it will be sent within the POST request
 			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Remember me", 'readonly -> true )
 		}
+		<p>
+			Note you can use any value for the <code>_text</code> argument.
+		</p>
+		@bsExample {
+			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> Html("""Do you want a beer? <i class="fa fa-beer"></i>""") )
+		}{
+			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> Html("Do you want a beer? <i class=\"fa fa-beer\"></i>") )
+		}
 
 
-		<h4><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+		<h4><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
 		<p>
 			It renders a radio. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
-			one and a <code>&ltinput type="hidden"></code>.
+			one and a <code>&lt;input type="hidden"&gt;</code>.
 		</p>
 		<p>
 			It has an additional special <code>_inline</code> argument to make it an inline radio (for vertical and horizontal forms).
@@ -438,6 +446,14 @@
 
 			// readonly -> it will be sent within the POST request
 			@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group", 'readonly -> true )
+		}
+		<p>
+			Note you can use any value for the <code>options</code> argument.
+		</p>
+		@bsExample {
+			@b3.radio( fooForm("foo"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
+		}{
+			@@b3.radio( fooForm("foo"), options = Seq("B" -> Html("Beer <i class=\"fa fa-beer\"></i>"), "C" -> Html("Coffee <i class=\"fa fa-coffee\"></i>")), '_label -> "What do you prefer?" )
 		}
 
 
