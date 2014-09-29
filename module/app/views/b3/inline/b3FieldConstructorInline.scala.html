@@ -1,9 +1,10 @@
 @(elements: helper.FieldElements)
 @import play.api.i18n._
 @import views.html.helper._
+@import views.html.b3.ArgsMap.isTrue
 
 <div class="form-group @elements.args.get('_class) @if(elements.hasErrors) {has-error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
-	<label class="control-label sr-only" for="@elements.id">@elements.label(elements.lang)</label>
+	<label class="control-label @if(!isTrue(elements.args, '_showLabel)){sr-only}" for="@elements.id">@elements.label(elements.lang)</label>
 	@elements.input
 	@elements.errors(elements.lang).filter(_ != null).map { error =>
 		<span class="help-block">@error</span>

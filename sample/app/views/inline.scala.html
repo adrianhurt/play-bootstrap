@@ -42,6 +42,10 @@
 		@code {
 			@@import b3.inline.fieldConstructor
 		}
+		<p>
+			By default, the inline field constructor hides the label using the <code>sr-only</code> class, but
+			you can show it with the <code>_showLabel</code> argument.
+		</p>
 		
 		<h3>Simple inputs</h3>
 		@bsExample {
@@ -59,12 +63,14 @@
 		<h3>More options</h3>
 		@bsExample {
 			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b3.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
 			@b3.text( fooForm("foo"), '_label -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
 			@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
 			@b3.text( fooForm("foo"), '_label -> None, 'placeholder -> "Without label" )
 			@b3.text( fooForm("foo"), '_label -> "A big text", 'placeholder -> "An awesome field...", 'class -> "form-control input-lg" )
 		}{
 			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b3.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
 			@@b3.text( fooForm("foo"), '_label -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
 			@@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
 			@@b3.text( fooForm("foo"), '_label -> None, 'placeholder -> "Without label" )
