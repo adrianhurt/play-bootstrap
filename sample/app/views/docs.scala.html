@@ -553,6 +553,37 @@
 		}{
 			@@b3.horizontal.submit('class -> "btn btn-default"){ ... }
 		}
+		
+		
+		<h4><code>b3.actions</code> <span class="def">@@(actions: => Html)</span></h4>
+		<p>
+			It renders whatever you want within a <code>form-group</code> div.
+		</p>
+		@bsExample {
+			@b3.actions {
+				<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+				<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+			}
+		}{
+			@@b3.actions {
+				<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+				<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+			}
+		}
+		<h5><code>b3.horizontal.actions</code> <span class="def">@@(actions: => Html)(implicit hfc: HorizontalFieldConstructor)</span></h5>
+		<p>
+			There is a version for horizontal forms that takes implicitly the horizontal field constructor.
+		</p>
+		@bsExample {
+			<div class="form-horizontal">
+				@b3.horizontal.actions {
+					<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+					<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+				}(horizontalFieldConstructor)
+			</div>
+		}{
+			@@b3.horizontal.actions { ... }
+		}
 
 	}
 

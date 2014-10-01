@@ -167,9 +167,17 @@
 		@bsExample {
 			@b3.vertical.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
 			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+			@b3.actions {
+				<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+				<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+			}
 		}{
 			@@b3.vertical.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
 			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+			@@b3.actions {
+				<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+				<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+			}
 		}
 
 	}

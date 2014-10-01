@@ -1,2 +1,4 @@
 @(args: (Symbol,Any)*)(text: => Html)
-<button type="submit" @toHtmlArgs(args.toMap)>@text</button>
+@actions {
+	<button type="submit" @toHtmlArgs(args.toMap)>@text</button>
+}
