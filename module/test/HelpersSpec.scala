@@ -439,4 +439,12 @@ object HelpersSpec extends Specification {
       body must contain(colInput)
     }
   }
+
+  "@hidden" should {
+
+    "be rendered correctly" in {
+      val body = clean(b3.hidden.apply("testName", "testValue").body)
+      body must be equalTo """<input type="hidden" name="testName" value="testValue">"""
+    }
+  }
 }

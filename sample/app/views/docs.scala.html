@@ -585,6 +585,18 @@
 			@@b3.horizontal.actions { ... }
 		}
 
+
+		<h4><code>b3.hidden</code> <span class="def">@@(name: String, value: String)</span></h4>
+		<p>
+			It simply renders a hidden input.
+		</p>
+		@code {
+			@@b3.hidden("fooName", "fooValue")
+		}
+		<p>Renders to:</p>
+		@code {
+			<input type="hidden" name="fooName" value="fooValue">
+		}
 	}
 
 }
