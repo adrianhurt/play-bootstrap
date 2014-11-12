@@ -1,0 +1,187 @@
+@(fooForm: Form[String])
+
+@import tags._
+@import helper.Implicits._
+@implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+
+@main("Multifield", tab = "multifield") {
+	
+	@b3.horizontal.form(routes.Application.multifield) {
+		
+		<h1 class="page-header">Multifield helpers</h1>
+		<p class="lead">
+			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
+			That is the purpose of the helper <code>b3.multifield</code>.
+		</p>
+		<p>
+			The helper <code>b3.multifield</code> tries to:
+			<ul>
+				<li>Manage a <strong>set of fields</strong> and group them within the same <code>form-group</code>.</li>
+				<li>Manage all of their <strong>errors</strong>, <strong>infos</strong> and <strong>constraints</strong> at the end of the <code>form-group</code> as if they were only one.</li>
+				<li>Take advantage of the helpers that are already implemented.</li>
+				<li>Be a tool to create <strong>your custom multifield helpers</strong>.</li>
+			</ul>
+		</p>
+		<p>
+			To see how it works take a look to the arguments it takes:
+		</p>
+		
+		@code {
+			@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (FieldConstructor, Lang) => Html)(implicit fc: FieldConstructor, lang: Lang)
+		}
+		
+		<p>
+			<ul>
+				<li><strong>fields:</strong> the list of <code>play.api.data.Field</code> used.</li>
+				<li><strong>args:</strong> the list of arguments to decorate the <code>form-group</code>, not for any internal helper you could use. You can use the <code>_id</code>, <code>_class</code>, <code>_label</code>, <code>_showConstraints</code> and <code>_help</code> arguments as you do with any other field constructor, and add any other that could be useful for your custom helper.</li>
+				<li><strong>inputsHtml:</strong> a function that takes a <strong>Clear Field Constructor</strong> and the language and generates the HMTL for the field.</li>
+				<li><strong>fc and lang:</strong> the field constructor used for the outer form.</li>
+			</ul>
+		</p>
+		
+		
+		<h2>Let's see a couple of examples</h2>
+		
+		<p>
+			Remember the code of this web with these examples is available on <a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>.
+		</p>
+		
+		<h3>A date range</h3>
+		
+		<p>
+			We are going to implement our own custom helper to use a date range with the <a href="http://bootstrap-datepicker.readthedocs.org/en/release/">bootstrap-datepicker</a> plugin.
+			Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. That's what we want to get:
+		</p>
+		
+		@bsExample {
+			@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
+		}{
+			@@b3.datepicker( fooForm("dateStart"), 'value -> "31-10-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
+		}
+		
+		<p>
+			As you can see we have 2 fields with their own specific arguments for their corresponding inputs, and then a list of general arguments to decorate the <code>form-group</code>.
+		</p>
+		<p>
+			Seeing the plugin, we need to generate a code like this one within the <code>form-group</code>:
+		</p>
+		
+		@code {
+			<div class="input-daterange input-group" id="datepicker">
+			    <input type="text" class="form-control" name="start" />
+			    <span class="input-group-addon">to</span>
+			    <input type="text" class="form-control" name="end" />
+			</div>
+		}
+		
+		<p>
+			Then, to implement our own <code>b3.datepicker</code> helper we would only need to create a the file <code>b3/datepicker.scala.html</code> within our <code>views</code> folder with the following code:
+		</p>
+			
+		@code {
+			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+			@@b3.multifield( startField, endField )(args:_*) { case (cfc, lang) =>
+				<div class="input-daterange input-group" @@toHtmlArgs(b3.Args.inner(args).toMap)>
+					@@b3.text(startField, startArgs:_*)(cfc, lang)
+					<span class="input-group-addon">to</span>
+					@@b3.text(endField, endArgs:_*)(cfc, lang)
+				</div>
+			}
+		}
+		
+		<p>
+			Note you need to explicitly specify the <strong>Clear Field Constructor</strong> for each inner helper you uses to avoid generating a whole <code>form-group</code>. <code>toHtmlArgs()</code> function helps you to render a list of arguments from a <code>Map</code> of arguments, and <code>b3.Args.inner()</code> filters the slashed arguments used for decorating the <code>form-group</code> (<code>_id</code>, <code>_class</code>, <code>_label</code>, <code>_showConstraints</code> and <code>_help</code>).
+		</p>
+		<p>
+			So for the <code>b3.datepicker</code> used before we get rendered the following code (for a horizontal form):
+		</p>
+		
+		@code {
+			<div class="form-group" id="">
+				<label class="control-label col-md-2">Date range</label>
+				<div class="col-md-10">
+					<div class="input-daterange input-group" data-date-start-date="10-11-2014">
+						<input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
+						<span class="input-group-addon">to</span>
+						<input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
+					</div>
+					<span class="help-block">Select a date range from 10-11-2014</span>
+				</div>
+			</div>
+		}
+		
+		
+		<h3>A set of checkboxes</h3>
+		
+		<p>
+			This is a classic one. A set of checkboxes within the same <code>form-group</code>. In that example they are displayed vertically but you coud put them with inline style using CSS.
+		</p>
+		
+		@bsExample {
+			@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", '_help -> "Mark what you want")
+		}{
+			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", '_help -> "Mark what you want")
+		}
+		
+		<p>
+			In this case we have a list of fields with their corresponding <strong>Map</strong> of arguments (you can use <strong>Map</strong>, <strong>Seq</strong> or whatever), and then a list of general arguments to decorate the <code>form-group</code>.
+		</p>
+		
+		<p>
+			Then, to implement our own <code>b3.multiCheckbox</code> helper we would only need to create a the file <code>b3/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
+		</p>
+		
+		@code {
+			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
+				<div class="multi-checkbox-list" @@toHtmlArgs(b3.Args.inner(args).toMap)>
+					@@fieldsWithArgs.map { case (field, fieldArgs) =>
+						<div class="checkbox-wrap">
+							@@b3.checkbox(field, fieldArgs.toSeq:_*)(cfc, lang)
+						</div>
+					}
+				</div>
+			}
+		}
+		
+		<p>
+			And for the <code>b3.multiCheckbox</code> used before we get rendered the following code (for a horizontal form):
+		</p>
+		
+		@code {
+			<div class="form-group" id="">
+				<label class="control-label col-md-2">Checkboxes</label>
+				<div class="col-md-10">
+					<div class="multi-checkbox-list">
+						<div class="checkbox-wrap">
+							<div class="checkbox">
+								<label for="foo">
+									<input type="checkbox" id="foo" name="foo" value="true">
+									Foo
+								</label>
+							</div>
+						</div>
+						<div class="checkbox-wrap">
+							<div class="checkbox">
+								<label for="bar">
+									<input type="checkbox" id="bar" name="bar" value="true">
+									Bar
+								</label>
+							</div>
+						</div>
+						<div class="checkbox-wrap">
+							<div class="checkbox">
+								<label for="beer">
+									<input type="checkbox" id="beer" name="beer" value="true">
+									Beer
+								</label>
+							</div>
+						</div>
+					</div>
+					<span class="help-block">Mark what you want</span>
+				</div>
+			</div>
+		}
+	}
+}

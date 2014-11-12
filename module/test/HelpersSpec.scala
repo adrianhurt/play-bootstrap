@@ -133,30 +133,6 @@ object HelpersSpec extends Specification {
     }
   }
 
-  "@inputWrapped" should {
-
-    "be equivalent to inputType for an empty wrapper" in {
-      val bodyInputType = clean(b3.inputType.apply("text", fooField, 'id -> "someid").body)
-      val body = clean(b3.inputWrapped.apply("text", fooField, 'id -> "someid")(x => x).body)
-      body must be equalTo bodyInputType
-    }
-
-    "wrap the input" in {
-      val bodyInputType = clean(b3.inputType.apply("text", fooField, 'id -> "someid").body)
-      val (wrapperPre, wrapperPost) = ("<wrapper>", "</wrapper>")
-      def wrap(input: Html) = HtmlFormat.fill(scala.collection.immutable.Seq(Html(wrapperPre), input, Html(wrapperPost)))
-      val body = clean(b3.inputWrapped.apply("text", fooField, 'id -> "someid")(input => wrap(input)).body)
-
-      val (indexOfWrapperPre, indexOfWrapperPost) = (body.indexOf(wrapperPre), body.indexOf(wrapperPost))
-
-      body.substring(0, indexOfWrapperPre) must be equalTo bodyInputType.substring(0, indexOfWrapperPre)
-      body.substring(indexOfWrapperPre, indexOfWrapperPre + wrapperPre.length) must be equalTo wrapperPre
-      body.substring(indexOfWrapperPre + wrapperPre.length, indexOfWrapperPost) must be equalTo bodyInputType.substring(indexOfWrapperPre, indexOfWrapperPost - wrapperPre.length)
-      body.substring(indexOfWrapperPost, indexOfWrapperPost + wrapperPost.length) must be equalTo wrapperPost
-      body.substring(indexOfWrapperPost + wrapperPost.length) must be equalTo bodyInputType.substring(indexOfWrapperPost - wrapperPre.length)
-    }
-  }
-
   "@textarea" should {
 
     "allow setting a custom id" in {
@@ -443,8 +419,96 @@ object HelpersSpec extends Specification {
   "@hidden" should {
 
     "be rendered correctly" in {
-      val body = clean(b3.hidden.apply("testName", "testValue").body)
-      body must be equalTo """<input type="hidden" name="testName" value="testValue">"""
+      val body = clean(b3.hidden.apply("testName", "testValue", 'foo -> "bar").body)
+      body must be equalTo """<input type="hidden" name="testName" value="testValue" foo="bar">"""
     }
+  }
+
+  "@inputWrapped" should {
+
+    "be equivalent to inputType for an empty wrapper" in {
+      val bodyInputType = clean(b3.inputType.apply("text", fooField, 'id -> "someid").body)
+      val body = clean(b3.inputWrapped.apply("text", fooField, 'id -> "someid")(x => x).body)
+      body must be equalTo bodyInputType
+    }
+
+    "wrap the input" in {
+      val bodyInputType = clean(b3.inputType.apply("text", fooField, 'id -> "someid").body)
+      val (wrapperPre, wrapperPost) = ("<wrapper>", "</wrapper>")
+      def wrap(input: Html) = HtmlFormat.fill(scala.collection.immutable.Seq(Html(wrapperPre), input, Html(wrapperPost)))
+      val body = clean(b3.inputWrapped.apply("text", fooField, 'id -> "someid")(input => wrap(input)).body)
+
+      val (indexOfWrapperPre, indexOfWrapperPost) = (body.indexOf(wrapperPre), body.indexOf(wrapperPost))
+
+      body.substring(0, indexOfWrapperPre) must be equalTo bodyInputType.substring(0, indexOfWrapperPre)
+      body.substring(indexOfWrapperPre, indexOfWrapperPre + wrapperPre.length) must be equalTo wrapperPre
+      body.substring(indexOfWrapperPre + wrapperPre.length, indexOfWrapperPost) must be equalTo bodyInputType.substring(indexOfWrapperPre, indexOfWrapperPost - wrapperPre.length)
+      body.substring(indexOfWrapperPost, indexOfWrapperPost + wrapperPost.length) must be equalTo wrapperPost
+      body.substring(indexOfWrapperPost + wrapperPost.length) must be equalTo bodyInputType.substring(indexOfWrapperPost - wrapperPre.length)
+    }
+  }
+
+  "@multifield" should {
+
+    val testInputsString = "<inputs>"
+    val fooForm = Form(tuple("foo" -> Forms.nonEmptyText, "bar" -> Forms.nonEmptyText))
+    val fooFormWithError = fooForm.withError("foo", "test-error")
+
+    val vfc = b3.vertical.fieldConstructor
+    val (colLabel, colInput) = ("col-md-2", "col-md-10")
+    val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
+    val lang = implicitly[Lang]
+
+    def multifield(form: Form[(String, String)], args: (Symbol, Any)*)(fc: FieldConstructor, lang: Lang) =
+      b3.multifield.apply(form("foo"), form("bar"))(args: _*)((cfc, lang) => Html(testInputsString))(fc, lang).body
+    def fooMultifield(args: (Symbol, Any)*) = multifield(fooForm, args: _*)(vfc, lang)
+
+    "have the basic structure" in {
+      val body = fooMultifield()
+      body must contain("class=\"form-group")
+      body must not contain ("has-error")
+      body must contain("<label class=\"control-label\"></label>")
+      body must contain(testInputsString)
+      body must not contain ("class=\"help-block\"")
+    }
+
+    "behave as a horizontal field constructor" in {
+      val body = multifield(fooForm)(hfc, lang)
+      body must contain("<label class=\"control-label " + colLabel + "\"></label>")
+      body must contain("<div class=\"" + colInput + "\">")
+    }
+
+    "allow setting a custom id" in {
+      fooMultifield('_id -> "customid") must contain("id=\"customid\"")
+    }
+
+    "allow setting extra classes form-group" in {
+      fooMultifield('_class -> "extra_class another_class") must contain("class=\"form-group extra_class another_class")
+    }
+
+    "show label" in {
+      multifield(fooForm, '_label -> "fooLabel")(vfc, lang) must contain("<label class=\"control-label\">fooLabel</label>")
+      multifield(fooForm, '_label -> "fooLabel")(hfc, lang) must contain("<label class=\"control-label " + colLabel + "\">fooLabel</label>")
+    }
+
+    "hide label" in {
+      multifield(fooForm, '_label -> None)(vfc, lang) must not contain ("label")
+      multifield(fooForm, '_label -> None)(hfc, lang) must contain("<label class=\"control-label " + colLabel + "\"></label>")
+    }
+
+    "allow rendering errors" in {
+      val body = multifield(fooFormWithError)(vfc, lang)
+      body must contain("has-error")
+      body must contain("<span class=\"help-block\">test-error</span>")
+    }
+
+    "allow showing constraints" in {
+      fooMultifield('_showConstraints -> true) must contain("<span class=\"help-block\">constraint.required</span>")
+    }
+
+    "allow showing help info" in {
+      fooMultifield('_help -> "test-help") must contain("<span class=\"help-block\">test-help</span>")
+    }
+
   }
 }

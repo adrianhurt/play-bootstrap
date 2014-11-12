@@ -1,0 +1,10 @@
+@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
+	<div class="multi-checkbox-list" @toHtmlArgs(b3.Args.inner(args).toMap)>
+		@fieldsWithArgs.map { case (field, fieldArgs) =>
+			<div class="checkbox-wrap">
+				@b3.checkbox(field, fieldArgs.toSeq:_*)(cfc, lang)
+			</div>
+		}
+	</div>
+}

@@ -1,0 +1,39 @@
+@(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: (helper.FieldConstructor, play.api.i18n.Lang) => Html)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@import play.api.i18n._
+@import views.html.helper._
+@argsMap = @{ args.toMap }
+@label = @{ argsMap.get('_label) }
+@elements = @{ fields.map { field => helper.FieldElements(id = null, field, input = null, args = Map(), lang) } }
+@errors = @{ elements.flatMap(e => e.errors(e.lang)).filter(_ != null) }
+
+@wrap(fc: helper.FieldConstructor)(content: Html) = { @fc match {
+	case hfc: b3.horizontal.HorizontalFieldConstructor => {
+		<label class="control-label @hfc.colLabel">@label</label>
+		<div class="@hfc.colInput">
+			@content
+		</div>
+	}
+	case _ => {
+		@if(label != Some(None)) {
+			<label class="control-label">@label</label>
+		}
+		@content
+	}
+}}
+
+<div class="form-group @argsMap.get('_class) @if(!errors.isEmpty) {has-error}" id="@argsMap.get('_id)">
+	@wrap(fc) {
+		@inputsHtml(b3.clear.fieldConstructor, lang)
+		@errors.map { error =>
+			<span class="help-block">@error</span>
+		}
+		@if(b3.ArgsMap.isTrue(argsMap, '_showConstraints)) {
+			@elements.flatMap(e => e.infos(e.lang)).map { info =>
+				<span class="help-block">@info</span>
+			}
+		}
+		@argsMap.get('_help).map { help =>
+			<span class="help-block">@help</span>
+		}
+	}
+</div>

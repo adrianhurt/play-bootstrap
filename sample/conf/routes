@@ -10,6 +10,7 @@ GET     /inline						controllers.Application.inline
 GET     /mixed						controllers.Application.mixed
 GET     /readonly					controllers.Application.readonly
 POST    /readonly					controllers.Application.handleReadonly
+GET     /multifield					controllers.Application.multifield
 GET     /docs						controllers.Application.docs
 GET     /changelog					controllers.Application.changelog
 

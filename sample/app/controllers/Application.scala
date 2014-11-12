@@ -48,6 +48,8 @@ object Application extends Controller {
     )
   }
 
+  def multifield = Action { Ok(views.html.multifield(fooForm)) }
+
   def docs = Action { Ok(views.html.docs(fooForm)) }
 
   def changelog = Action { Ok(views.html.changelog()) }
