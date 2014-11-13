@@ -1,6 +1,7 @@
 @(fooForm: Form[String])
 
 @import tags._
+@import helper.Implicits._
 @import b3.vertical.fieldConstructor
 
 @main("Play-Bootstrap3", tab = "index") {
@@ -107,6 +108,24 @@
 			</div>
 		</div>
 		
+		<h3>Multifield support</h3>
+		<p>
+			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
+			With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
+		</p>
+		@bsExample {
+			@b3.horizontal.formWithFC(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
+				@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")(hfc, lang)
+				@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )(hfc, lang)
+			}
+		}{
+			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+			@@b3.datepicker( fooForm("dateStart"), 'value -> "31-10-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
+		}
+		<p>
+			<strong>Note:</strong> these two helpers (<code>b3.multiCheckbox</code> and <code>b3.datepicker</code>) are not part of the library, but <a href="/multifield">here</a> it is explained how to easily implement them (or just copy them).
+		</p>
+		
 		
 		<h3>Every helper you need</h3>
 		<p>
@@ -140,7 +159,7 @@
 			for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
 			<code>&lt;input type="hidden"&gt;</code> if you need to send its value within your POST request. For
 			that cases, <code>b3</code> helpers for checkboxes, radio buttons and selects automatically add that
-			input for you.
+			input for you when the attribute <code>readonly</code> is present.
 		</p>
 		<p>
 			Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers

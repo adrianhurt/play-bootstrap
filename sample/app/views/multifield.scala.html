@@ -9,7 +9,7 @@
 	
 	@b3.horizontal.form(routes.Application.multifield) {
 		
-		<h1 class="page-header">Multifield helpers</h1>
+		<h1 class="page-header">Multifield support</h1>
 		<p class="lead">
 			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
 			That is the purpose of the helper <code>b3.multifield</code>.
@@ -51,7 +51,7 @@
 		
 		<p>
 			We are going to implement our own custom helper to use a date range with the <a href="http://bootstrap-datepicker.readthedocs.org/en/release/">bootstrap-datepicker</a> plugin.
-			Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. That's what we want to get:
+			Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. This is what we want to get:
 		</p>
 		
 		@bsExample {
@@ -115,13 +115,15 @@
 		<h3>A set of checkboxes</h3>
 		
 		<p>
-			This is a classic one. A set of checkboxes within the same <code>form-group</code>. In that example they are displayed vertically but you coud put them with inline style using CSS.
+			This is a classic one. A set of checkboxes within the same <code>form-group</code>. Note you can choose to display them vertically or inline simply by using CSS.
 		</p>
 		
 		@bsExample {
-			@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", '_help -> "Mark what you want")
+			@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+			@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
 		}{
-			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", '_help -> "Mark what you want")
+			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
 		}
 		
 		<p>
@@ -135,7 +137,7 @@
 		@code {
 			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
 			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
-				<div class="multi-checkbox-list" @@toHtmlArgs(b3.Args.inner(args).toMap)>
+				<div @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@fieldsWithArgs.map { case (field, fieldArgs) =>
 						<div class="checkbox-wrap">
 							@@b3.checkbox(field, fieldArgs.toSeq:_*)(cfc, lang)
@@ -146,9 +148,14 @@
 		}
 		
 		<p>
-			And for the <code>b3.multiCheckbox</code> used before we get rendered the following code (for a horizontal form):
+			So for the example:
 		</p>
-		
+		@code {
+			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+		}
+		<p>
+			We will get the following HTML code (for a horizontal form):
+		</p>
 		@code {
 			<div class="form-group" id="">
 				<label class="control-label col-md-2">Checkboxes</label>
