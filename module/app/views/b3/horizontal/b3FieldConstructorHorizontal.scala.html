@@ -14,8 +14,8 @@
 				<span class="help-block">@info</span>
 			}
 		}
-		@elements.args.get('_help).map { case help: String =>
-			<span class="help-block">@Html(help)</span>
+		@elements.args.get('_help).map { help =>
+			<span class="help-block">@help</span>
 		}
 	</div>
 </div>
