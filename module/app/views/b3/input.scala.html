@@ -12,7 +12,7 @@
 			field.value.orElse(argsMap.get('value).map(_.toString)),
 			Args.inner(args).filter(arg => arg._1 != 'id && arg._1 != 'value).toMap
 		),
-        args.toMap,
+        Args.withDefault(args, '_showConstraints -> false).toMap,
         lang
     )
 )

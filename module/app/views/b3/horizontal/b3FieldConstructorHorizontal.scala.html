@@ -1,21 +1,14 @@
 @(elements: helper.FieldElements, colLabel: String, colInput: String)
 @import play.api.i18n._
-@import views.html.helper._
+@import helper._
+@errorsAndInfos = @{ elements.errors(elements.lang) ++ elements.infos(elements.lang) }
 
 <div class="form-group @elements.args.get('_class) @if(elements.hasErrors) {has-error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
 	<label class="control-label @colLabel" for="@elements.id">@elements.label(elements.lang)</label>
 	<div class="@colInput">
 		@elements.input
-		@elements.errors(elements.lang).filter(_ != null).map { error =>
-			<span class="help-block">@error</span>
-		}
-		@if(elements.args.exists(_ == ('_showConstraints, true))) {
-			@elements.infos(elements.lang).map { info =>
-				<span class="help-block">@info</span>
-			}
-		}
-		@elements.args.get('_help).map { help =>
-			<span class="help-block">@help</span>
+		@errorsAndInfos.map { errorOrInfo =>
+			<span class="help-block">@errorOrInfo</span>
 		}
 	</div>
 </div>
