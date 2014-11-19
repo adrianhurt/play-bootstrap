@@ -276,6 +276,9 @@
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="password"</code>.
 			</p>
+			<p>
+				For security reasons, this helper doesn't display the possible value the field could have (for example when the form is reloaded after a validation failure).
+			</p>
 			@bsExample {
 				@b3.password( fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
 			}{
