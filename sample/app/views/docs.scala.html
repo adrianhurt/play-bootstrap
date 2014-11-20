@@ -261,17 +261,6 @@
 			}
 
 
-			<h4 id="helper-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
-			<p>
-				It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
-			</p>
-			@bsExample {
-				@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
-			}{
-				@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
-			}
-
-
 			<h4 id="helper-password"><code>b3.password</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="password"</code>.
@@ -283,17 +272,6 @@
 				@b3.password( fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
 			}{
 				@@b3.password( fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
-			}
-
-
-			<h4 id="helper-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
-			<p>
-				It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
-			</p>
-			@bsExample {
-				@b3.date( fooForm("date"), '_label -> "Date" )
-			}{
-				@@b3.date( fooForm("date"), '_label -> "Date" )
 			}
 
 
@@ -439,6 +417,158 @@
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'readonly -> true )
 			}
 
+
+			<h4 id="helper-hidden"><code>b3.hidden</code> <span class="def">@@(name: String, value: String, args: (Symbol, Any)*)</span></h4>
+			<p>
+				It simply renders a hidden input.
+			</p>
+			@code {
+				@@b3.hidden("fooName", "fooValue", 'fooAttr -> "fooAttrValue")
+			}
+			<p>Renders to:</p>
+			@code {
+				<input type="hidden" name="fooName" value="fooValue" fooAttr="fooAttrValue">
+			}
+
+	
+	
+	
+			<h3 id="html5-helpers">New HTML5 helpers</h3>
+			<p>
+				<strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
+			</p>
+			
+			<h4 id="html5-color"><code>b3.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
+			</p>
+			@bsExample {
+				@b3.color( fooForm("color"), '_label -> "Color" )
+			}{
+				@@b3.color( fooForm("color"), '_label -> "Color" )
+			}
+
+			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
+			</p>
+			@bsExample {
+				@b3.date( fooForm("date"), '_label -> "Date" )
+			}{
+				@@b3.date( fooForm("date"), '_label -> "Date" )
+			}
+			
+			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="datetime"</code>.
+			</p>
+			@bsExample {
+				@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
+			}{
+				@@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
+			}
+			
+			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="datetime-local"</code>.
+			</p>
+			@bsExample {
+				@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
+			}{
+				@@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
+			}
+
+			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
+			</p>
+			@bsExample {
+				@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+			}{
+				@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+			}
+			
+			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="month"</code>.
+			</p>
+			@bsExample {
+				@b3.month( fooForm("month"), '_label -> "Month" )
+			}{
+				@@b3.month( fooForm("month"), '_label -> "Month" )
+			}
+			
+			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="number"</code>.
+			</p>
+			@bsExample {
+				@b3.number( fooForm("number"), '_label -> "Number (0 to 50 with intervals of 5)", 'min -> 0, 'max -> 50, 'step -> 5 )
+			}{
+				@@b3.number( fooForm("number"), '_label -> "Number", 'min -> 0, 'max -> 50, 'step -> 5 )
+			}
+			
+			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="range"</code>.
+			</p>
+			@bsExample {
+				@b3.range( fooForm("range"), '_label -> "Range (0 to 50)", 'min -> 0, 'max -> 50 )
+			}{
+				@@b3.range( fooForm("range"), '_label -> "Range", 'min -> 0, 'max -> 50 )
+			}
+			
+			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="search"</code>.
+			</p>
+			@bsExample {
+				@b3.search( fooForm("search"), '_label -> "Search" )
+			}{
+				@@b3.search( fooForm("search"), '_label -> "Search" )
+			}
+			
+			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="tel"</code>.
+			</p>
+			@bsExample {
+				@b3.tel( fooForm("tel"), '_label -> "Telephone" )
+			}{
+				@@b3.tel( fooForm("tel"), '_label -> "Telephone" )
+			}
+			
+			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="time"</code>.
+			</p>
+			@bsExample {
+				@b3.time( fooForm("time"), '_label -> "Time" )
+			}{
+				@@b3.time( fooForm("time"), '_label -> "Time" )
+			}
+			
+			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="url"</code>.
+			</p>
+			@bsExample {
+				@b3.url( fooForm("url"), '_label -> "URL" )
+			}{
+				@@b3.url( fooForm("url"), '_label -> "URL" )
+			}
+			
+			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: Lang)</span></h4>
+			<p>
+				It is a short version of <code>b3.inputType</code> for <code>type="week"</code>.
+			</p>
+			@bsExample {
+				@b3.week( fooForm("week"), '_label -> "Week" )
+			}{
+				@@b3.week( fooForm("week"), '_label -> "Week" )
+			}
+			
+			
 	
 
 
@@ -492,6 +622,29 @@
 			}{
 				@@b3.horizontal.submit('class -> "btn btn-default"){ ... }
 			}
+			
+			
+			<h4 id="more-reset"><code>b3.reset</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)</span></h4>
+			<p>
+				It renders a reset button to place within your form. It takes a <code>HTML</code> as parameter, so you can
+				render whatever you want.
+			</p>
+			@bsExample {
+				@b3.reset('class -> "btn btn-default"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+			}{
+				@@b3.reset('class -> "btn btn-default"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+			}
+			<h5><code>b3.horizontal.reset</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit hfc: HorizontalFieldConstructor)</span></h5>
+			<p>
+				There is a version for horizontal forms that takes implicitly the horizontal field constructor.
+			</p>
+			@bsExample {
+				<div class="form-horizontal">
+					@b3.horizontal.reset('class -> "btn btn-default"){ <span class="glyphicon glyphicon-remove"></span> Reset }(horizontalFieldConstructor)
+				</div>
+			}{
+				@@b3.horizontal.reset('class -> "btn btn-default"){ ... }
+			}
 		
 		
 			<h4 id="more-actions"><code>b3.actions</code> <span class="def">@@(actions: => Html)</span></h4>
@@ -523,19 +676,12 @@
 			}{
 				@@b3.horizontal.actions { ... }
 			}
-
-
-			<h4 id="more-hidden"><code>b3.hidden</code> <span class="def">@@(name: String, value: String, args: (Symbol, Any)*)</span></h4>
-			<p>
-				It simply renders a hidden input.
-			</p>
-			@code {
-				@@b3.hidden("fooName", "fooValue", 'fooAttr -> "fooAttrValue")
-			}
-			<p>Renders to:</p>
-			@code {
-				<input type="hidden" name="fooName" value="fooValue" fooAttr="fooAttrValue">
-			}
+			
+			
+			
+			
+			
+			
 			
 			
 			<h3 id="your-helpers">Your own custom helpers</h3>
@@ -658,14 +804,31 @@
 						<li><a href="#helpers-disabled-readonly">Disabled & Readonly</a></li>
 						<li><a href="#helper-inputtype">b3.inputType</a></li>
 						<li><a href="#helper-text">b3.text</a></li>
-						<li><a href="#helper-email">b3.email</a></li>
 						<li><a href="#helper-password">b3.password</a></li>
-						<li><a href="#helper-date">b3.date</a></li>
 						<li><a href="#helper-file">b3.file</a></li>
 						<li><a href="#helper-textarea">b3.textarea</a></li>
 						<li><a href="#helper-checkbox">b3.checkbox</a></li>
 						<li><a href="#helper-radio">b3.radio</a></li>
 						<li><a href="#helper-select">b3.select</a></li>
+						<li><a href="#helper-hidden">b3.hidden</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#html5-helpers">New HTML5 helpers</a>
+					<ul class="nav">
+						<li><a href="#html5-color">b3.color</a></li>
+						<li><a href="#html5-date">b3.date</a></li>
+						<li><a href="#html5-datetime">b3.datetime</a></li>
+						<li><a href="#html5-datetime-local">b3.datetimeLocal</a></li>
+						<li><a href="#html5-email">b3.email</a></li>
+						<li><a href="#html5-month">b3.month</a></li>
+						<li><a href="#html5-number">b3.number</a></li>
+						<li><a href="#html5-range">b3.range</a></li>
+						<li><a href="#html5-search">b3.search</a></li>
+						<li><a href="#html5-tel">b3.tel</a></li>
+						<li><a href="#html5-time">b3.time</a></li>
+						<li><a href="#html5-url">b3.url</a></li>
+						<li><a href="#html5-week">b3.week</a></li>
 					</ul>
 				</li>
 				<li>
@@ -673,8 +836,8 @@
 					<ul class="nav">
 						<li><a href="#more-static">b3.static</a></li>
 						<li><a href="#more-submit">b3.submit</a></li>
+						<li><a href="#more-reset">b3.reset</a></li>
 						<li><a href="#more-actions">b3.actions</a></li>
-						<li><a href="#more-hidden">b3.hidden</a></li>
 					</ul>
 				</li>
 				<li>

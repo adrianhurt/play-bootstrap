@@ -88,48 +88,90 @@ object HelpersSpec extends Specification {
     }
   }
 
+  val sampleArgs = Seq[(Symbol, Any)]('id -> "someid", 'foo -> "fooValue")
+  def sampleInputTypeBody(theType: String) = b3.inputType.apply(theType, fooField, sampleArgs: _*).body.trim
+
   "@text" should {
-
     "be equivalent to inputType with text type" in {
-      val bodyInputType = b3.inputType.apply("text", fooField, 'id -> "someid").body.trim
-      val body = b3.text.apply(fooField, 'id -> "someid").body.trim
-      body must be equalTo bodyInputType
+      b3.text.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("text")
     }
   }
-
-  "@email" should {
-
-    "be equivalent to inputType with email type" in {
-      val bodyInputType = b3.inputType.apply("email", fooField, 'id -> "someid").body.trim
-      val body = b3.email.apply(fooField, 'id -> "someid").body.trim
-      body must be equalTo bodyInputType
-    }
-  }
-
   "@password" should {
-
     "be equivalent to inputType with password type" in {
-      val bodyInputType = b3.inputType.apply("password", fooField, 'id -> "someid").body.trim
-      val body = b3.password.apply(fooField, 'id -> "someid").body.trim
-      body must be equalTo bodyInputType
+      b3.password.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("password")
+    }
+    "not display its value" in {
+      b3.password.apply(fooFieldFilled("barValue"), sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("password")
     }
   }
-
-  "@date" should {
-
-    "be equivalent to inputType with date type" in {
-      val bodyInputType = b3.inputType.apply("date", fooField, 'id -> "someid").body.trim
-      val body = b3.date.apply(fooField, 'id -> "someid").body.trim
-      body must be equalTo bodyInputType
-    }
-  }
-
   "@file" should {
-
     "be equivalent to inputType with file type" in {
-      val bodyInputType = b3.inputType.apply("file", fooField, 'id -> "someid").body.trim
-      val body = b3.file.apply(fooField, 'id -> "someid").body.trim
-      body must be equalTo bodyInputType
+      b3.file.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("file")
+    }
+  }
+  "@color" should {
+    "be equivalent to inputType with date type" in {
+      b3.color.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("color")
+    }
+  }
+  "@date" should {
+    "be equivalent to inputType with date type" in {
+      b3.date.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("date")
+    }
+  }
+  "@datetime" should {
+    "be equivalent to inputType with date type" in {
+      b3.datetime.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime")
+    }
+  }
+  "@datetimeLocal" should {
+    "be equivalent to inputType with date type" in {
+      b3.datetimeLocal.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime-local")
+    }
+  }
+  "@email" should {
+    "be equivalent to inputType with email type" in {
+      b3.email.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("email")
+    }
+  }
+  "@month" should {
+    "be equivalent to inputType with date type" in {
+      b3.month.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("month")
+    }
+  }
+  "@number" should {
+    "be equivalent to inputType with date type" in {
+      b3.number.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("number")
+    }
+  }
+  "@range" should {
+    "be equivalent to inputType with date type" in {
+      b3.range.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("range")
+    }
+  }
+  "@search" should {
+    "be equivalent to inputType with date type" in {
+      b3.search.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("search")
+    }
+  }
+  "@tel" should {
+    "be equivalent to inputType with date type" in {
+      b3.tel.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("tel")
+    }
+  }
+  "@time" should {
+    "be equivalent to inputType with date type" in {
+      b3.time.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("time")
+    }
+  }
+  "@url" should {
+    "be equivalent to inputType with date type" in {
+      b3.url.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("url")
+    }
+  }
+  "@week" should {
+    "be equivalent to inputType with date type" in {
+      b3.week.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("week")
     }
   }
 
@@ -395,12 +437,12 @@ object HelpersSpec extends Specification {
 
     val (colLabel, colInput) = ("col-md-2", "col-md-10")
     implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
+    val simple = b3.horizontal.submit.apply('class -> "btn btn-default")(Html("test")).body
 
     "be rendered correctly" in {
-      val body = b3.horizontal.submit.apply('class -> "btn btn-default")(Html("test")).body
-      body must contain("button")
-      body must contain("type=\"submit\"")
-      body must contain(">test<")
+      simple must contain("button")
+      simple must contain("type=\"submit\"")
+      simple must contain(">test<")
     }
 
     "allow setting extra arguments" in {
@@ -410,9 +452,48 @@ object HelpersSpec extends Specification {
     }
 
     "render columns for horizontal form" in {
-      val body = b3.horizontal.submit.apply('class -> "btn btn-default")(Html("test")).body
-      body must contain(colLabel)
-      body must contain(colInput)
+      simple must contain(colLabel)
+      simple must contain(colInput)
+    }
+  }
+
+  "@reset" should {
+
+    "be rendered correctly" in {
+      val body = b3.reset.apply('class -> "btn btn-default")(Html("test")).body
+      body must contain("button")
+      body must contain("type=\"reset\"")
+      body must contain(">test<")
+    }
+
+    "allow setting extra arguments" in {
+      val body = b3.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
+      body must contain("class=\"btn btn-default\"")
+      body must contain("extra_attr=\"test\"")
+    }
+  }
+
+  "@horizontal.reset" should {
+
+    val (colLabel, colInput) = ("col-md-2", "col-md-10")
+    implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
+    val simple = b3.horizontal.reset.apply('class -> "btn btn-default")(Html("test")).body
+
+    "be rendered correctly" in {
+      simple must contain("button")
+      simple must contain("type=\"reset\"")
+      simple must contain(">test<")
+    }
+
+    "allow setting extra arguments" in {
+      val body = b3.horizontal.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
+      body must contain("class=\"btn btn-default\"")
+      body must contain("extra_attr=\"test\"")
+    }
+
+    "render columns for horizontal form" in {
+      simple must contain(colLabel)
+      simple must contain(colInput)
     }
   }
 

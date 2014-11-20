@@ -12,6 +12,9 @@ enableForm = ($form) ->
 	$formGroups.find('.checkbox, .radio, .radio-inline').removeClass('disabled')
 	$formGroups.find('.checkbox-group, .radio-group, .select-group').find('input[type="hidden"]').removeAttr('readonly').attr('disabled', true)
 
+scrollWithAnimation = ($id, duration) ->
+	$('html,body').animate({scrollTop: $id.offset().top - 60}, duration)
+
 ############################################################################################################
 ## DOCUMENT IS READY - INIT APP
 ############################################################################################################
@@ -48,10 +51,11 @@ $ ->
 			target = $(this.hash)
 			target = if target.length then target else $('[name=' + this.hash.slice(1) +']')
 			if (target.length)
-				$('html,body').animate({
-					scrollTop: target.offset().top - 50
-				}, 500)
-				false
+				scrollWithAnimation(target, 500)
+	
+	hash = window.location.hash
+	if hash.length > 0
+		scrollWithAnimation($(hash), 10)
 
 	
 	$('.apply-tweak').click (e) ->
