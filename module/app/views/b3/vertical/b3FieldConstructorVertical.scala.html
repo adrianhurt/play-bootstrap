@@ -2,12 +2,16 @@
 @import play.api.i18n._
 @import helper._
 @errorsAndInfos = @{ elements.errors(elements.lang) ++ elements.infos(elements.lang) }
+@showErrorIcon = @{ elements.args.exists(_ == ('_showErrorIcon, true)) }
 
-<div class="form-group @elements.args.get('_class) @if(elements.hasErrors) {has-error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+<div class="form-group @elements.args.get('_class)@if(elements.hasErrors) { has-error@if(showErrorIcon) { has-feedback}}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
 	@if(!elements.args.exists(_ == ('_label, None))) {
 		<label class="control-label" for="@elements.id">@elements.label(elements.lang)</label>
 	}
 	@elements.input
+	@if(elements.hasErrors && showErrorIcon) {
+		<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+	}
 	@errorsAndInfos.map { errorOrInfo =>
 		<span class="help-block">@errorOrInfo</span>
 	}
