@@ -1,4 +1,4 @@
-@(inputType: String, field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@(inputType: String, field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
 @input(field, Args.withDefault(args, 'class -> "form-control"):_*) { (id, name, value, htmlArgs) =>
     <input type="@inputType" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
 }

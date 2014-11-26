@@ -20,10 +20,16 @@ package object clear {
   import views.html.helper._
 
   /**
-   * Creates the implicit Clear FieldConstructor
+   * Declares the class for the Clear FieldConstructor.
    */
-  implicit val fieldConstructor = new FieldConstructor {
+  class ClearFieldConstructor extends B3FieldConstructor {
+    val defaultFormClass = "form-clear"
     def apply(elements: FieldElements) = clearFieldConstructor(elements)
   }
+
+  /**
+   * Creates the implicit Clear FieldConstructor
+   */
+  implicit val fieldConstructor = new ClearFieldConstructor()
 
 }

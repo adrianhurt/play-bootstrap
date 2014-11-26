@@ -37,32 +37,26 @@
 		</div>
 	}
 
-	@b3.horizontal.form(routes.Application.handleReadonly, 'id -> "form-readonly") {
+	@b3.form(routes.Application.handleReadonly, 'id -> "form-readonly") {
 
 		@bsExample {
 			@b3.text( fooReadonlyForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
 			@b3.checkbox( fooReadonlyForm("checkbox"), '_label -> None, '_text -> "Checkbox", 'value -> true, 'readonly -> true )
 			@b3.radio( fooReadonlyForm("radio"), options = Seq("M"->"Male","F"->"Female"), 'value -> "M", '_label -> "Radio Group", 'readonly -> true )
 			@b3.select( fooReadonlyForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-10">
-					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit me!</button>
-					<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
-				</div>
-			</div>
+			@b3.free() {
+				<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit me!</button>
+				<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
+			}
 		}{
 			@@b3.text( fooReadonlyForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
 			@@b3.checkbox( fooReadonlyForm("checkbox"), '_label -> None, '_text -> "Checkbox", 'value -> true, 'readonly -> true )
 			@@b3.radio( fooReadonlyForm("radio"), options = Seq("M"->"Male","F"->"Female"), 'value -> "M", '_label -> "Radio Group", 'readonly -> true )
 			@@b3.select( fooReadonlyForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-10">
-					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit me!</button>
-					<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
-				</div>
-			</div>
+			@@b3.free() {
+				<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit me!</button>
+				<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
+			}
 		}
 	}
 	

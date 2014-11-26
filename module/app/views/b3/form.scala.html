@@ -1,4 +1,4 @@
-@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)
-<form action="@action.url" method="@action.method" @toHtmlArgs(Args.inner(args, 'role -> "form").toMap)>
+@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: b3.B3FieldConstructor)
+<form action="@action.url" method="@action.method" @toHtmlArgs(Args.inner(args, 'class -> fc.defaultFormClass, 'role -> "form").toMap)>
 	@body
 </form>

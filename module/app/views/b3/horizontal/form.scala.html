@@ -1,2 +1,3 @@
-@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)
-@b3.form(action, b3.Args.withDefault(args, 'class -> "form-horizontal"):_*)(body)
+@(action: play.api.mvc.Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: (HorizontalFieldConstructor, Lang) => Html)(implicit lang: play.api.i18n.Lang)
+@hfc = @{ b3.horizontal.fieldConstructor(colLabel, colInput) }
+@b3.form(action, args:_*)(body(hfc, lang))(hfc)

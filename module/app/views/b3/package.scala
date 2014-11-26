@@ -13,23 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package views.html.b3
+package views.html
 
-package object inline {
+package object b3 {
 
   import views.html.helper._
 
-  /**
-   * Declares the class for the Inline FieldConstructor.
-   */
-  class InlineFieldConstructor extends B3FieldConstructor {
-    val defaultFormClass = "form-inline"
-    def apply(elements: FieldElements) = b3FieldConstructorInline(elements)
+  abstract class B3FieldConstructor extends FieldConstructor {
+    val defaultFormClass: String
   }
-
-  /**
-   * Creates the implicit Inline FieldConstructor
-   */
-  implicit val fieldConstructor = new InlineFieldConstructor()
 
 }

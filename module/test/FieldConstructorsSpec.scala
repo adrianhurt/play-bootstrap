@@ -26,7 +26,7 @@ import play.api.mvc.Call
 
 object FieldConstructorsSpec extends Specification {
 
-  def testFielConstructor(implicit fc: FieldConstructor) = {
+  def testFielConstructor(implicit fc: b3.B3FieldConstructor) = {
 
     val testInputString = "<input>"
     def testInput(field: Field, args: (Symbol, Any)*) =

@@ -23,7 +23,8 @@ package object horizontal {
    * Declares the class for the Horizontal FieldConstructor.
    * It needs the column widths for the corresponding Bootstrap3 form-group
    */
-  case class HorizontalFieldConstructor(colLabel: String, colInput: String) extends FieldConstructor {
+  case class HorizontalFieldConstructor(colLabel: String, colInput: String) extends B3FieldConstructor {
+    val defaultFormClass = "form-horizontal"
     def apply(elements: FieldElements) = b3FieldConstructorHorizontal(elements, colLabel, colInput)
   }
 

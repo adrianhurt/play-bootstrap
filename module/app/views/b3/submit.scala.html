@@ -1,4 +1,4 @@
-@(args: (Symbol,Any)*)(text: => Html)
-@actions {
-	<button type="submit" @toHtmlArgs(args.toMap)>@text</button>
+@(args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor)
+@formGroup(b3.Args.withDefault(args, '_label -> None):_*) { innerArgs =>
+	<button type="submit" @toHtmlArgs(innerArgs.toMap)>@text</button>
 }

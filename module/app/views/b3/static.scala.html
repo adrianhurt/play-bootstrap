@@ -1,0 +1,4 @@
+@(label: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor)
+@formGroup(b3.Args.withDefault(args, '_label -> label):_*) { innerArgs =>
+	<p @toHtmlArgs(b3.Args.withDefault(innerArgs, 'class -> "form-control-static").toMap)>@text</p>
+}

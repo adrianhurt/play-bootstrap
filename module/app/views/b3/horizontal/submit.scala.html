@@ -1,4 +1,0 @@
-@(args: (Symbol,Any)*)(text: => Html)(implicit hfc: HorizontalFieldConstructor)
-@actions {
-	<button type="submit" @toHtmlArgs(args.toMap)>@text</button>
-}

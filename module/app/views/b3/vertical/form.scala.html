@@ -1,0 +1,3 @@
+@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: (VerticalFieldConstructor, Lang) => Html)(implicit lang: play.api.i18n.Lang)
+@vfc = @{ b3.vertical.fieldConstructor }
+@b3.form(action, args:_*)(body(vfc, lang))(vfc)

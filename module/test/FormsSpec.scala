@@ -25,26 +25,45 @@ import play.api.mvc.Call
 
 object FormsSpec extends Specification {
 
+  val vfc = b3.vertical.fieldConstructor
+  val (colLabel, colInput) = ("col-md-2", "col-md-10")
+  val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
+  val ifc = b3.inline.fieldConstructor
+  val cfc = b3.clear.fieldConstructor
+  val lang = implicitly[Lang]
+
   val testContentString = "<content>"
 
   val (method, action) = ("POST", "/handleRequest")
   val fooCall = Call(method, action)
-  def fooFormBody(args: (Symbol, Any)*) = b3.form.apply(fooCall, args: _*)(Html(testContentString)).body
+  def fooFormBody(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor) = b3.form.apply(fooCall, args: _*)(Html(testContentString))(fc).body
 
   "@form" should {
 
+    val simple = fooFormBody()(vfc)
+
     "have action and method" in {
-      val body = fooFormBody()
-      body must contain("action=\"" + action + "\"")
-      body must contain("method=\"" + method + "\"")
+      simple must contain("action=\"" + action + "\"")
+      simple must contain("method=\"" + method + "\"")
     }
 
     "add form role as default" in {
-      fooFormBody() must contain("role=\"form\"")
+      simple must contain("role=\"form\"")
+    }
+
+    "allow setting custom class" in {
+      fooFormBody('class -> "customClass")(vfc) must contain("class=\"customClass\"")
+    }
+
+    "add default class for each field constructor" in {
+      fooFormBody()(vfc) must be equalTo fooFormBody('class -> "form-vertical")(vfc)
+      fooFormBody()(hfc) must be equalTo fooFormBody('class -> "form-horizontal")(vfc)
+      fooFormBody()(ifc) must be equalTo fooFormBody('class -> "form-inline")(vfc)
+      fooFormBody()(cfc) must be equalTo fooFormBody('class -> "form-clear")(vfc)
     }
 
     "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = fooFormBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")
+      val body = fooFormBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(vfc)
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
@@ -52,25 +71,7 @@ object FormsSpec extends Specification {
     }
 
     "render the content body" in {
-      fooFormBody() must contain("<content>")
-    }
-  }
-
-  "@horizontal.form" should {
-
-    "be equivalent to form with class form-horizontal" in {
-      val bodyForm = fooFormBody('class -> "form-horizontal").trim
-      val body = b3.horizontal.form.apply(fooCall)(Html(testContentString)).body.trim
-      body must be equalTo bodyForm
-    }
-  }
-
-  "@inline.form" should {
-
-    "be equivalent to form with class form-inline" in {
-      val bodyForm = fooFormBody('class -> "form-inline").trim
-      val body = b3.inline.form.apply(fooCall)(Html(testContentString)).body.trim
-      body must be equalTo bodyForm
+      simple must contain("<content>")
     }
   }
 }

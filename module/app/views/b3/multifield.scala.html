@@ -1,34 +1,16 @@
-@(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: (helper.FieldConstructor, play.api.i18n.Lang) => Html)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: (b3.B3FieldConstructor, play.api.i18n.Lang) => Html)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
 @import play.api.i18n._
 @import helper._
 @argsMap = @{ args.toMap }
-@label = @{ argsMap.get('_label) }
 @showConstraints = @{ b3.ArgsMap.isTrue(argsMap, '_showConstraints) }
 @elements = @{ fields.map { field => FieldElements(id = null, field, input = null, args = Map('_showConstraints -> showConstraints), lang) } }
 @errors = @{ elements.flatMap(e => e.errors(e.lang)) }
 @infos = @{ argsMap.get('_help).map(m => Seq(m.toString)).getOrElse { elements.flatMap(e => e.infos(e.lang)) } }
 @errorsAndInfos = @{ errors ++ infos }
 
-@wrap(fc: helper.FieldConstructor)(content: Html) = { @fc match {
-	case hfc: b3.horizontal.HorizontalFieldConstructor => {
-		<label class="control-label @hfc.colLabel">@label</label>
-		<div class="@hfc.colInput">
-			@content
-		</div>
+@formGroup(b3.Args.withDefault(args, '_class -> (if(!errors.isEmpty) "has-error" else "")):_*) { innerArgs =>
+	@inputsHtml(b3.clear.fieldConstructor, lang)
+	@errorsAndInfos.map { errorOrInfo =>
+		<span class="help-block">@errorOrInfo</span>
 	}
-	case _ => {
-		@if(label != Some(None)) {
-			<label class="control-label">@label</label>
-		}
-		@content
-	}
-}}
-
-<div class="form-group @argsMap.get('_class) @if(!errors.isEmpty) {has-error}" id="@argsMap.get('_id)">
-	@wrap(fc) {
-		@inputsHtml(b3.clear.fieldConstructor, lang)
-		@errorsAndInfos.map { errorOrInfo =>
-			<span class="help-block">@errorOrInfo</span>
-		}
-	}
-</div>
+}

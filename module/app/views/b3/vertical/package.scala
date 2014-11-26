@@ -20,10 +20,16 @@ package object vertical {
   import views.html.helper._
 
   /**
-   * Creates the implicit Vertical FieldConstructor
+   * Declares the class for the Vertical FieldConstructor.
    */
-  implicit val fieldConstructor = new FieldConstructor {
+  class VerticalFieldConstructor extends B3FieldConstructor {
+    val defaultFormClass = "form-vertical"
     def apply(elements: FieldElements) = b3FieldConstructorVertical(elements)
   }
+
+  /**
+   * Creates the implicit Vertical FieldConstructor
+   */
+  implicit val fieldConstructor = new VerticalFieldConstructor()
 
 }

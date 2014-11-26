@@ -1,0 +1,24 @@
+@(args: (Symbol,Any)*)(content: Seq[(Symbol, Any)] => Html)(implicit fc: b3.B3FieldConstructor)
+@argsMap = @{ args.toMap }
+@label = @{ argsMap.get('_label) }
+@innerArgs = @{ b3.Args.inner(args) }
+<div class="form-group @argsMap.get('_class)" id="@argsMap.get('_id)">
+	@fc match {
+		case vfc: b3.vertical.VerticalFieldConstructor => {
+			@if(label != Some(None)) {
+				<label class="control-label">@label</label>
+			}
+			@content(innerArgs)
+		}
+		case hfc: b3.horizontal.HorizontalFieldConstructor => {
+			<label class="control-label @hfc.colLabel">@label</label>
+			<div class="@hfc.colInput">
+				@content(innerArgs)
+			</div>
+		}
+		case ifc: b3.inline.InlineFieldConstructor => {
+			<label class="control-label @if(!b3.ArgsMap.isTrue(args.toMap, '_showLabel)){sr-only}">@label</label>
+			@content(innerArgs)
+		}
+	}
+</div>

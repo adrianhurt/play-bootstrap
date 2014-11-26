@@ -7,7 +7,7 @@
 
 @main("Multifield", tab = "multifield") {
 	
-	@b3.horizontal.form(routes.Application.multifield) {
+	@b3.form(routes.Application.multifield) {
 		
 		<h1 class="page-header">Multifield support</h1>
 		<p class="lead">
@@ -28,7 +28,7 @@
 		</p>
 		
 		@code {
-			@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (FieldConstructor, Lang) => Html)(implicit fc: FieldConstructor, lang: Lang)
+			@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, Lang) => Html)(implicit fc: B3FieldConstructor, lang: Lang)
 		}
 		
 		<p>
@@ -80,7 +80,7 @@
 		</p>
 			
 		@code {
-			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
 			@@b3.multifield( startField, endField )(args:_*) { case (cfc, lang) =>
 				<div class="input-daterange input-group" @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@b3.text(startField, startArgs:_*)(cfc, lang)
@@ -135,7 +135,7 @@
 		</p>
 		
 		@code {
-			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: helper.FieldConstructor, lang: play.api.i18n.Lang)
+			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
 			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
 				<div @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@fieldsWithArgs.map { case (field, fieldArgs) =>

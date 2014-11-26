@@ -1,0 +1,10 @@
+@(elements: helper.FieldElements)(wrap: Html => Html)
+@errorsAndInfos = @{ elements.errors(elements.lang) ++ elements.infos(elements.lang) }
+<div class="form-group @elements.args.get('_class) @if(elements.hasErrors){has-error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+	@wrap {
+		@elements.input
+		@errorsAndInfos.map { errorOrInfo =>
+			<span class="help-block">@errorOrInfo</span>
+		}
+	}
+</div>

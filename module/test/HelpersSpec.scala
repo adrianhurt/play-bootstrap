@@ -26,10 +26,18 @@ import play.api.mvc.Call
 
 object HelpersSpec extends Specification {
 
+  val vfc = b3.vertical.fieldConstructor
+  val (colLabel, colInput) = ("col-md-2", "col-md-10")
+  val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
+  val ifc = b3.inline.fieldConstructor
+  val cfc = b3.clear.fieldConstructor
+  val lang = implicitly[Lang]
+
   /**
    * A test field constructor that simply renders the input
    */
-  implicit val testFieldConstructor = new FieldConstructor {
+  implicit val testFieldConstructor = new b3.B3FieldConstructor {
+    val defaultFormClass = ""
     def apply(elements: FieldElements) = elements.input
   }
 
@@ -107,71 +115,6 @@ object HelpersSpec extends Specification {
   "@file" should {
     "be equivalent to inputType with file type" in {
       b3.file.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("file")
-    }
-  }
-  "@color" should {
-    "be equivalent to inputType with date type" in {
-      b3.color.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("color")
-    }
-  }
-  "@date" should {
-    "be equivalent to inputType with date type" in {
-      b3.date.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("date")
-    }
-  }
-  "@datetime" should {
-    "be equivalent to inputType with date type" in {
-      b3.datetime.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime")
-    }
-  }
-  "@datetimeLocal" should {
-    "be equivalent to inputType with date type" in {
-      b3.datetimeLocal.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime-local")
-    }
-  }
-  "@email" should {
-    "be equivalent to inputType with email type" in {
-      b3.email.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("email")
-    }
-  }
-  "@month" should {
-    "be equivalent to inputType with date type" in {
-      b3.month.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("month")
-    }
-  }
-  "@number" should {
-    "be equivalent to inputType with date type" in {
-      b3.number.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("number")
-    }
-  }
-  "@range" should {
-    "be equivalent to inputType with date type" in {
-      b3.range.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("range")
-    }
-  }
-  "@search" should {
-    "be equivalent to inputType with date type" in {
-      b3.search.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("search")
-    }
-  }
-  "@tel" should {
-    "be equivalent to inputType with date type" in {
-      b3.tel.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("tel")
-    }
-  }
-  "@time" should {
-    "be equivalent to inputType with date type" in {
-      b3.time.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("time")
-    }
-  }
-  "@url" should {
-    "be equivalent to inputType with date type" in {
-      b3.url.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("url")
-    }
-  }
-  "@week" should {
-    "be equivalent to inputType with date type" in {
-      b3.week.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("week")
     }
   }
 
@@ -368,140 +311,229 @@ object HelpersSpec extends Specification {
     }
   }
 
-  "@vertical.static" should {
-
-    "render correctly the form-group classes" in {
-      b3.vertical.static.apply("label")(Html("test")).body must contain("class=\"form-group")
-      b3.vertical.static.apply("label", '_class -> "other_class")(Html("test")).body must contain("class=\"form-group other_class")
+  "@hidden" should {
+    "be rendered correctly" in {
+      val body = clean(b3.hidden.apply("testName", "testValue", 'foo -> "bar").body)
+      body must be equalTo """<input type="hidden" name="testName" value="testValue" foo="bar">"""
     }
-
-    "add form-control-static class as default" in {
-      b3.vertical.static.apply("label")(Html("test")).body must contain("class=\"form-control-static\"")
-    }
-
-    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = b3.vertical.static.apply("label", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("test")).body
-      body must contain("extra_attr=\"test\"")
-      body must contain("true_attr=\"true\"")
-      body must not contain ("false_attr=\"false\"")
-      body must not contain ("_slashed_attr=\"test\"")
+  }
+  "@hiddens" should {
+    "be rendered correctly" in {
+      val body = clean(b3.hiddens.apply("fooId" -> 1L, "barId" -> 2L).body)
+      body must be equalTo """<input type="hidden" name="fooId" value="1"><input type="hidden" name="barId" value="2">"""
     }
   }
 
-  "@horizontal.static" should {
+  "@color" should {
+    "be equivalent to inputType with date type" in {
+      b3.color.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("color")
+    }
+  }
+  "@date" should {
+    "be equivalent to inputType with date type" in {
+      b3.date.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("date")
+    }
+  }
+  "@datetime" should {
+    "be equivalent to inputType with date type" in {
+      b3.datetime.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime")
+    }
+  }
+  "@datetimeLocal" should {
+    "be equivalent to inputType with date type" in {
+      b3.datetimeLocal.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("datetime-local")
+    }
+  }
+  "@email" should {
+    "be equivalent to inputType with email type" in {
+      b3.email.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("email")
+    }
+  }
+  "@month" should {
+    "be equivalent to inputType with date type" in {
+      b3.month.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("month")
+    }
+  }
+  "@number" should {
+    "be equivalent to inputType with date type" in {
+      b3.number.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("number")
+    }
+  }
+  "@range" should {
+    "be equivalent to inputType with date type" in {
+      b3.range.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("range")
+    }
+  }
+  "@search" should {
+    "be equivalent to inputType with date type" in {
+      b3.search.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("search")
+    }
+  }
+  "@tel" should {
+    "be equivalent to inputType with date type" in {
+      b3.tel.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("tel")
+    }
+  }
+  "@time" should {
+    "be equivalent to inputType with date type" in {
+      b3.time.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("time")
+    }
+  }
+  "@url" should {
+    "be equivalent to inputType with date type" in {
+      b3.url.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("url")
+    }
+  }
+  "@week" should {
+    "be equivalent to inputType with date type" in {
+      b3.week.apply(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("week")
+    }
+  }
 
-    val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
+  "@formGroup" should {
 
-    "render correctly the form-group classes" in {
-      b3.horizontal.static.apply("label")(Html("test")).body must contain("class=\"form-group")
-      b3.horizontal.static.apply("label", '_class -> "other_class")(Html("test")).body must contain("class=\"form-group other_class")
+    def testFormGroup(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor) =
+      clean(b3.formGroup.apply(args: _*)(innerArgs => Html("<content>"))(fc).body)
+
+    "vertical: show label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label">theLabel</label>
+	  	<content>
+	  </div>
+	  """)
+    }
+    "vertical: empty label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId")(vfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label"></label>
+	  	<content>
+	  </div>
+	  """)
+    }
+    "vertical: without label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> None)(vfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<content>
+	  </div>
+	  """)
+    }
+    "horizontal: show label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label col-md-2">theLabel</label>
+	  	<div class="col-md-10">
+	  	  <content>
+	  	</div>
+	  </div>
+	  """)
+    }
+    "horizontal: empty label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId")(hfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label col-md-2"></label>
+	  	<div class="col-md-10">
+	  	  <content>
+	  	</div>
+	  </div>
+	  """)
+    }
+    "horizontal: without label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> None)(hfc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label col-md-2"></label>
+	  	<div class="col-md-10">
+	  	  <content>
+	  	</div>
+	  </div>
+	  """)
+    }
+    "inline: with hidden label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label sr-only">theLabel</label>
+		<content>
+	  </div>
+	  """)
+    }
+    "inline: show label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel", '_showLabel -> true)(ifc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label ">theLabel</label>
+		<content>
+	  </div>
+	  """)
+    }
+    "inline: empty label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId")(ifc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label sr-only"></label>
+		<content>
+	  </div>
+	  """)
+    }
+    "inline: without label" in {
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> None)(ifc) must be equalTo clean("""
+	  <div class="form-group theClass" id="theId">
+	  	<label class="control-label sr-only"></label>
+		<content>
+	  </div>
+	  """)
     }
 
-    "add form-control-static class as default" in {
-      b3.horizontal.static.apply("label")(Html("test")).body must contain("class=\"form-control-static\"")
+    "get the inner arguments for the content" in {
+      val body = b3.formGroup.apply('_class -> "theClass", '_slashed -> "slashed", 'foo -> "foo")(innerArgs => Html(innerArgs.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc).body
+      body must not contain "_class=\"theClass\""
+      body must not contain "_slashed=\"slashed\""
+      body must contain("foo=\"foo\"")
+    }
+  }
+
+  "@free" should {
+    "be rendered correctly" in {
+      clean(b3.free.apply()(Html("<content>"))(vfc).body) must be equalTo clean(b3.formGroup.apply()(_ => Html("<content>"))(vfc).body)
+    }
+  }
+
+  "@static" should {
+
+    "render with form-control-static class as default" in {
+      b3.static.apply("theLabel")(Html("theText"))(vfc).body must contain("<p class=\"form-control-static\">theText</p>")
     }
 
     "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = b3.horizontal.static.apply("label", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("test")).body
+      val body = b3.static.apply("theLabel", 'class -> "theClass", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("theText"))(vfc).body
+      body must not contain ("form-control-static")
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
       body must not contain ("_slashed_attr=\"test\"")
-    }
-
-    "render columns for horizontal form" in {
-      val body = b3.horizontal.static.apply("label")(Html("test")).body
-      body must contain(colLabel)
-      body must contain(colInput)
     }
   }
 
   "@submit" should {
 
     "be rendered correctly" in {
-      val body = b3.submit.apply('class -> "btn btn-default")(Html("test")).body
-      body must contain("button")
-      body must contain("type=\"submit\"")
-      body must contain(">test<")
+      clean(b3.submit.apply()(Html("test"))(vfc).body) must contain("<button type=\"submit\" >test</button>")
     }
 
     "allow setting extra arguments" in {
-      val body = b3.submit.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
+      val body = b3.submit.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test"))(vfc).body
       body must contain("class=\"btn btn-default\"")
       body must contain("extra_attr=\"test\"")
-    }
-  }
-
-  "@horizontal.submit" should {
-
-    val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
-    val simple = b3.horizontal.submit.apply('class -> "btn btn-default")(Html("test")).body
-
-    "be rendered correctly" in {
-      simple must contain("button")
-      simple must contain("type=\"submit\"")
-      simple must contain(">test<")
-    }
-
-    "allow setting extra arguments" in {
-      val body = b3.horizontal.submit.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
-      body must contain("class=\"btn btn-default\"")
-      body must contain("extra_attr=\"test\"")
-    }
-
-    "render columns for horizontal form" in {
-      simple must contain(colLabel)
-      simple must contain(colInput)
     }
   }
 
   "@reset" should {
 
     "be rendered correctly" in {
-      val body = b3.reset.apply('class -> "btn btn-default")(Html("test")).body
-      body must contain("button")
-      body must contain("type=\"reset\"")
-      body must contain(">test<")
+      clean(b3.reset.apply()(Html("test"))(vfc).body) must contain("<button type=\"reset\" >test</button>")
     }
 
     "allow setting extra arguments" in {
-      val body = b3.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
+      val body = b3.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test"))(vfc).body
       body must contain("class=\"btn btn-default\"")
       body must contain("extra_attr=\"test\"")
-    }
-  }
-
-  "@horizontal.reset" should {
-
-    val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
-    val simple = b3.horizontal.reset.apply('class -> "btn btn-default")(Html("test")).body
-
-    "be rendered correctly" in {
-      simple must contain("button")
-      simple must contain("type=\"reset\"")
-      simple must contain(">test<")
-    }
-
-    "allow setting extra arguments" in {
-      val body = b3.horizontal.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test")).body
-      body must contain("class=\"btn btn-default\"")
-      body must contain("extra_attr=\"test\"")
-    }
-
-    "render columns for horizontal form" in {
-      simple must contain(colLabel)
-      simple must contain(colInput)
-    }
-  }
-
-  "@hidden" should {
-
-    "be rendered correctly" in {
-      val body = clean(b3.hidden.apply("testName", "testValue", 'foo -> "bar").body)
-      body must be equalTo """<input type="hidden" name="testName" value="testValue" foo="bar">"""
     }
   }
 
@@ -535,12 +567,7 @@ object HelpersSpec extends Specification {
     val fooForm = Form(tuple("foo" -> Forms.nonEmptyText, "bar" -> Forms.nonEmptyText))
     val fooFormWithError = fooForm.withError("foo", "test-error")
 
-    val vfc = b3.vertical.fieldConstructor
-    val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
-    val lang = implicitly[Lang]
-
-    def multifield(form: Form[(String, String)], args: (Symbol, Any)*)(fc: FieldConstructor, lang: Lang) =
+    def multifield(form: Form[(String, String)], args: (Symbol, Any)*)(fc: b3.B3FieldConstructor, lang: Lang) =
       b3.multifield.apply(form("foo"), form("bar"))(args: _*)((cfc, lang) => Html(testInputsString))(fc, lang).body
     def fooMultifield(args: (Symbol, Any)*) = multifield(fooForm, args: _*)(vfc, lang)
 

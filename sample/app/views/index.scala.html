@@ -25,16 +25,18 @@
 			
 			<img src="@routes.Assets.at("images/please_star.png")">
 		</div>
-
 		
 		<h2>Features</h2>
 		
+		@mainAlert()
 		
 		<h3>Simple to use</h3>
 		<p>
 			It tries to follow the same rules as the helper library from Play Framework.
 		</p>
 		@code {
+			@@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
+			
 			@@b3.form(routes.Application.login) {
 				@@b3.email( loginForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 				@@b3.password( loginForm("password"), '_label -> "Password", 'placeholder -> "Password" )
@@ -53,17 +55,20 @@
 		  <li class="active"><a href="#vertical" role="tab" data-toggle="tab">Vertical</a></li>
 		  <li><a href="#horizontal" role="tab" data-toggle="tab">Horizontal</a></li>
 		  <li><a href="#inline" role="tab" data-toggle="tab">Inline</a></li>
+		  <li><a href="#mixed" role="tab" data-toggle="tab">Mixed</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active fade in" id="vertical">
 				@bsExample {
-					@b3.vertical.formWithFC(routes.Application.index) { case (vfc, lang) =>
+					@b3.vertical.form(routes.Application.index) { case (vfc, lang) =>
 						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(vfc, lang)
 						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(vfc, lang)
 						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(vfc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }
+						@b3.submit('class -> "btn btn-default"){ Sign in }(vfc)
 					}
 				}{
+					@@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
+					
 					@@b3.form(routes.Application.index) {
 						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
@@ -74,35 +79,69 @@
 			</div>
 			<div class="tab-pane fade in" id="horizontal">
 				@bsExample {
-					@b3.horizontal.formWithFC(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
+					@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
 						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(hfc, lang)
 						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(hfc, lang)
 						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(hfc, lang)
-						@b3.horizontal.submit('class -> "btn btn-default"){ Sign in }(hfc)
+						@b3.submit('class -> "btn btn-default"){ Sign in }(hfc)
 					}
 				}{
-					@@b3.horizontal.form(routes.Application.index) {
+					@@implicitFieldConstructor = @@{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
+					
+					@@b3.form(routes.Application.index) {
 						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
 						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
-						@@b3.horizontal.submit('class -> "btn btn-default"){ Sign in }
+						@@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}
 			</div>
 			<div class="tab-pane fade" id="inline">
 				@bsExample {
-					@b3.inline.formWithFC(routes.Application.index) { case (ifc, lang) =>
+					@b3.inline.form(routes.Application.index) { case (ifc, lang) =>
 						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
 						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
 						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }
+						@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
 					}
 				}{
-					@@b3.inline.form(routes.Application.index) {
+					@@import b3.inline.fieldConstructor  // Declares a inline field constructor as default
+					
+					@@b3.form(routes.Application.index) {
 						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
 						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
 						@@b3.submit('class -> "btn btn-default"){ Sign in }
+					}
+				}
+			</div>
+			<div class="tab-pane fade" id="mixed">
+				@bsExample {
+					@b3.inline.form(routes.Application.index) { case (ifc, lang) =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
+						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
+						@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+					}
+					@b3.vertical.form(routes.Application.index) { case (hfc, lang) =>
+						@b3.text( fooForm("foo"), '_label -> "Foo", 'placeholder -> "Foo placeholder..." )(hfc, lang)
+						@b3.text( fooForm("bar"), '_label -> "Bar", 'placeholder -> "Bar placeholder..." )(hfc, lang)
+						@b3.submit('class -> "btn btn-default"){ Send }(hfc)
+					}
+				}{
+					@@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
+					
+					@@b3.inline.form(routes.Application.index) { case (ifc, lang) =>	// An inline form instead of the default one
+						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )(ifc, lang)
+						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
+						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
+						@@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+					}
+					
+					@@b3.form(routes.Application.index) {	// Uses the default field constructor (vertical in that case)
+						@@b3.text( fooForm("foo"), '_label -> "Foo", 'placeholder -> "Foo placeholder..." )
+						@@b3.text( fooForm("bar"), '_label -> "Bar", 'placeholder -> "Bar placeholder..." )
+						@@b3.submit('class -> "btn btn-default"){ Send }
 					}
 				}
 			</div>
@@ -114,7 +153,7 @@
 			With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
 		</p>
 		@bsExample {
-			@b3.horizontal.formWithFC(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
+			@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { case (hfc, lang) =>
 				@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")(hfc, lang)
 				@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )(hfc, lang)
 			}

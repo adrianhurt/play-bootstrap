@@ -1,2 +1,3 @@
-@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)
-@b3.form(action, b3.Args.withDefault(args, 'class -> "form-inline"):_*)(body)
+@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: (InlineFieldConstructor, Lang) => Html)(implicit lang: play.api.i18n.Lang)
+@ifc = @{ b3.inline.fieldConstructor }
+@b3.form(action, args:_*)(body(ifc, lang))(ifc)
