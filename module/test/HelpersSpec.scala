@@ -511,29 +511,52 @@ object HelpersSpec extends Specification {
     }
   }
 
-  "@submit" should {
+  "@buttonType" should {
 
-    "be rendered correctly" in {
-      clean(b3.submit.apply()(Html("test"))(vfc).body) must contain("<button type=\"submit\" >test</button>")
+    val sampleType = "myButtonType"
+    val sampleContent = "sample-content"
+    def buttonTypeBody(args: (Symbol, Any)*) = b3.buttonType.apply(sampleType, args: _*)(Html(sampleContent))(vfc).body
+
+    "allow setting a custom type" in {
+      val body = buttonTypeBody()
+      val typeAttr = "type=\"" + sampleType + "\""
+      body must contain(typeAttr)
+      // Make sure it doesn't contain it twice
+      body.substring(body.indexOf(typeAttr) + typeAttr.length) must not contain (typeAttr)
+    }
+    "render content" in {
+      buttonTypeBody() must contain(sampleContent)
     }
 
-    "allow setting extra arguments" in {
-      val body = b3.submit.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test"))(vfc).body
-      body must contain("class=\"btn btn-default\"")
+    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
+      val body = buttonTypeBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")
       body must contain("extra_attr=\"test\"")
+      body must contain("true_attr=\"true\"")
+      body must not contain ("false_attr=\"false\"")
+      body must not contain ("_slashed_attr=\"test\"")
+    }
+
+    "be rendered correctly" in {
+      val body = buttonTypeBody('id -> "someid", 'class -> "btn btn-default")
+      body must contain("<button type=\"" + sampleType + "\" id=\"someid\" class=\"btn btn-default\">" + sampleContent + "</button>")
     }
   }
 
-  "@reset" should {
+  def sampleButtonTypeBody(theType: String) = b3.buttonType.apply(theType, sampleArgs: _*)(Html("content"))(vfc).body.trim
 
-    "be rendered correctly" in {
-      clean(b3.reset.apply()(Html("test"))(vfc).body) must contain("<button type=\"reset\" >test</button>")
+  "@submit" should {
+    "be equivalent to buttonType with submit type" in {
+      b3.submit.apply(sampleArgs: _*)(Html("content"))(vfc).body.trim must be equalTo sampleButtonTypeBody("submit")
     }
-
-    "allow setting extra arguments" in {
-      val body = b3.reset.apply('class -> "btn btn-default", 'extra_attr -> "test")(Html("test"))(vfc).body
-      body must contain("class=\"btn btn-default\"")
-      body must contain("extra_attr=\"test\"")
+  }
+  "@reset" should {
+    "be equivalent to buttonType with reset type" in {
+      b3.reset.apply(sampleArgs: _*)(Html("content"))(vfc).body.trim must be equalTo sampleButtonTypeBody("reset")
+    }
+  }
+  "@button" should {
+    "be equivalent to buttonType with button type" in {
+      b3.button.apply(sampleArgs: _*)(Html("content"))(vfc).body.trim must be equalTo sampleButtonTypeBody("button")
     }
   }
 

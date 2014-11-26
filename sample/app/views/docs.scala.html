@@ -600,27 +600,46 @@
 			}
 	
 	
-			<h4 id="more-submit"><code>b3.submit</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
+			<h4 id="more-buttontype"><code>b3.buttonType</code> <span class="def">@@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor)</span></h4>
 			<p>
-				It renders a submit button to place within your form. It takes a <code>HTML</code> as parameter, so you can
+				It renders a simple button to place within your form. It takes a <code>HTML</code> as parameter, so you can
 				render whatever you want.
 			</p>
 			@bsExample {
-				@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@b3.buttonType("submit", 'class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}{
-				@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@@b3.buttonType("submit", 'class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+			}
+			
+			<h4 id="more-submit"><code>b3.submit</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
+			<p>
+				It is a short version of b3.buttonType for type="submit".
+			</p>
+			@bsExample {
+				@b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+			}{
+				@@b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}
 			
 			
 			<h4 id="more-reset"><code>b3.reset</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
 			<p>
-				It renders a reset button to place within your form. It takes a <code>HTML</code> as parameter, so you can
-				render whatever you want.
+				It is a short version of b3.buttonType for type="reset".
 			</p>
 			@bsExample {
-				@b3.reset('class -> "btn btn-default"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+				@b3.reset('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
 			}{
-				@@b3.reset('class -> "btn btn-default"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+				@@b3.reset('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+			}
+			
+			<h4 id="more-button"><code>b3.button</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
+			<p>
+				It is a short version of b3.buttonType for type="button".
+			</p>
+			@bsExample {
+				@b3.button('class -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
+			}{
+				@@b3.button('class -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
 			}
 		
 		
@@ -634,7 +653,7 @@
 					<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
 				}
 			}{
-				@b3.free('_id -> "idFormGroup") {
+				@@b3.free('_id -> "idFormGroup") {
 					<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
 					<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
 				}
@@ -799,8 +818,10 @@
 					<a href="#more-helpers">More helpers</a>
 					<ul class="nav">
 						<li><a href="#more-static">b3.static</a></li>
+						<li><a href="#more-buttontype">b3.buttonType</a></li>
 						<li><a href="#more-submit">b3.submit</a></li>
 						<li><a href="#more-reset">b3.reset</a></li>
+						<li><a href="#more-button">b3.button</a></li>
 						<li><a href="#more-free">b3.free</a></li>
 					</ul>
 				</li>

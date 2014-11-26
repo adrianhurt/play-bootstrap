@@ -1,0 +1,4 @@
+@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor)
+@formGroup(b3.Args.withDefault(args, '_label -> None):_*) { innerArgs =>
+	<button type="@buttonType" @toHtmlArgs(innerArgs.toMap)>@text</button>
+}
