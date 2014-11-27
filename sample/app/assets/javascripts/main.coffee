@@ -13,7 +13,7 @@ enableForm = ($form) ->
 	$formGroups.find('.checkbox-group, .radio-group, .select-group').find('input[type="hidden"]').removeAttr('readonly').attr('disabled', true)
 
 scrollWithAnimation = ($id, duration) ->
-	$('html,body').animate({scrollTop: $id.offset().top - 60}, duration)
+	$('html,body').animate({scrollTop: $id.offset().top - 55}, duration)
 
 ############################################################################################################
 ## DOCUMENT IS READY - INIT APP

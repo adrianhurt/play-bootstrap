@@ -13,7 +13,7 @@
 	<div class="col-md-9" role="main">
 		@b3.form(routes.Application.docs) {
 		
-			<h1 class="page-header">Documentation</h1>
+			<h1 id="documentation" class="page-header">Documentation</h1>
 			<p class="lead">This page explains each component in more details.</p>
 			
 	
@@ -109,6 +109,21 @@
 			@code {
 				@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
 			}
+			
+			<h4 id="arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</h4>
+			<p>
+				You always add any argument to helpers using tuples of <code>(Symbol, Any)</code>, like <code>'class -> "foo-class"</code>.
+				However, when you need to add an argument with dashes you <strong>cannot</strong> declare the symbol as <code>'data-attr</code>.
+				So to get this you have different solutions:
+				<ul>
+					<li>Create the </code>Symbol</code> directly with its apply method: <code>Symbol("data-attr") -> "data-value"</code>.</li>
+					<li>
+						Import the implicit <code>views.html.helper.Implicits.toAttributePair</code> with simply <code>@@import helper.Implicits._</code>.
+						And then you will be able to declare the argument as <code>"data-attr" -> "data-value"</code>.
+					</li>
+				</ul>
+			</p>
+			
 	
 			<h3 id="forms">Forms <span class="def">@@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: B3FieldConstructor)</span></h3>
 			<p>
@@ -757,7 +772,7 @@
 	
 	<div class="col-md-3" id="sidebar">
 		<div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
-			<ul class="nav bs-docs-sidenav" data-spy="affix" data-offset-top="20">
+			<ul class="nav bs-docs-sidenav" data-spy="affix">
 				<li>
 					<a href="#field-constructors">Field Constructors</a>
 					<ul class="nav">
@@ -771,6 +786,7 @@
 					<a href="#arguments">Arguments</a>
 					<ul class="nav">
 						<li><a href="#arguments-boolean">Boolean arguments</a></li>
+						<li><a href="#arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</a></li>
 					</ul>
 				</li>
 				<li>

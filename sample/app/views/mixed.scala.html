@@ -8,7 +8,7 @@
 
 @main("Mixed Forms", tab = "mixed") {
 	
-	<h1 class="page-header">Mixed Forms</h1>
+	<h1 id="mixed-forms" class="page-header">Mixed Forms</h1>
 	<p class="lead">This page its an example to show how to mix different forms within the same view.</p>
 	
 	<p>
@@ -20,7 +20,7 @@
 	}
 	
 	
-	<h3>A simple horizontal form</h3>
+	<h3 id="simple-form">A simple horizontal form</h3>
 	<p>
 		As we declared on top of the page an implicit horizontal field constructor, we can forget the field constructors
 		for a while.
@@ -42,7 +42,7 @@
 	}
 	
 	
-	<h3>The typical inline login form on top</h3>
+	<h3 id="inline-form">The typical inline login form on top</h3>
 	<p>
 		Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor
 		(and the language, which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
@@ -62,7 +62,7 @@
 	}
 	
 	
-	<h3>The typical vertical contact form on one side</h3>
+	<h3 id="vertical-form">The typical vertical contact form on one side</h3>
 	<p>
 		In this case you need a contact form on one side. Now we need a vertical form. Here you can use the helper
 		<code>b3.vertical.form</code>.
@@ -90,7 +90,7 @@
 	}
 	
 	
-	<h3>A different horizontal form</h3>
+	<h3 id="horizontal-form">A different horizontal form</h3>
 	<p>
 		And what happens if I need a horizontal form but with other column widths. Simple, create your own with
 		the helper <code>b3.horizontal.form</code>.
@@ -112,7 +112,7 @@
 	}
 	
 	
-	<h3>A clear field constructor</h3>
+	<h3 id="clear-form">A clear field constructor</h3>
 	<p>
 		Finally, if you would need to render a simple input, without any field constructor, you can use
 		the helper <code>b3.clear.form</code>. This is a field constructor that doesn't add any code,
@@ -145,7 +145,7 @@
 	}
 	
 	
-	<h3>Mixed FieldConstructors within the same form</h3>
+	<h3 id="mixed-within-form">Mixed FieldConstructors within the same form</h3>
 	<p>
 		If you would need to that, you can make an <em>"inner section"</em> like this:
 	</p>

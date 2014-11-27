@@ -10,7 +10,7 @@
 
 	@b3.form(routes.Application.inline) {
 		
-		<h1 class="page-header">Inline Form</h1>
+		<h1 id="inline-form" class="page-header">Inline Form</h1>
 		<p class="lead">This page its an example to show how to use a inline form.</p>
 	
 		<div class="col-md-8">
@@ -47,7 +47,7 @@
 			you can show it with the <code>_showLabel</code> argument.
 		</p>
 		
-		<h3>Simple inputs</h3>
+		<h3 id="simple-inputs">Simple inputs</h3>
 		@bsExample {
 			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
 			@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
@@ -60,7 +60,7 @@
 			@@b3.file( fooForm("foo"), '_label -> "File" )
 		}
 
-		<h3>More options</h3>
+		<h3 id="more-options">More options</h3>
 		@bsExample {
 			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
 			@b3.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
@@ -78,7 +78,7 @@
 		}
 
 
-		<h3>Textareas, checkboxes, radio buttons and selects</h3>
+		<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
 		@bsExample {
 			@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'row -> 3 )
 			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox", 'checked -> true )
@@ -96,7 +96,7 @@
 			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Multiple Select", 'multiple -> true )
 		}
 
-		<h3>Disabled and readonly attributes</h3>
+		<h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
 		<p>Checkboxes, radio buttons and selects also support <code>readonly</code> attribute adding a <strong>hidden input</strong>.</p>
 		@bsExample {
 			@b3.text( fooForm("foo"), '_label -> "Disabled", 'placeholder -> "Disabled text...", 'disabled -> true )
@@ -108,7 +108,7 @@
 			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
 		}
 
-		<h3>Validation states</h3>
+		<h3 id="validation-states">Validation states</h3>
 		@bsExample {
 			@b3.text( fooForm("foo"), '_label -> "Success", 'placeholder -> "Success text...", '_class -> "has-success" )
 			@b3.text( fooForm("foo"), '_label -> "Warning", 'placeholder -> "Warning text...", '_class -> "has-warning" )
@@ -119,7 +119,7 @@
 			@@b3.text( fooForm("foo"), '_label -> "Error", 'placeholder -> "Error text...", '_class -> "has-error" )
 		}
 
-		<h3>Customize them</h3>
+		<h3 id="customize">Customize them</h3>
 		@bsExample {
 			<div>
 				@b3.inputWrapped( "text", fooForm("foo"), '_label -> "Success with icon", '_class -> "has-success has-feedback" ){ input =>
@@ -185,7 +185,7 @@
 			}
 		}
 
-		<h3>More helpers</h3>
+		<h3 id="more-helpers">More helpers</h3>
 		@bsExample {
 			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
 		}{
