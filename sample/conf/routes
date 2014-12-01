@@ -11,7 +11,8 @@ GET     /mixed						controllers.Application.mixed
 GET     /readonly					controllers.Application.readonly
 POST    /readonly					controllers.Application.handleReadonly
 GET     /multifield					controllers.Application.multifield
-GET     /docs						controllers.Application.docs
+GET     /docs						controllers.Application.docsMaster
+GET     /docs/:version				controllers.Application.docs(version: String)
 GET     /changelog					controllers.Application.changelog
 
 # Map static resources from the /public folder to the /assets URL path

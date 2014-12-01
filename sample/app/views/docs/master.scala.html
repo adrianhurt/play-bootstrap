@@ -11,7 +11,7 @@
 
 <div class="row" id="affix-target">
 	<div class="col-md-9" role="main">
-		@b3.form(routes.Application.docs) {
+		@b3.form(routes.Application.docsMaster) {
 		
 			<h1 id="documentation" class="page-header">Documentation</h1>
 			<p class="lead">This page explains each component in more details.</p>
@@ -109,6 +109,14 @@
 			@code {
 				@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
 			}
+			<p>
+				And what happens if you need to set a <code>"false"</code> value to an attribute? Ok, you can simply convert it
+				to a string:
+			</p>
+			@code {
+				@@b3.text( fooForm("foo"), '_label -> "With a false attribute", 'fooAttr -> "false" )
+				@@b3.text( fooForm("foo"), '_label -> "With a boolean attribute", 'fooAttr -> maybeTrueFunction(...).toString )
+			}
 			
 			<h4 id="arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</h4>
 			<p>
@@ -184,7 +192,7 @@
 					...
 				}
 			}
-			<p>Or:
+			<p>Or:</p>
 			@code {
 				@@import b3.vertical.fieldConstructor
 
@@ -773,13 +781,14 @@
 	<div class="col-md-3" id="sidebar">
 		<div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
 			<ul class="nav bs-docs-sidenav" data-spy="affix">
+				@docsSelectVersion()
 				<li>
 					<a href="#field-constructors">Field Constructors</a>
 					<ul class="nav">
 						<li><a href="#field-constructors-vertical">Vertical forms</a></li>
 						<li><a href="#field-constructors-horizontal">Horizontal forms</a></li>
 						<li><a href="#field-constructors-inline">Inline forms</a></li>
-						<li><a href="#field-constructors-inline">Clear field constructors</a></li>
+						<li><a href="#field-constructors-clear">Clear field constructors</a></li>
 					</ul>
 				</li>
 				<li>

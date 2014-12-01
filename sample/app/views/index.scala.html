@@ -219,6 +219,14 @@
 		@code {
 			@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
 		}
+		<p>
+			And what happens if you need to set a <code>"false"</code> value to an attribute? Ok, you can simply convert it
+			to a string:
+		</p>
+		@code {
+			@@b3.text( fooForm("foo"), '_label -> "With a false attribute", 'fooAttr -> "false" )
+			@@b3.text( fooForm("foo"), '_label -> "With a boolean attribute", 'fooAttr -> maybeTrueFunction(...).toString )
+		}
 		
 		<h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
 		<p>
