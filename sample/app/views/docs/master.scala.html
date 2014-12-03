@@ -90,6 +90,30 @@
 					<span class="help-block">Maximum length: 10</span>
 				</div>
 			}
+			
+			
+			<h4 id="arguments-special">Special arguments (the slashed ones)</h4>
+			<p>
+				As we see before, there are some special arguments that are reserved to parametrize the corresponding
+				<code>form-group</code>'s behaviour. All of these special arguments are prefixed with a slash.
+				And the list is:
+				<ul>
+					<li><code>_id</code>: the id for the form-group.</li>
+					<li><code>_class</code>: the class for the form-group.</li>
+					<li><code>_label</code>: the text for the label. If you don't want a label, set it to None.</li>
+					<li><code>_showConstraints</code>: indicates if the constraints are shown.</li>
+					<li><code>_help</code>: a help text below the input.</li>
+					<li><code>_showLabel</code>: a boolean indicating if the label must be shown for a helper within an <strong>Inline Field Constructors</strong>.</li>
+					<li><code>_error</code>: a specific error message for the input.</li>
+					<li><code>_showErrors</code>: boolean indicating if the errors should be shown. True is the default value.</li>
+					<li>
+						<code>_default</code>: only available for the <a href="#helper-select"><code>b3.select</code></a> helper,
+						it indicates a default message to show. For more details check the
+						<a href="#helper-select"><code>b3.select</code> documentation</a>.
+					</li>
+				</ul>
+			</p>
+			
 	
 			<h4 id="arguments-boolean">Boolean arguments</h4>
 			<p>
@@ -212,43 +236,10 @@
 				<code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to
 				wrap them with a <code>div</code> with these classes.
 			</p>
+			
+			
 
 			<h3 id="helpers">Input helpers</h3>
-	
-	
-			<h4 id="helpers-special">Special arguments (the slashed ones)</h4>
-			<p>
-				To understand them better, let's see before the vertical <code>FieldConstructor</code>:
-			</p>
-			@code {
-				<div class="form-group @@elements.args.get('_class) @@if(elements.hasErrors) {has-error}" id="@@elements.args.get('_id).getOrElse(elements.id + "_field")">
-					<label for="@@elements.id">@@elements.label(elements.lang)</label>
-					@@elements.input
-					@@elements.errors(elements.lang).filter(_ != null).map { error =>
-						<span class="help-block">@@error</span>
-					}
-					@@if(elements.args.exists(_ == ('_showConstraints, true))) {
-						@@elements.infos(elements.lang).map { info =>
-							<span class="help-block">@@info</span>
-						}
-					}
-					@@elements.args.get('_help).map { help =>
-						<span class="help-block">@@help</span>
-					}
-				</div>
-			}
-			<p>
-				<ul>
-					<li><code>_id</code>: the id for the form-group.</li>
-					<li><code>_class</code>: the class for the form-group.</li>
-					<li><code>_label</code>: the text for the label. If you don't want a label, set it to None</li>
-					<li><code>_showConstraints</code>: indicates if the constraints are shown.</li>
-					<li><code>_help</code>: a help text below the input.</li>
-					<li><code>_showLabel</code>: a boolean indicating if the label must be shown for a helper within an <strong>Inline Field Constructors</strong>.</li>
-				</ul>
-			</p>
-	
-	
 	
 			<h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
 			@docsReadonlyAttributes()
@@ -331,7 +322,7 @@
 			</p>
 			<p>
 				It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a
-				<code>&ltinput type="hidden"></code>.
+				<code>&lt;input type="hidden"&gt;</code>.
 			</p>
 			@bsExample {
 				@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Remember me" )
@@ -400,17 +391,16 @@
 			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
 			<p>
 				It renders a select. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
-				one and a <code>&ltinput type="hidden"></code>.
+				one and a <code>&lt;input type="hidden"&gt;</code>.
 			</p>
 			@bsExample {
 				@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
+				@b3.select( fooForm("foo"), options = fruits, '_label -> "Disabled", 'disabled -> true )
+				@b3.select( fooForm("foo"), options = fruits, '_label -> "Readonly", 'readonly -> true )
 			}{
 				@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
-
-				// with value "No" by default (if the form is filled, this value will be taken)
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'value -> "No" )
 
 				// disabled -> it will NOT be sent within the POST request
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'disabled -> true )
@@ -418,9 +408,24 @@
 				// readonly -> it will be sent within the POST request
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'readonly -> true )
 			}
+			<p>
+				You can add a default first value using the argument <code>'_default</code> with a string.
+				It will add a first option to the select with an empty string value. So you could add a
+				<strong><em>required</em></strong> constraint to the field to force the user to select one
+				other option. In addition, this default option is always disable to avoid the user to select it,
+				and if any other option is selected this default one will not appear at all.
+			</p>
+			@bsExample {
+				@b3.select( fooForm("foo"), options = fruits, '_label -> "With default", '_default -> "Select an option" )
+				@b3.select( fooForm("foo"), options = fruits, '_label -> "With default and Pears as value", '_default -> "Select an option", 'value -> "P" )
+			}{
+				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", '_default -> "Select an option" )
+				@@b3.select( fooForm("foo"), options = fruits, '_label -> "With default and Pears as value", '_default -> "Select an option", 'value -> "P" )
+			}
 
 			<p>
-				For a <code>multiple select</code>.
+				For a <code>multiple select</code> you only need to add the <code>'multiple</code> argument.
+				In that case, the <code>'_default</code> argument will be ignored.
 			</p>
 			@bsExample {
 				@b3.select( fooForm("foo"), options = fruits, '_label -> "Select Multiple", 'multiple -> true )
@@ -429,15 +434,9 @@
 
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true )
 
-				// with value "A" and "B" by default (if the form is filled, this value will be taken)
+				// with value "A" and "B" by default
 				// it is a string with every value separated by commas
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'value -> "A,B" )
-
-				// disabled -> it will NOT be sent within the POST request
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'disabled -> true )
-
-				// readonly -> it will be sent within the POST request
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'readonly -> true )
 			}
 
 
@@ -794,6 +793,7 @@
 				<li>
 					<a href="#arguments">Arguments</a>
 					<ul class="nav">
+						<li><a href="#arguments-special">Special arguments</a></li>
 						<li><a href="#arguments-boolean">Boolean arguments</a></li>
 						<li><a href="#arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</a></li>
 					</ul>
@@ -807,7 +807,6 @@
 				<li>
 					<a href="#helpers">Input helpers</a>
 					<ul class="nav">
-						<li><a href="#helpers-special">Special arguments</a></li>
 						<li><a href="#helpers-disabled-readonly">Disabled & Readonly</a></li>
 						<li><a href="#helper-inputtype">b3.inputType</a></li>
 						<li><a href="#helper-text">b3.text</a></li>

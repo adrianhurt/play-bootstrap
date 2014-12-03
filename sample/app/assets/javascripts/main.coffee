@@ -46,7 +46,7 @@ $ ->
 		target: '#sidebar'
 		offset: 60
 
-	$('#sidebar a[href*=#]:not([href=#])').click (e) ->
+	$('a[href*=#]:not([href=#])').click (e) ->
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
 			target = $(this.hash)
 			target = if target.length then target else $('[name=' + this.hash.slice(1) +']')

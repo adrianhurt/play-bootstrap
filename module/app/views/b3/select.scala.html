@@ -3,12 +3,13 @@
 @readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
 @disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }
 @multiple = @{ ArgsMap.isTrue(argsMap, 'multiple) }
+@default = @{ argsMap.get('_default) }
 
 @readonlyWrapper(selectName: String, value: Option[String])(content: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
 			@content
-			<input type="hidden" name="@selectName" value="@{value.getOrElse(options(0)._1)}" @if(!disabled){disabled}/>
+			<input type="hidden" name="@selectName" value="@{value.getOrElse(if (default.isDefined) "" else options(0)._1)}" @if(!disabled){disabled}/>
 		</div>
 	} else { @content }
 }
@@ -21,8 +22,10 @@
     }){ values =>
 		@readonlyWrapper(selectName, value) {
 	        <select id="@id" name="@selectName" @toHtmlArgs(htmlArgs)>
-	            @argsMap.get('_default).map { defaultValue =>
-	                <option class="blank" value="">@defaultValue</option>
+	            @if(values.isEmpty && !multiple) {
+					@default.map { defaultValue =>
+	                	<option class="blank" value disabled selected>@defaultValue</option>
+					}
 	            }
 	            @options.map { v =>
 	                <option value="@v._1" @if(values.contains(v._1)){selected}>@v._2</option>
