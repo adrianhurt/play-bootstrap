@@ -1,5 +1,5 @@
 @(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
+@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { (cfc, lang) =>
 	<div @toHtmlArgs(b3.Args.inner(args).toMap)>
 		@fieldsWithArgs.map { case (field, fieldArgs) =>
 			<div class="checkbox-wrap">

@@ -81,7 +81,7 @@
 			
 		@code {
 			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-			@@b3.multifield( startField, endField )(args:_*) { case (cfc, lang) =>
+			@@b3.multifield( startField, endField )(args:_*) { (cfc, lang) =>
 				<div class="input-daterange input-group" @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@b3.text(startField, startArgs:_*)(cfc, lang)
 					<span class="input-group-addon">to</span>
@@ -136,7 +136,7 @@
 		
 		@code {
 			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { case (cfc, lang) =>
+			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { (cfc, lang) =>
 				<div @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@fieldsWithArgs.map { case (field, fieldArgs) =>
 						<div class="checkbox-wrap">

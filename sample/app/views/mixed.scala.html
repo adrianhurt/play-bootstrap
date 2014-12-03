@@ -48,13 +48,13 @@
 		(and the language, which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
 	</p>
 	@bsExample {
-		@b3.inline.form(routes.Application.mixed) { case (ifc, lang) =>
+		@b3.inline.form(routes.Application.mixed) { (ifc, lang) =>
 			@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
 			@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
 			@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
 		}
 	}{
-		@@b3.inline.form(routes.Application.mixed) { case (ifc, lang) =>
+		@@b3.inline.form(routes.Application.mixed) { (ifc, lang) =>
 			@@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )(ifc, lang)
 			@@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
 			@@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
@@ -70,7 +70,7 @@
 	@bsExample {
 		<div class="row">
 		<div class="col-md-4">
-			@b3.vertical.form(routes.Application.mixed) { case (vfc, lang) =>
+			@b3.vertical.form(routes.Application.mixed) { (vfc, lang) =>
 				@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )(vfc, lang)
 				@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@mail.com" )(vfc, lang)
 				@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )(vfc, lang)
@@ -80,7 +80,7 @@
 		</div>
 		</div>
 	}{
-		@@b3.vertical.form(routes.Application.mixed) { case (vfc, lang) =>
+		@@b3.vertical.form(routes.Application.mixed) { (vfc, lang) =>
 			@@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )(vfc, lang)
 			@@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@@mail.com" )(vfc, lang)
 			@@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )(vfc, lang)
@@ -96,14 +96,14 @@
 		the helper <code>b3.horizontal.form</code>.
 	</p>
 	@bsExample {
-		@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { case (hfc, lang) =>
+		@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { (hfc, lang) =>
 			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )(hfc, lang)
 			@b3.file( fooForm("foo"), '_label -> "File" )(hfc, lang)
 			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox" )(hfc, lang)
 			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }(hfc)
 		}
 	}{
-		@@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { case (hfc, lang) =>
+		@@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { (hfc, lang) =>
 			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )(hfc, lang)
 			@@b3.file( fooForm("foo"), '_label -> "File" )(hfc, lang)
 			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox" )(hfc, lang)
@@ -119,7 +119,7 @@
 		just the input.
 	</p>
 	@bsExample {
-		@b3.clear.form(routes.Application.mixed) { case (cfc, lang) =>
+		@b3.clear.form(routes.Application.mixed) { (cfc, lang) =>
 			@b3.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -131,7 +131,7 @@
 			}(cfc, lang)	
 		}
 	}{
-		@@b3.clear.form(routes.Application.mixed) { case (cfc, lang) =>
+		@@b3.clear.form(routes.Application.mixed) { (cfc, lang) =>
 			@@b3.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -150,7 +150,7 @@
 		If you would need to that, you can make an <em>"inner section"</em> like this:
 	</p>
 	@code {
-		@@defining(theFieldConstructor, implicitly[Lang]) { case (fc, lang) =>
+		@@defining(theFieldConstructor, implicitly[Lang]) { (fc, lang) =>
 			@@b3.text( fooForm("bar"), '_label -> "Inline input text" )(fc, lang)
 			...
 		}

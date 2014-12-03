@@ -185,7 +185,7 @@
 					@@b3.text( fooForm("foo"), '_label -> "Input Text" )
 					...
 				}
-				@@b3.inline.form(routes.Application.handleRequest) { case (ifc, lang) // an inline form
+				@@b3.inline.form(routes.Application.handleRequest) { (ifc, lang) // an inline form
 					@@b3.text( fooForm("foo"), '_label -> "Input Text" )(ifc, lang) // you have to insert them explicitly
 					...
 				}
@@ -197,10 +197,10 @@
 				So we have:
 			</p>
 			@code {
-				@@b3.vertical.form(routes.Application.handleRequest) { case (vfc, lang) => ... }
-				@@b3.horizontal.form(routes.Application.handleRequest, "col-md-2", "col-md-10") { case (hfc, lang) => ... }
-				@@b3.inline.form(routes.Application.handleRequest) { case (ifc, lang) => ... }
-				@@b3.clear.form(routes.Application.handleRequest) { case (cfc, lang) => ... }
+				@@b3.vertical.form(routes.Application.handleRequest) { (vfc, lang) => ... }
+				@@b3.horizontal.form(routes.Application.handleRequest, "col-md-2", "col-md-10") { (hfc, lang) => ... }
+				@@b3.inline.form(routes.Application.handleRequest) { (ifc, lang) => ... }
+				@@b3.clear.form(routes.Application.handleRequest) { (cfc, lang) => ... }
 			}
 
 			<p>
@@ -224,7 +224,7 @@
 					@@b3.text( fooForm("foo"), '_label -> "Vertical input text" )
 					...
 					// an inline inner section
-					@@defining(b3.inline.fieldConstructor, implicitly[Lang]) { case (ifc, lang) =>
+					@@defining(b3.inline.fieldConstructor, implicitly[Lang]) { (ifc, lang) =>
 						@@b3.text( fooForm("bar"), '_label -> "Inline input text" )(ifc, lang)
 						...
 					}
