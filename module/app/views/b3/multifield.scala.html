@@ -1,16 +1,8 @@
-@(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: (b3.B3FieldConstructor, play.api.i18n.Lang) => Html)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@import play.api.i18n._
-@import helper._
-@argsMap = @{ args.toMap }
-@showConstraints = @{ b3.ArgsMap.isTrue(argsMap, '_showConstraints) }
-@elements = @{ fields.map { field => FieldElements(id = null, field, input = null, args = Map('_showConstraints -> showConstraints), lang) } }
-@errors = @{ elements.flatMap(e => e.errors(e.lang)) }
-@infos = @{ argsMap.get('_help).map(m => Seq(m.toString)).getOrElse { elements.flatMap(e => e.infos(e.lang)) } }
-@errorsAndInfos = @{ errors ++ infos }
-
-@formGroup(b3.Args.withDefault(args, '_class -> (if(!errors.isEmpty) "has-error" else "")):_*) { innerArgs =>
-	@inputsHtml(b3.clear.fieldConstructor, lang)
-	@errorsAndInfos.map { errorOrInfo =>
+@(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: b3.clear.ClearFieldConstructor => Html)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+@multifieldInfo = @{ B3MultifieldInfo(fields, args, lang) }
+@freeFormGroup(extraClasses = multifieldInfo.statusWithFeedback, args) { innerArgsMap =>
+	@inputsHtml(b3.clear.fieldConstructorSpecific)
+	@multifieldInfo.errorsAndInfos.map { errorOrInfo =>
 		<span class="help-block">@errorOrInfo</span>
 	}
 }

@@ -34,7 +34,7 @@ object Application extends Controller {
   case class ReadonlyDemoData(text: String, checkbox: Boolean, radio: String, select: String)
   val fooReadonlyForm = Form(
     mapping(
-      "text" -> text,
+      "text" -> nonEmptyText,
       "checkbox" -> boolean,
       "radio" -> text,
       "select" -> text
@@ -49,6 +49,8 @@ object Application extends Controller {
   }
 
   def multifield = Action { Ok(views.html.multifield(fooForm)) }
+
+  def extendIt = Action { Ok(views.html.extendIt(fooForm)) }
 
   def docsMaster = Action { Ok(views.html.docs.master(fooForm)) }
 

@@ -46,7 +46,7 @@ $ ->
 		target: '#sidebar'
 		offset: 60
 
-	$('a[href*=#]:not([href=#])').click (e) ->
+	$('a[href*=#]:not([href=#], [href*=#collapse])').click (e) ->
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
 			target = $(this.hash)
 			target = if target.length then target else $('[name=' + this.hash.slice(1) +']')
@@ -65,3 +65,15 @@ $ ->
 		else
 			$('.form-inline').addClass('align-top')
 			$(this).removeClass('btn-info').addClass('btn-danger')
+	
+	
+	
+	$('.input-number-plus').click (e) ->
+		$input = $(this).parent().find('input')
+		current = parseInt $input.val(), 10
+		$input.val current+1
+		
+	$('.input-number-minus').click (e) ->
+		$input = $(this).parent().find('input')
+		current = parseInt $input.val(), 10
+		$input.val current-1

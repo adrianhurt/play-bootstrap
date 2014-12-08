@@ -17,19 +17,40 @@ package views.html.b3
 
 package object inline {
 
+  import play.twirl.api.Html
+  import play.api.mvc.Call
   import views.html.helper._
 
   /**
    * Declares the class for the Inline FieldConstructor.
    */
   class InlineFieldConstructor extends B3FieldConstructor {
+    /* Define the default class of the corresponding form */
     val defaultFormClass = "form-inline"
-    def apply(elements: FieldElements) = b3FieldConstructorInline(elements)
+    /* Renders the corresponding template of the field constructor */
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = b3FieldConstructor(fieldInfo, inputHtml)
+    /* Renders the corresponding template of the form group */
+    def apply(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any]) = b3FormGroup(contentHtml, extraClasses, argsMap)
   }
 
   /**
-   * Creates the implicit Inline FieldConstructor
+   * Creates a new InlineFieldConstructor to use for specific forms or scopes (don't use it as a default one).
+   * If a default B3FieldConstructor and a specific InlineFieldConstructor are within the same scope, the more
+   * specific will be chosen.
    */
-  implicit val fieldConstructor = new InlineFieldConstructor()
+  val fieldConstructorSpecific: InlineFieldConstructor = new InlineFieldConstructor()
+
+  /**
+   * Returns it as a B3FieldConstructor to use it as default within a template
+   */
+  implicit val fieldConstructor: B3FieldConstructor = fieldConstructorSpecific
+
+  /**
+   * **********************************************************************************************************************************
+   * SHORTCUT HELPERS
+   * *********************************************************************************************************************************
+   */
+  def form(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html) =
+    views.html.b3.form(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific)
 
 }

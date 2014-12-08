@@ -3,29 +3,26 @@
 @readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
 @disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }
 @multiple = @{ ArgsMap.isTrue(argsMap, 'multiple) }
-@default = @{ argsMap.get('_default) }
 
 @readonlyWrapper(selectName: String, value: Option[String])(content: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
 			@content
-			<input type="hidden" name="@selectName" value="@{value.getOrElse(if (default.isDefined) "" else options(0)._1)}" @if(!disabled){disabled}/>
+			<input type="hidden" name="@selectName" value="@{value.getOrElse(options(0)._1)}" @if(!disabled){disabled}/>
 		</div>
 	} else { @content }
 }
-@input(field, Args.withDefault(args, 'class -> "form-control", 'disabled -> disabled):_*) { (id, name, value, htmlArgs) =>
-    @defining( if(multiple) "%s[]".format(name) else name ) { selectName =>
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control", 'disabled -> disabled)) { fieldInfo =>
+    @defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
     @defining( ( !field.indexes.isEmpty && multiple ) match {
             case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
-			case _ if multiple && value.isDefined => value.get.split(",").toSet
-			case _ => value.toSet
+			case _ if multiple && fieldInfo.value.isDefined => fieldInfo.value.get.split(",").toSet
+			case _ => fieldInfo.value.toSet
     }){ values =>
-		@readonlyWrapper(selectName, value) {
-	        <select id="@id" name="@selectName" @toHtmlArgs(htmlArgs)>
-	            @if(values.isEmpty && !multiple) {
-					@default.map { defaultValue =>
-	                	<option class="blank" value disabled selected>@defaultValue</option>
-					}
+		@readonlyWrapper(selectName, fieldInfo.value) {
+	        <select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
+	            @argsMap.get('_default).map { defaultValue =>
+	                <option class="blank" value="">@defaultValue</option>
 	            }
 	            @options.map { v =>
 	                <option value="@v._1" @if(values.contains(v._1)){selected}>@v._2</option>

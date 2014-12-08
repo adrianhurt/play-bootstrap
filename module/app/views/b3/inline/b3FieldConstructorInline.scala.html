@@ -1,5 +1,0 @@
-@(elements: helper.FieldElements)
-@b3.b3FieldConstructorCommon(elements) { content =>
-	<label class="control-label @if(!b3.ArgsMap.isTrue(elements.args, '_showLabel)){sr-only}" for="@elements.id">@elements.label(elements.lang)</label>
-	@content
-}

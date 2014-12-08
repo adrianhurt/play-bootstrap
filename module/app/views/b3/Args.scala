@@ -23,12 +23,23 @@ object Args {
   def withDefault(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) = default ++: args
 
   /**
+   * Removes those arguments which its value is None. It lets you omit those arguments that satisfy some criteria.
+   * It also lets you add some default arguments to the parameter 'args'.
+   */
+  def withoutNones(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) = (default ++: args).filter(_._2 != None)
+
+  /**
    * Returns only the inner arguments (those that are exclusive for an input and not for the field constructor).
    * Removes every argument with a prefixed slash and those whose value is false.
-   * It also lets you add some default arguments to the parameter 'args'
+   * It also lets you add some default arguments to the parameter 'args'.
    */
   def inner(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) =
-    default ++: args.filter(arg => !arg._1.name.startsWith("_") && arg._2 != false)
+    (default ++: args).filter(arg => !arg._1.name.startsWith("_") && arg._2 != false)
+
+  /**
+   * Returns true only if exists a pair with that key and its value is true.
+   */
+  def isTrue(args: Seq[(Symbol, Any)], key: Symbol) = args.exists(_ == (key, true))
 }
 
 object ArgsMap {

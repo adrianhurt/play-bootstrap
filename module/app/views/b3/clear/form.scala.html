@@ -1,3 +1,0 @@
-@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: (ClearFieldConstructor, Lang) => Html)(implicit lang: play.api.i18n.Lang)
-@cfc = @{ b3.clear.fieldConstructor }
-@b3.form(action, args:_*)(body(cfc, lang))(cfc)

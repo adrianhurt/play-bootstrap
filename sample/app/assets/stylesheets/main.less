@@ -13,30 +13,50 @@ body {
 	padding-top: 60px;
 	background-color: @bg-color;
 }
+.navbar-mixin-active() {
+	background-color: @nav-bg-color-active;
+	color: @nav-color-active;
+}
+.navbar-mixin-hover() {
+	background-color: @nav-bg-color-hover;
+	color: white;
+}
 .navbar-default {
 	background-color: @nav-bg-color;
 	.navbar-brand {
 		color: @nav-color;
-		&:hover {
-			background-color: @nav-bg-color-hover;
-			color: white;
+		&:hover, &:focus {
+			.navbar-mixin-hover();
 		}
 		&.active {
-			background-color: @nav-bg-color-active;
-			color: @nav-color-active;
+			.navbar-mixin-active();
 		}
 	}
 	.navbar-nav {
 		& > li > a {
 			color: @nav-color;
-			&:hover {
-				background-color: @nav-bg-color-hover;
-				color: white;
+			&:hover, &:focus {
+				.navbar-mixin-hover();
 			}
 		}
-		& > .active > a, & > .active > a:hover, & > .active > a:focus {
-			background-color: @nav-bg-color-active;
+		& > .active > a {
+			&, &:hover, &:focus {
+				.navbar-mixin-active();
+			}
+		}
+		& > .open > a {
+			&, &:hover, &:focus {
+				.navbar-mixin-active();
+			}
+		}
+	}
+	.dropdown-menu {
+		background-color: @nav-bg-color-active;
+		& > li > a {
 			color: @nav-color-active;
+			&:hover {
+				.navbar-mixin-hover();
+			}
 		}
 	}
 	.navbar-right a {
@@ -46,6 +66,13 @@ body {
 }
 .container {
 	max-width: 960px;
+}
+.header-with-logo {
+	& > div {
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 15px;
+	}
 }
 #github-buttons {
 	margin-top: 25px;
@@ -150,3 +177,57 @@ span.def {
 	margin-right: 20px;
 }
 
+.input-text-checkbox > .input-group-addon {
+	.checkbox {
+		display: inline;
+	}
+	label {
+		display: inline;
+		padding: 0;
+		input {
+			position: relative;
+			margin-left: 0;
+		}
+	}
+}
+
+.input-daterange {
+	#dateStart + .form-control-feedback { right: 228px; }
+	#dateEnd + .form-control-feedback { right: 0px; }
+}
+.input-text-checkbox #foo + .form-control-feedback { right: 0px; }
+
+.input-number-plus, .input-number-minus { cursor: pointer; }
+
+.input-number {
+	width: 150px;
+	input {
+		text-align: center;
+		& + .form-control-feedback {
+			right: 40px;
+		}
+	}
+}
+
+.my-form-group {
+	white-space: nowrap;
+	& > div.field-container {
+		width: 50%;
+	}
+	& > div {
+		display: inline-block;
+		white-space: normal;
+		vertical-align: middle;
+		margin: 0;
+		ul {
+			padding-left: 0;
+			list-style-type: none;
+		}
+		.help-error {
+			color: #a94442
+		}
+		.help-info {
+			color: #8a6d3b;
+		}
+	}
+}

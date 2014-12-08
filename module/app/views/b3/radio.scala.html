@@ -11,22 +11,22 @@
 		</div>
 	} else { @content }
 }
-@displayInput(labelClass: String, v: (String, Any), id: String, name: String, value: Option[String], htmlArgs: Map[Symbol,Any]) = {
+@displayInput(labelClass: String, v: (String, Any), id: String, name: String, value: Option[String], innerArgsMap: Map[Symbol,Any]) = {
 	<label class="@labelClass" for="@(id)_@v._1">
-		<input type="radio" id="@(id)_@v._1" name="@name" value="@v._1" @if(value == Some(v._1)){checked} @toHtmlArgs(htmlArgs)>
+		<input type="radio" id="@(id)_@v._1" name="@name" value="@v._1" @if(value == Some(v._1)){checked} @toHtmlArgs(innerArgsMap)>
 		@v._2
 	</label>
 }
-@input(field, Args.withDefault(args, 'disabled -> disabled):_*) { (id, name, value, htmlArgs) =>
-	@readonlyWrapper(name, value) {
+@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+	@readonlyWrapper(fieldInfo.name, fieldInfo.value) {
 		@if(ArgsMap.isTrue(argsMap, '_inline)) {
 			@options.map { v =>
-				@displayInput(labelClass = "radio-inline" + (if (disabled) " disabled" else ""), v, id, name, value, htmlArgs)
+				@displayInput(labelClass = "radio-inline" + (if (disabled) " disabled" else ""), v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
 			}
 		} else {
 			@options.map { v =>
 				<div class="radio @if(disabled){disabled}">
-					@displayInput(labelClass = "", v, id, name, value, htmlArgs)
+					@displayInput(labelClass = "", v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
 				</div>
 			}
 		}

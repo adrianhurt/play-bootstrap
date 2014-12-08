@@ -1,10 +1,12 @@
-@(elements: helper.FieldElements)(wrap: Html => Html)
-@errorsAndInfos = @{ elements.errors(elements.lang) ++ elements.infos(elements.lang) }
-<div class="form-group @elements.args.get('_class) @if(elements.hasErrors){has-error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(wrap: Html => Html)
+<div class="form-group @fieldInfo.argsMap.get('_class) @fieldInfo.statusWithFeedback" id="@fieldInfo.idFormGroup">
 	@wrap {
-		@elements.input
-		@errorsAndInfos.map { errorOrInfo =>
-			<span class="help-block">@errorOrInfo</span>
+		@inputHtml
+		@fieldInfo.errors.map { case (id, error) =>
+			<span id="@id" class="help-block">@error</span>
+		}
+		@fieldInfo.infos.map { case (id, info) =>
+			<span id="@id" class="help-block">@info</span>
 		}
 	}
 </div>

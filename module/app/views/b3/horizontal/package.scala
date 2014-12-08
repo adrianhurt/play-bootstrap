@@ -17,6 +17,8 @@ package views.html.b3
 
 package object horizontal {
 
+  import play.twirl.api.Html
+  import play.api.mvc.Call
   import views.html.helper._
 
   /**
@@ -24,13 +26,39 @@ package object horizontal {
    * It needs the column widths for the corresponding Bootstrap3 form-group
    */
   case class HorizontalFieldConstructor(colLabel: String, colInput: String) extends B3FieldConstructor {
+    /* The equivalent offset if label is not present (ex: colLabel = "col-md-2"  =>  colOffset = "col-md-offset-2") */
+    val colOffset: String = {
+      val chunks = colLabel.split("-")
+      (chunks.init :+ "offset" :+ chunks.last).mkString("-")
+    }
+    /* Define the default class of the corresponding form */
     val defaultFormClass = "form-horizontal"
-    def apply(elements: FieldElements) = b3FieldConstructorHorizontal(elements, colLabel, colInput)
+    /* Renders the corresponding template of the field constructor */
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = b3FieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)
+    /* Renders the corresponding template of the form group */
+    def apply(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any]) = b3FormGroup(contentHtml, extraClasses, argsMap, colLabel, colOffset, colInput)
   }
 
   /**
-   * Returns a new the Horizontal FieldConstructor
+   * Returns a new HorizontalFieldConstructor to use for specific forms or scopes (don't use it as a default one).
+   * If a default B3FieldConstructor and a specific HorizontalFieldConstructor are within the same scope, the more
+   * specific will be chosen.
    */
-  def fieldConstructor(colLabel: String, colInput: String) = new HorizontalFieldConstructor(colLabel, colInput)
+  def fieldConstructorSpecific(colLabel: String, colInput: String): HorizontalFieldConstructor = new HorizontalFieldConstructor(colLabel, colInput)
+
+  /**
+   * Returns it as a B3FieldConstructor to use it as default within a template
+   */
+  def fieldConstructor(colLabel: String, colInput: String): B3FieldConstructor = fieldConstructorSpecific(colLabel, colInput)
+
+  /**
+   * **********************************************************************************************************************************
+   * SHORTCUT HELPERS
+   * *********************************************************************************************************************************
+   */
+  def form(action: Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: HorizontalFieldConstructor => Html) = {
+    val hfc = fieldConstructorSpecific(colLabel, colInput)
+    views.html.b3.form(action, args: _*)(body(hfc))(hfc)
+  }
 
 }

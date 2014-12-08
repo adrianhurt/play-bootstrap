@@ -10,6 +10,7 @@
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/font-awesome/css/font-awesome.min.css")">
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/bootstrap-datepicker/css/datepicker3.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+		<link rel="icon" href="@routes.Assets.at("images/favicon.ico")">
 		@styles
 		<script src="@routes.Assets.at("lib/jquery/jquery.min.js")" type="text/javascript"></script>
 		<script src="@routes.Assets.at("lib/bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
@@ -32,12 +33,18 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-						<li class="@("active".when(tab == "vertical"))"><a href="@routes.Application.vertical">Vertical</a></li>
-						<li class="@("active".when(tab == "horizontal"))"><a href="@routes.Application.horizontal">Horizontal</a></li>
-						<li class="@("active".when(tab == "inline"))"><a href="@routes.Application.inline">Inline</a></li>
-						<li class="@("active".when(tab == "mixed"))"><a href="@routes.Application.mixed">Mixed</a></li>
+						<li class="dropdown @("active".when(tab == "styles"))">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Styles <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="@routes.Application.vertical">Vertical</a></li>
+								<li><a href="@routes.Application.horizontal">Horizontal</a></li>
+								<li><a href="@routes.Application.inline">Inline</a></li>
+							</ul>
+						</li>
+						<li class="@("active".when(tab == "mixed"))"><a href="@routes.Application.mixed">Mix styles</a></li>
 						<li class="@("active".when(tab == "multifield"))"><a href="@routes.Application.multifield">Multifield</a></li>
 						<li class="@("active".when(tab == "readonly"))"><a href="@routes.Application.readonly">Readonly</a></li>
+						<li class="@("active".when(tab == "extend-it"))"><a href="@routes.Application.extendIt">Extend it!</a></li>
 						<li class="@("active".when(tab == "docs"))"><a href="@routes.Application.docsMaster">Documentation</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -54,7 +61,7 @@
 		<div class="footer">
 			<div class="container">
 				<p><a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank"><i class="fa fa-github fa-2x"></i> View on Github</a></p>
-				<p><a href="/changelog">Change Log</a></p>
+				<p><a href="@routes.Application.changelog">Change Log</a></p>
 				<p>Designed and developed by <a href="https://github.com/adrianhurt" target="_blank">adrianhurt</a></p>
 				<p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a></p>
 				<p>© 2014 Adrian Hurtado (adrianhut)</p>

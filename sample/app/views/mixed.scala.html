@@ -25,18 +25,18 @@
 		As we declared on top of the page an implicit horizontal field constructor, we can forget the field constructors
 		for a while.
 	</p>
-	@bsExample {
+	@bsExampleWithCode {
 		@b3.form(routes.Application.mixed) {
 			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
 			@b3.select( fooForm("foo"), options = fruits, '_label -> "Select a fruit" )
-			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox", 'checked -> true )
+			@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }
 		}
 	}{
 		@@b3.form(routes.Application.mixed) {
 			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
 			@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select a fruit" )
-			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox", 'checked -> true )
+			@@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }
 		}
 	}
@@ -47,17 +47,17 @@
 		Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor
 		(and the language, which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
 	</p>
-	@bsExample {
-		@b3.inline.form(routes.Application.mixed) { (ifc, lang) =>
-			@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
-			@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
-			@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+	@bsExampleWithCode {
+		@b3.inline.form(routes.Application.mixed) { implicit ifc =>
+			@b3.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
+			@b3.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+			@b3.submit('class -> "btn btn-default"){ Sign in }
 		}
 	}{
-		@@b3.inline.form(routes.Application.mixed) { (ifc, lang) =>
-			@@b3.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )(ifc, lang)
-			@@b3.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
-			@@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+		@@b3.inline.form(routes.Application.mixed) { implicit ifc =>
+			@@b3.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
+			@@b3.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+			@@b3.submit('class -> "btn btn-default"){ Sign in }
 		}
 	}
 	
@@ -67,25 +67,25 @@
 		In this case you need a contact form on one side. Now we need a vertical form. Here you can use the helper
 		<code>b3.vertical.form</code>.
 	</p>
-	@bsExample {
+	@bsExampleWithCode {
 		<div class="row">
 		<div class="col-md-4">
-			@b3.vertical.form(routes.Application.mixed) { (vfc, lang) =>
-				@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )(vfc, lang)
-				@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@mail.com" )(vfc, lang)
-				@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )(vfc, lang)
-				@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Send me a copy to my email", 'checked -> true )(vfc, lang)
-				@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }(vfc)
+			@b3.vertical.form(routes.Application.mixed) { implicit vfc =>
+				@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
+				@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@mail.com" )
+				@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )
+				@b3.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
+				@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }
 			}
 		</div>
 		</div>
 	}{
-		@@b3.vertical.form(routes.Application.mixed) { (vfc, lang) =>
-			@@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )(vfc, lang)
-			@@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@@mail.com" )(vfc, lang)
-			@@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )(vfc, lang)
-			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Send me a copy to my email", 'checked -> true )(vfc, lang)
-			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }(vfc)
+		@@b3.vertical.form(routes.Application.mixed) { implicit vfc =>
+			@@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
+			@@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@@mail.com" )
+			@@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )
+			@@b3.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
+			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }
 		}
 	}
 	
@@ -95,19 +95,19 @@
 		And what happens if I need a horizontal form but with other column widths. Simple, create your own with
 		the helper <code>b3.horizontal.form</code>.
 	</p>
-	@bsExample {
-		@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { (hfc, lang) =>
-			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )(hfc, lang)
-			@b3.file( fooForm("foo"), '_label -> "File" )(hfc, lang)
-			@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox" )(hfc, lang)
-			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }(hfc)
+	@bsExampleWithCode {
+		@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =>
+			@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b3.file( fooForm("foo"), '_label -> "File" )
+			@b3.checkbox( fooForm("foo"), '_text -> "Checkbox" )
+			@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }
 		}
 	}{
-		@@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { (hfc, lang) =>
-			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )(hfc, lang)
-			@@b3.file( fooForm("foo"), '_label -> "File" )(hfc, lang)
-			@@b3.checkbox( fooForm("foo"), '_label -> None, '_text -> "Checkbox" )(hfc, lang)
-			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }(hfc)
+		@@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =>
+			@@b3.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b3.file( fooForm("foo"), '_label -> "File" )
+			@@b3.checkbox( fooForm("foo"), '_text -> "Checkbox" )
+			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Save changes }
 		}
 	}
 	
@@ -118,8 +118,8 @@
 		the helper <code>b3.clear.form</code>. This is a field constructor that doesn't add any code,
 		just the input.
 	</p>
-	@bsExample {
-		@b3.clear.form(routes.Application.mixed) { (cfc, lang) =>
+	@bsExampleWithCode {
+		@b3.clear.form(routes.Application.mixed) { implicit cfc =>
 			@b3.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -128,10 +128,10 @@
 						<button class="btn btn-default" type="button">Search</button>
 					</span>
 				</div>
-			}(cfc, lang)	
+			}
 		}
 	}{
-		@@b3.clear.form(routes.Application.mixed) { (cfc, lang) =>
+		@@b3.clear.form(routes.Application.mixed) { implicit cfc =>
 			@@b3.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -140,7 +140,7 @@
 						<button class="btn btn-default" type="button">Search</button>
 					</span>
 				</div>
-			}(cfc, lang)	
+			}
 		}
 	}
 	
@@ -150,9 +150,13 @@
 		If you would need to that, you can make an <em>"inner section"</em> like this:
 	</p>
 	@code {
-		@@defining(theFieldConstructor, implicitly[Lang]) { (fc, lang) =>
-			@@b3.text( fooForm("bar"), '_label -> "Inline input text" )(fc, lang)
-			...
+		@@defining(b3.inline.fieldConstructorSpecific) { implicit ifc =>
+			@@b3.text( fooForm("bar"), '_label -> "Inline input text" )
+		}
+		
+		// with your own custom field constructor that extends B3FieldConstructor
+		@@defining(yourCustomFieldConstructor) { implicit myfc =>
+			@@b3.text( fooForm("bar"), '_label -> "Inline input text" )
 		}
 	}
 	<p>

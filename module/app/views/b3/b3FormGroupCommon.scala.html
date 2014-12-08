@@ -1,0 +1,9 @@
+@(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any])(wrap: Html => Html)
+<div class="form-group @extraClasses @argsMap.get('_class)" id="@argsMap.get('_id)">
+	@wrap {
+		@contentHtml
+		@argsMap.get('_help).map { help =>
+			<span class="help-block">@help</span>
+		}
+	}
+</div>

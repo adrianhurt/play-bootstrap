@@ -1,0 +1,8 @@
+@(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any])
+@labelOpt = @{ argsMap.get('_label) }
+@b3.b3FormGroupCommon(contentHtml, extraClasses, argsMap) { content =>
+	@labelOpt.map { label =>
+		<label class="control-label">@label</label>
+	}
+	@content
+}

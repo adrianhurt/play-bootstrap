@@ -1,5 +1,5 @@
 @(current: Option[String] = None)
-@list = @{ Seq("0.3", "0.2", "0.1.x") }
+@list = @{ Seq("0.4", "0.3", "0.2", "0.1.x") }
 @currentVersion = @{ current.getOrElse(list.head)}
 @isOlder = @{ currentVersion != list.head }
 <div class="docs-select-version">

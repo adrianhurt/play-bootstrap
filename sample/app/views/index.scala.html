@@ -6,8 +6,15 @@
 
 @main("Play-Bootstrap3", tab = "index") {
 
-		<h1 id="play-bootstrap3">Play-Bootstrap3</h1>
-		<p class="lead">Play Framework library for Bootstrap 3</p>
+		<div class="header-with-logo">
+			<div class="header-logo">
+				<img src="@routes.Assets.at("images/logo.gif")" width=100>
+			</div>
+			<div class="header-title">
+				<h1 id="play-bootstrap3">Play-Bootstrap3</h1>
+				<p class="lead">Play Framework library for Bootstrap 3</p>
+			</div>
+		</div>
 		
 		<p>
 			This is a collection of input helpers and field constructors for
@@ -24,33 +31,33 @@
 			<img src="@routes.Assets.at("images/please_star.png")">
 		</div>
 		
-		<h2 id="new" style="margin-top: 60px">New 0.3-SNAPSHOT</h2>
-		<div class="alert alert-warning" role="alert">
-			<strong>Changes in helper's names:</strong> now in 0.3, the names and the structure of some helpers have been simplified.
-			You can see the full changelog <a href="/changelog">here</a> but if you want to get this working with the new version you
-			need to do the following:
+		<h2 id="new" style="margin-top: 60px">New 0.4-SNAPSHOT</h2>
+		<p>
+			For this version I have refactored it totally to get a better library. The new features are:
 			<ul>
 				<li>
-					For every <code>static</code>, <code>submit</code>, <code>reset</code> and <code>actions</code> helper within a <code>formWithFC</code> now need to include explicitly the corresponding field constructor
-					For example:<br><code>@@b3.submit('class -> "btn btn-default"){ Send }</code> &rarr; <code>@@b3.submit('class -> "btn btn-default"){ Send }(fc)</code>
+					A better management for the field constructor's implicits. Now there are implicits for
+					the default field constructor for each template and different specific implicits for the
+					inner field constructors for mixed forms (with another one instead of the default one). Thus,
+					you don't need to add a field constructor explicitly any more. See more details in the
+					documentation sections 
+					<a href="@routes.Application.docsMaster#field-constructors-specific" target="_blank">Specific field constructors</a> and
+					<a href="@routes.Application.docsMaster#forms-specific" target="_blank">Forms with a specific <code>B3FieldConstructor</code></a>.
 				</li>
+				<li><a href="@routes.Application.docsMaster#helpers-validation-states" target="_blank">Validations states and feedback icons</a> support.</li>
+				<li><a href="@routes.Application.docsMaster#aria" target="_blank">WAI-ARIA attributes</a> support.</li>
+				<li><a href="@routes.Application.docsMaster#arguments-optional" target="_blank">Optional arguments</a> support.</li>
+				<li><a href="@routes.Application.docsMaster#arguments-labels" target="_blank">Better label rendering</a>.</li>
 			</ul>
-			And then, replace the following (the first 2 ones in first place):
-			<ol>
-				<li><code>b3.horizontal.form(</code> &rarr; <code>b3.form(</code> <small>(its important to add the <code>(</code> to avoid replace <code>formWithFC</code> as well)</small></li>
-				<li><code>b3.inline.form(</code> &rarr; <code>b3.form(</code> <small>(its important to add the <code>(</code> to avoid replace <code>formWithFC</code> as well)</small></li>
-				<li><code>b3.vertical.formWithFC</code> &rarr; <code>b3.vertical.form</code></li>
-				<li><code>b3.horizontal.formWithFC</code> &rarr; <code>b3.horizontal.form</code></li>
-				<li><code>b3.inline.formWithFC</code> &rarr; <code>b3.inline.form</code></li>
-				<li><code>b3.clear.formWithFC</code> &rarr; <code>b3.clear.form</code></li>
-				<li><code>b3.vertical.static</code> &rarr; <code>b3.static</code></li>
-				<li><code>b3.horizontal.static</code> &rarr; <code>b3.static</code></li>
-				<li><code>b3.horizontal.submit</code> &rarr; <code>b3.submit</code></li>
-				<li><code>b3.horizontal.reset</code> &rarr; <code>b3.reset</code></li>
-				<li><code>b3.actions</code> &rarr; <code>b3.free()</code></li>
-				<li><code>b3.horizontal.actions</code> &rarr; <code>b3.free()</code></li>
-			</ol>
-		</div>
+			For the last two versions I have tried to simplify the syntax, specially for mixed forms. I know it's
+			very annoying to modify your own code to adapt to each version of the library. Sorry for that. Fortunately,
+			I think it's already finished and we can consider the syntax is now correct. So for this point, I hope
+			the library will only be updated for adding new features.
+		</p>
+		<p>
+			You can see the full changelog <a href="@routes.Application.changelog" target="_blank">here</a> and it's also available the migration guide.
+		</p>
+		@lastMigrationGuide()
 		
 		
 		
@@ -66,7 +73,7 @@
 			@@b3.form(routes.Application.login) {
 				@@b3.email( loginForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 				@@b3.password( loginForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-				@@b3.checkbox( loginForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+				@@b3.checkbox( loginForm("remember"), '_text -> "Remember me", 'value -> true )
 				@@b3.submit('class -> "btn btn-default"){ Sign in }
 			}
 		}
@@ -85,12 +92,12 @@
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active fade in" id="vertical">
-				@bsExample {
-					@b3.vertical.form(routes.Application.index) { (vfc, lang) =>
-						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(vfc, lang)
-						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(vfc, lang)
-						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(vfc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }(vfc)
+				@bsExampleWithCode {
+					@b3.vertical.form(routes.Application.index) { implicit vfc =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+						@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
+						@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}{
 					@@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
@@ -98,18 +105,18 @@
 					@@b3.form(routes.Application.index) {
 						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
 						@@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}
 			</div>
 			<div class="tab-pane fade in" id="horizontal">
-				@bsExample {
-					@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { (hfc, lang) =>
-						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(hfc, lang)
-						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(hfc, lang)
-						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(hfc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }(hfc)
+				@bsExampleWithCode {
+					@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { implicit hfc =>
+						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+						@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
+						@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}{
 					@@implicitFieldConstructor = @@{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
@@ -117,51 +124,51 @@
 					@@b3.form(routes.Application.index) {
 						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
 						@@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}
 			</div>
 			<div class="tab-pane fade" id="inline">
-				@bsExample {
-					@b3.inline.form(routes.Application.index) { (ifc, lang) =>
-						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
-						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
-						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+				@bsExampleWithCode {
+					@b3.inline.form(routes.Application.index) { implicit ifc =>
+						@b3.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
+						@b3.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+						@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
+						@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}{
 					@@import b3.inline.fieldConstructor  // Declares a inline field constructor as default
 					
 					@@b3.form(routes.Application.index) {
-						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
-						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )
+						@@b3.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
+						@@b3.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+						@@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
 						@@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 				}
 			</div>
 			<div class="tab-pane fade" id="mixed">
-				@bsExample {
-					@b3.inline.form(routes.Application.index) { (ifc, lang) =>
-						@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
-						@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
-						@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
-						@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+				@bsExampleWithCode {
+					@b3.inline.form(routes.Application.index) { implicit ifc =>
+						@b3.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
+						@b3.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+						@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
+						@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
-					@b3.vertical.form(routes.Application.index) { (hfc, lang) =>
-						@b3.text( fooForm("foo"), '_label -> "Foo", 'placeholder -> "Foo placeholder..." )(hfc, lang)
-						@b3.text( fooForm("bar"), '_label -> "Bar", 'placeholder -> "Bar placeholder..." )(hfc, lang)
-						@b3.submit('class -> "btn btn-default"){ Send }(hfc)
+					@b3.vertical.form(routes.Application.index) { implicit hfc =>
+						@b3.text( fooForm("foo"), '_label -> "Foo", 'placeholder -> "Foo placeholder..." )
+						@b3.text( fooForm("bar"), '_label -> "Bar", 'placeholder -> "Bar placeholder..." )
+						@b3.submit('class -> "btn btn-default"){ Send }
 					}
 				}{
 					@@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 					
-					@@b3.inline.form(routes.Application.index) { (ifc, lang) =>	// An inline form instead of the default one
-						@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )(ifc, lang)
-						@@b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
-						@@b3.checkbox( fooForm("remember"), '_label -> None, '_text -> "Remember me", 'value -> true )(ifc, lang)
-						@@b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+					@@b3.inline.form(routes.Application.index) { implicit ifc =>	// An inline form instead of the default one
+						@@b3.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
+						@@b3.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+						@@b3.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
+						@@b3.submit('class -> "btn btn-default"){ Sign in }
 					}
 					
 					@@b3.form(routes.Application.index) {	// Uses the default field constructor (vertical in that case)
@@ -173,30 +180,15 @@
 			</div>
 		</div>
 		
-		<h3 id="multifield">Multifield support</h3>
-		<p>
-			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
-			With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
-		</p>
-		@bsExample {
-			@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { (hfc, lang) =>
-				@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")(hfc, lang)
-				@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )(hfc, lang)
-			}
-		}{
-			@@b3.multiCheckbox( (fooForm("foo"), Map('_text -> "Foo")), (fooForm("bar"), Map('_text -> "Bar")), (fooForm("beer"), Map('_text -> "Beer")) )('_label -> "Checkboxes", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
-			@@b3.datepicker( fooForm("dateStart"), 'value -> "31-10-2014" )( fooForm("dateEnd"), 'value -> "31-12-2014" )('_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
-		}
-		<p>
-			<strong>Note:</strong> these two helpers (<code>b3.multiCheckbox</code> and <code>b3.datepicker</code>) are not part of the library, but <a href="/multifield">here</a> it is explained how to easily implement them (or just copy them).
-		</p>
-		
 		
 		<h3 id="every-helper-you-need">Every helper you need</h3>
 		<p>
 			Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ...
 			You have the essential input helpers you could need. But this library is for the community,
 			so you can collaborate or ask for others.
+		</p>
+		<p>
+			See the list of available helpers <a href="@routes.Application.docsMaster#helpers" target="_blank">here</a>.
 		</p>
 		
 		
@@ -220,13 +212,8 @@
 			@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
 		}
 		<p>
-			And what happens if you need to set a <code>"false"</code> value to an attribute? Ok, you can simply convert it
-			to a string:
+			See more about <a href="@routes.Application.docsMaster#arguments-boolean" target="_blank">Boolean arguments</a>.
 		</p>
-		@code {
-			@@b3.text( fooForm("foo"), '_label -> "With a false attribute", 'fooAttr -> "false" )
-			@@b3.text( fooForm("foo"), '_label -> "With a boolean attribute", 'fooAttr -> maybeTrueFunction(...).toString )
-		}
 		
 		<h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
 		<p>
@@ -240,6 +227,59 @@
 			Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers
 			will also add the <code>disabled</code> attribute. Then, Bootstrap 3 will avoid their interactability.
 		</p>
+		<p>
+			See more about <a href="@routes.Application.docsMaster#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+		</p>
+		
+		
+		<h3 id="multifield">Multifield support</h3>
+		<p>
+			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
+			With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
+		</p>
+		@bsExampleWithCode {
+			@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { implicit hfc =>
+				@b3.multiCheckbox(
+					(fooForm("foo"), Map('_text -> "Foo")),
+					(fooForm("bar"), Map('_text -> "Bar")),
+					(fooForm("beer"), Map('_text -> "Beer"))
+					)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+					@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+						fooForm("dateEnd"), 'value -> "31-12-2014" )(
+						'_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
+				@b3.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+			}
+		}{
+			@@b3.multiCheckbox(
+				(fooForm("foo"), Map('_text -> "Foo")),
+				(fooForm("bar"), Map('_text -> "Bar")),
+				(fooForm("beer"), Map('_text -> "Beer"))
+				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+				
+			@@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-12-2014" )(
+				'_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
+				
+			@@b3.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+		}
+		<p>
+			<strong>Note:</strong> these helpers (<code>b3.multiCheckbox</code>, <code>b3.datepicker</code> and <code>b3.textWithCheckbox</code>) are not part of the library, but <a href="@routes.Application.multifield" target="_blank">here</a> it is explained how to easily implement them (or just copy them).
+		</p>
+		<p>
+			See more about <a href="@routes.Application.multifield" target="_blank">Multifield</a> support.
+		</p>
+		
+		
+		<h3 id="aria">With ARIA attributes</h3>
+		<p>
+			The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility.
+			However we know it could be difficult and boring to integrate it everywhere within your web. Because of that, <strong>the library
+			will do automatically for you</strong> for any field constructor.
+		</p>
+		<p>
+			See more about <a href="@routes.Application.docsMaster#aria" target="_blank">ARIA attributes</a> support.
+		</p>
+		
 		
 		<h2 id="installation">Installation</h2>
 		<p>
@@ -248,7 +288,7 @@
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.1.1"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.3"
 			)
 		}
 		
@@ -259,7 +299,7 @@
 			resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 			
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.3-SNAPSHOT"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4-SNAPSHOT"
 			)
 		}
 		<p>
@@ -277,8 +317,9 @@
 		<h2 id="examples">Examples</h2>
 		<p>
 			This web is an example. You can see on the top menu an example of each kind of form
-			(<a href="/vertical">vertical</a>, <a href="/horizontal">horizontal</a>, <a href="/inline">inline</a>)
-			and one more for a single view with <a href="/mixed">different mixed forms</a>.
+			(<a href="@routes.Application.vertical">vertical</a>, <a href="@routes.Application.horizontal">horizontal</a>,
+			<a href="@routes.Application.inline">inline</a>) and one more for a single view with
+			<a href="@routes.Application.mixed">different mixed forms</a>.
 		</p>
 		<p>
 			You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>.
@@ -293,7 +334,7 @@
 		
 		<h2 id="documentation">Documentation</h2>
 		<p>
-			You can check the documentation <a href="/docs">here</a>.
+			You can check the documentation <a href="@routes.Application.docsMaster">here</a>.
 		</p>
 		
 		
@@ -306,6 +347,6 @@
 		
 		<h2 id="changelog">Change Log</h2>
 		<p>
-			You can check the change log <a href="/changelog">here</a>.
+			You can check the change log <a href="@routes.Application.changelog">here</a>.
 		</p>
 }

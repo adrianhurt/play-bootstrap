@@ -1,0 +1,16 @@
+@(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any])
+<div class="my-form-group form-group @extraClasses @argsMap.get('_class)" id="@argsMap.get('_id)">
+	<div class="field-container">
+		@argsMap.get('_label).map { label =>
+			<label class="control-label">@label</label>
+		}
+		@contentHtml
+	</div>
+	<div class="alert alert-info" role="alert">
+		<ul>
+			@argsMap.get('_help).map { help =>
+				<li><span class="help-info"><span class="glyphicon glyphicon-warning-sign"> @help</span></li>
+			}
+		</ul>
+	</div>
+</div>

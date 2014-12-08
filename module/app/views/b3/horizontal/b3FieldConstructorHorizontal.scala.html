@@ -1,7 +1,0 @@
-@(elements: helper.FieldElements, colLabel: String, colInput: String)
-@b3.b3FieldConstructorCommon(elements) { content =>
-	<label class="control-label @colLabel" for="@elements.id">@elements.label(elements.lang)</label>
-	<div class="@colInput">
-		@content
-	</div>
-}

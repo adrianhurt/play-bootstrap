@@ -11,6 +11,7 @@ GET     /mixed						controllers.Application.mixed
 GET     /readonly					controllers.Application.readonly
 POST    /readonly					controllers.Application.handleReadonly
 GET     /multifield					controllers.Application.multifield
+GET     /extend-it					controllers.Application.extendIt
 GET     /docs						controllers.Application.docsMaster
 GET     /docs/:version				controllers.Application.docs(version: String)
 GET     /changelog					controllers.Application.changelog

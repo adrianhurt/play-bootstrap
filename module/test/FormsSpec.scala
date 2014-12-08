@@ -36,7 +36,7 @@ object FormsSpec extends Specification {
 
   val (method, action) = ("POST", "/handleRequest")
   val fooCall = Call(method, action)
-  def fooFormBody(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor) = b3.form.apply(fooCall, args: _*)(Html(testContentString))(fc).body
+  def fooFormBody(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor) = b3.form(fooCall, args: _*)(Html(testContentString))(fc).body
 
   "@form" should {
 

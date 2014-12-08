@@ -1,22 +1,8 @@
-/**
- * Copyright 2014 Adrian Hurtado (adrianhurt)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package views.html.b3
+package views.html.b3.my
 
 package object vertical {
 
+  import views.html.b3._
   import play.twirl.api.Html
   import play.api.mvc.Call
   import views.html.helper._
@@ -26,7 +12,7 @@ package object vertical {
    */
   class VerticalFieldConstructor extends B3FieldConstructor {
     /* Define the default class of the corresponding form */
-    val defaultFormClass = "form-vertical"
+    val defaultFormClass = "form-my-vertical"
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = b3FieldConstructor(fieldInfo, inputHtml)
     /* Renders the corresponding template of the form group */
