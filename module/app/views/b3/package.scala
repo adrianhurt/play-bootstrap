@@ -89,12 +89,12 @@ package object b3 {
     val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
 
     /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val infos: Seq[(String, String)] = B3FieldInfo.infos(field, argsMap).zipWithIndex.map {
+    val infos: Seq[(String, String)] = B3FieldInfo.infos(field, argsMap, lang).zipWithIndex.map {
       case (info, i) => (ariaInfoId(i), info)
     }
 
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
-    val errors: Seq[(String, String)] = B3FieldInfo.errors(field, argsMap).zipWithIndex.map {
+    val errors: Seq[(String, String)] = B3FieldInfo.errors(field, argsMap, lang).zipWithIndex.map {
       case (error, i) => (ariaErrorId(i), error)
     }
 
@@ -159,24 +159,24 @@ package object b3 {
   object B3FieldInfo {
 
     /* List with every "info" */
-    def infos(field: Field, argsMap: Map[Symbol, Any]): Seq[String] = {
+    def infos(field: Field, argsMap: Map[Symbol, Any], lang: Lang): Seq[String] = {
       argsMap.get('_help).map(m => Seq(m.toString)).getOrElse {
         if (argsMap.get('_showConstraints) == Some(true)) {
-          field.constraints.map(c => Messages(c._1, c._2: _*)) ++ field.format.map(f => Messages(f._1, f._2: _*))
+          field.constraints.map(c => Messages(c._1, c._2: _*)(lang)) ++ field.format.map(f => Messages(f._1, f._2: _*)(lang))
         } else Nil
       }
     }
 
     /* List with every error */
-    def errors(field: Field, argsMap: Map[Symbol, Any]): Seq[String] = {
+    def errors(field: Field, argsMap: Map[Symbol, Any], lang: Lang): Seq[String] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
-          case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*))
-          case message => Seq(Messages(message.toString))
+          case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*)(lang))
+          case message => Seq(Messages(message.toString)(lang))
         }
       }.getOrElse {
         if (argsMap.get('_showErrors) != Some(false))
-          field.errors.map { e => Messages(e.message, e.args: _*) }
+          field.errors.map { e => Messages(e.message, e.args: _*)(lang) }
         else Nil
       }
     }
@@ -213,17 +213,17 @@ package object b3 {
 
     /* List with every "info" */
     val infos: Seq[String] = argsMap.get('_help).map(m => Seq(m.toString)).getOrElse {
-      fields.flatMap { field => B3FieldInfo.infos(field, argsMapForInfosAndErrors) }
+      fields.flatMap { field => B3FieldInfo.infos(field, argsMapForInfosAndErrors, lang) }
     }
 
     /* List with every error */
     val errors: Seq[String] = argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
       _ match {
-        case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*))
-        case message => Seq(Messages(message.toString))
+        case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*)(lang))
+        case message => Seq(Messages(message.toString)(lang))
       }
     }.getOrElse {
-      fields.flatMap { field => B3FieldInfo.errors(field, argsMapForInfosAndErrors) }
+      fields.flatMap { field => B3FieldInfo.errors(field, argsMapForInfosAndErrors, lang) }
     }
 
     /* List with the errors and infos */
