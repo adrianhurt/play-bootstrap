@@ -267,5 +267,8 @@ package object b3 {
   def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("reset", args: _*)(text)
   def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("button", args: _*)(text)
 
+  def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = staticBasic(args: _*)(text)
+  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)
+  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)
   def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B3FieldConstructor) = freeFormGroup(extraClasses = None, args)(_ => content)
 }

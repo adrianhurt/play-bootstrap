@@ -808,6 +808,16 @@
 			}{
 				@@b3.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
 			}
+			<p>
+				There are two equivalent more versions of <code>b3.static</code> helper: one for labels with <code>HTML</code>, and another one to omit the label.
+			</p>
+			@bsExampleWithCode {
+				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+			}{
+				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+			}
 	
 	
 			<h4 id="more-buttontype"><code>b3.buttonType</code> <span class="def">@@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor)</span></h4>
