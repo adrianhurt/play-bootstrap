@@ -85,7 +85,7 @@
 		@bsExampleWithCode {
 			<div class="row">
 				<div class="col-md-6">
-					@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'row -> 3 )
+					@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
 					@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 					@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
 				</div>
@@ -95,7 +95,7 @@
 				</div>
 			</div>
 		}{
-			@@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'row -> 3 )
+			@@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
 			@@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
 	
