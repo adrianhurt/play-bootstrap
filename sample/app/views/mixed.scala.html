@@ -73,7 +73,7 @@
 			@b3.vertical.form(routes.Application.mixed) { implicit vfc =>
 				@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
 				@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@mail.com" )
-				@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )
+				@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'rows -> 3 )
 				@b3.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
 				@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }
 			}
@@ -83,7 +83,7 @@
 		@@b3.vertical.form(routes.Application.mixed) { implicit vfc =>
 			@@b3.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
 			@@b3.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@@mail.com" )
-			@@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'row -> 3 )
+			@@b3.textarea( fooForm("foo"), '_label -> "What happened?", 'rows -> 3 )
 			@@b3.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
 			@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-envelope"></span> Send }
 		}

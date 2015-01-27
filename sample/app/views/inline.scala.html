@@ -80,13 +80,13 @@
 
 		<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
 		@bsExampleWithCode {
-			@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'row -> 3 )
+			@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
 			@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
 			@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select" )
 			@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Multiple Select", 'multiple -> true )
 		}{
-			@@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'row -> 3 )
+			@@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
 			@@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
 	
