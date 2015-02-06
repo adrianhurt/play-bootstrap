@@ -31,7 +31,7 @@
 			<img src="@routes.Assets.at("images/please_star.png")">
 		</div>
 		
-		<h2 id="new" style="margin-top: 60px">New 0.4-SNAPSHOT</h2>
+		<h2 id="new" style="margin-top: 60px">New 0.4</h2>
 		<p>
 			For this version I have refactored it totally to get a better library. The new features are:
 			<ul>
@@ -288,20 +288,20 @@
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.3"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4"
 			)
 		}
 		
-		<p>
+		@*<p>
 			If you want to use the latest snapshot, add the following instead:
 		</p>
 		@code {
 			resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 			
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.4-SNAPSHOT"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4.1-SNAPSHOT"
 			)
-		}
+		}*@
 		<p>
 			Note the <code>play-bootstrap3</code> has <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3</a>
 			and <a href="https://jquery.org" target="_blank">jQuery</a> as
@@ -309,8 +309,8 @@
 			Specifically, it adds the following dependencies for you:
 		</p>
 		@code {
-			"org.webjars" % "jquery" % "2.1.1"
-			"org.webjars" % "bootstrap" % "3.3.1"
+			"org.webjars" % "jquery" % "2.1.3"
+			"org.webjars" % "bootstrap" % "3.3.2"
 		}
 
 
