@@ -73,3 +73,9 @@
 		Finally, take into account now every argument with a <code>None</code> value will be ommited (see more about <a href="/docs#arguments-optional" target="_blank">Optional arguments</a> support).
 	</p>
 }
+@migrationGuide("0.4.2-SNAPSHOT") {
+	<p>
+		The forms now always include the required class (<code>form-vertical</code>, <code>form-horizontal</code>, ...) instead of adding it simply as default.
+    This means that if you need to add a custom class to a form you can do it with simply <code>'class -> "another-class"</code> instead of <code>'class -> "form-vertical another-class"</code>.
+	</p>
+}

@@ -25,8 +25,8 @@ package object inline {
    * Declares the class for the Inline FieldConstructor.
    */
   class InlineFieldConstructor extends B3FieldConstructor {
-    /* Define the default class of the corresponding form */
-    val defaultFormClass = "form-inline"
+    /* Define the class of the corresponding form */
+    val formClass = "form-inline"
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = b3FieldConstructor(fieldInfo, inputHtml)
     /* Renders the corresponding template of the form group */

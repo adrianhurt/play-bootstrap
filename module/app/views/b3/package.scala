@@ -27,8 +27,8 @@ package object b3 {
    * Custom FieldConstructor for the library. Every FieldConstructor must extend this functionality.
    */
   trait B3FieldConstructor {
-    /* Define the default class of the corresponding form (ex: "form-horizontal", "form-inline", ...) */
-    val defaultFormClass: String
+    /* Define the class of the corresponding form (ex: "form-horizontal", "form-inline", ...) */
+    val formClass: String
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B3FieldInfo, inputHtml: Html): Html
     /* Renders the corresponding template of the form group */

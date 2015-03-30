@@ -37,6 +37,16 @@ object Args {
     (default ++: args).filter(arg => !arg._1.name.startsWith("_") && arg._2 != false)
 
   /**
+   * Gets the value for the selected key
+   */
+  def get(args: Seq[(Symbol, Any)], key: Symbol) = args.find(_._1 == key).map(_._2)
+
+  /**
+   * Removes those arguments with these keys
+   */
+  def remove(args: Seq[(Symbol, Any)], keys: Symbol*) = args.filter(arg => !keys.contains(arg._1))
+
+  /**
    * Returns true only if exists a pair with that key and its value is true.
    */
   def isTrue(args: Seq[(Symbol, Any)], key: Symbol) = args.exists(_ == (key, true))

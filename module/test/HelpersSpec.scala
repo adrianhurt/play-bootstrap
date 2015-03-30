@@ -37,7 +37,7 @@ object HelpersSpec extends Specification {
    * A test field constructor that simply renders the input
    */
   implicit val testFieldConstructor = new B3FieldConstructor {
-    val defaultFormClass = ""
+    val formClass = ""
     def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = inputHtml
     def apply(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any]) = contentHtml
   }

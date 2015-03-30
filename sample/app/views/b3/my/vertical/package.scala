@@ -12,7 +12,7 @@ package object vertical {
    */
   class VerticalFieldConstructor extends B3FieldConstructor {
     /* Define the default class of the corresponding form */
-    val defaultFormClass = "form-my-vertical"
+    val formClass = "form-my-vertical"
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B3FieldInfo, inputHtml: Html) = b3FieldConstructor(fieldInfo, inputHtml)
     /* Renders the corresponding template of the form group */

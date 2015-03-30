@@ -47,19 +47,19 @@ object FormsSpec extends Specification {
       simple must contain("method=\"" + method + "\"")
     }
 
-    "add form role as default" in {
-      simple must contain("role=\"form\"")
+    "add default class for each field constructor" in {
+      fooFormBody()(vfc) must contain("class=\"form-vertical")
+      fooFormBody()(hfc) must contain("class=\"form-horizontal")
+      fooFormBody()(ifc) must contain("class=\"form-inline")
+      fooFormBody()(cfc) must contain("class=\"form-clear")
     }
 
     "allow setting custom class" in {
-      fooFormBody('class -> "customClass")(vfc) must contain("class=\"customClass\"")
+      fooFormBody('class -> "customClass")(vfc) must contain("class=\"form-vertical customClass\"")
     }
 
-    "add default class for each field constructor" in {
-      fooFormBody()(vfc) must be equalTo fooFormBody('class -> "form-vertical")(vfc)
-      fooFormBody()(hfc) must be equalTo fooFormBody('class -> "form-horizontal")(vfc)
-      fooFormBody()(ifc) must be equalTo fooFormBody('class -> "form-inline")(vfc)
-      fooFormBody()(cfc) must be equalTo fooFormBody('class -> "form-clear")(vfc)
+    "add form role as default" in {
+      simple must contain("role=\"form\"")
     }
 
     "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
