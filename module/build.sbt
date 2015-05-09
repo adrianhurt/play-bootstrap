@@ -1,13 +1,13 @@
 name := """play-bootstrap3"""
 
-version := "0.4.2"
+version := "0.4.3-SNAPSHOT"
 
 scalaVersion := "2.11.1"
 
 crossScalaVersions := Seq("2.11.1", "2.10.4")
 
 libraryDependencies ++= Seq(
-  "org.webjars" % "jquery" % "2.1.3",
+  "org.webjars" % "jquery" % "2.1.4",
   "org.webjars" % "bootstrap" % "3.3.4")
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
