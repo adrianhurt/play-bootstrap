@@ -31,28 +31,9 @@
 			<img src="@routes.Assets.at("images/please_star.png")">
 		</div>
 		
-		<h2 id="new" style="margin-top: 60px">New 0.4</h2>
+		<h2 id="new" style="margin-top: 60px">New 0.4.2</h2>
 		<p>
-			For this version I have refactored it totally to get a better library. The new features are:
-			<ul>
-				<li>
-					A better management for the field constructor's implicits. Now there are implicits for
-					the default field constructor for each template and different specific implicits for the
-					inner field constructors for mixed forms (with another one instead of the default one). Thus,
-					you don't need to add a field constructor explicitly any more. See more details in the
-					documentation sections 
-					<a href="@routes.Application.docsMaster#field-constructors-specific" target="_blank">Specific field constructors</a> and
-					<a href="@routes.Application.docsMaster#forms-specific" target="_blank">Forms with a specific <code>B3FieldConstructor</code></a>.
-				</li>
-				<li><a href="@routes.Application.docsMaster#helpers-validation-states" target="_blank">Validations states and feedback icons</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#aria" target="_blank">WAI-ARIA attributes</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#arguments-optional" target="_blank">Optional arguments</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#arguments-labels" target="_blank">Better label rendering</a>.</li>
-			</ul>
-			For the last two versions I have tried to simplify the syntax, specially for mixed forms. I know it's
-			very annoying to modify your own code to adapt to each version of the library. Sorry for that. Fortunately,
-			I think it's already finished and we can consider the syntax is now correct. So for this point, I hope
-			the library will only be updated for adding new features.
+			The forms now always include the required class (<code>form-vertical</code>, <code>form-horizontal</code>, ...) instead of adding it simply as default.
 		</p>
 		<p>
 			You can see the full changelog <a href="@routes.Application.changelog" target="_blank">here</a> and it's also available the migration guide.
@@ -288,7 +269,7 @@
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.4"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4.2"
 			)
 		}
 		
@@ -299,7 +280,7 @@
 			resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 			
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.4.2-SNAPSHOT"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4.3-SNAPSHOT"
 			)
 		}
 		<p>
