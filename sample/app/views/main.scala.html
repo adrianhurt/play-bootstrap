@@ -1,4 +1,4 @@
-@(title: String, tab: String = "", styles: Html = Html(""), scripts: Html = Html(""), modals: Html = Html(""))(content: Html)
+@(title: String, tab: String = "", styles: Html = Html(""), scripts: Html = Html(""), modals: Html = Html(""))(content: Html)(implicit isPlay24: Boolean)
 
 <!DOCTYPE html>
 
@@ -48,7 +48,14 @@
 						<li class="@("active".when(tab == "docs"))"><a href="@routes.Application.docsMaster">Documentation</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank"><i class="fa fa-github fa-2x"></i> View on Github</a></li>
+						<li class="dropdown play-version">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Play @if(isPlay24) {2.4} else {2.3} <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="@routes.Application.selectPlay24(false)">See Play 2.3 version</a></li>
+								<li><a href="@routes.Application.selectPlay24(true)">See Play 2.4 version</a></li>
+							</ul>
+						</li>
+						<li class="github"><a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank"><i class="fa fa-github fa-2x"></i> Github</a></li>
 					</ul>
 				</div>
 			</div>

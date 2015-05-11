@@ -59,9 +59,13 @@ body {
 			}
 		}
 	}
-	.navbar-right a {
+	.github a {
 		padding-top: 10px;
 		padding-bottom: 10px;
+	}
+	.play-version a {
+		font-style: italic;
+		color: #f0ad4e !important;
 	}
 }
 .container {
@@ -140,6 +144,15 @@ span.def {
 			color: #d9534f;
 		}
 	}
+}
+
+[data-toggle="collapse"] {
+	.fa.fa-caret {
+		float: right;
+		margin-left: 15px;
+		&:before { content: "\f0d7" }
+	}
+	&[aria-expanded="true"] .fa.fa-caret:before { content: "\f0d8" }
 }
 
 .bs-docs-sidebar {

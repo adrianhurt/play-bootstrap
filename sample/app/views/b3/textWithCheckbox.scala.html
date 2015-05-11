@@ -1,4 +1,4 @@
-@(textField: play.api.data.Field, textArgs: (Symbol,Any)*)(checkboxField: play.api.data.Field, checkboxArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+@(textField: play.api.data.Field, textArgs: (Symbol,Any)*)(checkboxField: play.api.data.Field, checkboxArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
 @b3.multifield( textField, checkboxField )(args:_*) { implicit cfc =>
 	<div class="input-text-checkbox input-group" @toHtmlArgs(b3.Args.inner(args).toMap)>
 		<span class="input-group-addon">

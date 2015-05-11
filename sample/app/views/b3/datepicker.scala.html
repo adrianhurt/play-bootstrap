@@ -1,4 +1,4 @@
-@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
 @b3.multifield( startField, endField )(args:_*) { implicit cfc =>
 	<div class="input-daterange input-group" @toHtmlArgs(b3.Args.inner(args).toMap)>
 		@b3.text(startField, startArgs:_*)

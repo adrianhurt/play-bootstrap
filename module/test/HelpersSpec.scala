@@ -20,18 +20,21 @@ import org.specs2.mutable.Specification
 import views.html.helper._
 import play.api.data.Forms._
 import play.api.data._
-import play.api.i18n.Lang
+import play.api.{ Configuration, Environment }
+import play.api.i18n.{ DefaultLangs, DefaultMessagesApi, Messages }
 import play.twirl.api.{ Html, HtmlFormat }
 import play.api.mvc.Call
 
 object HelpersSpec extends Specification {
+
+  val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
+  implicit val messages = messagesApi.preferred(Seq.empty)
 
   val vfc = b3.vertical.fieldConstructor
   val (colLabel, colInput) = ("col-md-2", "col-md-10")
   val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
   val ifc = b3.inline.fieldConstructor
   val cfc = b3.clear.fieldConstructor
-  val lang = implicitly[Lang]
 
   /**
    * A test field constructor that simply renders the input
@@ -555,9 +558,9 @@ object HelpersSpec extends Specification {
     val fooForm = Form(tuple("foo" -> Forms.nonEmptyText, "bar" -> Forms.nonEmptyText))
     val fooFormWithError = fooForm.withError("foo", "test-error")
 
-    def multifield(form: Form[(String, String)], args: (Symbol, Any)*)(fc: b3.B3FieldConstructor, lang: Lang) =
-      clean(b3.multifield(form("foo"), form("bar"))(args: _*)(cfc => Html(testInputsString))(fc, lang).body)
-    def fooMultifield(args: (Symbol, Any)*) = multifield(fooForm, args: _*)(vfc, lang)
+    def multifield(form: Form[(String, String)], args: (Symbol, Any)*)(fc: b3.B3FieldConstructor, messages: Messages) =
+      clean(b3.multifield(form("foo"), form("bar"))(args: _*)(cfc => Html(testInputsString))(fc, messages).body)
+    def fooMultifield(args: (Symbol, Any)*) = multifield(fooForm, args: _*)(vfc, messages)
 
     "have the basic structure" in {
       val body = fooMultifield('_label -> "theLabel")
@@ -569,7 +572,7 @@ object HelpersSpec extends Specification {
     }
 
     "behave as a horizontal field constructor" in {
-      val body = multifield(fooForm, '_label -> "theLabel")(hfc, lang)
+      val body = multifield(fooForm, '_label -> "theLabel")(hfc, messages)
       body must contain("<label class=\"control-label " + colLabel + "\">theLabel</label>")
       body must contain("<div class=\"" + colInput + "\">")
     }
@@ -583,23 +586,23 @@ object HelpersSpec extends Specification {
     }
 
     "show label" in {
-      multifield(fooForm, '_label -> "fooLabel")(vfc, lang) must contain("<label class=\"control-label\">fooLabel</label>")
-      multifield(fooForm, '_label -> "fooLabel")(hfc, lang) must contain("<label class=\"control-label " + colLabel + "\">fooLabel</label>")
+      multifield(fooForm, '_label -> "fooLabel")(vfc, messages) must contain("<label class=\"control-label\">fooLabel</label>")
+      multifield(fooForm, '_label -> "fooLabel")(hfc, messages) must contain("<label class=\"control-label " + colLabel + "\">fooLabel</label>")
     }
 
     "without label" in {
-      multifield(fooForm)(vfc, lang) must not contain ("label")
-      multifield(fooForm)(hfc, lang) must not contain ("label")
+      multifield(fooForm)(vfc, messages) must not contain ("label")
+      multifield(fooForm)(hfc, messages) must not contain ("label")
     }
 
     "allow rendering errors" in {
-      val body = multifield(fooFormWithError)(vfc, lang)
+      val body = multifield(fooFormWithError)(vfc, messages)
       body must contain("has-error")
       body must contain("<span class=\"help-block\">test-error</span>")
     }
 
     "allow showing constraints" in {
-      fooMultifield('_showConstraints -> true) must contain("<span class=\"help-block\">constraint.required</span>")
+      fooMultifield('_showConstraints -> true) must contain("<span class=\"help-block\">" + messages("constraint.required") + "</span>")
     }
 
     "allow showing help info" in {

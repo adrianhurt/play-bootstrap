@@ -1,6 +1,7 @@
-@(fooForm: Form[String])
+@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
 
 @import tags._
+@import tags.Version._
 @import helper.Implicits._
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
@@ -31,7 +32,7 @@
 		</p>
 		
 		@code {
-			@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: ClearFieldConstructor => Html)(implicit fc: B3FieldConstructor, lang: Lang)
+			@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: ClearFieldConstructor => Html)(implicit fc: B3FieldConstructor, @msgsArg(isPlay24))
 		}
 		
 		<p>
@@ -44,7 +45,7 @@
 					and add any other that could be useful for your custom helper.
 				</li>
 				<li><strong>inputsHtml:</strong> a function that takes a <strong>Clear Field Constructor</strong> and generates the HMTL for the field.</li>
-				<li><strong>fc and lang:</strong> the field constructor used for the outer form.</li>
+				<li><strong>fc and @msgsName(isPlay24):</strong> the field constructor used for the outer form.</li>
 			</ul>
 			Here are the special arguments you can use for the <code>b3.multifield</code> helper.
 			<ul>
@@ -113,7 +114,7 @@
 		</p>
 			
 		@code {
-			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+			@@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @msgsArg(isPlay24))
 			@@b3.multifield( startField, endField )(args:_*) { implicit cfc =>
 				<div class="input-daterange input-group" @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@b3.text(startField, startArgs:_*)
@@ -190,7 +191,7 @@
 		</p>
 		
 		@code {
-			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+			@@(fieldsWithArgs: (play.api.data.Field, Map[Symbol,Any])*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @msgsArg(isPlay24))
 			@@b3.multifield( fieldsWithArgs.map(_._1):_* )(args:_*) { implicit cfc =>
 				<div @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					@@fieldsWithArgs.map { case (field, fieldArgs) =>
@@ -271,7 +272,7 @@
 		</p>
 			
 		@code {
-			@@(textField: play.api.data.Field, textArgs: (Symbol,Any)*)(checkboxField: play.api.data.Field, checkboxArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+			@@(textField: play.api.data.Field, textArgs: (Symbol,Any)*)(checkboxField: play.api.data.Field, checkboxArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @msgsArg(isPlay24))
 			@@b3.multifield( textField, checkboxField )(args:_*) { implicit cfc =>
 				<div class="input-text-checkbox input-group" @@toHtmlArgs(b3.Args.inner(args).toMap)>
 					<span class="input-group-addon">

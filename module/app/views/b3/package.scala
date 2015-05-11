@@ -44,8 +44,8 @@ package object b3 {
    * - args: list of available arguments for the helper and field constructor
    * - inputDef: function that returns a Html from a B3FieldInfo that contains all the information about the field
    */
-  def inputFormGroup(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B3FieldInfo => Html)(implicit handler: B3FieldConstructor, lang: Lang) = {
-    val fieldInfo = B3FieldInfo(field, withFeedback, withLabelFor, Args.withoutNones(args), lang)
+  def inputFormGroup(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B3FieldInfo => Html)(implicit handler: B3FieldConstructor, messages: Messages) = {
+    val fieldInfo = B3FieldInfo(field, withFeedback, withLabelFor, Args.withoutNones(args), messages)
     handler(fieldInfo, inputDef(fieldInfo))
   }
 
@@ -65,7 +65,7 @@ package object b3 {
    * - withLabelFor: indicates if the label's "for" attribute should be shown
    * - args: list of available arguments for the helper and field constructor
    */
-  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], lang: Lang) {
+  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], messages: Messages) {
 
     /* A map with the args to work easily with them */
     val argsMap: Map[Symbol, Any] = args.toMap
@@ -89,12 +89,12 @@ package object b3 {
     val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
 
     /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val infos: Seq[(String, String)] = B3FieldInfo.infos(field, argsMap, lang).zipWithIndex.map {
+    val infos: Seq[(String, String)] = B3FieldInfo.infos(field, argsMap, messages).zipWithIndex.map {
       case (info, i) => (ariaInfoId(i), info)
     }
 
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
-    val errors: Seq[(String, String)] = B3FieldInfo.errors(field, argsMap, lang).zipWithIndex.map {
+    val errors: Seq[(String, String)] = B3FieldInfo.errors(field, argsMap, messages).zipWithIndex.map {
       case (error, i) => (ariaErrorId(i), error)
     }
 
@@ -159,24 +159,24 @@ package object b3 {
   object B3FieldInfo {
 
     /* List with every "info" */
-    def infos(field: Field, argsMap: Map[Symbol, Any], lang: Lang): Seq[String] = {
+    def infos(field: Field, argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
       argsMap.get('_help).map(m => Seq(m.toString)).getOrElse {
         if (argsMap.get('_showConstraints) == Some(true)) {
-          field.constraints.map(c => Messages(c._1, c._2: _*)(lang)) ++ field.format.map(f => Messages(f._1, f._2: _*)(lang))
+          field.constraints.map(c => messages(c._1, c._2: _*)) ++ field.format.map(f => messages(f._1, f._2: _*))
         } else Nil
       }
     }
 
     /* List with every error */
-    def errors(field: Field, argsMap: Map[Symbol, Any], lang: Lang): Seq[String] = {
+    def errors(field: Field, argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
-          case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*)(lang))
-          case message => Seq(Messages(message.toString)(lang))
+          case Some(FormError(_, message, args)) => Seq(messages(message, args: _*))
+          case message => Seq(messages(message.toString))
         }
       }.getOrElse {
         if (argsMap.get('_showErrors) != Some(false))
-          field.errors.map { e => Messages(e.message, e.args: _*)(lang) }
+          field.errors.map { e => messages(e.message, e.args: _*) }
         else Nil
       }
     }
@@ -203,7 +203,7 @@ package object b3 {
    * - fields: list of Fields
    * - args: list of available arguments for the helper and the form-group
    */
-  case class B3MultifieldInfo(fields: Seq[Field], args: Seq[(Symbol, Any)], lang: Lang) {
+  case class B3MultifieldInfo(fields: Seq[Field], args: Seq[(Symbol, Any)], messages: Messages) {
 
     /* A map with the args to work easily with them. The '_help is removed because the helper freeFormGroup will add it */
     val argsMap: Map[Symbol, Any] = Args.withoutNones(args).filter(_._1 != '_help).toMap
@@ -213,17 +213,17 @@ package object b3 {
 
     /* List with every "info" */
     val infos: Seq[String] = argsMap.get('_help).map(m => Seq(m.toString)).getOrElse {
-      fields.flatMap { field => B3FieldInfo.infos(field, argsMapForInfosAndErrors, lang) }
+      fields.flatMap { field => B3FieldInfo.infos(field, argsMapForInfosAndErrors, messages) }
     }
 
     /* List with every error */
     val errors: Seq[String] = argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
       _ match {
-        case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*)(lang))
-        case message => Seq(Messages(message.toString)(lang))
+        case Some(FormError(_, message, args)) => Seq(messages(message, args: _*))
+        case message => Seq(messages(message.toString))
       }
     }.getOrElse {
-      fields.flatMap { field => B3FieldInfo.errors(field, argsMapForInfosAndErrors, lang) }
+      fields.flatMap { field => B3FieldInfo.errors(field, argsMapForInfosAndErrors, messages) }
     }
 
     /* List with the errors and infos */
@@ -244,24 +244,24 @@ package object b3 {
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def inputType(inputType: String, field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputWrapped(inputType, field, args: _*)(html => html)
+  def inputType(inputType: String, field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputWrapped(inputType, field, args: _*)(html => html)
 
-  def text(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("text", field, args: _*)
-  def password(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("password", field.copy(value = Some("")), args: _*)
-  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("file", field, args: _*)
-  def color(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("color", field, args: _*)
-  def date(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("date", field, args: _*)
-  def datetime(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("datetime", field, args: _*)
-  def datetimeLocal(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("datetime-local", field, args: _*)
-  def email(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("email", field, args: _*)
-  def month(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("month", field, args: _*)
-  def number(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("number", field, args: _*)
-  def range(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("range", field, args: _*)
-  def search(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("search", field, args: _*)
-  def tel(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("tel", field, args: _*)
-  def time(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("time", field, args: _*)
-  def url(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("url", field, args: _*)
-  def week(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("week", field, args: _*)
+  def text(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("text", field, args: _*)
+  def password(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("password", field.copy(value = Some("")), args: _*)
+  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("file", field, args: _*)
+  def color(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("color", field, args: _*)
+  def date(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("date", field, args: _*)
+  def datetime(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("datetime", field, args: _*)
+  def datetimeLocal(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("datetime-local", field, args: _*)
+  def email(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("email", field, args: _*)
+  def month(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("month", field, args: _*)
+  def number(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("number", field, args: _*)
+  def range(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("range", field, args: _*)
+  def search(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("search", field, args: _*)
+  def tel(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("tel", field, args: _*)
+  def time(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("time", field, args: _*)
+  def url(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("url", field, args: _*)
+  def week(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("week", field, args: _*)
 
   def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("submit", args: _*)(text)
   def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("reset", args: _*)(text)

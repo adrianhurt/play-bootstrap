@@ -20,11 +20,15 @@ import org.specs2.mutable.Specification
 import views.html.helper.FieldConstructor
 import play.api.data.Forms._
 import play.api.data._
-import play.api.i18n.Lang
+import play.api.{ Configuration, Environment }
+import play.api.i18n.{ DefaultLangs, DefaultMessagesApi }
 import play.twirl.api.Html
 import play.api.mvc.Call
 
 object FieldConstructorsSpec extends Specification {
+
+  val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
+  implicit val messages = messagesApi.preferred(Seq.empty)
 
   def testFielConstructor(implicit fc: B3FieldConstructor) = {
 
@@ -88,8 +92,8 @@ object FieldConstructorsSpec extends Specification {
       val test = simpleInputWithArgs('_showConstraints -> true)
       test must contain("<span id=\"foo_info_0\" class=\"help-block\">")
       test must contain("<span id=\"foo_info_1\" class=\"help-block\">")
-      test must contain("class=\"help-block\">constraint.required</span>")
-      test must contain("class=\"help-block\">constraint.maxLength</span>")
+      test must contain("class=\"help-block\">" + messages("constraint.required") + "</span>")
+      test must contain("class=\"help-block\">" + messages("constraint.maxLength", 8) + "</span>")
     }
 
     "allow showing help info" in {

@@ -19,18 +19,21 @@ import views.html.b3
 import org.specs2.mutable.Specification
 import play.api.data.Forms._
 import play.api.data._
-import play.api.i18n.Lang
+import play.api.{ Configuration, Environment }
+import play.api.i18n.{ DefaultLangs, DefaultMessagesApi }
 import play.twirl.api.Html
 import play.api.mvc.Call
 
 object FormsSpec extends Specification {
+
+  val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
+  implicit val messages = messagesApi.preferred(Seq.empty)
 
   val vfc = b3.vertical.fieldConstructor
   val (colLabel, colInput) = ("col-md-2", "col-md-10")
   val hfc = b3.horizontal.fieldConstructor(colLabel, colInput)
   val ifc = b3.inline.fieldConstructor
   val cfc = b3.clear.fieldConstructor
-  val lang = implicitly[Lang]
 
   val testContentString = "<content>"
 

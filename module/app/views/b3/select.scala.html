@@ -1,4 +1,4 @@
-@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
 @argsMap = @{ args.toMap }
 @readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
 @disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }

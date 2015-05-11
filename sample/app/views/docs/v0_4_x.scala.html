@@ -1,8 +1,11 @@
-@(fooForm: Form[String])
+@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
 
 @import tags._
+@import tags.Version._
 @import b3.vertical.fieldConstructor
 @horizontalFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+@playVersion(isPlay24: Boolean) = @{if (isPlay24) "2.4.0-RC2" else "2.3.9"}
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 
@@ -13,7 +16,10 @@
 	<div class="col-md-9" role="main">
 		@b3.form(routes.Application.docsMaster) {
 		
-			<h1 id="documentation" class="page-header">Documentation</h1>
+			<h1 id="documentation" class="page-header">
+				Documentation (Play @playVersion(isPlay24))
+				<a href="@routes.Application.selectPlay24(!isPlay24)" style="font-size: 0.5em"><i class="fa fa-external-link"></i> @playVersion(!isPlay24)</a>
+			</h1>
 			<p class="lead">This page explains each component in more details.</p>
 			
 	
@@ -297,14 +303,14 @@
 	
 			<h3 id="forms">Forms <span class="def">@@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: B3FieldConstructor)</span></h3>
 			<p>
-				The <code>b3.form</code> takes a <code>Call</code> object and a list of arguments. The implicit <code>B3FieldConstructor</code> argument is used to know which default class is needed. Each <code>B3FieldConstructor</code> add its corresponding class:
+				The <code>b3.form</code> takes a <code>Call</code> object and a list of arguments. The implicit <code>B3FieldConstructor</code> argument is used to know which class is needed. Each <code>B3FieldConstructor</code> add its corresponding class:
 				<ul>
 					<li><code>HorizontalFieldConstructor:</code> <code>class="form-horizontal"</code></li>
 					<li><code>InlineFieldConstructor:</code> <code>class="form-inline"</code></li>
 					<li><code>VerticalFieldConstructor:</code> <code>class="form-vertical"</code></li>
 					<li><code>ClearFieldConstructor:</code> <code>class="form-clear"</code></li>
 				</ul>
-				The last two ones don't belong to Bootstrap 3, but they could be useful for your own CSS.
+				The last two ones don't belong to Bootstrap 3, but they could be useful for your own CSS. Every other class you include within <code>args</code> will be appended to this required one.
 			</p>
 			<p>
 				The helper also adds the <code>role="form"</code> attribute by default.
@@ -350,7 +356,7 @@
 
 				@@b3.form(routes.Application.handleRequest) { // vertical form as default
 					@@b3.text( fooForm("foo"), '_label -> "Vertical input text" )
-					@@b3.text( fooForm("bar"), '_label -> "Horizontal input text" )(horizontalFC, implicitly[Lang])
+					@@b3.text( fooForm("bar"), '_label -> "Horizontal input text" )(horizontalFC, implicitly[@msgsClass(isPlay24)])
 					...
 				}
 			}
@@ -428,7 +434,7 @@
 			
 	
 
-			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default.
 			</p>
@@ -443,7 +449,7 @@
 			}
 
 
-			<h4 id="helper-text"><code>b3.text</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-text"><code>b3.text</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="text"</code>.
 			</p>
@@ -454,7 +460,7 @@
 			}
 
 
-			<h4 id="helper-password"><code>b3.password</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-password"><code>b3.password</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="password"</code>.
 			</p>
@@ -468,7 +474,7 @@
 			}
 
 
-			<h4 id="helper-file"><code>b3.file</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-file"><code>b3.file</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="file"</code>.
 			</p>
@@ -480,7 +486,7 @@
 
 
 			
-			<h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It renders a textarea and it adds <code>class="form-control"</code> by default.
 			</p>
@@ -491,7 +497,7 @@
 			}
 
 
-			<h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It renders a checkbox. It have always the attribute value set to true. So it only supports boolean bindings.
 				Then, the <code>'value</code> argument determines its default value (true or false).
@@ -530,7 +536,7 @@
 			}
 
 
-			<h4 id="helper-radio"><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-radio"><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It renders a radio. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
 				one and a <code>&lt;input type="hidden"&gt;</code>.
@@ -567,7 +573,7 @@
 			}
 
 
-			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It renders a select. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
 				one and a <code>&lt;input type="hidden"&gt;</code>.
@@ -652,7 +658,7 @@
 				<strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
 			</p>
 			
-			<h4 id="html5-color"><code>b3.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-color"><code>b3.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
 			</p>
@@ -662,7 +668,7 @@
 				@@b3.color( fooForm("color"), '_label -> "Color" )
 			}
 
-			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
 			</p>
@@ -672,7 +678,7 @@
 				@@b3.date( fooForm("date"), '_label -> "Date" )
 			}
 			
-			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime"</code>.
 			</p>
@@ -682,7 +688,7 @@
 				@@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
 			}
 			
-			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime-local"</code>.
 			</p>
@@ -692,7 +698,7 @@
 				@@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
 			}
 
-			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
 			</p>
@@ -702,7 +708,7 @@
 				@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 			}
 			
-			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="month"</code>.
 			</p>
@@ -712,7 +718,7 @@
 				@@b3.month( fooForm("month"), '_label -> "Month" )
 			}
 			
-			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="number"</code>.
 			</p>
@@ -722,7 +728,7 @@
 				@@b3.number( fooForm("number"), '_label -> "Number", 'min -> 0, 'max -> 50, 'step -> 5 )
 			}
 			
-			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="range"</code>.
 			</p>
@@ -732,7 +738,7 @@
 				@@b3.range( fooForm("range"), '_label -> "Range", 'min -> 0, 'max -> 50 )
 			}
 			
-			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="search"</code>.
 			</p>
@@ -742,7 +748,7 @@
 				@@b3.search( fooForm("search"), '_label -> "Search" )
 			}
 			
-			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="tel"</code>.
 			</p>
@@ -752,7 +758,7 @@
 				@@b3.tel( fooForm("tel"), '_label -> "Telephone" )
 			}
 			
-			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="time"</code>.
 			</p>
@@ -762,7 +768,7 @@
 				@@b3.time( fooForm("time"), '_label -> "Time" )
 			}
 			
-			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="url"</code>.
 			</p>
@@ -772,7 +778,7 @@
 				@@b3.url( fooForm("url"), '_label -> "URL" )
 			}
 			
-			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="week"</code>.
 			</p>
@@ -892,7 +898,7 @@
 				<a href="@routes.Application.extendIt">here</a>.
 			</p>
 			
-			<h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				This is the same as <code>b3.inputType</code> but specifying a custom wrapper for the input tag.
 				It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback icons</strong>.
@@ -933,7 +939,7 @@
 				}
 			}
 			
-			<h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, Lang) => Html)(implicit fc: B3FieldConstructor, lang: Lang)</span></h4>
+			<h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, @msgsClass(isPlay24)) => Html)(implicit fc: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
 				Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
 			</p>
@@ -957,7 +963,7 @@
 	<div class="col-md-3" id="sidebar">
 		<div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
 			<ul class="nav bs-docs-sidenav" data-spy="affix">
-				@docsSelectVersion()
+				@docsSelectVersion(Some("0.4.x"))
 				<li>
 					<a href="#field-constructors">Field Constructors</a>
 					<ul class="nav">

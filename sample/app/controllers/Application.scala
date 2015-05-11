@@ -15,23 +15,43 @@
  */
 package controllers
 
+import javax.inject.Inject
+import play.api.i18n.{ MessagesApi, I18nSupport }
 import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 
-object Application extends Controller {
+case class ReadonlyDemoData(text: String, checkbox: Boolean, radio: String, select: String)
+
+class Application @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
+
+  final val IS_PLAY24_KEY = "isPlay24"
+
+  implicit def requestToIsPlay24(implicit request: Request[_]): Boolean = {
+    request.session.get(IS_PLAY24_KEY) match {
+      case Some("true") => true
+      case _ => false
+    }
+  }
+
+  def selectPlay24(isPlay24: Boolean) = Action { implicit request =>
+    request.headers.get(REFERER).map { referer =>
+      Redirect(referer)
+    }.getOrElse {
+      Redirect(routes.Application.index)
+    }.withSession(IS_PLAY24_KEY -> isPlay24.toString)
+  }
 
   val fooForm = Form(single("foo" -> text(maxLength = 10)))
 
-  def index = Action { Ok(views.html.index(fooForm)) }
-  def vertical = Action { Ok(views.html.vertical(fooForm)) }
-  def horizontal = Action { Ok(views.html.horizontal(fooForm)) }
-  def inline = Action { Ok(views.html.inline(fooForm)) }
-  def mixed = Action { Ok(views.html.mixed(fooForm)) }
+  def index = Action { implicit request => Ok(views.html.index(fooForm)) }
+  def vertical = Action { implicit request => Ok(views.html.vertical(fooForm)) }
+  def horizontal = Action { implicit request => Ok(views.html.horizontal(fooForm)) }
+  def inline = Action { implicit request => Ok(views.html.inline(fooForm)) }
+  def mixed = Action { implicit request => Ok(views.html.mixed(fooForm)) }
 
-  case class ReadonlyDemoData(text: String, checkbox: Boolean, radio: String, select: String)
   val fooReadonlyForm = Form(
     mapping(
       "text" -> nonEmptyText,
@@ -40,7 +60,7 @@ object Application extends Controller {
       "select" -> text
     )(ReadonlyDemoData.apply)(ReadonlyDemoData.unapply)
   )
-  def readonly = Action { Ok(views.html.readonly(fooReadonlyForm, None)) }
+  def readonly = Action { implicit request => Ok(views.html.readonly(fooReadonlyForm, None)) }
   def handleReadonly = Action { implicit request =>
     fooReadonlyForm.bindFromRequest.fold(
       formWithErrors => BadRequest(views.html.readonly(formWithErrors, None)),
@@ -48,33 +68,29 @@ object Application extends Controller {
     )
   }
 
-  def multifield = Action { Ok(views.html.multifield(fooForm)) }
+  def multifield = Action { implicit request => Ok(views.html.multifield(fooForm)) }
 
-  def extendIt = Action { Ok(views.html.extendIt(fooForm)) }
+  def extendIt = Action { implicit request => Ok(views.html.extendIt(fooForm)) }
 
-  def docsMaster = Action { Ok(views.html.docs.master(fooForm)) }
+  def docsMaster = Action { implicit request => Ok(views.html.docs.master(fooForm)) }
 
   /*
   * Thanks to https://thomasheuring.wordpress.com/2013/01/29/scala-playframework-2-04-get-pages-dynamically/
   */
-  def docs(version: String) = Action {
-    import java.lang.reflect.Method
-    import play.twirl.api.Html
+  def docs(version: String) = Action { implicit request =>
+    val viewClazz = "views.html.docs.v" + version.replaceAll("(\\.|-)", "_")
 
-    val viewClazz = "views.html.docs.v" + version.replaceAll("\\.", "_")
-    try {
-      val clazz: Class[_] = Play.current.classloader.loadClass(viewClazz)
-      val render: Method = clazz.getDeclaredMethod("render")
-      val view = render.invoke(clazz).asInstanceOf[Html]
-      Ok(view)
-    } catch {
-      case ex: ClassNotFoundException => {
-        Logger.error("Html.renderDynamic() : could not find view " + viewClazz, ex)
-        NotFound
-      }
-    }
+    import scala.reflect.runtime.{ universe => ru }
+    val mirror = ru.runtimeMirror(getClass.getClassLoader)
+    val cls = mirror.classSymbol(Class.forName(viewClazz))
+    val module = cls.companion.asModule
+    val instance = mirror.reflectModule(module).instance
+    val im = mirror.reflect(instance)
+    val method = im.symbol.typeSignature.member(ru.TermName("render")).asMethod
+    val view = im.reflectMethod(method)(requestToIsPlay24).asInstanceOf[play.twirl.api.Html]
+    Ok(view)
   }
 
-  def changelog = Action { Ok(views.html.changelog()) }
+  def changelog = Action { implicit request => Ok(views.html.changelog()) }
 
 }

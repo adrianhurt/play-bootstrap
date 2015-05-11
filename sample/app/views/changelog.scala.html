@@ -1,5 +1,6 @@
-@()
+@()(implicit isPlay24: Boolean, messages: Messages)
 @import tags._
+@import tags.Version._
 
 @main("Change Log", tab = "changelog") {
 	
@@ -8,10 +9,14 @@
 
 			<h1 id="changelog" class="page-header">Play-Bootstrap3 Change Log</h1>
 			
-			<h2 id="0-4-3-SNAPSHOT">0.4.3-SNAPSHOT</h2>
+			<h2 id="0-4-3-SNAPSHOT">0.4.3-SNAPSHOT and 0.4.3-P24-SNAPSHOT</h2>
+			<p>The project has been split to give support for <strong>Play 2.4.0</strong>. So now there are two parallel versions:</p>
 			<ul>
-				<li><span class="glyphicon glyphicon-chevron-right"></span> Nothing different. Built with Play 2.3.9, jQuery 2.1.4 and Bootstrap 3.3.4.</li>
+				<li><span class="glyphicon glyphicon-chevron-right"></span> <strong>0.4.3-SNAPSHOT:</strong> Nothing different. Built with Play 2.3.9, jQuery 2.1.4 and Bootstrap 3.3.4.</li>
+				<li><span class="glyphicon glyphicon-chevron-right"></span> <strong>0.4.3-P24-SNAPSHOT:</strong> The same for Play 2.4. Built with Play 2.4.0-RC2, jQuery 2.1.4 and Bootstrap 3.3.4.</li>
 			</ul>
+			
+			@lastMigrationGuide()
 			
 			<h2 id="0-4-2">0.4.2</h2>
 			<p class="lead">Released 9 May 2015</p>
@@ -19,7 +24,11 @@
 				<li><span class="glyphicon glyphicon-chevron-right"></span> The forms now always include the required class (<code>form-vertical</code>, <code>form-horizontal</code>, ...) instead of adding it simply as default.</li>
 			</ul>
 			
-			@lastMigrationGuide()
+			@migrationGuide("0.4.2") {
+				<p>
+					You need to add a custom class to a form you can do it with simply <code>'class -> "another-class"</code> instead of <code>'class -> "form-vertical another-class"</code>.
+				</p>
+			}
 			
 			<h2 id="0-4">0.4 - <em>It can be better!</em></h2>
 			<p class="lead">Released 6 February 2015</p>

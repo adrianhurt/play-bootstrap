@@ -1,6 +1,7 @@
-@(fooReadonlyForm: Form[controllers.Application.ReadonlyDemoData], data: Option[controllers.Application.ReadonlyDemoData])
+@(fooReadonlyForm: Form[controllers.ReadonlyDemoData], data: Option[controllers.ReadonlyDemoData])(implicit isPlay24: Boolean, messages: Messages)
 
 @import tags._
+@import tags.Version._
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }

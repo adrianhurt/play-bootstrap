@@ -1,12 +1,15 @@
 name := """play-bootstrap3"""
 
-version := "0.4.3-SNAPSHOT"
+version := "0.4.3-P24-SNAPSHOT"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.6"
 
-crossScalaVersions := Seq("2.11.1", "2.10.4")
+crossScalaVersions := Seq("2.11.6", "2.10.5")
+
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(
+	specs2 % Test,
   "org.webjars" % "jquery" % "2.1.4",
   "org.webjars" % "bootstrap" % "3.3.4")
 

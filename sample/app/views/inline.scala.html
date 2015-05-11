@@ -1,6 +1,7 @@
-@(fooForm: Form[String])
+@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
 
 @import tags._
+@import tags.Version._
 @import b3.inline.fieldConstructor
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }

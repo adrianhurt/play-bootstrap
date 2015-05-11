@@ -1,11 +1,11 @@
 @(version: String)(content: Html)
-@versionId = @{ version.replaceAll("\\.", "_") }
+@versionId = @{ version.replaceAll("(\\.|\\s)", "_") }
 <div class="panel panel-info">
 	<div class="panel-heading" role="tab" id="migration_@versionId">
 		<h4 class="panel-title">
 			<a class="collapsed" data-toggle="collapse" href="#collapse_@versionId" aria-expanded="false" aria-controls="collapse_@versionId">
 				@version Migration guide
-				<i class="fa fa-caret-down pull-right"></i>
+				<i class="fa fa-caret"></i>
 			</a>
 		</h4>
 	</div>

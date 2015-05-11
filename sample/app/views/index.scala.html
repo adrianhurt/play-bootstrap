@@ -1,6 +1,7 @@
-@(fooForm: Form[String])
+@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
 
 @import tags._
+@import tags.Version._
 @import helper.Implicits._
 @import b3.vertical.fieldConstructor
 
@@ -31,9 +32,16 @@
 			<img src="@routes.Assets.at("images/please_star.png")">
 		</div>
 		
-		<h2 id="new" style="margin-top: 60px">New 0.4.2</h2>
+		<h2 id="new" style="margin-top: 60px">New support for Play 2.4.0-RC2</h2>
 		<p>
-			The forms now always include the required class (<code>form-vertical</code>, <code>form-horizontal</code>, ...) instead of adding it simply as default.
+			The project has been split to give support for <strong><em>Play 2.4.0</em></strong>. So now there are two parallel versions:
+		</p>
+		<ul>
+			<li><strong>0.4.3-SNAPSHOT:</strong> Nothing different. Built with <em>Play 2.3.9</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.4</em>.</li>
+			<li><strong>0.4.3-P24-SNAPSHOT:</strong> The same for </em>Play 2.4</em>. Built with <em>Play 2.4.0-RC2</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.4</em>.</li>
+		</ul>
+		<p>
+			<span class="label label-info">Note!</span> There is a new selector on the topbar's right side for change between these versions (<em>Play 2.3</em> and <em>Play 2.4</em>)
 		</p>
 		<p>
 			You can see the full changelog <a href="@routes.Application.changelog" target="_blank">here</a> and it's also available the migration guide.
@@ -265,7 +273,7 @@
 		<h2 id="installation">Installation</h2>
 		<p>
 			You only need to add it as a dependency in your <code>build.sbt</code> file. It is cross compiled
-			against Scala 2.10.4 and 2.11.0.
+			against Scala 2.10.5 and 2.11.6.
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
