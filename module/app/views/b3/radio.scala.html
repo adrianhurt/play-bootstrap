@@ -7,13 +7,13 @@
 	@if(argsMap.contains('readonly)) {
 		<div class="radio-group">
 			@content
-			<input type="hidden" name="@name" value="@{value.getOrElse(options(0)._1)}" @if(!disabled){disabled}/>
+			<input type="hidden" name="@name" value="@{value.getOrElse(options(0)._1)}"@if(!disabled){ disabled}/>
 		</div>
 	} else { @content }
 }
 @displayInput(labelClass: String, v: (String, Any), id: String, name: String, value: Option[String], innerArgsMap: Map[Symbol,Any]) = {
 	<label class="@labelClass" for="@(id)_@v._1">
-		<input type="radio" id="@(id)_@v._1" name="@name" value="@v._1" @if(value == Some(v._1)){checked} @toHtmlArgs(innerArgsMap)>
+		<input type="radio" id="@(id)_@v._1" name="@name" value="@v._1"@if(value == Some(v._1)){ checked} @toHtmlArgs(innerArgsMap)>
 		@v._2
 	</label>
 }
@@ -25,7 +25,7 @@
 			}
 		} else {
 			@options.map { v =>
-				<div class="radio @if(disabled){disabled}">
+				<div class="radio@if(disabled){ disabled}">
 					@displayInput(labelClass = "", v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
 				</div>
 			}

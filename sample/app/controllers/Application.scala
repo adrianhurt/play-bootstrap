@@ -31,8 +31,8 @@ class Application @Inject() (val messagesApi: MessagesApi) extends Controller wi
 
   implicit def requestToIsPlay24(implicit request: Request[_]): Boolean = {
     request.session.get(IS_PLAY24_KEY) match {
-      case Some("true") => true
-      case _ => false
+      case Some("false") => false
+      case _ => true
     }
   }
 

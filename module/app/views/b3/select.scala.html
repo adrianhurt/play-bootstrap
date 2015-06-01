@@ -8,7 +8,7 @@
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
 			@content
-			<input type="hidden" name="@selectName" value="@{value.getOrElse(options(0)._1)}" @if(!disabled){disabled}/>
+			<input type="hidden" name="@selectName" value="@{value.getOrElse(options(0)._1)}"@if(!disabled){ disabled}/>
 		</div>
 	} else { @content }
 }

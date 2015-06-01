@@ -68,7 +68,7 @@ object FieldConstructorsSpec extends Specification {
       case _ => ""
     }
     "render the label" in {
-      simpleInputWithArgs('_label -> "theLabel") must contain("<label class=\"control-label" + colLabel + " \" for=\"foo\">theLabel</label>")
+      simpleInputWithArgs('_label -> "theLabel") must contain("<label class=\"control-label" + colLabel + "\" for=\"foo\">theLabel</label>")
     }
 
     "allow hide the label" in {

@@ -189,7 +189,7 @@ object HelpersSpec extends Specification {
       val bodyReadonlyTrue = b3.checkbox(boolField, 'readonly -> true, 'value -> true).body
       bodyReadonlyTrue must contain("<div class=\"checkbox checkbox-group disabled\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
-      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"true\" />")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"true\"/>")
     }
   }
 
@@ -249,7 +249,7 @@ object HelpersSpec extends Specification {
       bodyReadonlyTrue must contain("<div class=\"radio-group\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
       bodyReadonlyTrue must contain("<div class=\"radio disabled\"")
-      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" />")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
     }
   }
 
@@ -300,7 +300,7 @@ object HelpersSpec extends Specification {
       val bodyReadonlyTrue = b3.select(fooField, fruits, 'readonly -> true, 'value -> "B").body
       bodyReadonlyTrue must contain("<div class=\"select-group\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
-      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" />")
+      bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
     }
 
     "allow multiple" in {
