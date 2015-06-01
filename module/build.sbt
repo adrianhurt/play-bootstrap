@@ -1,6 +1,6 @@
 name := """play-bootstrap3"""
 
-version := "0.4.3-P24-SNAPSHOT"
+version := "0.4.4-P24-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
@@ -9,7 +9,7 @@ crossScalaVersions := Seq("2.11.6", "2.10.5")
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(
-	specs2 % Test,
+  specs2 % Test,
   "org.webjars" % "jquery" % "2.1.4",
   "org.webjars" % "bootstrap" % "3.3.4")
 
@@ -38,11 +38,11 @@ licenses := Seq("Apache License" -> url("https://github.com/adrianhurt/play-boot
 startYear := Some(2014)
 
 publishTo := {
-	val nexus = "https://oss.sonatype.org/"
-	if (isSnapshot.value)
-		Some("snapshots" at nexus + "content/repositories/snapshots")
-	else
-		Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
 publishArtifact in Test := false
@@ -50,17 +50,17 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 pomExtra := (
-	<scm>
-		<url>git@github.com:adrianhurt/play-bootstrap3.git</url>
-		<connection>scm:git:git@github.com:adrianhurt/play-bootstrap3.git</connection>
-	</scm>
-	<developers>
-		<developer>
-			<id>adrianhurt</id>
-			<name>Adrian Hurtado</name>
-			<url>https://github.com/adrianhurt</url>
-		</developer>
-	</developers>
+  <scm>
+    <url>git@github.com:adrianhurt/play-bootstrap3.git</url>
+    <connection>scm:git:git@github.com:adrianhurt/play-bootstrap3.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>adrianhurt</id>
+      <name>Adrian Hurtado</name>
+      <url>https://github.com/adrianhurt</url>
+    </developer>
+  </developers>
 )
 
 credentials += Credentials(Path.userHome / ".sbt" / "sonatype.credentials")
