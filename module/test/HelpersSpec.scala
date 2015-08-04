@@ -118,7 +118,7 @@ object HelpersSpec extends Specification {
   }
   "@file" should {
     "be equivalent to inputType with file type" in {
-      b3.file(fooField, sampleArgs: _*).body.trim must be equalTo sampleInputTypeBody("file")
+      b3.file(fooField, (('class -> "form-control") +: sampleArgs): _*).body.trim must be equalTo sampleInputTypeBody("file")
     }
   }
 

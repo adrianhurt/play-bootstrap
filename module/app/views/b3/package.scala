@@ -248,7 +248,7 @@ package object b3 {
 
   def text(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("text", field, args: _*)
   def password(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("password", field.copy(value = Some("")), args: _*)
-  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("file", field, args: _*)
+  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("file", field, Args.withDefault(args, 'class -> ""): _*)
   def color(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("color", field, args: _*)
   def date(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("date", field, args: _*)
   def datetime(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, messages: Messages) = inputType("datetime", field, args: _*)

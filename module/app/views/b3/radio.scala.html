@@ -1,9 +1,5 @@
 @(field: play.api.data.Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
-@argsMap = @{ args.toMap }
-@readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
-@disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }
-
-@readonlyWrapper(name: String, value: Option[String])(content: Html) = {
+@readonlyWrapper(name: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(content: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="radio-group">
 			@content
@@ -17,17 +13,24 @@
 		@v._2
 	</label>
 }
-@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
-	@readonlyWrapper(fieldInfo.name, fieldInfo.value) {
-		@if(ArgsMap.isTrue(argsMap, '_inline)) {
-			@options.map { v =>
-				@displayInput(labelClass = "radio-inline" + (if (disabled) " disabled" else ""), v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
-			}
-		} else {
-			@options.map { v =>
-				<div class="radio@if(disabled){ disabled}">
-					@displayInput(labelClass = "", v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
-				</div>
+@defining({
+	val argsMap = args.toMap
+	val readonly = ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || ArgsMap.isTrue(argsMap, 'disabled)
+	(argsMap, disabled)
+}) { case (argsMap, disabled) =>
+	@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
+			@if(ArgsMap.isTrue(argsMap, '_inline)) {
+				@options.map { v =>
+					@displayInput(labelClass = "radio-inline" + (if (disabled) " disabled" else ""), v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
+				}
+			} else {
+				@options.map { v =>
+					<div class="radio@if(disabled){ disabled}">
+						@displayInput(labelClass = "", v, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
+					</div>
+				}
 			}
 		}
 	}

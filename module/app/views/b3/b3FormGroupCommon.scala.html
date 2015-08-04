@@ -1,10 +1,11 @@
 @(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any])(wrap: Html => Html)
-@idFormGroup = @{ argsMap.get('_id).map(_.toString).orElse(argsMap.get('id).map(_.toString + "_field")) }
-<div class="form-group @extraClasses @argsMap.get('_class)" @idFormGroup.map{id=>id="@id"}>
-	@wrap {
-		@contentHtml
-		@argsMap.get('_help).map { help =>
-			<span class="help-block">@help</span>
+@defining(argsMap.get('_id).map(_.toString).orElse(argsMap.get('id).map(_.toString + "_field"))) { idFormGroup =>
+	<div class="form-group @extraClasses @argsMap.get('_class)" @idFormGroup.map{id=>id="@id"}>
+		@wrap {
+			@contentHtml
+			@argsMap.get('_help).map { help =>
+				<span class="help-block">@help</span>
+			}
 		}
-	}
-</div>
+	</div>
+}

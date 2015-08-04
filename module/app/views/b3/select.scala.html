@@ -1,10 +1,5 @@
 @(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
-@argsMap = @{ args.toMap }
-@readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
-@disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }
-@multiple = @{ ArgsMap.isTrue(argsMap, 'multiple) }
-
-@readonlyWrapper(selectName: String, value: Option[String])(content: Html) = {
+@readonlyWrapper(selectName: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(content: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
 			@content
@@ -12,22 +7,31 @@
 		</div>
 	} else { @content }
 }
-@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control", 'disabled -> disabled)) { fieldInfo =>
-    @defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
-    @defining( ( !field.indexes.isEmpty && multiple ) match {
-            case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
-			case _ if multiple && fieldInfo.value.isDefined => fieldInfo.value.get.split(",").toSet
-			case _ => fieldInfo.value.toSet
-    }){ values =>
-		@readonlyWrapper(selectName, fieldInfo.value) {
-	        <select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
-	            @argsMap.get('_default).map { defaultValue =>
-	                <option class="blank" value="">@defaultValue</option>
-	            }
-	            @options.map { v =>
-	                <option value="@v._1"@if(values.contains(v._1)){ selected}>@v._2</option>
-	            }
-	        </select>
+@defining({
+	val argsMap = args.toMap
+	val readonly = ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || ArgsMap.isTrue(argsMap, 'disabled)
+	val multiple = ArgsMap.isTrue(argsMap, 'multiple)
+	(argsMap, disabled, multiple)
+}) { case (argsMap, disabled, multiple) =>
+	@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control", 'disabled -> disabled)) { fieldInfo =>
+		@defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
+			@defining( ( !field.indexes.isEmpty && multiple ) match {
+				case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
+				case _ if multiple && fieldInfo.value.isDefined => fieldInfo.value.get.split(",").toSet
+				case _ => fieldInfo.value.toSet
+			}){ values =>
+				@readonlyWrapper(selectName, fieldInfo.value, argsMap, disabled) {
+					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
+						@argsMap.get('_default).map { defaultValue =>
+							<option class="blank" value="">@defaultValue</option>
+						}
+						@options.map { v =>
+							<option value="@v._1"@if(values.contains(v._1)){ selected}>@v._2</option>
+						}
+					</select>
+				}
+			}
 		}
-	}}
+	}
 }
