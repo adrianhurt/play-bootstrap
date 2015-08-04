@@ -1,8 +1,9 @@
 @(fields: play.api.data.Field*)(args: (Symbol,Any)*)(inputsHtml: b3.clear.ClearFieldConstructor => Html)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@multifieldInfo = @{ B3MultifieldInfo(fields, args, lang) }
-@freeFormGroup(extraClasses = multifieldInfo.statusWithFeedback, args) { innerArgsMap =>
-	@inputsHtml(b3.clear.fieldConstructorSpecific)
-	@multifieldInfo.errorsAndInfos.map { errorOrInfo =>
-		<span class="help-block">@errorOrInfo</span>
+@defining(B3MultifieldInfo(fields, args, lang)) { multifieldInfo =>
+	@freeFormGroup(extraClasses = multifieldInfo.statusWithFeedback, args) { innerArgsMap =>
+		@inputsHtml(b3.clear.fieldConstructorSpecific)
+		@multifieldInfo.errorsAndInfos.map { errorOrInfo =>
+			<span class="help-block">@errorOrInfo</span>
+		}
 	}
 }

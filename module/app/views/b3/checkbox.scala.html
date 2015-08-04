@@ -1,17 +1,20 @@
 @(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@argsMap = @{ args.toMap }
-@containsReadonly = @{ argsMap.contains('readonly) }
-@readonly = @{ ArgsMap.isTrue(argsMap, 'readonly) }
-@disabled = @{ readonly || ArgsMap.isTrue(argsMap, 'disabled) }
-
-@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
-	<div class="checkbox@if(containsReadonly){ checkbox-group}@if(disabled){ disabled}">
-		<label for="@fieldInfo.id">
-			<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="true"@if(fieldInfo.value == Some("true")){ checked} @toHtmlArgs(fieldInfo.innerArgsMap)>
-			@argsMap.get('_text)
-		</label>
-		@if(containsReadonly) {
-			<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse("false")}"@if(!disabled){ disabled}/>
-		}
-	</div>
+@defining({
+	val argsMap = args.toMap
+	val containsReadonly = argsMap.contains('readonly)
+	val readonly = ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || ArgsMap.isTrue(argsMap, 'disabled)
+	(argsMap, containsReadonly, readonly, disabled)
+}){ case (argsMap, containsReadonly, readonly, disabled) =>
+	@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+		<div class="checkbox@if(containsReadonly){ checkbox-group}@if(disabled){ disabled}">
+			<label for="@fieldInfo.id">
+				<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="true"@if(fieldInfo.value == Some("true")){ checked} @toHtmlArgs(fieldInfo.innerArgsMap)>
+				@argsMap.get('_text)
+			</label>
+			@if(containsReadonly) {
+				<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse("false")}"@if(!disabled){ disabled}/>
+			}
+		</div>
+	}
 }

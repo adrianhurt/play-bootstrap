@@ -1,7 +1,6 @@
 @(contentHtml: Html, extraClasses: Option[String], argsMap: Map[Symbol, Any], colLabel: String, colOffset: String, colInput: String)
-@labelOpt = @{ argsMap.get('_label) }
 @b3.b3FormGroupCommon(contentHtml, extraClasses, argsMap) { content =>
-	@labelOpt.map { label =>
+	@argsMap.get('_label).map { label =>
 		<label class="control-label @colLabel">@label</label>
 		<div class="@colInput">
 			@content
