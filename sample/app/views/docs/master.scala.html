@@ -436,14 +436,14 @@
 
 			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
 			<p>
-				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default.
+				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default, but you can add an extra class with <code>'class -> "extra_class"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.inputType( "text", fooForm("name"), '_label -> "Name", 'placeholder -> "John Doe" )
+				@b3.inputType( "text", fooForm("name"), 'class -> "extra_class", '_label -> "Name", 'placeholder -> "John Doe" )
 				@b3.inputType( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
 				@b3.inputType( "password", fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
 			}{
-				@@b3.inputType( "text", fooForm("name"), '_label -> "Name", 'placeholder -> "John Doe" )
+				@@b3.inputType( "text", fooForm("name"), 'class -> "extra_class", '_label -> "Name", 'placeholder -> "John Doe" )
 				@@b3.inputType( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 				@@b3.inputType( "password", fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
 			}

@@ -13,10 +13,14 @@
 			<p class="lead">In developement...</p>
 			<ul>
 				<li><span class="glyphicon glyphicon-chevron-right"></span> Performance improvements.</li>
+				<li><span class="glyphicon glyphicon-chevron-right"></span> Now <code>b3.inputType</code>, <code>b3.select</code> and <code>b3.inputWrapped</code> helpers add always the <code>"form-control"</code> and you can add extra classes simply adding <code>'class -> "extra_class"</code>. <code>b3.static</code> does the same with <code>"form-control-static"</code>.</li>
 				<li><span class="glyphicon glyphicon-chevron-right"></span> Now <code>b3.file</code> helper doesn't add the <code>"form-control"</code> default class.</li>
 			</ul>
 			
 			@migrationGuide("0.4.5-P2X-SNAPSHOT") {
+				<p>
+					Now the <code>"form-control"</code> default class is added to any other. So change your old code <code>'class -> "form-control extra_class"</code> for this one <code>'class -> "extra_class"</code>.
+				</p>
 				<p>
 					Now <code>b3.file</code> helper doesn't add the <code>"form-control"</code> default class, so you need to add it explicitly if you want it.
 				</p>
