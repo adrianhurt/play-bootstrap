@@ -14,7 +14,7 @@
 	val multiple = ArgsMap.isTrue(argsMap, 'multiple)
 	(argsMap, disabled, multiple)
 }) { case (argsMap, disabled, multiple) =>
-	@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control", 'disabled -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(Args.withAddingStringValue(args, 'class, "form-control"), 'disabled -> disabled)) { fieldInfo =>
 		@defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
 			@defining( ( !field.indexes.isEmpty && multiple ) match {
 				case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet

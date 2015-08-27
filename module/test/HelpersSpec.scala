@@ -70,6 +70,10 @@ object HelpersSpec extends Specification {
       b3.inputType("text", fooField).body must contain("class=\"form-control\"")
     }
 
+    "allow setting additional classes" in {
+      b3.inputType("text", fooField, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
+    }
+
     "allow setting a default value" in {
       val body = b3.inputType("text", fooField, 'value -> "defaultvalue").body
       val valueAttr = "value=\"defaultvalue\""
@@ -131,6 +135,10 @@ object HelpersSpec extends Specification {
 
     "add form-control class as default" in {
       b3.textarea(fooField).body must contain("class=\"form-control\"")
+    }
+
+    "allow setting additional classes" in {
+      b3.textarea(fooField, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
     }
 
     "allow setting a default value" in {
@@ -261,6 +269,10 @@ object HelpersSpec extends Specification {
 
     "add form-control class as default" in {
       b3.select(fooField, fruits).body must contain("class=\"form-control\"")
+    }
+
+    "allow setting additional classes" in {
+      b3.select(fooField, fruits, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
     }
 
     "be unselected by default" in {
@@ -466,9 +478,12 @@ object HelpersSpec extends Specification {
       b3.static("theLabel")(Html("theText"))(vfc).body must contain("<p class=\"form-control-static\">theText</p>")
     }
 
+    "allow setting additional classes" in {
+      b3.static("theLabel", 'class -> "extra_class")(Html("theText"))(vfc).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
+    }
+
     "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = b3.static("theLabel", 'class -> "theClass", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("theText"))(vfc).body
-      body must not contain ("form-control-static")
+      val body = b3.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("theText"))(vfc).body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")

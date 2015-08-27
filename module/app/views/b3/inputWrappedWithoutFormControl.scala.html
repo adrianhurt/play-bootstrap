@@ -1,5 +1,5 @@
 @(inputType: String, field: play.api.data.Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@inputFormGroup(field, withFeedback = true, withLabelFor = true, Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+@inputFormGroup(field, withFeedback = true, withLabelFor = true, args) { fieldInfo =>
 	@inputGroup {
 	    <input type="@inputType" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
 		@if(fieldInfo.hasFeedback) {

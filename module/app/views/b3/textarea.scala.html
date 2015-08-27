@@ -1,4 +1,4 @@
 @(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
-@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withAddingStringValue(args, 'class, "form-control")) { fieldInfo =>
     <textarea id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap)>@fieldInfo.value</textarea>
 }

@@ -23,6 +23,14 @@ object Args {
   def withDefault(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) = default ++: args
 
   /**
+   * Adds a string value to a selected arg. For example, to add "form-control" to 'class, even if there is already other extra class
+   */
+  def withAddingStringValue(args: Seq[(Symbol, Any)], arg: Symbol, value: String): Seq[(Symbol, Any)] = {
+    val (withArg, withoutArg) = args.partition(_._1 == arg)
+    (arg, withArg.headOption.map(v => s"$value ${v._2.toString}").getOrElse(value)) +: withoutArg
+  }
+
+  /**
    * Removes those arguments which its value is None. It lets you omit those arguments that satisfy some criteria.
    * It also lets you add some default arguments to the parameter 'args'.
    */

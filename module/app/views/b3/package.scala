@@ -244,11 +244,13 @@ package object b3 {
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
+  def inputWrapped(inputType: String, field: Field, args: (Symbol, Any)*)(inputGroup: Html => Html)(implicit handler: B3FieldConstructor, lang: Lang) = inputWrappedWithoutFormControl(inputType, field, Args.withAddingStringValue(args, 'class, "form-control"): _*)(inputGroup)
+  def inputTypeWithoutFormControl(inputType: String, field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputWrappedWithoutFormControl(inputType, field, args: _*)(html => html)
   def inputType(inputType: String, field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputWrapped(inputType, field, args: _*)(html => html)
 
   def text(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("text", field, args: _*)
   def password(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("password", field.copy(value = Some("")), args: _*)
-  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("file", field, Args.withDefault(args, 'class -> ""): _*)
+  def file(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputTypeWithoutFormControl("file", field, args: _*)
   def color(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("color", field, args: _*)
   def date(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("date", field, args: _*)
   def datetime(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("datetime", field, args: _*)
