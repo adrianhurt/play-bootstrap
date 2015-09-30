@@ -1,0 +1,21 @@
+@(field: play.api.data.Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]] => Html)(implicit handler: b3.B3FieldConstructor, messages: Messages)
+@readonlyWrapper(name: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(contentWrapped: Html) = {
+	@if(argsMap.contains('readonly)) {
+		<div class="radio-group">
+			@contentWrapped
+			<input type="hidden" name="@name" value="@{value.orElse(argsMap.get('_default)).get}"@if(!disabled){ disabled}/>
+		</div>
+	} else { @contentWrapped }
+}
+@defining({
+	val argsMap = args.toMap
+	val readonly = ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || ArgsMap.isTrue(argsMap, 'disabled)
+	(argsMap, disabled)
+}) { case (argsMap, disabled) =>
+	@inputFormGroup(field, withFeedback = false, withLabelFor = false, Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
+			@content(ArgsMap.isTrue(argsMap, '_inline), disabled, fieldInfo.id, fieldInfo.name, fieldInfo.value, fieldInfo.innerArgsMap)
+		}
+	}
+}

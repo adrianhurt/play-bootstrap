@@ -1,11 +1,11 @@
-@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
-@readonlyWrapper(selectName: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(content: Html) = {
+@(field: play.api.data.Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit handler: b3.B3FieldConstructor, messages: Messages)
+@readonlyWrapper(selectName: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(contentWrapped: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
-			@content
-			<input type="hidden" name="@selectName" value="@{value.getOrElse(options(0)._1)}"@if(!disabled){ disabled}/>
+			@contentWrapped
+			<input type="hidden" name="@selectName" value="@{value.orElse(argsMap.get('_default)).get}"@if(!disabled){ disabled}/>
 		</div>
-	} else { @content }
+	} else { @contentWrapped }
 }
 @defining({
 	val argsMap = args.toMap
@@ -23,12 +23,7 @@
 			}){ values =>
 				@readonlyWrapper(selectName, fieldInfo.value, argsMap, disabled) {
 					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
-						@argsMap.get('_default).map { defaultValue =>
-							<option class="blank" value="">@defaultValue</option>
-						}
-						@options.map { v =>
-							<option value="@v._1"@if(values.contains(v._1)){ selected}>@v._2</option>
-						}
+						@content(values)
 					</select>
 				}
 			}
