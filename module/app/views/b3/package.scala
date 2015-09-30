@@ -265,6 +265,12 @@ package object b3 {
   def url(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("url", field, args: _*)
   def week(field: Field, args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = inputType("week", field, args: _*)
 
+  def radio(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] => Html)(implicit handler: B3FieldConstructor, lang: Lang) = radioWithContent(field, args: _*)(content)
+  def radio(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = radioWithOptions(field, options, args: _*)
+
+  def select(field: Field, args: (Symbol, Any)*)(content: Set[String] => Html)(implicit handler: B3FieldConstructor, lang: Lang) = selectWithContent(field, args: _*)(content)
+  def select(field: Field, options: Seq[(String, String)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang) = selectWithOptions(field, options, args: _*)
+
   def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("submit", args: _*)(text)
   def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("reset", args: _*)(text)
   def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor) = buttonType("button", args: _*)(text)
