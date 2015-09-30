@@ -1,5 +1,6 @@
 @(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
 
+@import models._
 @import tags._
 @import tags.Version._
 @import b3.vertical.fieldConstructor
@@ -8,6 +9,14 @@
 @playVersion(isPlay24: Boolean) = @{if (isPlay24) "2.4.0-RC2" else "2.3.9"}
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+@fruitsWithCitrus = @{ Seq(
+	Fruit(1L, "Apple", false),
+	Fruit(2L, "Orange", true),
+	Fruit(3L, "Pear", false),
+	Fruit(4L, "Lemon", true),
+	Fruit(5L, "Banana", false)
+)}
 
 
 @main("Documentation", tab = "docs") {
@@ -545,7 +554,7 @@
 				It has an additional special <code>_inline</code> argument to make it an inline radio (for vertical and horizontal forms).
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+				@b3.radio( fooForm("foo_radio1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
 			}{
 				@@opts = @@{ Seq("M"->"Male","F"->"Female") }
 
@@ -567,10 +576,29 @@
 				Note you can use any value for the <code>options</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
+				@b3.radio( fooForm("foo_radio2"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
 			}{
 				@@b3.radio( fooForm("foo"), options = Seq("B" -> Html("Beer <i class=\"fa fa-beer\"></i>"), "C" -> Html("Coffee <i class=\"fa fa-coffee\"></i>")), '_label -> "What do you prefer?" )
 			}
+			
+			<h5 id="helper-radio-customizable" style="margin-top:40px"><code>b3.radio</code> <span class="def">@@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] => Html)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h5>
+			<h5><code>b3.radioOption</code> <span class="def">@@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]))</span></h5>
+			<p>
+				If you need more versatility you can fully customize your radio options:
+			</p>
+			@bsExampleWithCode {
+				@b3.radio( fooForm("foo_radio3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+					@b3.radioOption("B", Html("""Beer <i class="fa fa-beer"></i>"""))
+					@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), 'disabled -> true)
+				}
+			}{
+				@@b3.radio( fooForm("foo3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+					@@b3.radioOption("B", Html("""Beer <i class="fa fa-beer"></i>"""))
+					@@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), 'disabled -> true)
+				}
+			}
+			
+			
 
 
 			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
@@ -622,6 +650,73 @@
 				// with value "A" and "B" by default
 				// it is a string with every value separated by commas
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'value -> "A,B" )
+			}
+
+			<h5 id="helper-select-customizable" style="margin-top:40px"><code>b3.select</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h5>
+			<h5><code>b3.selectOption</code> <span class="def">@@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String])</span></h5>
+			<p>
+				If you need more versatility you can fully customize your select options:
+			</p>
+			@bsExampleWithCode {
+				@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				  <optgroup label="Group 1">
+				    @b3.selectOption("opt_1-1", "Option 1.1")
+				    @b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @b3.selectOption("opt_1-3", "Option 1.3")
+				  </optgroup>
+				  <optgroup label="Group 2">
+				    @b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @b3.selectOption("opt_2-2", "Option 2.2")
+				  </optgroup>
+				}
+				
+				@b3.select( fooForm("foo"), '_label -> "Fruits select" ) { implicit values =>
+					<optgroup label="Citrus fruits">
+				    @fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
+				      @b3.selectOption(citrus.id, citrus.name)
+				    }
+					</optgroup>
+					<optgroup label="Rest of fruits">
+				    @fruitsWithCitrus.filterNot(_.isCitrus).map { fruit =>
+				      @b3.selectOption(fruit.id, fruit.name)
+				    }
+					</optgroup>
+				}
+			}{
+				@@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				  <optgroup label="Group 1">
+				    @@b3.selectOption("opt_1-1", "Option 1.1")
+				    @@b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @@b3.selectOption("opt_1-3", "Option 1.3")
+				  </optgroup>
+				  <optgroup label="Group 2">
+				    @@b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @@b3.selectOption("opt_2-2", "Option 2.2")
+				  </optgroup>
+				}
+				
+				class Fruit (id: Long, name: String, isCitrus: Boolean)
+				
+				@@fruitsWithCitrus = @@{ Seq(
+					Fruit(1L, "Apple", false),
+					Fruit(2L, "Orange", true),
+					Fruit(3L, "Pear", false),
+					Fruit(4L, "Lemon", true),
+					Fruit(5L, "Banana", false)
+				)}
+				
+				@@b3.select( fooForm("foo"), '_label -> "Fruits select" ) { implicit values =>
+					<optgroup label="Citrus fruits">
+				    @@fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
+				      @@b3.selectOption(citrus.id, citrus.name)
+				    }
+					</optgroup>
+					<optgroup label="Rest of fruits">
+				    @@fruitsWithCitrus.filterNot(_.isCitrus).map { fruit =>
+				      @@b3.selectOption(fruit.id, fruit.name)
+				    }
+					</optgroup>
+				}
 			}
 
 
