@@ -1,5 +1,5 @@
 @(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
-@selectWithContent(field, Args.withDefault(args, '_default -> options(0)._1):_*) { implicit values =>
+@selectWithContent(field, Args.withDefault(args, '_default -> options.headOption.map(_._1)):_*) { implicit values =>
 	@args.toMap.get('_default).map { defaultValue =>
 		@selectOption("", defaultValue, 'class -> "blank")
 	}
