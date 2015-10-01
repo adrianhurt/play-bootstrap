@@ -1,5 +1,5 @@
 @(field: play.api.data.Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: b3.B3FieldConstructor, lang: Lang)
-@radioWithContent(field, Args.withDefault(args, '_default -> options(0)._1):_*) { implicit extraInfo =>
+@radioWithContent(field, Args.withDefault(args, '_default -> options.headOption.map(_._1)):_*) { implicit extraInfo =>
 	@options.map { v =>
 		@radioOption(v._1, v._2)
 	}
