@@ -6,7 +6,7 @@
 @import b3.vertical.fieldConstructor
 @horizontalFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
-@playVersion(isPlay24: Boolean) = @{if (isPlay24) "2.4.0-RC2" else "2.3.9"}
+@playVersion(isPlay24: Boolean) = @{if (isPlay24) "2.4" else "2.3"}
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 
@@ -670,10 +670,10 @@
 				  </optgroup>
 				}
 				
-				@b3.select( fooForm("foo"), '_label -> "Fruits select" ) { implicit values =>
+				@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
-				      @b3.selectOption(citrus.id, citrus.name)
+				      @b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
 				    }
 					</optgroup>
 					<optgroup label="Rest of fruits">
@@ -705,10 +705,10 @@
 					Fruit(5L, "Banana", false)
 				)}
 				
-				@@b3.select( fooForm("foo"), '_label -> "Fruits select" ) { implicit values =>
+				@@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @@fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
-				      @@b3.selectOption(citrus.id, citrus.name)
+				      @@b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
 				    }
 					</optgroup>
 					<optgroup label="Rest of fruits">
@@ -758,9 +758,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.color( fooForm("color"), '_label -> "Color" )
+				@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
 			}{
-				@@b3.color( fooForm("color"), '_label -> "Color" )
+				@@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
 			}
 
 			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
@@ -910,14 +910,16 @@
 				@@b3.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
 			}
 			<p>
-				There are two equivalent more versions of <code>b3.static</code> helper: one for labels with <code>HTML</code>, and another one to omit the label.
+				There are two equivalent more versions of <code>b3.static</code> helper: one for labels with <code>HTML</code>, and another one to omit the label. Note that you can also have a hidden label using <code>'_hideLabel'</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
-				@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
+				@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@b3.static(){ <a href="#">Basic control without label</a> }
 			}{
-				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
-				@@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
+				@@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@@b3.static(){ <a href="#">Basic control without label</a> }
 			}
 	
 	
