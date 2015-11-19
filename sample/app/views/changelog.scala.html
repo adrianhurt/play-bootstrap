@@ -9,8 +9,8 @@
 
 			<h1 id="changelog" class="page-header">Play-Bootstrap3 Change Log</h1>
 			
-			<h2 id="0-4-5-P2X-SNAPSHOT">0.4.5-P24-SNAPSHOT and 0.4.5-P23-SNAPSHOT</h2>
-			<p class="lead">In developement...</p>
+			<h2 id="0-4-5-P2X">0.4.5-P24 and 0.4.5-P23</h2>
+			<p class="lead">Released 19 November 2015</p>
 			<ul>
 				<li><span class="glyphicon glyphicon-chevron-right"></span> Performance improvements.</li>
 				<li><span class="glyphicon glyphicon-chevron-right"></span> Now <code>b3.inputType</code>, <code>b3.select</code> and <code>b3.inputWrapped</code> helpers add always the <code>"form-control"</code> and you can add extra classes simply adding <code>'class -> "extra_class"</code>. <code>b3.static</code> does the same with <code>"form-control-static"</code>.</li>
@@ -19,14 +19,7 @@
 				<li><span class="glyphicon glyphicon-plus"></span> Added a new version of <a href="@routes.Application.docsMaster#helper-select-customizable" target="_blank">b3.select</a> with customizable <code>b3.selectOption</code></li>
 			</ul>
 			
-			@migrationGuide("0.4.5-P2X-SNAPSHOT") {
-				<p>
-					Now the <code>"form-control"</code> default class is added to any other. So change your old code <code>'class -> "form-control extra_class"</code> for this one <code>'class -> "extra_class"</code>.
-				</p>
-				<p>
-					Now <code>b3.file</code> helper doesn't add the <code>"form-control"</code> default class, so you need to add it explicitly if you want it.
-				</p>
-			}
+			@lastMigrationGuide()
 			
 			<h2 id="0-4-4">0.4.4-P24 and 0.4.4-P23 - <em>Welcome to Play 2.4!</em></h2>
 			<p class="lead">Released 21 June 2015</p>
@@ -35,7 +28,17 @@
 				<li><span class="glyphicon glyphicon-chevron-right"></span> Removed unnecessary whitespaces.</li>
 			</ul>
 			
-			@lastMigrationGuide()
+      @migrationGuide("Play 2.4") {
+      	<p>
+      		Basically, the only difference is that every <code>Lang</code> object has been replaced with new <code>Messages</code> (note that class <code>Messages</code> has changed in Play 2.4).
+      		That means you need to follow the section about <a href="https://www.playframework.com/documentation/2.4.x/Migration24#I18n" target="_blank">I18n</a> from the
+      		<a href="https://www.playframework.com/documentation/2.4.x/Migration24" target="_blank">Play 2.4 Migration Guide</a> and change every <code>Lang</code> for <code>Messages</code> in
+      		your own custom helpers.
+      	</p>
+      	<p>
+      		Of course, you will need to use the <code>0.4.4-P24</code> version.
+      	</p>
+      }
 			
 			<h2 id="0-4-2">0.4.2</h2>
 			<p class="lead">Released 9 May 2015</p>

@@ -37,8 +37,8 @@
 			The project has been split to give support for <strong><em>Play 2.4</em></strong>. So now there are two parallel versions:
 		</p>
 		<ul>
-			<li><strong>0.4.4-P23:</strong> Nothing different. Built with <em>Play 2.3.9</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.4</em>.</li>
-			<li><strong>0.4.4-P24:</strong> The same for </em>Play 2.4</em>. Built with <em>Play 2.4.0</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.4</em>.</li>
+			<li><strong>0.4.5-P23:</strong> Nothing different. Built with <em>Play 2.3.9</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.4</em>.</li>
+			<li><strong>0.4.5-P24:</strong> The same for </em>Play 2.4</em>. Built with <em>Play 2.4.3</em>, <em>jQuery 2.1.4</em> and <em>Bootstrap 3.3.5</em>.</li>
 		</ul>
 		<p>
 			<span class="label label-info">Note!</span> There is a new selector on the topbar's right side for change between these versions (<em>Play 2.4</em> and <em>Play 2.3</em>)
@@ -273,14 +273,14 @@
 		<h2 id="installation">Installation</h2>
 		<p>
 			You only need to add it as a dependency in your <code>build.sbt</code> file. It is cross compiled
-			against Scala 2.10.5 and 2.11.6.
+			against Scala 2.10.5 and 2.11.7.
 		</p>
 		@code {
 			libraryDependencies ++= Seq(
-				"com.adrianhurt" %% "play-bootstrap3" % "0.4.4"
+				"com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24"
 			)
 		}
-		
+		@*
 		<p>
 			If you want to use the latest snapshot, add the following instead:
 		</p>
@@ -291,6 +291,7 @@
 				"com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24-SNAPSHOT"
 			)
 		}
+    *@
 		<p>
 			Note the <code>play-bootstrap3</code> has <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3</a>
 			and <a href="https://jquery.org" target="_blank">jQuery</a> as
