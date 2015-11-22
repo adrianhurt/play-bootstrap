@@ -11,21 +11,21 @@
 				<img src="@routes.Assets.at("images/logo.gif")" width=100>
 			</div>
 			<div class="header-title">
-				<h1 id="play-bootstrap3">Play-Bootstrap3</h1>
+				<h1 id="play-bootstrap">Play-Bootstrap3</h1>
 				<p class="lead">Play Framework library for Bootstrap 3</p>
 			</div>
 		</div>
 		
 		<p>
 			This is a collection of input helpers and field constructors for
-			<a href="http://www.playframework.com" target="_blank">Play Framework 2.3</a> to render
-			<a href="http://getbootstrap.com" target="_blank">Bootstrap 3</a> HTML code.
+			<a href="http://www.playframework.com" target="_blank">Play Framework</a> to render
+			<a href="http://getbootstrap.com" target="_blank">Bootstrap</a> HTML code.
 		</p>
 		
 		<div id="github-buttons">
-			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap3&type=watch&count=true&size=large"
+			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap&type=watch&count=true&size=large"
 				allowtransparency="true" frameborder="0" scrolling="0" width="160" height="30"></iframe>
-			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap3&type=fork&count=true&size=large"
+			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap&type=fork&count=true&size=large"
 				allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
 			
 			<img src="@routes.Assets.at("images/please_star.png")">
@@ -41,13 +41,13 @@
 					inner field constructors for mixed forms (with another one instead of the default one). Thus,
 					you don't need to add a field constructor explicitly any more. See more details in the
 					documentation sections 
-					<a href="@routes.Application.docsMaster#field-constructors-specific" target="_blank">Specific field constructors</a> and
-					<a href="@routes.Application.docsMaster#forms-specific" target="_blank">Forms with a specific <code>B3FieldConstructor</code></a>.
+					<a href="@routes.Application.docs#field-constructors-specific" target="_blank">Specific field constructors</a> and
+					<a href="@routes.Application.docs#forms-specific" target="_blank">Forms with a specific <code>B3FieldConstructor</code></a>.
 				</li>
-				<li><a href="@routes.Application.docsMaster#helpers-validation-states" target="_blank">Validations states and feedback icons</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#aria" target="_blank">WAI-ARIA attributes</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#arguments-optional" target="_blank">Optional arguments</a> support.</li>
-				<li><a href="@routes.Application.docsMaster#arguments-labels" target="_blank">Better label rendering</a>.</li>
+				<li><a href="@routes.Application.docs#helpers-validation-states" target="_blank">Validations states and feedback icons</a> support.</li>
+				<li><a href="@routes.Application.docs#aria" target="_blank">WAI-ARIA attributes</a> support.</li>
+				<li><a href="@routes.Application.docs#arguments-optional" target="_blank">Optional arguments</a> support.</li>
+				<li><a href="@routes.Application.docs#arguments-labels" target="_blank">Better label rendering</a>.</li>
 			</ul>
 			For the last two versions I have tried to simplify the syntax, specially for mixed forms. I know it's
 			very annoying to modify your own code to adapt to each version of the library. Sorry for that. Fortunately,
@@ -55,9 +55,8 @@
 			the library will only be updated for adding new features.
 		</p>
 		<p>
-			You can see the full changelog <a href="@routes.Application.changelog" target="_blank">here</a> and it's also available the migration guide.
+			You can see the full changelog <a href="/changelog" target="_blank">here</a> and it's also available the migration guide.
 		</p>
-		@lastMigrationGuide()
 		
 		
 		
@@ -188,7 +187,7 @@
 			so you can collaborate or ask for others.
 		</p>
 		<p>
-			See the list of available helpers <a href="@routes.Application.docsMaster#helpers" target="_blank">here</a>.
+			See the list of available helpers <a href="@routes.Application.docs#helpers" target="_blank">here</a>.
 		</p>
 		
 		
@@ -212,7 +211,7 @@
 			@@b3.text( fooForm("foo"), '_label -> "A maybe disabled text", 'disabled -> maybeTrueFunction(...) )
 		}
 		<p>
-			See more about <a href="@routes.Application.docsMaster#arguments-boolean" target="_blank">Boolean arguments</a>.
+			See more about <a href="@routes.Application.docs#arguments-boolean" target="_blank">Boolean arguments</a>.
 		</p>
 		
 		<h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
@@ -228,7 +227,7 @@
 			will also add the <code>disabled</code> attribute. Then, Bootstrap 3 will avoid their interactability.
 		</p>
 		<p>
-			See more about <a href="@routes.Application.docsMaster#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+			See more about <a href="@routes.Application.docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
 		</p>
 		
 		
@@ -277,7 +276,7 @@
 			will do automatically for you</strong> for any field constructor.
 		</p>
 		<p>
-			See more about <a href="@routes.Application.docsMaster#aria" target="_blank">ARIA attributes</a> support.
+			See more about <a href="@routes.Application.docs#aria" target="_blank">ARIA attributes</a> support.
 		</p>
 		
 		
@@ -303,7 +302,7 @@
 			)
 		}
 		<p>
-			Note the <code>play-bootstrap3</code> has <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3</a>
+			Note the <code>play-bootstrap</code> has <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3</a>
 			and <a href="https://jquery.org" target="_blank">jQuery</a> as
 			<a href="http://www.webjars.org" target="_blank">WebJar</a> dependencies, so they are included automatically.
 			Specifically, it adds the following dependencies for you:
@@ -322,7 +321,7 @@
 			<a href="@routes.Application.mixed">different mixed forms</a>.
 		</p>
 		<p>
-			You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>.
+			You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>.
 		</p>
 		<p>
 			More examples:
@@ -334,19 +333,19 @@
 		
 		<h2 id="documentation">Documentation</h2>
 		<p>
-			You can check the documentation <a href="@routes.Application.docsMaster">here</a>.
+			You can check the documentation <a href="@routes.Application.docs">here</a>.
 		</p>
 		
 		
 		<h2 id="customization">Customization</h2>
 		<p>
 			This is a very simple library, and you have all the code on
-			<a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github</a>. So you can use it as
+			<a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>. So you can use it as
 			inspiration and create your own field constructors and/or helpers.
 		</p>
 		
 		<h2 id="changelog">Change Log</h2>
 		<p>
-			You can check the change log <a href="@routes.Application.changelog">here</a>.
+			You can check the change log <a href="/changelog">here</a>.
 		</p>
 }

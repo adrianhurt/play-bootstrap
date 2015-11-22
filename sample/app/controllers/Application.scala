@@ -49,32 +49,7 @@ object Application extends Controller {
   }
 
   def multifield = Action { Ok(views.html.multifield(fooForm)) }
-
   def extendIt = Action { Ok(views.html.extendIt(fooForm)) }
-
-  def docsMaster = Action { Ok(views.html.docs.master(fooForm)) }
-
-  /*
-  * Thanks to https://thomasheuring.wordpress.com/2013/01/29/scala-playframework-2-04-get-pages-dynamically/
-  */
-  def docs(version: String) = Action {
-    import java.lang.reflect.Method
-    import play.twirl.api.Html
-
-    val viewClazz = "views.html.docs.v" + version.replaceAll("\\.", "_")
-    try {
-      val clazz: Class[_] = Play.current.classloader.loadClass(viewClazz)
-      val render: Method = clazz.getDeclaredMethod("render")
-      val view = render.invoke(clazz).asInstanceOf[Html]
-      Ok(view)
-    } catch {
-      case ex: ClassNotFoundException => {
-        Logger.error("Html.renderDynamic() : could not find view " + viewClazz, ex)
-        NotFound
-      }
-    }
-  }
-
-  def changelog = Action { Ok(views.html.changelog()) }
+  def docs = Action { Ok(views.html.docs(fooForm)) }
 
 }

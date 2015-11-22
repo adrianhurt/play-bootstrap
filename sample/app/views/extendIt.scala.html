@@ -19,7 +19,7 @@
 		<h2 id="create-helper">Create your own helper</h2>
 		<p>
 			To create a helper is very easy. You only have to look the helpers within the
-			<a href="https://github.com/adrianhurt/play-bootstrap3" target="_blank">Github repository</a>.
+			<a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github repository</a>.
 			Let's suppose you want to add an input group for every email input. And you would like
 			to create your own email helper like this one: 
 		</p>
@@ -41,7 +41,7 @@
 		}
 		<p>
 			The code is a reduced version of <code>b3.inputWrapped</code> adapted to this purpose (you can see it
-			<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/module/app/views/b3/inputWrapped.scala.html" target="_blank">here</a>).
+			<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/module/app/views/b3/inputWrapped.scala.html" target="_blank">here</a>).
 			The library is very easy and it's documented, so you can check it to understand how it works. The main concept
 			is that <code>b3.inputFormGroup</code> will generate the whole <code>form-group</code>. For that it needs
 			the field, some arguments and a function that returns the input HTML with the field information. All that
@@ -120,11 +120,11 @@
 	}
 	<p>
 		We are going to make it easy. Let's going to copy the files for the vertical field constructor and modify them. You can
-		see the files <a href="https://github.com/adrianhurt/play-bootstrap3/tree/master/module/app/views/b3/vertical" target="_blank">here</a>.
+		see the files <a href="https://github.com/adrianhurt/play-bootstrap/tree/master/module/app/views/b3/vertical" target="_blank">here</a>.
 		So create a folder <code>views/b3/my/vertical</code> and copy there the files
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/module/app/views/b3/vertical/b3FieldConstructor.scala.html" target="_blank">b3FieldConstructor.scala.html</a>,
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/module/app/views/b3/vertical/b3FormGroup.scala.html" target="_blank">b3FormGroup.scala.html</a> and
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/module/app/views/b3/vertical/package.scala" target="_blank">package.scala</a>.
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/module/app/views/b3/vertical/b3FieldConstructor.scala.html" target="_blank">b3FieldConstructor.scala.html</a>,
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/module/app/views/b3/vertical/b3FormGroup.scala.html" target="_blank">b3FormGroup.scala.html</a> and
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/module/app/views/b3/vertical/package.scala" target="_blank">package.scala</a>.
 	</p>
 	<p>
 		Modify <code>b3FieldConstructor.scala.html</code> and <code>b3FormGroup.scala.html</code> to get the functionality you want. For
@@ -161,8 +161,8 @@
 	}
 	<p>
 		Do the same with <code>b3FormGroup.scala.html</code>. You can check them at the Github repository here:
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/sample/app/views/b3/my/vertical/b3FieldConstructor.scala.html" target="_blank">b3FieldConstructor.scala.html</a> and
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/sample/app/views/b3/my/vertical/b3FormGroup.scala.html" target="_blank">b3FormGroup.scala.html</a>.
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/sample/app/views/b3/my/vertical/b3FieldConstructor.scala.html" target="_blank">b3FieldConstructor.scala.html</a> and
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/sample/app/views/b3/my/vertical/b3FormGroup.scala.html" target="_blank">b3FormGroup.scala.html</a>.
 	</p>
 	<p>
 		Finally, the modifications for this examples to <code>package.scala</code> are minimal:
@@ -172,7 +172,7 @@
 			<li>Change the value of <code>formClass</code> to <code>"form-my-vertical"</code></li>
 		</ul>
 		You can check the code
-		<a href="https://github.com/adrianhurt/play-bootstrap3/blob/master/sample/app/views/b3/my/vertical/package.scala" target="_blank">here</a>.
+		<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/sample/app/views/b3/my/vertical/package.scala" target="_blank">here</a>.
 	</p>
 			
 	<p>
