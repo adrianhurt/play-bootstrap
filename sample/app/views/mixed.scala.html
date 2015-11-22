@@ -1,7 +1,7 @@
-@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
+@(fooForm: Form[String])(implicit messages: Messages)
 
 @import tags._
-@import tags.Version._
+@import utils.BSVersion
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
@@ -46,7 +46,7 @@
 	<h3 id="inline-form">The typical inline login form on top</h3>
 	<p>
 		Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor
-		(and the @msgsName(isPlay24), which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
+		(and the @BSVersion.msgsName, which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
 	</p>
 	@bsExampleWithCode {
 		@b3.inline.form(routes.Application.mixed) { implicit ifc =>
@@ -164,7 +164,7 @@
 		Or simply:
 	</p>
 	@code {
-		@@b3.text( fooForm("bar"), '_label -> "Inline input text" )(b3.inline.fieldConstructor, implicitly[@msgsClass(isPlay24)])
+		@@b3.text( fooForm("bar"), '_label -> "Inline input text" )(b3.inline.fieldConstructor, implicitly[@BSVersion.msgsClass])
 	}
 	<p>
 		But remember that horizontal and inline controls need to be inside their corresponding

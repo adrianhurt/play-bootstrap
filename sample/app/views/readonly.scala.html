@@ -1,7 +1,7 @@
-@(fooReadonlyForm: Form[controllers.ReadonlyDemoData], data: Option[controllers.ReadonlyDemoData])(implicit isPlay24: Boolean, messages: Messages)
+@(fooReadonlyForm: Form[controllers.ReadonlyDemoData], data: Option[controllers.ReadonlyDemoData])(implicit messages: Messages)
 
 @import tags._
-@import tags.Version._
+@import utils.BSVersion
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
@@ -63,7 +63,7 @@
 	
 	<p>
 		Check
-		<a target="_blank" href="https://github.com/adrianhurt/play-bootstrap3/blob/master/sample/app/assets/javascripts/main.coffee">here</a>
+		<a target="_blank" href="https://github.com/adrianhurt/play-bootstrap/blob/master/sample/app/assets/javascripts/main.coffee">here</a>
 		the CoffeScript code used for lock and unlock the fields.
 	</p>
 }

@@ -12,12 +12,9 @@ GET		/readonly					controllers.Application.readonly
 POST	/readonly					controllers.Application.handleReadonly
 GET		/multifield				controllers.Application.multifield
 GET		/extend-it				controllers.Application.extendIt
-GET		/docs							controllers.Application.docsMaster
-GET		/docs/:version		controllers.Application.docs(version: String)
-GET		/changelog				controllers.Application.changelog
+GET		/docs							controllers.Application.docs
+GET		/changelog				controllers.Default.redirect(to = "http://adrianhurt.github.io/play-bootstrap/changelog")
 
-GET		/version/play23		controllers.Application.selectPlay24(isPlay24: Boolean = false)
-GET		/version/play24		controllers.Application.selectPlay24(isPlay24: Boolean = true)
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/assets/*file			controllers.Assets.at(path="/public", file)

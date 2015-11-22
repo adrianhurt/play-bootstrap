@@ -1,7 +1,7 @@
-@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
+@(fooForm: Form[String])(implicit messages: Messages)
 
 @import tags._
-@import tags.Version._
+@import utils.BSVersion
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-4", "col-md-8") }
 
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }

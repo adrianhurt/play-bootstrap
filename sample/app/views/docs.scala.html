@@ -1,24 +1,30 @@
-@(fooForm: Form[String])(implicit isPlay24: Boolean, messages: Messages)
+@(fooForm: Form[String])(implicit messages: Messages)
 
+@import models._
 @import tags._
-@import tags.Version._
+@import utils.BSVersion
 @import b3.vertical.fieldConstructor
 @horizontalFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 
-@playVersion(isPlay24: Boolean) = @{if (isPlay24) "2.4" else "2.3"}
-
 @fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+@fruitsWithCitrus = @{ Seq(
+	Fruit(1L, "Apple", false),
+	Fruit(2L, "Orange", true),
+	Fruit(3L, "Pear", false),
+	Fruit(4L, "Lemon", true),
+	Fruit(5L, "Banana", false)
+)}
 
 
 @main("Documentation", tab = "docs") {
 
 <div class="row" id="affix-target">
 	<div class="col-md-9" role="main">
-		@b3.form(routes.Application.docsMaster) {
+		@b3.form(routes.Application.docs) {
 		
 			<h1 id="documentation" class="page-header">
-				Documentation (Play @playVersion(isPlay24))
-				<a href="@routes.Application.selectPlay24(!isPlay24)" style="font-size: 0.5em"><i class="fa fa-external-link"></i> @playVersion(!isPlay24)</a>
+				Documentation (@BSVersion.code)
 			</h1>
 			<p class="lead">This page explains each component in more details.</p>
 			
@@ -356,7 +362,7 @@
 
 				@@b3.form(routes.Application.handleRequest) { // vertical form as default
 					@@b3.text( fooForm("foo"), '_label -> "Vertical input text" )
-					@@b3.text( fooForm("bar"), '_label -> "Horizontal input text" )(horizontalFC, implicitly[@msgsClass(isPlay24)])
+					@@b3.text( fooForm("bar"), '_label -> "Horizontal input text" )(horizontalFC, implicitly[@BSVersion.msgsClass])
 					...
 				}
 			}
@@ -434,7 +440,7 @@
 			
 	
 
-			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default, but you can add an extra class with <code>'class -> "extra_class"</code>.
 			</p>
@@ -449,7 +455,7 @@
 			}
 
 
-			<h4 id="helper-text"><code>b3.text</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-text"><code>b3.text</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="text"</code>.
 			</p>
@@ -460,7 +466,7 @@
 			}
 
 
-			<h4 id="helper-password"><code>b3.password</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-password"><code>b3.password</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="password"</code>.
 			</p>
@@ -474,7 +480,7 @@
 			}
 
 
-			<h4 id="helper-file"><code>b3.file</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-file"><code>b3.file</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="file"</code>.
 			</p>
@@ -486,7 +492,7 @@
 
 
 			
-			<h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a textarea and it adds <code>class="form-control"</code> by default.
 			</p>
@@ -497,7 +503,7 @@
 			}
 
 
-			<h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a checkbox. It have always the attribute value set to true. So it only supports boolean bindings.
 				Then, the <code>'value</code> argument determines its default value (true or false).
@@ -536,7 +542,7 @@
 			}
 
 
-			<h4 id="helper-radio"><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-radio"><code>b3.radio</code> <span class="def">@@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a radio. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
 				one and a <code>&lt;input type="hidden"&gt;</code>.
@@ -545,7 +551,7 @@
 				It has an additional special <code>_inline</code> argument to make it an inline radio (for vertical and horizontal forms).
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+				@b3.radio( fooForm("foo_radio1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
 			}{
 				@@opts = @@{ Seq("M"->"Male","F"->"Female") }
 
@@ -567,13 +573,32 @@
 				Note you can use any value for the <code>options</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
+				@b3.radio( fooForm("foo_radio2"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
 			}{
 				@@b3.radio( fooForm("foo"), options = Seq("B" -> Html("Beer <i class=\"fa fa-beer\"></i>"), "C" -> Html("Coffee <i class=\"fa fa-coffee\"></i>")), '_label -> "What do you prefer?" )
 			}
+			
+			<h5 id="helper-radio-customizable" style="margin-top:40px"><code>b3.radio</code> <span class="def">@@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] => Html)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h5>
+			<h5><code>b3.radioOption</code> <span class="def">@@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]))</span></h5>
+			<p>
+				If you need more versatility you can fully customize your radio options:
+			</p>
+			@bsExampleWithCode {
+				@b3.radio( fooForm("foo_radio3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+					@b3.radioOption("B", Html("""Beer <i class="fa fa-beer"></i>"""))
+					@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), 'disabled -> true)
+				}
+			}{
+				@@b3.radio( fooForm("foo3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+					@@b3.radioOption("B", Html("""Beer <i class="fa fa-beer"></i>"""))
+					@@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), 'disabled -> true)
+				}
+			}
+			
+			
 
 
-			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="helper-select"><code>b3.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a select. It supports <code>readonly</code> attribute adding an additional <code>disabled</code>
 				one and a <code>&lt;input type="hidden"&gt;</code>.
@@ -624,6 +649,73 @@
 				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'value -> "A,B" )
 			}
 
+			<h5 id="helper-select-customizable" style="margin-top:40px"><code>b3.select</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h5>
+			<h5><code>b3.selectOption</code> <span class="def">@@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String])</span></h5>
+			<p>
+				If you need more versatility you can fully customize your select options:
+			</p>
+			@bsExampleWithCode {
+				@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				  <optgroup label="Group 1">
+				    @b3.selectOption("opt_1-1", "Option 1.1")
+				    @b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @b3.selectOption("opt_1-3", "Option 1.3")
+				  </optgroup>
+				  <optgroup label="Group 2">
+				    @b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @b3.selectOption("opt_2-2", "Option 2.2")
+				  </optgroup>
+				}
+				
+				@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
+					<optgroup label="Citrus fruits">
+				    @fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
+				      @b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
+				    }
+					</optgroup>
+					<optgroup label="Rest of fruits">
+				    @fruitsWithCitrus.filterNot(_.isCitrus).map { fruit =>
+				      @b3.selectOption(fruit.id, fruit.name)
+				    }
+					</optgroup>
+				}
+			}{
+				@@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				  <optgroup label="Group 1">
+				    @@b3.selectOption("opt_1-1", "Option 1.1")
+				    @@b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @@b3.selectOption("opt_1-3", "Option 1.3")
+				  </optgroup>
+				  <optgroup label="Group 2">
+				    @@b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @@b3.selectOption("opt_2-2", "Option 2.2")
+				  </optgroup>
+				}
+				
+				class Fruit (id: Long, name: String, isCitrus: Boolean)
+				
+				@@fruitsWithCitrus = @@{ Seq(
+					Fruit(1L, "Apple", false),
+					Fruit(2L, "Orange", true),
+					Fruit(3L, "Pear", false),
+					Fruit(4L, "Lemon", true),
+					Fruit(5L, "Banana", false)
+				)}
+				
+				@@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
+					<optgroup label="Citrus fruits">
+				    @@fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
+				      @@b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
+				    }
+					</optgroup>
+					<optgroup label="Rest of fruits">
+				    @@fruitsWithCitrus.filterNot(_.isCitrus).map { fruit =>
+				      @@b3.selectOption(fruit.id, fruit.name)
+				    }
+					</optgroup>
+				}
+			}
+
 
 			<h4 id="helper-hidden"><code>b3.hidden</code> <span class="def">@@(name: Any, value: Any, args: (Symbol, Any)*)</span></h4>
 			<p>
@@ -658,17 +750,17 @@
 				<strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
 			</p>
 			
-			<h4 id="html5-color"><code>b3.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-color"><code>b3.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.color( fooForm("color"), '_label -> "Color" )
+				@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
 			}{
-				@@b3.color( fooForm("color"), '_label -> "Color" )
+				@@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
 			}
 
-			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
 			</p>
@@ -678,7 +770,7 @@
 				@@b3.date( fooForm("date"), '_label -> "Date" )
 			}
 			
-			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime"</code>.
 			</p>
@@ -688,7 +780,7 @@
 				@@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
 			}
 			
-			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime-local"</code>.
 			</p>
@@ -698,7 +790,7 @@
 				@@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
 			}
 
-			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
 			</p>
@@ -708,7 +800,7 @@
 				@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 			}
 			
-			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="month"</code>.
 			</p>
@@ -718,7 +810,7 @@
 				@@b3.month( fooForm("month"), '_label -> "Month" )
 			}
 			
-			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="number"</code>.
 			</p>
@@ -728,7 +820,7 @@
 				@@b3.number( fooForm("number"), '_label -> "Number", 'min -> 0, 'max -> 50, 'step -> 5 )
 			}
 			
-			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="range"</code>.
 			</p>
@@ -738,7 +830,7 @@
 				@@b3.range( fooForm("range"), '_label -> "Range", 'min -> 0, 'max -> 50 )
 			}
 			
-			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="search"</code>.
 			</p>
@@ -748,7 +840,7 @@
 				@@b3.search( fooForm("search"), '_label -> "Search" )
 			}
 			
-			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="tel"</code>.
 			</p>
@@ -758,7 +850,7 @@
 				@@b3.tel( fooForm("tel"), '_label -> "Telephone" )
 			}
 			
-			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="time"</code>.
 			</p>
@@ -768,7 +860,7 @@
 				@@b3.time( fooForm("time"), '_label -> "Time" )
 			}
 			
-			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="url"</code>.
 			</p>
@@ -778,7 +870,7 @@
 				@@b3.url( fooForm("url"), '_label -> "URL" )
 			}
 			
-			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b3.inputType</code> for <code>type="week"</code>.
 			</p>
@@ -815,14 +907,16 @@
 				@@b3.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
 			}
 			<p>
-				There are two equivalent more versions of <code>b3.static</code> helper: one for labels with <code>HTML</code>, and another one to omit the label.
+				There are two equivalent more versions of <code>b3.static</code> helper: one for labels with <code>HTML</code>, and another one to omit the label. Note that you can also have a hidden label using <code>'_hideLabel'</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
-				@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
+				@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@b3.static(){ <a href="#">Basic control without label</a> }
 			}{
-				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
-				@@b3.static(){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
+				@@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@@b3.static(){ <a href="#">Basic control without label</a> }
 			}
 	
 	
@@ -898,7 +992,7 @@
 				<a href="@routes.Application.extendIt">here</a>.
 			</p>
 			
-			<h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				This is the same as <code>b3.inputType</code> but specifying a custom wrapper for the input tag.
 				It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback icons</strong>.
@@ -939,7 +1033,7 @@
 				}
 			}
 			
-			<h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, @msgsClass(isPlay24)) => Html)(implicit fc: B3FieldConstructor, @msgsArg(isPlay24))</span></h4>
+			<h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, @BSVersion.msgsClass) => Html)(implicit fc: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
 			</p>
@@ -963,7 +1057,6 @@
 	<div class="col-md-3" id="sidebar">
 		<div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
 			<ul class="nav bs-docs-sidenav" data-spy="affix">
-				@docsSelectVersion(Some("0.4.x"))
 				<li>
 					<a href="#field-constructors">Field Constructors</a>
 					<ul class="nav">
