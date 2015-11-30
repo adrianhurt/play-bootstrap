@@ -1,0 +1,334 @@
+---
+title: "Play-Bootstrap 0.1 | Inline forms examples"
+layout: default_b3
+permalink: /0.1/inline/
+version: "0.1"
+uri: /inline/
+tab: inline
+---
+<form action="/inline" method="GET" class="form-inline " role="form">
+  <h1 id="inline-form" class="page-header">Inline Form</h1>
+  <p class="lead">This page its an example to show how to use a inline form.</p>
+  <div class="col-md-8">
+    <p>
+      Bootstrap 3 aligns inline controls with <code>vertical-align: middle</code>. But there are some cases, like controls with <code>help-blocks</code>, that it doesn't fit very well. So that, you can easily tweak this with a simple <code>vertical-align: top</code>. You can enable this tweak for this page by clicking the button on the right.
+    </p>
+  </div>
+  <div class="col-md-4 tweak">
+    <button class="btn btn-xs btn-info apply-tweak" data-toggle="button">Apply tweak to this page</button>
+    <div class="highlight">
+<pre><code>.form-inline .form-group {
+  vertical-align: top;
+}</code></pre>
+    </div>
+  </div>
+  <p>
+    First of all, you need to declare as implicit the inline field constructor.
+  </p>
+  <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.inline.fieldConstructor }</code></pre>
+  </div>
+  <p>
+    Or simply:
+  </p>
+  <div class="highlight">
+<pre><code>@import b3.inline.fieldConstructor</code></pre>
+  </div>
+  <p>
+    By default, the inline field constructor hides the label using the <code>sr-only</code> class, but you can show it with the <code>_showLabel</code> argument.
+  </p>
+  
+      
+      
+  <h3 id="simple-inputs">Simple inputs</h3>
+  <div class="bs-example">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Input Text</label>
+      <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Email</label>
+      <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="example@mail.com">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Password</label>
+      <input type="password" id="foo" name="foo" value="" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">File</label>
+      <input type="file" id="foo" name="foo" value="" class="form-control">
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+@b3.email( fooForm("foo"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("foo"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.file( fooForm("foo"), '_hiddenLabel -&gt; "File" )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="more-options">More options</h3>
+  <div class="bs-example">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Input Text</label>
+      <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label" for="foo">Show label</label>
+      <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Show label">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Help</label>
+      <input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing a help...">
+      <span id="foo_info_0" class="help-block">This is a help text</span>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Constraints</label>
+      <input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing its constraints...">
+      <span id="foo_info_0" class="help-block">Maximum length: 10</span>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Without label">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">A big text</label>
+      <input type="text" id="foo" name="foo" value="" class="form-control input-lg" placeholder="An awesome field...">
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Show label", '_showLabel -&gt; true, 'placeholder -&gt; "Show label" )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Help", '_help -&gt; "This is a help text", 'placeholder -&gt; "A simple text showing a help..." )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Constraints", '_showConstraints -&gt; true, 'placeholder -&gt; "A simple text showing its constraints..." )
+@b3.text( fooForm("foo"), 'placeholder -&gt; "Without label" )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "A big text", 'class -&gt; "form-control input-lg", 'placeholder -&gt; "An awesome field..." )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
+  <div class="bs-example">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Textarea</label>
+      <textarea id="foo" name="foo" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <div class="checkbox">
+        <label for="foo">
+          <input type="checkbox" id="foo" name="foo" value="true" checked="true"> Checkbox
+        </label>
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <div class="radio">
+        <label class="" for="foo_M">
+          <input type="radio" id="foo_M" name="foo" value="M"> Male
+        </label>
+      </div>
+      <div class="radio">
+        <label class="" for="foo_F">
+          <input type="radio" id="foo_F" name="foo" value="F"> Female
+        </label>
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Select</label>
+      <select id="foo" name="foo" class="form-control">
+        <option value="A">Apples</option>
+        <option value="P">Pears</option>
+        <option value="B">Bananas</option>
+      </select>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Multiple Select</label>
+      <select id="foo" name="foo[]" class="form-control" multiple="true">
+        <option value="A">Apples</option>
+        <option value="P">Pears</option>
+        <option value="B">Bananas</option>
+      </select>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.textarea( fooForm("foo"), '_hiddenLabel -&gt; "Textarea", 'rows -&gt; 3 )
+@b3.checkbox( fooForm("foo"), '_text -&gt; "Checkbox", 'checked -&gt; true )
+@b3.radio( fooForm("foo"), options = Seq("M"-&gt;"Male","F"-&gt;"Female") )
+  
+@fruits = @{ Seq("A"-&gt;"Apples","P"-&gt;"Pears","B"-&gt;"Bananas") }
+...
+@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -&gt; "Select" )
+@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -&gt; "Multiple Select", 'multiple -&gt; true )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
+  <p>Checkboxes, radio buttons and selects also support <code>readonly</code> attribute adding a <strong>hidden input</strong>.</p>
+  <div class="bs-example">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Disabled</label>
+      <input type="text" id="foo" name="foo" value="" class="form-control" disabled="true" placeholder="Disabled text...">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <div class="checkbox checkbox-group disabled">
+        <label for="foo">
+          <input type="checkbox" id="foo" name="foo" value="true" checked="" disabled="true" readonly="true"> Readonly checkbox
+        </label>
+        <input type="hidden" name="foo" value="true">
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Select</label>
+      <div class="select-group">
+        <select id="foo" name="foo[]" class="form-control" disabled="true" multiple="true" readonly="true">
+          <option value="A">Apples</option>
+          <option value="P" selected="">Pears</option>
+          <option value="B" selected="">Bananas</option>
+        </select>
+        <input type="hidden" name="foo[]" value="B,P">
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Disabled", 'disabled -&gt; true, 'placeholder -&gt; "Disabled text..." )
+@b3.checkbox( fooForm("foo"), '_text -&gt; "Readonly checkbox", 'readonly -&gt; true, 'value -&gt; true )
+@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -&gt; "Select", 'multiple -&gt; true, 'readonly -&gt; true, 'value -&gt; "B,P" )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="validation-states">Validation states</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group  has-success" id="foo_field">
+          <label class="control-label sr-only" for="foo">Success</label>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Success text...">
+        </div>
+        <div class="form-group  has-warning" id="foo_field">
+          <label class="control-label sr-only" for="foo">Warning</label>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Warning text...">
+        </div>
+        <div class="form-group  has-error" id="foo_field">
+          <label class="control-label sr-only" for="foo">Error</label>
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_error_0" aria-invalid="true" class="form-control" placeholder="Error text...">
+          <span id="foo_error_0" class="help-block">An error occurred!</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group  has-success has-feedback" id="foo_field">
+          <label class="control-label sr-only" for="foo">Success</label>
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status" class="form-control" placeholder="Success text...">
+          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          <span id="foo_status" class="sr-only">(success)</span>
+        </div>
+        <div class="form-group  has-warning has-feedback" id="foo_field">
+          <label class="control-label sr-only" for="foo">Warning</label>
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status" class="form-control" placeholder="Warning text...">
+          <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+          <span id="foo_status" class="sr-only">(warning)</span>
+        </div>
+        <div class="form-group  has-error has-feedback" id="foo_field">
+          <label class="control-label sr-only" for="foo">Error</label>
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status foo_error_0" aria-invalid="true" class="form-control" placeholder="Error text...">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span id="foo_status" class="sr-only">(error)</span>
+          <span id="foo_error_0" class="help-block">An error occurred!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Success", '_success -&gt; true, 'placeholder -&gt; "Success text..." )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Warning", '_warning -&gt; true, 'placeholder -&gt; "Warning text..." )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Error", '_error -&gt; "An error occurred!", 'placeholder -&gt; "Error text..." )
+// With feedback icons
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Success", '_showIconValid -&gt; true, 'placeholder -&gt; "Success text..." )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Warning", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
+@b3.text( fooForm("foo"), '_hiddenLabel -&gt; "Error", '_showIconOnError -&gt; true, '_error -&gt; "An error occurred!", 'placeholder -&gt; "Error text..." )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="customize">Customize them</h3>
+  <div class="bs-example">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Input group</label>
+      <div class="input-group">
+        <span class="input-group-addon">@</span>
+        <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="Custom input group for email...">
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Fully customized</label>
+      <div class="input-group">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+        <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A complicated one...">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default" tabindex="-1">Action</button>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li><a href="#">Action</a>
+            </li>
+            <li><a href="#">Another action</a>
+            </li>
+            <li><a href="#">Something else here</a>
+            </li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Number</label>
+      <div class="input-number input-group">
+        <span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+        <input type="text" id="foo" name="foo" value="0" class="form-control">
+        <span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.inputWrapped( "email", fooForm("foo"), '_hiddenLabel -&gt; "Simple input group", 'placeholder -&gt; "Custom input group for email..." ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;@@&lt;/span&gt;
+    @input
+  &lt;/div&gt;  
+}
+@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -&gt; "Fully customized", 'placeholder -&gt; "A complicated one..." ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;&lt;span class="glyphicon glyphicon-star"&gt;&lt;/span&gt;&lt;/span&gt;
+    @input
+    &lt;div class="input-group-btn"&gt;
+      &lt;!-- Button and dropdown menu --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;  
+}
+@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -&gt; "Number", 'value -&gt; 0 ) { input =&gt;
+  &lt;div class="input-number input-group"&gt;
+    &lt;span class="input-group-addon input-number-minus"&gt;&lt;span class="glyphicon glyphicon-minus"&gt;&lt;/span&gt;&lt;/span&gt;
+    @input
+    &lt;span class="input-group-addon input-number-plus"&gt;&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/div&gt;  
+}</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="more-helpers">More helpers</h3>
+  <div class="bs-example">
+    <div class="form-group  ">
+      <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-ok"></span> Submit me! </button>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.submit('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Submit me! }</code></pre>
+  </div>
+</form>

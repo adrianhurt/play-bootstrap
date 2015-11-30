@@ -1,0 +1,306 @@
+- id: 1-0-P2X-BX
+  library: "1.0"
+  title: 1.0-P2X-BX-SNAPSHOT
+  claim: Welcome to Bootstrap 4
+  released: In development...
+  bullets:
+    - type: add
+      text: |
+        Added support to `Bootstrap 4`. Now there is a new version `X-P24-B4` where every helpers are moved from `b3` to `b4` path.
+    - type: add
+      text: |
+        Added support to new custom forms in `Bootstrap 4`. You only need to add the new `'_custom -> true` special argument.
+    - type: add
+      text: |
+        Added CSRF support adding token to forms with `formCSRF` helpers. See more information [here](/docs#forms-csrf).
+    - type: add
+      text: |
+        Special arguments `'_success` and `'_warning` now are `Any` objects, so you can add `'_warning -> "your warning text"` and it will be added as a help text.
+    - type: add
+      text: |
+        [#43](https://github.com/adrianhurt/play-bootstrap/issues/43){:target="_blank"}
+        `checkbox` helper now allows to use a custom value attributes.
+    - type: change
+      text: |
+        Multifield support has been rewritten and modified a bit, so if you use your custom multifield helpers, please check the docs again.
+  migration: |
+    If you want to bump to [Bootstrap 4](http://v4-alpha.getbootstrap.com) you need to use the `1.0-P24-B4-SNAPSHOT` version and replace every `b3` for `b4`.
+    
+    If you have your own custom helpers or field constructors, not that `b3.Args` and `b3.ArgsMap` are now `bs.Args` and `bs.ArgsMap`.
+
+
+
+- id: 0-4-5-P2X
+  library: "0.4.5"
+  title: 0.4.5-P2X
+  released: 19 November 2015
+  bullets:
+    - type: change
+      text: Performance improvements.
+    - type: change
+      text: |
+        Now `b3.inputType`, `b3.select` and `b3.inputWrapped` helpers add always the `"form-control"` and you can add extra classes simply adding `'class -> "extra_class"`. `b3.static` does the same with `"form-control-static"`.
+    - type: change
+      text: |
+        Now `b3.file` helper doesn\'t add the `"form-control"` default class.
+    - type: add
+      text: |
+        Added a new version of [`b3.radio`](/docs#helper-radio-customizable){:target="_blank"} with customizable `b3.radioOption`.
+    - type: add
+      text: |
+        Added a new version of [`b3.select`](/docs#helper-select-customizable){:target="_blank"} with customizable `b3.selectOption`.
+  migration: |
+    Now the `"form-control"` default class is added to any other. So change your old code `'class -> "form-control extra_class"` for this one `'class -> "extra_class"`.
+    
+    Now `b3.file` helper doesn\'t add the `"form-control"` default class, so you need to add it explicitly if you want it.
+
+
+
+- id: 0-4-4
+  library: "0.4.4"
+  title: 0.4.4-P2X
+  claim: Welcome to Play 2.4!
+  released: 21 June 2015
+  bullets:
+    - type: add
+      text: Added support to `Play 2.4` final version.
+    - type: change
+      text: Removed unnecessary whitespaces.        
+  migration: |
+    Basically, if you want to bump to Play 2.4, the only difference is that every `Lang` object has been replaced with new `Messages` (note that class `Messages` has changed in Play 2.4).
+    That means you need to follow the section about [I18n](https://www.playframework.com/documentation/2.4.x/Migration24#I18n){:target="_blank"} from the
+    [Play 2.4 Migration Guide](https://www.playframework.com/documentation/2.4.x/Migration24){:target="_blank"} and change every `Lang` for `Messages` in
+    your own custom helpers.
+    
+    Of course, you will need to use the `0.4.4-P24` version.
+
+
+
+- id: 0-4-2
+  library: "0.4.2"
+  title: "0.4.2"
+  released: 9 May 2015
+  bullets:
+    - type: change
+      text: |
+        The forms now always include the required class (`form-vertical`, `form-horizontal`, \.\.\.) instead of adding it simply as default.        
+  migration: |
+    You need to add a custom class to a form you can do it with simply `'class -> "another-class"` instead of `'class -> "form-vertical another-class"`.
+
+
+
+- id: 0-4
+  library: "0.4"
+  title: "0.4"
+  claim: It can be better!
+  released: 6 February 2015
+  bullets:
+    - type: change
+      text: |
+        Refactor and simplifications:
+      bullets:
+        - type: change
+          text: |
+            Improvements and simplification with implicits for mixed forms. Now there is no need for declare the field constructor and language explicitly for each helper.
+        - type: change
+          text: |
+            The use of `helper.FieldConstructor` and `helper.FieldElements` has been reimplemented to use now `b3.B3FieldConstructor`  and `b3.B3FieldInfo`.
+    - type: add
+      text: |
+        Added [validation states and feedback icons](/docs#helpers-validation-states){:target="_blank"} support.
+    - type: add
+      text: |
+        Added [WAI-ARIA](/docs#helpers-validation-states){:target="_blank"} support.
+    - type: delete
+      text: |
+        [#13](https://github.com/adrianhurt/play-bootstrap/issues/13){:target="_blank"}
+        Improvements with the [rendering of labels](/docs#arguments-labels){:target="_blank"}. The argument `'_showLabel` for inline forms has been
+        removed and now you have `'_hideLabel` to do the opposite, and `'_hiddenLabel` as a shortcut for `'_label`
+        and `'_hideLabel`.
+    - type: change
+      text: |
+        [Optional arguments](/docs#arguments-optional){:target="_blank"} support. Every argument with `None` value is now ignored.
+    - type: change
+      text: |
+        [#18](https://github.com/adrianhurt/play-bootstrap/issues/18){:target="_blank"} Added the possibility to omit the label for the [`b3.static`](/docs#more-static){:target="_blank"} helper.
+    - type: change
+      text: |
+        [#25](https://github.com/adrianhurt/play-bootstrap/issues/18){:target="_blank"} From 0.4.2-SNAPSHOT, forms always include its corresponding required class (`form-vertical`, `form-horizontal`, \.\.\.).
+  migration: |
+    The __mixed forms__ now require a HTML given a `B3FieldConstructor` that you can declare it as implicit, so
+    there is no need to declare the `B3FieldConstructor` and `Lang` explicitly for every helper within the mixed form.
+    Then a code like:
+    
+    <div class="highlight">
+    <pre><code>@b3.inline.form(routes.Application.index) { (ifc, lang) =>
+      @b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
+      @b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )(ifc, lang)
+      @b3.submit('class -> "btn btn-default"){ Sign in }(ifc)
+    }
+    </code></pre>
+    </div>
+    
+    Is now simplified to:
+    
+    <div class="highlight">
+    <pre><code>@b3.inline.form(routes.Application.index) { implicit ifc =>
+      @b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+      @b3.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
+      @b3.submit('class -> "btn btn-default"){ Sign in }
+    }</code></pre>
+    </div>
+    
+    It also happens with `b3.multifield`. Let\'s see how we should modify the `b3.datepicker` example that previously was:
+    
+    <div class="highlight">
+    <pre><code>@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+    @b3.multifield( startField, endField )(args:_*) { (cfc, lang) =>
+      &lt;div class="input-daterange input-group" @toHtmlArgs(b3.Args.inner(args).toMap)&gt;
+        @b3.text(startField, startArgs:_*)(cfc, lang)
+        &lt;span class="input-group-addon"&gt;to&lt;/span&gt;
+        @b3.text(endField, endArgs:_*)(cfc, lang)
+      &lt;/div&gt;
+    }</code></pre>
+    </div>
+    
+    And now would be:
+    
+    <div class="highlight">
+    <pre><code>@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+    @b3.multifield( startField, endField )(args:_*) { implicit cfc =>
+      &lt;div class="input-daterange input-group" @toHtmlArgs(b3.Args.inner(args).toMap)&gt;
+        @b3.text(startField, startArgs:_*)
+        &lt;span class="input-group-addon"&gt;to&lt;/span&gt;
+        @b3.text(endField, endArgs:_*)
+      &lt;/div&gt;
+    }</code></pre>
+    </div>
+    
+    
+    In addition, the rendering of labels have been reimplemented. Now there are 3 arguments to parametrize them:
+    
+    * `_label`: the text for the label.
+    * `_hideLabel`: a boolean indicating if the label must be hidden. It will be rendered into the DOM, but it will add the class `sr-only` to the label to hide it.
+    * `_hiddenLabel`: a shortcut to use a hidden label instead of using `_label` and `_hideLabel`.
+    
+    Thus, you must take into account these changes for labels in __inline forms__:
+    
+    * `'_label` -> `'_hiddenLabel`
+    * `'_label` with `'_showLabel` -> simply `'_label`
+    
+    And you can ommit every `'_label -> None` because it will be ignored.
+    
+    Finally, take into account now every argument with a `None` value will be ommited (see more about [Optional arguments](/docs#arguments-optional) support).
+    
+ 
+    
+- id: 0-3
+  library: "0.3"
+  title: "0.3"
+  claim: Let's do simpler
+  released: 6 December 2014
+  bullets:
+    - type: change
+      text: |
+        Refactor and simplifications:
+      bullets:
+        - type: delete
+          text: |
+            Removed `b3.horizontal.form` and `b3.inline.form`. Now use simply [`b3.form`](/docs#forms){:target="_blank"}.
+        - type: change
+          text: |
+            Now each `formWithFC` has been renamed to simply `form`.
+        - type: delete
+          text: |
+            Removed `b3.vertical.static` and `b3.horizontal.static`. Now use simply [`b3.static`](/docs#more-static){:target="_blank"}.
+        - type: delete
+          text: |
+            Removed `b3.horizontal.submit`. Now use simply [`b3.submit`](/docs#more-submit){:target="_blank"}.
+        - type: delete
+          text: |
+            Removed `b3.horizontal.reset`. Now use simply [`b3.reset`](/docs#more-reset){:target="_blank"}.
+        - type: delete
+          text: |
+            Removed `b3.actions` and `b3.horizontal.actions`. They are substituted by [`b3.free`](/docs#more-free){:target="_blank"}.
+    - type: add
+      text: |
+        [#10](https://github.com/adrianhurt/play-bootstrap/issues/10){:target="_blank"} Added [`b3.buttonType`](/docs#more-buttontype){:target="_blank"} and [`b3.button`](/docs#more-button){:target="_blank"} helpers.
+    - type: add
+      text: |
+        Added [`b3.hiddens`](/docs#helper-hiddens){:target="_blank"} helper.
+    - type: change
+      text: |
+        Improvements with the `'_default` value for [`b3.select`](/docs#helper-select){:target="_blank"} helper.        
+  migration: |
+    __Changes in helper\'s names:__ in 0.3, the names and the structure of some helpers have been simplified.
+    If you want to get this working with the new version you need to do the following:
+    * For every `static`, `submit`, `reset` and `actions` helper within a `formWithFC` now need to include explicitly the corresponding field constructor. 
+      For example:<br>`@b3.submit('class -> "btn btn-default"){ Send }` -> `@b3.submit('class -> "btn btn-default"){ Send }(fc)`
+    
+    And then, replace the following (the first 2 ones in first place):
+      
+    1. `b3.horizontal.form(` -> `b3.form(` <small>(its important to add the `(` to avoid replace `formWithFC` as well)</small>
+    2. `b3.inline.form(` -> `b3.form(` <small>(its important to add the `(` to avoid replace `formWithFC` as well)</small>
+    3. `b3.vertical.formWithFC` -> `b3.vertical.form`
+    4. `b3.horizontal.formWithFC` -> `b3.horizontal.form`
+    5. `b3.inline.formWithFC` -> `b3.inline.form`
+    6. `b3.clear.formWithFC` -> `b3.clear.form`
+    7. `b3.vertical.static` -> `b3.static`
+    8. `b3.horizontal.static` -> `b3.static`
+    9. `b3.horizontal.submit` -> `b3.submit`
+    10. `b3.horizontal.reset` -> `b3.reset`
+    11. `b3.actions` -> `b3.free()`
+    12. `b3.horizontal.actions` -> `b3.free()`
+
+
+
+- id: 0-2
+  library: "0.2"
+  title: "0.2"
+  claim: Multifield
+  released: 1 December 2014
+  bullets:
+    - type: add
+      text: |
+        Added [`b3.multifield`](/multifield){:target="_blank"} helper for multiple fields within the same `form-group`.
+    - type: change
+      text: |
+        [#9](https://github.com/adrianhurt/play-bootstrap/pull/9){:target="_blank"} ([#8](https://github.com/adrianhurt/play-bootstrap/pull/9){:target="_blank"}) [`b3.password`](/docs#helper-password){:target="_blank"} helper now avoid displaying its value at the DOM when a validation fails.
+    - type: change
+      text: |
+        [#3](https://github.com/adrianhurt/play-bootstrap/issues/3){:target="_blank"} `_showLabel` attribute for inline fields.
+    - type: add
+      text: |
+        Added [`b3.hidden`](/docs#helper-hidden){:target="_blank"} and [`b3.reset`](/docs#more-reset){:target="_blank"} helpers.
+    - type: add
+      text: |
+        Added helpers for the new HTML5 inputs.
+    - type: add
+      text: |
+        Added [`b3.actions`](/docs#more-free){:target="_blank"} helper.
+    - type: change
+      text: |
+        [#4](https://github.com/adrianhurt/play-bootstrap/issues/4){:target="_blank"} [#5](https://github.com/adrianhurt/play-bootstrap/issues/5){:target="_blank"} Some cleaning and fixing bugs.
+
+
+
+- id: 0-1-1
+  library: "0.1"
+  title: "0.1.1"
+  claim: A little bit more
+  released: 25 September 2014
+  bullets:
+    - type: change
+      text: |
+        [#1](https://github.com/adrianhurt/play-bootstrap/pull/1){:target="_blank"} Added WebJar dependencies.
+    - type: change
+      text: |
+        [#2](https://github.com/adrianhurt/play-bootstrap/issues/2){:target="_blank"} Allow Html for radio buttons.
+
+
+
+- id: 0-1
+  library: "0.1"
+  title: "0.1"
+  claim: First version
+  released: 17 September 2014

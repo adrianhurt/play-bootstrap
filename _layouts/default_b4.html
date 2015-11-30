@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  {% include head.html %}
+  <body tab="{{ page.tab }}" default-version="{{ site.data.versions | map: 'code' | first }}">
+    {% include header_b4.html %}
+    <div class="container">
+      {{ content }}
+    </div>
+    {% include footer.html %}
+  </body>
+</html>

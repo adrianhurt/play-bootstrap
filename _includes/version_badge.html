@@ -1,0 +1,10 @@
+<span class="version-badge">
+  <span class="code">{{ include.version.code }}</span>
+  <span class="play-bootstrap">
+    {% if include.explicit %}
+      <span class="play">&nbsp;Play <span>{{ include.version.play }}</span>&nbsp;</span><span class="bootstrap">&nbsp;Bootstrap <span>{{ include.version.bootstrap }}</span>&nbsp;</span>
+    {% else %}
+      <span class="play">&nbsp;<span>{{ include.version.play }}</span>&nbsp;</span><span class="bootstrap">&nbsp;<span>{{ include.version.bootstrap }}</span>&nbsp;</span>
+    {% endif %}
+  </span>
+</span>

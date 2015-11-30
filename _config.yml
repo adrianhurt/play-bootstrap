@@ -1,0 +1,20 @@
+# Site settings
+title: Play-Bootstrap
+author: Adrian Hurtado (adrianhurt)
+description: "Play-Bootstrap, a Play Framework library for Bootstrap that gives you an out-of-the-box solution with a set of input helpers and field constructors."
+subject: "Play-Bootstrap, a Play Framework library for Bootstrap."
+keywords: "Play-Bootstrap, play-bootstrap3, Play, framework, bootstrap, module, library, plugin, helpers, helper, field constructor, tag, template, HTML, CSS"
+
+url: https://adrianhurt.github.io/play-bootstrap
+baseurl: /play-bootstrap
+email: adrianhurt@gmail.com
+github_username:  adrianhurt
+
+# Build settings
+markdown: kramdown
+
+sass:
+  style: compressed
+
+gems:
+  - jekyll-sitemap

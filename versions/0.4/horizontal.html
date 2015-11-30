@@ -1,0 +1,428 @@
+---
+title: "Play-Bootstrap 0.4 | Horizontal forms examples"
+layout: default_b3
+permalink: /0.4/horizontal/
+version: "0.4"
+uri: /horizontal/
+tab: horizontal
+---
+<form action="/horizontal" method="GET" class="form-horizontal " role="form">
+  <h1 id="horizontal-form" class="page-header">Horizontal Form</h1>
+  <p class="lead">This page its an example to show how to use a horizontal form.</p>
+  <p>
+    First of all, you need to declare the horizontal field constructor as implicit. You have to specify its column widths for the <code>form-group</code>.
+  </p>
+  <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }</code></pre>
+  </div>
+  <p>
+    <strong>Tip:</strong> You could create your own default horizontal field constructor and import it with something like:
+  </p>
+  <div class="highlight">
+<pre><code>@import b3.horizontal.default.fieldConstructor</code></pre>
+  </div>
+  <p>
+    To do that, you only need to add a file with this content to your <code>views</code> folder (
+    <code>views/b3/horizontal/default/package.scala</code>):
+  </p>
+  <div class="highlight">
+<pre><code>package views.html.b3.horizontal
+package object default {
+  implicit val fieldConstructor = views.html.b3.horizontal.fieldConstructor("col-md-2", "col-md-10")
+}</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="simple-inputs">Simple inputs</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Input Text</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Email</label>
+          <div class="col-md-8">
+            <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="example@mail.com">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Password</label>
+          <div class="col-md-8">
+            <input type="password" id="foo" name="foo" value="" class="form-control" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">File</label>
+          <div class="col-md-8">
+            <input type="file" id="foo" name="foo" value="" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+@b3.email( fooForm("foo"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("foo"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.file( fooForm("foo"), '_label -&gt; "File" )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="more-options">More options</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Input Text</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Help</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing a help...">
+            <span id="foo_info_0" class="help-block">This is a help text</span>
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Constraints</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing its constraints...">
+            <span id="foo_info_0" class="help-block">Maximum length: 10</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <div class="col-md-8 col-md-offset-4">
+            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Without label">
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">A big text</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control input-lg" placeholder="An awesome field...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Help", '_help -&gt; "This is a help text", 'placeholder -&gt; "A simple text showing a help..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Constraints", '_showConstraints -&gt; true, 'placeholder -&gt; "A simple text showing its constraints..." )
+@b3.text( fooForm("foo"), 'placeholder -&gt; "Without label" )
+@b3.text( fooForm("foo"), '_label -&gt; "A big text", 'class -&gt; "form-control input-lg", 'placeholder -&gt; "An awesome field..." )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Textarea</label>
+          <div class="col-md-8">
+            <textarea id="foo" name="foo" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <div class="col-md-8 col-md-offset-4">
+            <div class="checkbox">
+              <label for="foo">
+                <input type="checkbox" id="foo" name="foo" value="true" checked="true"> Checkbox
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4">Radio Group</label>
+          <div class="col-md-8">
+            <div class="radio">
+              <label class="" for="foo_M">
+                <input type="radio" id="foo_M" name="foo" value="M"> Male
+              </label>
+            </div>
+            <div class="radio">
+              <label class="" for="foo_F">
+                <input type="radio" id="foo_F" name="foo" value="F"> Female
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Select</label>
+          <div class="col-md-8">
+            <select id="foo" name="foo" class="form-control">
+              <option value="A">Apples</option>
+              <option value="P">Pears</option>
+              <option value="B">Bananas</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Multiple Select</label>
+          <div class="col-md-8">
+            <select id="foo" name="foo[]" class="form-control" multiple="true">
+              <option value="A">Apples</option>
+              <option value="P">Pears</option>
+              <option value="B">Bananas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.textarea( fooForm("foo"), '_label -&gt; "Textarea", 'rows -&gt; 3 )
+@b3.checkbox( fooForm("foo"), '_text -&gt; "Checkbox", 'checked -&gt; true )
+@b3.radio( fooForm("foo"), options = Seq("M"-&gt;"Male","F"-&gt;"Female"), '_label -&gt; "Radio Group" )
+  
+@fruits = @{ Seq("A"-&gt;"Apples","P"-&gt;"Pears","B"-&gt;"Bananas") }
+...
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select" )
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Multiple Select", 'multiple -&gt; true )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
+  <p>Checkboxes, radio buttons and selects also support <code>readonly</code> attribute adding a <strong>hidden input</strong>.</p>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Disabled</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control" disabled="true" placeholder="Disabled text...">
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <div class="col-md-8 col-md-offset-4">
+            <div class="checkbox checkbox-group disabled">
+              <label for="foo">
+                <input type="checkbox" id="foo" name="foo" value="true" checked="" disabled="true" readonly="true"> Readonly checkbox
+              </label>
+              <input type="hidden" name="foo" value="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Select</label>
+          <div class="col-md-8">
+            <div class="select-group">
+              <select id="foo" name="foo[]" class="form-control" disabled="true" multiple="true" readonly="true">
+                <option value="A">Apples</option>
+                <option value="P" selected="">Pears</option>
+                <option value="B" selected="">Bananas</option>
+              </select>
+              <input type="hidden" name="foo[]" value="B,P">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "Disabled", 'disabled -&gt; true, 'placeholder -&gt; "Disabled text..." )
+@b3.checkbox( fooForm("foo"), '_text -&gt; "Readonly checkbox", 'readonly -&gt; true, 'value -&gt; true )
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select", 'multiple -&gt; true, 'readonly -&gt; true, 'value -&gt; "B,P" )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="validation-states">Validation states</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  has-success" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Success</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Success text...">
+          </div>
+        </div>
+        <div class="form-group  has-warning" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Warning</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Warning text...">
+          </div>
+        </div>
+        <div class="form-group  has-error" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Error</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_error_0" aria-invalid="true" class="form-control" placeholder="Error text...">
+            <span id="foo_error_0" class="help-block">An error occurred!</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  has-success has-feedback" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Success</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status" class="form-control" placeholder="Success text...">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            <span id="foo_status" class="sr-only">(success)</span>
+          </div>
+        </div>
+        <div class="form-group  has-warning has-feedback" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Warning</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status" class="form-control" placeholder="Warning text...">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+            <span id="foo_status" class="sr-only">(warning)</span>
+          </div>
+        </div>
+        <div class="form-group  has-error has-feedback" id="foo_field">
+          <label class="control-label col-md-4" for="foo">Error</label>
+          <div class="col-md-8">
+            <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status foo_error_0" aria-invalid="true" class="form-control" placeholder="Error text...">
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+            <span id="foo_status" class="sr-only">(error)</span>
+            <span id="foo_error_0" class="help-block">An error occurred!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "Success", '_success -&gt; true, 'placeholder -&gt; "Success text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; true, 'placeholder -&gt; "Warning text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", 'placeholder -&gt; "Error text..." )
+// With feedback icons
+@b3.text( fooForm("foo"), '_label -&gt; "Success", '_showIconValid -&gt; true, 'placeholder -&gt; "Success text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Warning", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
+@b3.text( fooForm("foo"), '_label -&gt; "Error", '_showIconOnError -&gt; true, '_error -&gt; "An error occurred!", 'placeholder -&gt; "Error text..." )</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="customize">Customize them</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Input group</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+              <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="Custom input group for email...">
+            </div>
+          </div>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Number</label>
+          <div class="col-md-8">
+            <div class="input-number input-group">
+              <span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+              <input type="text" id="foo" name="foo" value="0" aria-describedby="foo_info_0" class="form-control">
+              <span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+            </div>
+            <span id="foo_info_0" class="help-block">This needs some JavaScript and CSS</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label col-md-4" for="foo">Fully customized</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+              <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A complicated one...">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default" tabindex="-1">Action</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                  <li><a href="#">Action</a>
+                  </li>
+                  <li><a href="#">Another action</a>
+                  </li>
+                  <li><a href="#">Something else here</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.inputWrapped( "email", fooForm("foo"), '_label -&gt; "Input group", 'placeholder -&gt; "Custom input group for email..." ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;@@&lt;/span&gt;
+    @input
+  &lt;/div&gt;  
+}
+@b3.inputWrapped( "text", fooForm("foo"), '_label -&gt; "Fully customized", 'placeholder -&gt; "A complicated one..." ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;&lt;span class="glyphicon glyphicon-star"&gt;&lt;/span&gt;&lt;/span&gt;
+    @input
+    &lt;div class="input-group-btn"&gt;
+      &lt;!-- Button and dropdown menu --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;  
+}
+@b3.inputWrapped( "text", fooForm("foo"), '_label -&gt; "Number", 'value -&gt; 0, '_help -&gt; "This needs some JavaScript and CSS" ) { input =&gt;
+  &lt;div class="input-number input-group"&gt;
+    &lt;span class="input-group-addon input-number-minus"&gt;&lt;span class="glyphicon glyphicon-minus"&gt;&lt;/span&gt;&lt;/span&gt;
+    @input
+    &lt;span class="input-group-addon input-number-plus"&gt;&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/div&gt;  
+}</code></pre>
+  </div>
+  
+      
+      
+  <h3 id="more-helpers">More helpers</h3>
+  <div class="bs-example">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group  ">
+          <label class="control-label col-md-4">Static HTML</label>
+          <div class="col-md-8">
+            <p class="form-control-static"> <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> </p>
+          </div>
+        </div>
+        <div class="form-group  ">
+          <div class="col-md-8 col-md-offset-4">
+            <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-ok"></span> Submit me! </button>
+          </div>
+        </div>
+        <div class="form-group  ">
+          <div class="col-md-8 col-md-offset-4">
+            <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+            <a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.static("Static HTML"){ &lt;a href="#"&gt;&lt;span class="glyphicon glyphicon-star"&gt;&lt;/span&gt; This is a link&lt;/a&gt; }
+@b3.submit('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Submit me! }
+@b3.free() {
+  &lt;button type="submit" class="btn btn-primary"&gt; &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Save changes&lt;/button&gt;
+  &lt;a class="btn btn-default"&gt; &lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt; Cancel&lt;/a&gt;
+}</code></pre>
+  </div>
+</form>

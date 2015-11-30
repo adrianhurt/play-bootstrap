@@ -1,0 +1,46 @@
+{% assign version = site.data.versions | first %}
+<h2 id="installation">Installation</h2>
+<p>
+  You only need to add it as a dependency in your <code>build.sbt</code> file. It is cross compiled against Scala 2.11.7 and 2.10.5.
+</p>
+<div class="highlight">
+<pre><code>{% if version.snapshot %}// Resolver is needed only for SNAPSHOT versions
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+
+{% endif %}libraryDependencies ++= Seq(
+  "com.adrianhurt" %% "{{ version.artifact }}" % "{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}"
+)</code></pre>
+</div>
+<p>
+  Note the <code>play-bootstrap</code> has <strong>filters</strong>, <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> and
+  <a href="https://jquery.org" target="_blank">jQuery</a> as dependencies, so they are included automatically. Specifically, it adds the
+  following dependencies for you:
+</p>
+<div class="highlight">
+<pre><code>filters,
+"org.webjars" % "bootstrap" % "{{ version.bootstrap_dependency }}",
+"org.webjars" % "jquery" % "{{ version.jquery_dependency }}"</code></pre>
+</div>
+<p>
+  You can use different versions of jQuery or even Bootstrap. For example, if you prefer to use jQuery 2.1.0:
+</p>
+<div class="highlight">
+<pre><code>"com.adrianhurt" %% "play-bootstrap" % "{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}" exclude("org.webjars", "jquery"),
+"org.webjars" % "jquery" % "2.1.0"</code></pre>
+</div>
+<p>
+  There are different versions of the library depending on the which version of Play Framework and Bootstrap you need:
+</p>
+{% assign versions = site.data.versions | where: "legacy", false | where: "artifact", "play-bootstrap" %}
+{% include version_table.html versions=versions %}
+<p>
+  The previous versions are within the artifact <code>play-bootstrap3</code>:
+</p>
+<div class="highlight">
+<pre><code>"com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24"</code></pre>
+</div>
+{% assign versions_old = site.data.versions | where: "legacy", false | where: "artifact", "play-bootstrap3" %}
+{% include version_table.html versions=versions_old %}
+<p>
+  You can check the change log <a href="{{ site.baseurl }}/changelog">here</a> to see all versions.
+</p>

@@ -1,0 +1,47 @@
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand {% if page.tab == 'index' %}active{% endif %}" href="{{ site.baseurl }}/">Play-Bootstrap</a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li class="dropdown {% assign my_array = "vertical|horizontal|inline|mixed" | split: "|" %}{% if my_array contains page.tab %}active{% endif %}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Styles <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li {% if page.tab == 'vertical' %} class="active" {% endif %}><a href="{{ site.baseurl }}/vertical">Vertical</a></li>
+            <li {% if page.tab == 'horizontal' %} class="active" {% endif %}><a href="{{ site.baseurl }}/horizontal">Horizontal</a></li>
+            <li {% if page.tab == 'inline' %} class="active" {% endif %}><a href="{{ site.baseurl }}/inline">Inline</a></li>
+            <li {% if page.tab == 'mixed' %} class="active" {% endif %}><a href="{{ site.baseurl }}/mixed">Mix styles</a></li>
+          </ul>
+        </li>
+        <li {% if page.tab == 'multifield' %} class="active" {% endif %}><a href="{{ site.baseurl }}/multifield">Multifield</a></li>
+        <li {% if page.tab == 'extendit' %} class="active" {% endif %}><a href="{{ site.baseurl }}/extend-it">Extend it!</a></li>
+        <li {% if page.tab == 'docs' %} class="active" {% endif %}><a href="{{ site.baseurl }}/docs">Documentation</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          {% assign version = site.data.versions | where: "code", page.version | first %}
+          <a href="#" id="current-version" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            {% include version_badge.html version=version explicit=true %}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            {% assign versions = site.data.versions | where: "legacy", false %}
+            {% for version in versions %}
+              <li><a version="{{ version.code }}" href="{{ page.uri }}">{% include version_badge.html version=version %}</a></li>
+						{% endfor %}
+            <li><a class="legacy" href="{{ site.baseurl }}/changelog">View legacy versions</a></li>
+          </ul>
+        </li>
+        <li class="github"><a href="https://github.com/adrianhurt/play-bootstrap" target="_blank"><i class="fa fa-github fa-2x"></i> Github</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

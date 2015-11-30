@@ -1,7 +1,0 @@
-@(fieldInfo: b4.B4FieldInfo, inputHtml: Html)
-@b4.bsFieldConstructorCommon(fieldInfo, inputHtml) { content =>
-	@fieldInfo.labelOpt.map { label =>
-		<label class="control-label@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@label</label>
-	}
-	@content
-}

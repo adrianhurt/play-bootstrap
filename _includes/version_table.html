@@ -1,0 +1,24 @@
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Artifact</th>
+      <th>Play version</th>
+      <th colspan="2">Added dependencies</th>
+      <th>Documentation</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for version in include.versions %}
+      <tr>
+        <td><strong>{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}</strong></td>
+        <td><small>{{ version.artifact }}</small></td>
+        <td>Play {{ version.play }}</td>
+        <td>Bootstrap {{ version.bootstrap_dependency }}</td>
+        <td>jQuery {{ version.jquery_dependency }}</td>
+        <td><a version="{{ version.code }}" href="{{ site.baseurl }}/docs">See {{ version.code }} docs</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

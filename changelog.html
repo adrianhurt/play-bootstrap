@@ -1,0 +1,27 @@
+---
+title: "Play-Bootstrap | Changelog"
+layout: default_b3
+permalink: /changelog/
+version: "1.0-P24-B3"
+uri: /changelog/
+---
+<div class="row changelog">
+		<div class="col-md-12">
+			<h1 id="changelog" class="page-header">Play-Bootstrap Change Log</h1>
+			
+      {% for v in site.data.changelog %}
+  			<h2 id="{{ v.id }}">{{ v.title }}{% if v.claim %} - <em>{{ v.claim }}</em>{% endif %}</h2>
+  			<p class="lead">{{ v.released }}</p>
+        
+        {% assign versions = site.data.versions | where: "library", v.library %}
+        {% include version_table.html versions=versions %}
+        
+        {% include changelog_bullets.html bullets=v.bullets %}
+        
+        {% if v.migration %}
+          {% include migration_guide.html text=v.migration id=v.id %}
+        {% endif %}
+      {% endfor %}
+      			
+	</div>
+</div>

@@ -1,0 +1,1088 @@
+---
+title: "Play-Bootstrap 0.3 | Documents"
+layout: default_b3
+permalink: /0.3/docs/
+version: "0.3"
+uri: /docs/
+tab: docs
+---
+{% assign version = site.data.versions | where: "code", page.version | first %}
+<div class="row" id="affix-target">
+  <div class="col-md-9" role="main">
+    <form action="/docs" method="GET" class="form-vertical" role="form">
+      <h1 id="documentation" class="page-header">
+        Documentation <small>{% include version_badge.html version=version explicit=true %}</small>
+      </h1>
+      <p class="lead">This page explains each component in more details.</p>
+      
+      
+      
+      <h3 id="field-constructors">Field Constructors</h3>
+      <p>
+        There are 4 different field constructors you can use. You only need to declare any of them implicitly on top of your template. Then every input will take it by default. All of them extend the <code>b3.B3FieldConstructor</code> class.
+      </p>
+      
+      
+      <h4 id="field-constructors-vertical">Vertical forms</h4>
+      <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.vertical.fieldConstructor }</code></pre>
+      </div>
+      <p>
+        Or simply:
+      </p>
+      <div class="highlight">
+<pre><code>@import b3.vertical.fieldConstructor</code></pre>
+      </div>
+      
+      
+      <h4 id="field-constructors-horizontal">Horizontal forms</h4>
+      <p>
+        You have to specify its column widths for the <code>form-group</code>.
+      </p>
+      <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }</code></pre>
+      </div>
+      
+      
+      <h4 id="field-constructors-inline">Inline forms</h4>
+      <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.inline.fieldConstructor }</code></pre>
+      </div>
+      <p>
+        Or:
+      </p>
+      <div class="highlight">
+<pre><code>@import b3.inline.fieldConstructor</code></pre>
+      </div>
+      
+      
+      <h4 id="field-constructors-clear">Clear field constructor</h4>
+      <p>
+        This field constructor renders the input helpers directly. It is useful for those cases you need the input without its corresponding <code>form-group</code>. However, although it is used for specific cases, you can also declare it as the default field constructor within a template.
+      </p>
+      <div class="highlight">
+<pre><code>@import b3.clear.fieldConstructor</code></pre>
+      </div>
+      
+      
+      
+      <h3 id="arguments">Arguments (<code>args</code>)</h3>
+      <p>
+        For every component there is a list of arguments you can add and they will be put within the corresponding input tag as normal HTML. However it will only happen with those arguments without a prefixed slash. The slashed arguments are used to complement the corresponding <code>form-group</code> or to parametrize its behaviour.
+      </p>
+      <p>
+        For example, the following component has the argument <code>placeholder</code> that will be added to the input text tag. The <code>_label</code> argument set the label for the form-group and the
+        <code>_showConstraints</code> one specifies if the constraints should be shown.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Constraints</label>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text showing its constraints...">
+          <span class="help-block">Maximum length: 10</span>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "Constraints", '_showConstraints -&gt; true, 'placeholder -&gt; "A simple text showing its constraints..." )</code></pre>
+      </div>
+      <p>The previous example outputs the HTML:</p>
+      <div class="highlight">
+<pre><code>&lt;div class="form-group" id="foo_field"&gt;
+  &lt;label class="control-label" for="foo"&gt;Constraints&lt;/label&gt;
+  &lt;input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text showing its constraints..."&gt;
+  &lt;span class="help-block"&gt;Maximum length: 10&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      
+      
+      <h4 id="arguments-special">Special arguments (the slashed ones)</h4>
+      <p>
+        As we see before, there are some special arguments that are reserved to parametrize the corresponding
+        <code>form-group</code>'s behaviour. All of these special arguments are prefixed with a slash. And the list is:
+      </p>
+      <ul>
+        <li><code>_id</code>: the id for the form-group.</li>
+        <li><code>_class</code>: the class for the form-group.</li>
+        <li><code>_label</code>: the text for the label. If you don't want a label, set it to None.</li>
+        <li><code>_showConstraints</code>: indicates if the constraints are shown.</li>
+        <li><code>_help</code>: a help text below the input.</li>
+        <li><code>_showLabel</code>: a boolean indicating if the label must be shown for a helper within an <strong>Inline Field Constructors</strong>.</li>
+        <li><code>_error</code>: a specific error for the input (<code>Option[play.api.data.FormError]</code>).</li>
+        <li><code>_showErrors</code>: boolean indicating if the errors should be shown. True is the default value.</li>
+        <li>
+          <code>_default</code>: only available for the <a href="#helper-select"><code>b3.select</code></a> helper, it indicates a default message to show. For more details check the
+          <a href="#helper-select"><code>b3.select</code> documentation</a>.
+        </li>
+      </ul>
+      <p></p>
+      
+      
+      <h4 id="arguments-boolean">Boolean arguments</h4>
+      <p>
+        The boolean arguments are simply that, booleans. Let's see an example for the <code>disabled</code> attribute. Look all of these different codes:
+      </p>
+      <div class="highlight">
+<pre><code>&lt;input type="text" name="foo" disabled&gt;
+&lt;input type="text" name="foo" disabled="true"&gt;
+&lt;input type="text" name="foo" disabled="false"&gt;
+&lt;input type="text" name="foo" disabled="blah"&gt;</code></pre>
+      </div>
+      <p>
+        And all of them are equivalents... But don't worry, every <code>false</code> argument will be automatically removed. So you can feel free to do something like:
+      </p>
+      <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "A maybe disabled text", 'disabled -&gt; maybeTrueFunction(...) )</code></pre>
+      </div>
+      <p>
+        And what happens if you need to set a <code>"false"</code> value to an attribute? Ok, you can simply convert it to a string:
+      </p>
+      <div class="highlight">
+<pre><code>@b3.text( fooForm("foo"), '_label -&gt; "With a false attribute", 'fooAttr -&gt; "false" )
+@b3.text( fooForm("foo"), '_label -&gt; "With a boolean attribute", 'fooAttr -&gt; maybeTrueFunction(...).toString )</code></pre>
+      </div>
+      <p>
+        Note <strong>only regular arguments</strong> with <code>false</code> value are removed. It doesn't happen with the special ones (i.e. the <strong><em>slashed</em></strong> ones).
+      </p>
+      
+      
+      <h4 id="arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</h4>
+      <p>
+        You always add any argument to helpers using tuples of <code>(Symbol, Any)</code>, like <code>'class -&gt; "foo-class"</code>. However, when you need to add an argument with dashes you <strong>cannot</strong> declare the symbol as <code>'data-attr</code>. So to get this you have different solutions:
+      </p>
+      <ul>
+        <li>Create the Symbol directly with its apply method: <code>Symbol("data-attr") -&gt; "data-value"</code>.</li>
+        <li>
+          Import the implicit <code>views.html.helper.Implicits.toAttributePair</code> with simply <code>@import helper.Implicits._</code>. And then you will be able to declare the argument as <code>"data-attr" -&gt; "data-value"</code>.
+        </li>
+      </ul>
+      <p></p>
+      
+      
+      
+      <h3 id="forms">Forms <span class="def">@(action: Call, args: (Symbol, Any)*)(body: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h3>
+      <p>
+        The <code>b3.form</code> takes a <code>Call</code> object and a list of arguments. The implicit <code>B3FieldConstructor</code> argument is used to know which default class is needed. Each <code>B3FieldConstructor</code> add its corresponding class:
+      </p>
+      <ul>
+        <li><code>HorizontalFieldConstructor:</code> <code>class="form-horizontal"</code>
+        </li>
+        <li><code>InlineFieldConstructor:</code> <code>class="form-inline"</code>
+        </li>
+        <li><code>VerticalFieldConstructor:</code> <code>class="form-vertical"</code>
+        </li>
+        <li><code>ClearFieldConstructor:</code> <code>class="form-clear"</code>
+        </li>
+      </ul>
+      The last two ones don't belong to Bootstrap 3, but they could be useful for your own CSS.
+      <p></p>
+      <p>
+        The helper also adds the <code>role="form"</code> attribute by default.
+      </p>
+      
+      
+      <h4 id="forms-specific">Forms with a specific <code>FieldConstructor</code></h4>
+      <p>
+        Every input helper will use the default <code>FieldConstructor</code> (the implicit one), unless you specify another. To do this you can use the <code>form</code> helper. There is one for each type of form. Here is an example of how to add an inline form within a view with a vertical form as default.
+      </p>
+      <div class="highlight">
+<pre><code>@import b3.vertical.fieldConstructor
+	
+@b3.form(routes.Application.handleRequest) { // vertical form as default
+  @b3.text( fooForm("foo"), '_label -&gt; "Input Text" )
+  ...
+}
+@b3.inline.form(routes.Application.handleRequest) { (ifc, lang) // an inline form
+  @b3.text( fooForm("foo"), '_label -&gt; "Input Text" )(ifc, lang) // you have to insert them explicitly
+  ...
+}</code></pre>
+      </div>
+      <p>
+        There are 4 different options to insert each type of form. Note that there is also one for a clear
+        <code>FieldConstructor</code> (it simply outputs the input helper without any more). So we have:
+      </p>
+      <div class="highlight">
+<pre><code>@b3.vertical.form(routes.Application.handleRequest) { (vfc, lang) =&gt; ... }
+@b3.horizontal.form(routes.Application.handleRequest, "col-md-2", "col-md-10") { (hfc, lang) =&gt; ... }
+@b3.inline.form(routes.Application.handleRequest) { (ifc, lang) =&gt; ... }
+@b3.clear.form(routes.Application.handleRequest) { (cfc, lang) =&gt; ... }</code></pre>
+      </div>
+      <p>
+        If you would need to specify a different <code>FieldConstructor</code> within a form, you can do:
+      </p>
+      <div class="highlight">
+<pre><code>@import b3.vertical.fieldConstructor
+@horizontalFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+@b3.form(routes.Application.handleRequest) { // vertical form as default
+  @b3.text( fooForm("foo"), '_label -&gt; "Vertical input text" )
+  @b3.text( fooForm("bar"), '_label -&gt; "Horizontal input text" )(horizontalFC, implicitly[Lang])
+  ...
+}</code></pre>
+      </div>
+      <p>Or:</p>
+      <div class="highlight">
+<pre><code>@import b3.vertical.fieldConstructor
+	
+@b3.form(routes.Application.handleRequest) { // vertical form as default
+  @b3.text( fooForm("foo"), '_label -&gt; "Vertical input text" )
+  ...
+  
+  // an inline inner section
+  @defining(b3.inline.fieldConstructor, implicitly[Lang]) { (ifc, lang) =&gt;
+    @b3.text( fooForm("bar"), '_label -&gt; "Inline input text" )(ifc, lang)
+    ...
+  }
+  ...
+}</code></pre>
+      </div>
+      <p>
+        But remember that horizontal and inline controls need to be inside their corresponding
+        <code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to wrap them with a <code>div</code> with these classes.
+      </p>
+      
+      
+      
+      <h3 id="helpers">Input helpers</h3>
+      
+      
+      <h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
+      <p>
+        Both the <code>disabled</code> and <code>readonly</code> attributes for an input prevent the user from modify it. However, the <code>disabled</code> attribute means this input will NOT be sent within the POST request, whereas the <code>readonly</code> one means it will.
+      </p>
+      <p>
+        Nevertheless, for <code>checkbox</code>, <code>radio</code> and <code>select</code> tags it doesn't happen. To support the <code>readonly</code> attribute for these tags, the corresponding helpers have been adapted to behave as would be expected. To do that, when the <code>readonly</code> attribute appears the helper will:
+      </p>
+      <ul>
+        <li>add an additional <code>disabled</code> attribute</li>
+        <li>add an additional <code>&lt;input type="hidden"&gt;</code> with the desired value</li>
+        <li>wraps them with in a div (with class <code>checkbox-group</code>, <code>radio-group</code> or <code>select-group</code>)</li>
+      </ul>
+      Note it only happens when the <code>readonly</code> attribute is present, even with a <em>false</em> value. It is done to make it easier to modify its <code>readonly</code> behaviour using javascript.
+      <p></p>
+      <p>
+        You can see an example in the <a href="/readonly">Readonly Demo</a>.
+      </p>
+      
+      
+      <h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="name_field">
+          <label class="control-label" for="name">Name</label>
+          <input type="text" id="name" name="name" value="" class="form-control" placeholder="John Doe">
+        </div>
+        <div class="form-group  " id="email_field">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+        <div class="form-group  " id="password_field">
+          <label class="control-label" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control">
+          <span class="help-block">With at least 8 characters</span>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.inputType( "text", fooForm("name"), '_label -&gt; "Name", 'placeholder -&gt; "John Doe" )
+@b3.inputType( "email", fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.inputType( "password", fooForm("password"), '_label -&gt; "Password", '_help -&gt; "With at least 8 characters" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-text"><code>b3.text</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="text"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="name_field">
+          <label class="control-label" for="name">Name</label>
+          <input type="text" id="name" name="name" value="" class="form-control" placeholder="John Doe">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.text( fooForm("name"), '_label -&gt; "Name", 'placeholder -&gt; "John Doe" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-password"><code>b3.password</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="password"</code>.
+      </p>
+      <p>
+        For security reasons, this helper doesn't display the possible value the field could have (for example when the form is reloaded after a validation failure).
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="password_field">
+          <label class="control-label" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control">
+          <span class="help-block">With at least 8 characters</span>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.password( fooForm("password"), '_label -&gt; "Password", '_help -&gt; "With at least 8 characters" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-file"><code>b3.file</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="file"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="file_field">
+          <label class="control-label" for="file">File</label>
+          <input type="file" id="file" name="file" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.file( fooForm("file"), '_label -&gt; "File" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It renders a textarea and it adds <code>class="form-control"</code> by default.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Textarea</label>
+          <textarea id="foo" name="foo" class="form-control" row="3"></textarea>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.textarea( fooForm("foo"), '_label -&gt; "Textarea", 'row -&gt; 3 )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It renders a checkbox. It have always the attribute value set to true. So it only supports boolean bindings. Then, the <code>'value</code> argument determines its default value (true or false).
+      </p>
+      <p>
+        The special <code>'_text</code> argument lets you put a text after the checkbox.
+      </p>
+      <p>
+        It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a
+        <code>&lt;input type="hidden"&gt;</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <div class="checkbox  ">
+            <label for="foo">
+              <input type="checkbox" id="foo" name="foo" value="true"> Remember me
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; "Remember me" )
+	
+// always checked (even if the form has been filled with a false)
+@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; "Remember me", 'checked -&gt; true )
+// checked by default (if the form is filled, this value will be taken)
+@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; "Remember me", 'value -&gt; true )
+// disabled -&gt; it will NOT be sent within the POST request
+@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; "Remember me", 'disabled -&gt; true )
+// readonly -&gt; it will be sent within the POST request
+@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; "Remember me", 'readonly -&gt; true )</code></pre>
+      </div>
+      <p>
+        Note you can use any value for the <code>_text</code> argument.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <div class="checkbox  ">
+            <label for="foo">
+              <input type="checkbox" id="foo" name="foo" value="true"> Do you want a beer? <i class="fa fa-beer"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.checkbox( fooForm("foo"), '_label -&gt; None, '_text -&gt; Html("Do you want a beer? &lt;i class=\"fa fa-beer\"&gt;&lt;/i&gt;") )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-radio"><code>b3.radio</code> <span class="def">@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It renders a radio. It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a <code>&lt;input type="hidden"&gt;</code>.
+      </p>
+      <p>
+        It has an additional special <code>_inline</code> argument to make it an inline radio (for vertical and horizontal forms).
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Radio Group</label>
+          <div class="radio ">
+            <label class="" for="foo_M">
+              <input type="radio" id="foo_M" name="foo" value="M"> Male
+            </label>
+          </div>
+          <div class="radio ">
+            <label class="" for="foo_F">
+              <input type="radio" id="foo_F" name="foo" value="F"> Female
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@opts = @{ Seq("M"-&gt;"Male","F"-&gt;"Female") }
+@b3.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group" )
+// an inline radio within a vertical or horizontal form
+@b3.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group", '_inline -&gt; true )
+// with value "F" by default (if the form is filled, this value will be taken)
+@b3.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group", 'value -&gt; "F" )
+// disabled -&gt; it will NOT be sent within the POST request
+@b3.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group", 'disabled -&gt; true )
+// readonly -&gt; it will be sent within the POST request
+@b3.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group", 'readonly -&gt; true )</code></pre>
+      </div>
+      <p>
+        Note you can use any value for the <code>options</code> argument.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">What do you prefer?</label>
+          <div class="radio ">
+            <label class="" for="foo_B">
+              <input type="radio" id="foo_B" name="foo" value="B"> Beer <i class="fa fa-beer"></i>
+            </label>
+          </div>
+          <div class="radio ">
+            <label class="" for="foo_C">
+              <input type="radio" id="foo_C" name="foo" value="C"> Coffee <i class="fa fa-coffee"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.radio( fooForm("foo"), options = Seq("B" -&gt; Html("Beer &lt;i class=\"fa fa-beer\"&gt;&lt;/i&gt;"), "C" -&gt; Html("Coffee &lt;i class=\"fa fa-coffee\"&gt;&lt;/i&gt;")), '_label -&gt; "What do you prefer?" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-select"><code>b3.select</code> <span class="def">@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It renders a select. It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a <code>&lt;input type="hidden"&gt;</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Select</label>
+          <select id="foo" name="foo" class="form-control">
+            <option value="A">Apples</option>
+            <option value="P">Pears</option>
+            <option value="B">Bananas</option>
+          </select>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Disabled</label>
+          <select id="foo" name="foo" class="form-control" disabled="true">
+            <option value="A">Apples</option>
+            <option value="P">Pears</option>
+            <option value="B">Bananas</option>
+          </select>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Readonly</label>
+          <div class="select-group">
+            <select id="foo" name="foo" class="form-control" disabled="true" readonly="true">
+              <option value="A">Apples</option>
+              <option value="P">Pears</option>
+              <option value="B">Bananas</option>
+            </select>
+            <input type="hidden" name="foo" value="A">
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@fruits = @{ Seq("A"-&gt;"Apples","P"-&gt;"Pears","B"-&gt;"Bananas") }
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select" )
+// disabled -&gt; it will NOT be sent within the POST request
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select", 'disabled -&gt; true )
+// readonly -&gt; it will be sent within the POST request
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select", 'readonly -&gt; true )</code></pre>
+      </div>
+      <p>
+        You can add a default first value using the argument <code>'_default</code> with a string. It will add a first option to the select with an empty string value. So you could add a
+        <strong><em>required</em></strong> constraint to the field to force the user to select one other option. In addition, this default option is always disable to avoid the user to select it, and if any other option is selected this default one will not appear at all.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">With default</label>
+          <select id="foo" name="foo" class="form-control">
+            <option class="blank" value="" disabled="" selected="">Select an option</option>
+            <option value="A">Apples</option>
+            <option value="P">Pears</option>
+            <option value="B">Bananas</option>
+          </select>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">With default and Pears as value</label>
+          <select id="foo" name="foo" class="form-control">
+            <option value="A">Apples</option>
+            <option value="P" selected="">Pears</option>
+            <option value="B">Bananas</option>
+          </select>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select", '_default -&gt; "Select an option" )
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "With default and Pears as value", '_default -&gt; "Select an option", 'value -&gt; "P" )</code></pre>
+      </div>
+      <p>
+        For a <code>multiple select</code> you only need to add the <code>'multiple</code> argument. In that case, the <code>'_default</code> argument will be ignored.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Select Multiple</label>
+          <select id="foo" name="foo[]" class="form-control" multiple="true">
+            <option value="A">Apples</option>
+            <option value="P">Pears</option>
+            <option value="B">Bananas</option>
+          </select>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@fruits = @{ Seq("A"-&gt;"Apples","P"-&gt;"Pears","B"-&gt;"Bananas") }
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Fruits", 'multiple -&gt; true )
+// with value "A" and "B" by default
+// it is a string with every value separated by commas
+@b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Fruits", 'multiple -&gt; true, 'value -&gt; "A,B" )</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-hidden"><code>b3.hidden</code> <span class="def">@(name: Any, value: Any, args: (Symbol, Any)*)</span></h4>
+      <p>
+        It simply renders a hidden input.
+      </p>
+      <div class="highlight">
+<pre><code>@b3.hidden("fooName", "fooValue", 'fooAttr -&gt; "fooAttrValue")</code></pre>
+      </div>
+      <p>Renders to:</p>
+      <div class="highlight">
+<pre><code>&lt;input type="hidden" name="fooName" value="fooValue" fooAttr="fooAttrValue"&gt;</code></pre>
+      </div>
+      
+      
+      <h4 id="helper-hiddens"><code>b3.hiddens</code> <span class="def">@(namesAndValues: (Any, Any)*)</span></h4>
+      <p>
+        Render a list of hidden inputs.
+      </p>
+      <div class="highlight">
+<pre><code>@b3.hiddens("fooId" -&gt; 1L, "barId" -&gt; 2L)</code></pre>
+      </div>
+      <p>Renders to:</p>
+      <div class="highlight">
+<pre><code>&lt;input type="hidden" name="fooId" value="1"&gt;
+&lt;input type="hidden" name="barId" value="2"&gt;</code></pre>
+      </div>
+      
+      
+      
+      <h3 id="html5-helpers">New HTML5 helpers</h3>
+      <p>
+        <strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
+      </p>
+      
+      
+      <h4 id="html5-color"><code>b3.color</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="color_field">
+          <label class="control-label" for="color">Color</label>
+          <input type="color" id="color" name="color" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.color( fooForm("color"), '_label -&gt; "Color" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-date"><code>b3.date</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="date_field">
+          <label class="control-label" for="date">Date</label>
+          <input type="date" id="date" name="date" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.date( fooForm("date"), '_label -&gt; "Date" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="datetime"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="datetime_field">
+          <label class="control-label" for="datetime">Datetime</label>
+          <input type="datetime" id="datetime" name="datetime" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.datetime( fooForm("datetime"), '_label -&gt; "Datetime" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="datetime-local"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="datetimeLocal_field">
+          <label class="control-label" for="datetimeLocal">Datetime-Local</label>
+          <input type="datetime-local" id="datetimeLocal" name="datetimeLocal" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -&gt; "Datetime-Local" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-email"><code>b3.email</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="email_field">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-month"><code>b3.month</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="month"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="month_field">
+          <label class="control-label" for="month">Month</label>
+          <input type="month" id="month" name="month" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.month( fooForm("month"), '_label -&gt; "Month" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-number"><code>b3.number</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="number"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="number_field">
+          <label class="control-label" for="number">Number (0 to 50 with intervals of 5)</label>
+          <input type="number" id="number" name="number" value="" class="form-control" min="0" max="50" step="5">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.number( fooForm("number"), '_label -&gt; "Number", 'min -&gt; 0, 'max -&gt; 50, 'step -&gt; 5 )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-range"><code>b3.range</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="range"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="range_field">
+          <label class="control-label" for="range">Range (0 to 50)</label>
+          <input type="range" id="range" name="range" value="" class="form-control" min="0" max="50">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.range( fooForm("range"), '_label -&gt; "Range", 'min -&gt; 0, 'max -&gt; 50 )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-search"><code>b3.search</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="search"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="search_field">
+          <label class="control-label" for="search">Search</label>
+          <input type="search" id="search" name="search" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.search( fooForm("search"), '_label -&gt; "Search" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-tel"><code>b3.tel</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="tel"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="tel_field">
+          <label class="control-label" for="tel">Telephone</label>
+          <input type="tel" id="tel" name="tel" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.tel( fooForm("tel"), '_label -&gt; "Telephone" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-time"><code>b3.time</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="time"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="time_field">
+          <label class="control-label" for="time">Time</label>
+          <input type="time" id="time" name="time" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.time( fooForm("time"), '_label -&gt; "Time" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-url"><code>b3.url</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="url"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="url_field">
+          <label class="control-label" for="url">URL</label>
+          <input type="url" id="url" name="url" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.url( fooForm("url"), '_label -&gt; "URL" )</code></pre>
+      </div>
+      
+      
+      <h4 id="html5-week"><code>b3.week</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        It is a short version of <code>b3.inputType</code> for <code>type="week"</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="week_field">
+          <label class="control-label" for="week">Week</label>
+          <input type="week" id="week" name="week" value="" class="form-control">
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.week( fooForm("week"), '_label -&gt; "Week" )</code></pre>
+      </div>
+      
+      
+      
+      <h3 id="more-helpers">More helpers</h3>
+      
+      
+      <h4 id="more-static"><code>b3.static</code> <span class="def">@(label: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
+      <p>
+        It renders a static control to place within your form. It takes a <code>HTML</code> as parameter, so you can render whatever you want. Actually, it is like a wrapper for a static <code>HTML</code>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="">
+          <label class="control-label">Static HTML</label>
+          <p class="form-control-static"> <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> </p>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.static("Static HTML"){ &lt;a href="#"&gt;&lt;span class="glyphicon glyphicon-star"&gt;&lt;/span&gt; This is a link&lt;/a&gt; }</code></pre>
+      </div>
+      
+      
+      <h4 id="more-buttontype"><code>b3.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b3.B3FieldConstructor)</span></h4>
+      <p>
+        It renders a simple button to place within your form. It takes a <code>HTML</code> as parameter, so you can render whatever you want.
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="">
+          <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-ok"></span> Sign in </button>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.buttonType("submit", 'class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Sign in }</code></pre>
+      </div>
+      
+      
+      <h4 id="more-submit"><code>b3.submit</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
+      <p>
+        It is a short version of b3.buttonType for type="submit".
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="">
+          <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Sign in </button>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.submit('class -&gt; "btn btn-primary"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Sign in }</code></pre>
+      </div>
+      
+      
+      <h4 id="more-reset"><code>b3.reset</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
+      <p>
+        It is a short version of b3.buttonType for type="reset".
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="">
+          <button type="reset" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> Reset </button>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.reset('class -&gt; "btn btn-danger"){ &lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt; Reset }</code></pre>
+      </div>
+      
+      
+      <h4 id="more-button"><code>b3.button</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
+      <p>
+        It is a short version of b3.buttonType for type="button".
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="">
+          <button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-heart"></span> Favorite </button>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.button('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-heart"&gt;&lt;/span&gt; Favorite }</code></pre>
+      </div>
+      
+      
+      <h4 id="more-free"><code>b3.free</code> <span class="def">@(args: (Symbol,Any)*)(content: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
+      <p>
+        It renders whatever you want within a <code>form-group</code> div.
+      </p>
+      <div class="bs-example">
+        <div class="form-group " id="idFormGroup">
+          <label class="control-label"></label>
+          <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+          <a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.free('_id -&gt; "idFormGroup") {
+  &lt;button type="submit" class="btn btn-primary"&gt; &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Save changes&lt;/button&gt;
+  &lt;a class="btn btn-default"&gt; &lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt; Cancel&lt;/a&gt;
+}</code></pre>
+      </div>
+      
+      
+      
+      <h3 id="your-helpers">Your own custom helpers</h3>
+      
+      
+      <h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html =&gt; Html)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        This is the same as <code>b3.inputType</code> but specifying a custom wrapper for the input tag. It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback icons</strong>.
+      </p>
+      <div class="bs-example">
+        <div class="form-group  " id="email_field">
+          <label class="control-label" for="email">Email</label>
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a>
+                </li>
+                <li><a href="#">Another action</a>
+                </li>
+                <li><a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /btn-group -->
+          </div>
+        </div>
+        <div class="form-group has-success has-feedback " id="password_field">
+          <label class="control-label" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control">
+          <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+      </div>
+      <div class="highlight">
+<pre><code>@b3.inputWrapped( "email", fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;@&lt;/span&gt;
+    @input
+    &lt;div class="input-group-btn"&gt;
+      &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"&gt;Action &lt;span class="caret"&gt;&lt;/span&gt;&lt;/button&gt;
+      &lt;ul class="dropdown-menu" role="menu"&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Action&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Another action&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="divider"&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;&lt;!-- /btn-group --&gt;
+  &lt;/div&gt;
+}
+@b3.inputWrapped( "password", fooForm("password"), '_label -&gt; "Password", '_class -&gt; "has-success has-feedback" ){ input =&gt;
+  @input
+  &lt;span class="glyphicon glyphicon-ok form-control-feedback"&gt;&lt;/span&gt;
+}</code></pre>
+      </div>
+      <p>
+        It is also very useful for developing your own complex helpers based on this <code>b3.inputWrapped</code>. For example, imagine you use in several places an <code>input-group</code> with <code>glyphicons</code>. Then you could create a new helper as:
+      </p>
+      <div class="highlight">
+<pre><code>@(inputType: String, icon: String, field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@b3.inputWrapped( inputType, field, b3.Args.withDefault(args, '_label -&gt; None):_* ) { input =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;&lt;span class="glyphicon glyphicon-@icon"&gt;&lt;/span&gt;&lt;/span&gt;
+    @input
+  &lt;/div&gt;  
+}</code></pre>
+      </div>
+      
+      
+      <h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, Lang) =&gt; Html)(implicit fc: B3FieldConstructor, lang: Lang)</span></h4>
+      <p>
+        Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
+      </p>
+      <p>
+        The helper <code>b3.multifield</code> tries to:
+      </p>
+      <ul>
+        <li>Manage a <strong>set of fields</strong> and group them within the same <code>form-group</code>.</li>
+        <li>Manage all of their <strong>errors</strong>, <strong>infos</strong> and <strong>constraints</strong> at the end of the <code>form-group</code> as if they were only one.</li>
+        <li>Take advantage of the helpers that are already implemented.</li>
+        <li>Be a tool to create <strong>your custom multifield helpers</strong>.</li>
+      </ul>
+      <p></p>
+      <p>
+        To know how it works and how to use it go the the <a href="multifield">Multifield</a> section.
+      </p>
+    </form>
+  </div>
+  <div class="col-md-3" id="sidebar">
+    <div class="bs-docs-sidebar hidden-print hidden-xs hidden-sm" role="complementary">
+      <ul class="nav bs-docs-sidenav affix" data-spy="affix">
+        <li class="">
+          <a href="#field-constructors">Field Constructors</a>
+          <ul class="nav">
+            <li class=""><a href="#field-constructors-vertical">Vertical forms</a>
+            </li>
+            <li class=""><a href="#field-constructors-horizontal">Horizontal forms</a>
+            </li>
+            <li class=""><a href="#field-constructors-inline">Inline forms</a>
+            </li>
+            <li class=""><a href="#field-constructors-clear">Clear field constructors</a>
+            </li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="#arguments">Arguments</a>
+          <ul class="nav">
+            <li class=""><a href="#arguments-special">Special arguments</a>
+            </li>
+            <li class=""><a href="#arguments-boolean">Boolean arguments</a>
+            </li>
+            <li class=""><a href="#arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</a>
+            </li>
+          </ul>
+        </li>
+        <li class="">
+          <a href="#forms">Forms</a>
+          <ul class="nav">
+            <li><a href="#forms-specific">Forms with a specific FieldConstructor</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#helpers">Input helpers</a>
+          <ul class="nav">
+            <li><a href="#helpers-disabled-readonly">Disabled &amp; Readonly</a>
+            </li>
+            <li><a href="#helper-inputtype">b3.inputType</a>
+            </li>
+            <li><a href="#helper-text">b3.text</a>
+            </li>
+            <li><a href="#helper-password">b3.password</a>
+            </li>
+            <li><a href="#helper-file">b3.file</a>
+            </li>
+            <li><a href="#helper-textarea">b3.textarea</a>
+            </li>
+            <li><a href="#helper-checkbox">b3.checkbox</a>
+            </li>
+            <li><a href="#helper-radio">b3.radio</a>
+            </li>
+            <li><a href="#helper-select">b3.select</a>
+            </li>
+            <li><a href="#helper-hidden">b3.hidden</a>
+            </li>
+            <li><a href="#helper-hiddens">b3.hiddens</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#html5-helpers">New HTML5 helpers</a>
+          <ul class="nav">
+            <li><a href="#html5-color">b3.color</a>
+            </li>
+            <li><a href="#html5-date">b3.date</a>
+            </li>
+            <li><a href="#html5-datetime">b3.datetime</a>
+            </li>
+            <li><a href="#html5-datetime-local">b3.datetimeLocal</a>
+            </li>
+            <li><a href="#html5-email">b3.email</a>
+            </li>
+            <li><a href="#html5-month">b3.month</a>
+            </li>
+            <li><a href="#html5-number">b3.number</a>
+            </li>
+            <li><a href="#html5-range">b3.range</a>
+            </li>
+            <li><a href="#html5-search">b3.search</a>
+            </li>
+            <li><a href="#html5-tel">b3.tel</a>
+            </li>
+            <li><a href="#html5-time">b3.time</a>
+            </li>
+            <li><a href="#html5-url">b3.url</a>
+            </li>
+            <li><a href="#html5-week">b3.week</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#more-helpers">More helpers</a>
+          <ul class="nav">
+            <li><a href="#more-static">b3.static</a>
+            </li>
+            <li><a href="#more-buttontype">b3.buttonType</a>
+            </li>
+            <li><a href="#more-submit">b3.submit</a>
+            </li>
+            <li><a href="#more-reset">b3.reset</a>
+            </li>
+            <li><a href="#more-button">b3.button</a>
+            </li>
+            <li><a href="#more-free">b3.free</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#your-helpers">Your custom helpers</a>
+          <ul class="nav">
+            <li><a href="#your-inputwrapped">b3.inputWrapped</a>
+            </li>
+            <li><a href="#your-multifield">b3.multifield</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

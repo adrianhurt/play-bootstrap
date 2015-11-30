@@ -1,4 +1,0 @@
-@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: b3.B3FieldConstructor)
-<form action="@action.toString" method="@action.method" class="@fc.formClass @bs.Args.get(args, 'class)" @toHtmlArgs(bs.Args.remove(bs.Args.inner(args, 'role -> "form"), 'class).toMap)>
-	@body
-</form>
