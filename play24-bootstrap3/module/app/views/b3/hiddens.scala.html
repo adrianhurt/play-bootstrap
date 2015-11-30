@@ -1,0 +1,4 @@
+@(namesAndValues: (Any, Any)*)
+@namesAndValues.map { case (name, value) =>
+	<input type="hidden" name="@name" value="@value">
+}

@@ -1,4 +1,0 @@
-@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
-@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withAddingStringValue(args, 'class, "form-control")) { fieldInfo =>
-    <textarea id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap)>@fieldInfo.value</textarea>
-}

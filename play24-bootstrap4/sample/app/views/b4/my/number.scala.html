@@ -1,0 +1,8 @@
+@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.B4FieldConstructor, messages: Messages)
+@b4.inputWrapped("text", field, args:_*) { input =>
+	<div class="input-number input-group">
+		<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+		@input
+		<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
+	</div>
+}

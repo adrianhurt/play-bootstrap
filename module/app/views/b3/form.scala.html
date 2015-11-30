@@ -1,4 +1,0 @@
-@(action: play.api.mvc.Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: b3.B3FieldConstructor)
-<form action="@action.toString" method="@action.method" class="@fc.formClass @Args.get(args, 'class)" @toHtmlArgs(Args.remove(Args.inner(args, 'role -> "form"), 'class).toMap)>
-	@body
-</form>

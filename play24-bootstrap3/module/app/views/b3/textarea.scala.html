@@ -1,0 +1,4 @@
+@(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, bs.Args.withAddingStringValue(args, 'class, "form-control")) { fieldInfo =>
+    <textarea id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap)>@fieldInfo.value</textarea>
+}(fc, messages)
