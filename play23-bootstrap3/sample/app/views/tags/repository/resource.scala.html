@@ -1,0 +1,2 @@
+@(resource: String, text: String = "")
+<a href="@resource" target="_blank">@Html(if (text != "") text else resource.replaceAll("^.*/", ""))</a>

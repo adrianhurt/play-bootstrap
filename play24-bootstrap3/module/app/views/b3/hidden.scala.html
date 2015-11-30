@@ -1,0 +1,2 @@
+@(name: Any, value: Any, args: (Symbol, Any)*)
+<input type="hidden" name="@name" value="@value" @toHtmlArgs(args.toMap)>

@@ -1,0 +1,11 @@
+@(field: Field, args: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
+@inputFormGroup(field, withFeedback = true, withLabelFor = true, bs.Args.withAddingStringValue(args, 'class, "form-control-file")) { fieldInfo =>
+	@if(fieldInfo.isCustom) {
+    <label class="file">
+      <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
+      <span class="file-custom"></span>
+    </label>
+  } else {
+    <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
+	}
+}(fc, messages)

@@ -1,11 +1,11 @@
-Play-Bootstrap3
+Play-Bootstrap
 =================================
 
-# Play Framework library for Bootstrap 3
+# Play Framework library for Bootstrap
 
-This is a collection of input helpers and field constructors for Play Framework 2 to render Bootstrap 3 HTML code.
+This is a collection of input helpers and field constructors for Play Framework to render Bootstrap HTML code.
 
-The documentation and examples are [here](http://play-bootstrap3.herokuapp.com/).
+The documentation and examples are [here](https://adrianhurt.github.io/play-bootstrap).
 
 Also check my other templates projects:
 
