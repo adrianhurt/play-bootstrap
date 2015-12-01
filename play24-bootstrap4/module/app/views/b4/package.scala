@@ -63,12 +63,12 @@ package object b4 {
     override lazy val innerArgsMap: Map[Symbol, Any] = (
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
-      Args.inner(
+      (BSFieldInfo.constraintsArgs(field) ++ Args.inner(
         Args.remove(
           (if (hasFeedback) Args.withAddingStringValue(args, 'class, status.map("form-control-" + _).getOrElse("")) else args),
           'id, 'value
         )
-      )
+      ))
     ).toMap
   }
 

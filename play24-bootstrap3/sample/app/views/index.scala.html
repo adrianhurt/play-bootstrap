@@ -1,4 +1,4 @@
-@(fooForm: Form[String])(implicit messages: Messages)
+@(fooForm: Form[String], validationForm: Form[(String, String, Int, String)])(implicit messages: Messages)
 @import utils.BSVersion
 @import tags._
 @import helper.Implicits._
@@ -199,7 +199,48 @@
 			will also add the <code>disabled</code> attribute. Then, Bootstrap will avoid their interactability.
 		</p>
 		<p>
-			See more about <a href="@routes.Application.docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+			See more <a href="@routes.Application.docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+		</p>
+    
+    
+    <h3 id="html5-validation">HTML5 data form validation</h3>
+		<p>
+      If a field has <strong>validation constraints</strong> they will be added automatically as
+      <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Data_form_validation" target="_blank">HTML5 data form validation</a>.
+		</p>
+		<p>
+			For example, if you have this form
+		</p>
+    @code {
+			val validationForm = Form(tuple(
+				"username" -> nonEmptyText(maxLength = 20),
+				"email" -> email,
+				"age" -> number(min = 18, max = 99),
+				"color" -> nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
+			))
+    }
+		<p>
+			The constraints will be automatically added as you can see here:
+		</p>
+		@bsExampleWithCode {
+      <div class="row example-html5-validation">
+        <div class="col-md-6">
+          @b3.text( validationForm("username"), '_label -> "Username", '_help -> "A username between 1 and 20 characters" )
+          @b3.email( validationForm("email"), '_label -> "Email" )  
+        </div>
+        <div class="col-md-6">
+          @b3.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
+          @b3.text( validationForm("color"), '_label -> "Hexadecimal color", '_help -> "Format is #CCC or #CCCCCC" )
+        </div>
+      </div>
+		}{
+			@@b3.text( validationForm("username"), '_label -> "Username", '_help -> "A username between 1 and 20 characters" )
+			@@b3.email( validationForm("email"), '_label -> "Email" )
+			@@b3.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
+			@@b3.text( validationForm("color"), '_label -> "Hexadecimal color", '_help -> "Format is #CCC or #CCCCCC" )
+		}
+		<p>
+			See more about <a href="@routes.Application.docs#arguments-validation" target="_blank">Validation arguments</a>.
 		</p>
 		
 		

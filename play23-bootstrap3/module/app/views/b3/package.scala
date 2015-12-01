@@ -63,17 +63,6 @@ package object b3 {
 
     /* List of every ARIA id */
     override val ariaIds: Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ infos.map(_._1) ++ errors.map(_._1)
-
-    /*
-    * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
-    * It adds the ARIA attributes and removes the slashed reserved for the field constructor and the `id and `value ones that are
-    * managed independently.
-    */
-    override lazy val innerArgsMap: Map[Symbol, Any] = (
-      (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
-      (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
-      Args.inner(Args.remove(args, 'id, 'value))
-    ).toMap
   }
 
   /**

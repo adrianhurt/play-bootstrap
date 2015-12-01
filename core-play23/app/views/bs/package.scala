@@ -86,7 +86,7 @@ package object bs {
     lazy val innerArgsMap: Map[Symbol, Any] = (
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
-      Args.inner(Args.remove(args, 'id, 'value))
+      (BSFieldInfo.constraintsArgs(field) ++ Args.inner(Args.remove(args, 'id, 'value)))
     ).toMap
   }
 
@@ -137,6 +137,17 @@ package object bs {
       else
         None
     }
+
+    /* Generates automatically the input attributes for the constraints of a field */
+    def constraintsArgs(field: Field): Seq[(Symbol, Any)] = field.constraints.map {
+      case ("constraint.required", params) => Some(('required -> true))
+      case ("constraint.min", params: Seq[Any]) => Some(('min -> params.head))
+      case ("constraint.max", params: Seq[Any]) => Some(('max -> params.head))
+      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> params.head))
+      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> params.head))
+      case ("constraint.pattern", params: Seq[Any]) => Some(('pattern -> params.head.asInstanceOf[() => scala.util.matching.Regex]().toString))
+      case _ => None
+    }.flatten
   }
 
   /**

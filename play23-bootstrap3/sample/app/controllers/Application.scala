@@ -23,9 +23,16 @@ import play.api.data.validation.Constraints._
 
 object Application extends Controller {
 
-  val fooForm = Form(single("foo" -> text(maxLength = 10)))
+  val fooForm = Form(single("foo" -> text(maxLength = 20)))
 
-  def index = Action { implicit request => Ok(views.html.index(fooForm)) }
+  val validationForm = Form(tuple(
+    "username" -> nonEmptyText(maxLength = 20),
+    "email" -> email,
+    "age" -> number(min = 18, max = 99),
+    "color" -> nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
+  ))
+
+  def index = Action { implicit request => Ok(views.html.index(fooForm, validationForm)) }
   def vertical = Action { implicit request => Ok(views.html.vertical(fooForm)) }
   def horizontal = Action { implicit request => Ok(views.html.horizontal(fooForm)) }
   def inline = Action { implicit request => Ok(views.html.inline(fooForm)) }
@@ -33,6 +40,6 @@ object Application extends Controller {
   def readonly = Action { implicit request => Ok(views.html.readonly(fooForm)) }
   def multifield = Action { implicit request => Ok(views.html.multifield(fooForm)) }
   def extendIt = Action { implicit request => Ok(views.html.extendIt(fooForm)) }
-  def docs = Action { implicit request => Ok(views.html.docs(fooForm)) }
+  def docs = Action { implicit request => Ok(views.html.docs(fooForm, validationForm)) }
 
 }
