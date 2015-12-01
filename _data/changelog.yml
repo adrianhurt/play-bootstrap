@@ -12,6 +12,9 @@
         Added support to new custom forms in `Bootstrap 4`. You only need to add the new `'_custom -> true` special argument.
     - type: add
       text: |
+        Field constraints are now automatically added as [HTML5 data form validation](/docs#arguments-validation){:target="_blank"}.
+    - type: add
+      text: |
         Added CSRF support adding token to forms with `formCSRF` helpers. See more information [here](/docs#forms-csrf).
     - type: add
       text: |

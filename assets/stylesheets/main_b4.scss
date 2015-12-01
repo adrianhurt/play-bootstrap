@@ -144,12 +144,12 @@ i.fa-github {
 	line-height: 15px;
 }
 
-h3, h4 {
-	margin-top: 35px;
-}
-h1 + h2, h2 + h3, h3 + h4 {
-	margin-top: 15px;
-}
+h3, h4 { margin-top: 35px; }
+h1 + h2, h2 + h3, h3 + h4 { margin-top: 15px; }
+ 
+input:invalid { color: red !important; }
+.example-html5-validation input:valid { color: green !important; }
+
 .bd-example {
   border: 0.4rem solid $code-bg-color;
   padding: 0.8rem 1.2rem;

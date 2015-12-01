@@ -28,7 +28,14 @@ tab: index
   </div>
   {% include index_new_features.html %}
   
+  
+  
+  
   <h2 id="features">Features</h2>
+  
+  
+  
+  
   <h3 id="simple-to-use">Simple to use</h3>
   <p>
     It tries to follow the same rules as the helper library from Play Framework.
@@ -43,6 +50,10 @@ tab: index
   @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
   </div>
+  
+  
+  
+  
   <h3 id="horizontal-vertical-inline">Horizontal, vertical or inline forms</h3>
   <p>
     There is a different field constructor for each kind of form. Normally, you will declare one of them as default for each of your templates, but you can mix them if you want.
@@ -221,6 +232,10 @@ tab: index
       </div>
     </div>
   </div>
+  
+  
+  
+  
   <h3 id="every-helper-you-need">Every helper you need</h3>
   <p>
     Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ... You have the essential input helpers you could need. But this library is for the community, so you can collaborate or ask for others.
@@ -228,7 +243,13 @@ tab: index
   <p>
     See the list of available helpers <a href="{{ site.baseurl }}/docs#helpers" target="_blank">here</a>.
   </p>
+  
+  
+  
+  
   <h3 id="coherence-consistency">Coherence and consistency</h3>
+  
+  
   <h4 id="boolean-attributes">Boolean attributes</h4>
   <p>
     Sometimes the HTML syntax could be confusing. For example, all of the following codes are equivalent:
@@ -248,6 +269,8 @@ tab: index
   <p>
     See more about <a href="{{ site.baseurl }}/docs#arguments-boolean" target="_blank">Boolean arguments</a>.
   </p>
+  
+  
   <h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
   <p>
     Another frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
@@ -257,8 +280,71 @@ tab: index
     Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers will also add the <code>disabled</code> attribute. Then, Bootstrap will avoid their interactability.
   </p>
   <p>
-    See more about <a href="{{ site.baseurl }}/docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+    See more <a href="{{ site.baseurl }}/docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
   </p>
+  
+  
+  
+  
+  <h3 id="html5-validation">HTML5 data form validation</h3>
+  <p>
+    If a field has <strong>validation constraints</strong> they will be added automatically as
+    <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Data_form_validation" target="_blank">HTML5 data form validation</a>.
+  </p>
+  <p>
+    For example, if you have this form
+  </p>
+  <div class="highlight">
+<pre><code>val validationForm = Form(tuple(
+  "username" -&gt; nonEmptyText(maxLength = 20),
+  "email" -&gt; email,
+  "age" -&gt; number(min = 18, max = 99),
+  "color" -&gt; nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
+))</code></pre>
+  </div>
+  <p>
+    The constraints will be automatically added as you can see here:
+  </p>
+  <div class="bs-example">
+    <div class="row example-html5-validation">
+      <div class="col-md-6">
+        <div class="form-group  " id="username_field">
+          <label class="control-label" for="username">Username</label>
+          <input type="text" id="username" name="username" value="" aria-describedby="username_info_0" maxlength="20" required="true" class="form-control">
+          <span id="username_info_0" class="help-block">A username between 1 and 20 characters</span>
+        </div>
+        <div class="form-group  " id="email_field">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group  " id="age_field">
+          <label class="control-label" for="age">Age</label>
+          <input type="number" id="age" name="age" value="" aria-describedby="age_info_0" min="18" max="99" class="form-control">
+          <span id="age_info_0" class="help-block">From 18 to 99 years old</span>
+        </div>
+        <div class="form-group  " id="color_field">
+          <label class="control-label" for="color">Hexadecimal color</label>
+          <input type="text" id="color" name="color" value="" aria-describedby="color_info_0" required="true" pattern="^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" class="form-control">
+          <span id="color_info_0" class="help-block">Format is #CCC or #CCCCCC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b3.text( validationForm("username"), '_label -&gt; "Username", '_help -&gt; "A username between 1 and 20 characters" )
+@b3.email( validationForm("email"), '_label -&gt; "Email" )
+@b3.number( validationForm("age"), '_label -&gt; "Age", '_help -&gt; "From 18 to 99 years old" )
+@b3.text( validationForm("color"), '_label -&gt; "Hexadecimal color", '_help -&gt; "Format is #CCC or #CCCCCC" )</code></pre>
+  </div>
+  <p>
+    See more about <a href="/docs#arguments-validation" target="_blank">Validation arguments</a>.
+  </p>
+  
+  
+  
+  
   <h3 id="multifield">Multifield support</h3>
   <p>
     Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...). With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
@@ -341,6 +427,10 @@ tab: index
   <p>
     See more about <a href="{{ site.baseurl }}/multifield" target="_blank">Multifield</a> support.
   </p>
+  
+  
+  
+  
   <h3 id="aria">With ARIA attributes</h3>
   <p>
     The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility. However we know it could be difficult and boring to integrate it everywhere within your web. Because of that, <strong>the library
@@ -352,6 +442,9 @@ tab: index
   
   
   {% include index_installation.html %}
+  
+  
+  
   
   <h2 id="examples">Examples</h2>
   <p>
@@ -370,11 +463,19 @@ tab: index
     <li><a href="https://github.com/adrianhurt/play-multidomain-auth" target="_blank">Play Multidomain Auth</a>
     </li>
   </ul>
+  
+  
+  
+  
   <h2 id="customization">Customization</h2>
   <p>
     This is a very simple library, and you have all the code on
     <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>. So you can use it as inspiration and create your own field constructors and/or helpers.
   </p>
+  
+  
+  
+  
   <h2 id="changelog">Change Log</h2>
   <p>
     You can check the change log <a href="{{ site.baseurl }}/changelog">here</a>.
