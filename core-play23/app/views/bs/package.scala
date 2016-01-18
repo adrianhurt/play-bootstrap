@@ -86,8 +86,9 @@ package object bs {
     lazy val innerArgsMap: Map[Symbol, Any] = (
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
-      (BSFieldInfo.constraintsArgs(field) ++ Args.inner(Args.remove(args, 'id, 'value)))
-    ).toMap
+      BSFieldInfo.constraintsArgs(field) ++
+      args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
+    ).toMap.filterNot { case (_, value) => value == false }
   }
 
   /**
