@@ -93,12 +93,12 @@ object HelpersSpec extends Specification {
       body must not contain ("value=\"defaultvalue\"")
     }
 
-    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = b3.inputType("text", fooField, 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test").body
+    "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
+      val body = b3.inputType("text", fooField, 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test").body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
-      body must not contain ("_slashed_attr=\"test\"")
+      body must not contain ("_underscored_attr=\"test\"")
     }
   }
 
@@ -473,9 +473,9 @@ object HelpersSpec extends Specification {
     }
 
     "get the inner arguments for the content" in {
-      val body = b3.freeFormGroup(Seq('_class -> "theClass", '_slashed -> "slashed", 'foo -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc).body
+      val body = b3.freeFormGroup(Seq('_class -> "theClass", '_underscored -> "underscored", 'foo -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc).body
       body must not contain "_class=\"theClass\""
-      body must not contain "_slashed=\"slashed\""
+      body must not contain "_underscored=\"underscored\""
       body must contain("foo=\"foo\"")
     }
   }
@@ -496,12 +496,12 @@ object HelpersSpec extends Specification {
       b3.static("theLabel", 'class -> "extra_class")(Html("theText"))(vfc).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
     }
 
-    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = b3.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(Html("theText"))(vfc).body
+    "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
+      val body = b3.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(Html("theText"))(vfc).body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
-      body must not contain ("_slashed_attr=\"test\"")
+      body must not contain ("_underscored_attr=\"test\"")
     }
   }
 
@@ -522,12 +522,12 @@ object HelpersSpec extends Specification {
       buttonTypeBody() must contain(sampleContent)
     }
 
-    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = buttonTypeBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")
+    "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
+      val body = buttonTypeBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
-      body must not contain ("_slashed_attr=\"test\"")
+      body must not contain ("_underscored_attr=\"test\"")
     }
 
     "be rendered correctly" in {

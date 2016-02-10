@@ -80,7 +80,7 @@ package object bs {
 
     /*
     * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
-    * It adds the ARIA attributes and removes the slashed reserved for the field constructor and the `id and `value ones that are
+    * It adds the ARIA attributes and removes the underscored reserved for the field constructor and the `id and `value ones that are
     * managed independently.
     */
     lazy val innerArgsMap: Map[Symbol, Any] = (

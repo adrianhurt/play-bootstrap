@@ -63,12 +63,12 @@ object FormsSpec extends Specification {
       simple must contain("role=\"form\"")
     }
 
-    "allow setting extra arguments and remove those arguments with false values or with slashed names" in {
-      val body = fooFormBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_slashed_attr -> "test")(vfc)
+    "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
+      val body = fooFormBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(vfc)
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
-      body must not contain ("_slashed_attr=\"test\"")
+      body must not contain ("_underscored_attr=\"test\"")
     }
 
     "render the content body" in {

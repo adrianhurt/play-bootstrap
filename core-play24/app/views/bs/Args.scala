@@ -40,7 +40,7 @@ object Args {
 
   /**
    * Returns only the inner arguments (those that are exclusive for an input and not for the field constructor).
-   * Removes every argument with a prefixed slash and those whose value is false.
+   * Removes every argument with a prefixed underscore (_) and those whose value is false.
    * It also lets you add some default arguments to the parameter 'args'.
    */
   def inner(args: Seq[(Symbol, Any)], default: (Symbol, Any)*) =
