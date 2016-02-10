@@ -68,7 +68,7 @@ tab: docs
       
       <h3 id="arguments">Arguments (<code>args</code>)</h3>
       <p>
-        For every component there is a list of arguments you can add and they will be put within the corresponding input tag as normal HTML. However it will only happen with those arguments without a prefixed slash. The slashed arguments are used to complement the corresponding <code>form-group</code> or to parametrize its behaviour.
+        For every component there is a list of arguments you can add and they will be put within the corresponding input tag as normal HTML. However it will only happen with those arguments without a prefixed underscore (_). The underscored arguments are used to complement the corresponding <code>form-group</code> or to parametrize its behaviour.
       </p>
       <p>
         For example, the following component has the argument <code>placeholder</code> that will be added to the input text tag. The <code>_label</code> argument set the label for the form-group and the
@@ -94,10 +94,10 @@ tab: docs
       </div>
       
       
-      <h4 id="arguments-special">Special arguments (the slashed ones)</h4>
+      <h4 id="arguments-special">Special arguments (the underscored ones)</h4>
       <p>
         As we see before, there are some special arguments that are reserved to parametrize the corresponding
-        <code>form-group</code>'s behaviour. All of these special arguments are prefixed with a slash. And the list is:
+        <code>form-group</code>'s behaviour. All of these special arguments are prefixed with an underscore (_). And the list is:
       </p>
       <ul>
         <li><code>_id</code>: the id for the form-group.</li>
@@ -140,7 +140,7 @@ tab: docs
 @b3.text( fooForm("foo"), '_label -&gt; "With a boolean attribute", 'fooAttr -&gt; maybeTrueFunction(...).toString )</code></pre>
       </div>
       <p>
-        Note <strong>only regular arguments</strong> with <code>false</code> value are removed. It doesn't happen with the special ones (i.e. the <strong><em>slashed</em></strong> ones).
+        Note <strong>only regular arguments</strong> with <code>false</code> value are removed. It doesn't happen with the special ones (i.e. the <strong><em>underscored</em></strong> ones).
       </p>
       
       
