@@ -106,7 +106,7 @@ package object bs {
         argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(Messages(m.toString)(lang))).getOrElse(
           argsMap.get('_help).map(m => Seq(Messages(m.toString)(lang))).getOrElse {
             maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
-              field.constraints.map(c => Messages(c._1, c._2: _*)(lang)) ++ field.format.map(f => Messages(f._1, f._2: _*)(lang))
+              field.constraints.map(c => Messages(c._1, c._2.map(a => translateMsgArg(a, lang)): _*)(lang)) ++ field.format.map(f => Messages(f._1, f._2.map(a => translateMsgArg(a, lang)): _*)(lang))
             }.getOrElse(Nil)
           }
         )
@@ -117,12 +117,12 @@ package object bs {
     def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], lang: Lang): Seq[String] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
-          case Some(FormError(_, message, args)) => Seq(Messages(message, args: _*)(lang))
+          case Some(FormError(_, message, args)) => Seq(Messages(message, args.map(a => translateMsgArg(a, lang)): _*)(lang))
           case message => Seq(Messages(message.toString)(lang))
         }
       }.getOrElse {
         maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
-          field.errors.map { e => Messages(e.message, e.args: _*)(lang) }
+          field.errors.map { e => Messages(e.message, e.args.map(a => translateMsgArg(a, lang)): _*)(lang) }
         }.getOrElse(Nil)
       }
     }
@@ -153,6 +153,12 @@ package object bs {
       }
       case _ => None
     }.flatten
+
+    private def translateMsgArg(msgArg: Any, lang: Lang) = msgArg match {
+      case key: String => Messages(key)(lang)
+      case keys: Seq[String] => keys.map(key => Messages(key)(lang))
+      case _ => msgArg
+    }
   }
 
   /**
