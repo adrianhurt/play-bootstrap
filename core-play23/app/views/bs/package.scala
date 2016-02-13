@@ -146,7 +146,11 @@ package object bs {
       case ("constraint.max", params: Seq[Any]) => Some(('max -> params.head))
       case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> params.head))
       case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> params.head))
-      case ("constraint.pattern", params: Seq[Any]) => Some(('pattern -> params.head.asInstanceOf[() => scala.util.matching.Regex]().toString))
+      case ("constraint.pattern", params: Seq[Any]) => params.head match {
+        case str: String => Some(('pattern -> str))
+        case func: Function0[_] => Some(('pattern -> func.asInstanceOf[() => scala.util.matching.Regex]().toString))
+        case _ => None
+      }
       case _ => None
     }.flatten
   }
