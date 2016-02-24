@@ -86,7 +86,7 @@ package object bs {
     lazy val innerArgsMap: Map[Symbol, Any] = (
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
-      BSFieldInfo.constraintsArgs(field) ++
+      BSFieldInfo.constraintsArgs(field, lang) ++
       args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
     ).toMap.filterNot { case (_, value) => value == false }
   }
@@ -140,15 +140,15 @@ package object bs {
     }
 
     /* Generates automatically the input attributes for the constraints of a field */
-    def constraintsArgs(field: Field): Seq[(Symbol, Any)] = field.constraints.map {
+    def constraintsArgs(field: Field, lang: Lang): Seq[(Symbol, Any)] = field.constraints.map {
       case ("constraint.required", params) => Some(('required -> true))
-      case ("constraint.min", params: Seq[Any]) => Some(('min -> params.head))
-      case ("constraint.max", params: Seq[Any]) => Some(('max -> params.head))
-      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> params.head))
-      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> params.head))
+      case ("constraint.min", params: Seq[Any]) => Some(('min -> Messages(params.head)(lang)))
+      case ("constraint.max", params: Seq[Any]) => Some(('max -> Messages(params.head)(lang)))
+      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> Messages(params.head)(lang)))
+      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> Messages(params.head)(lang)))
       case ("constraint.pattern", params: Seq[Any]) => params.head match {
-        case str: String => Some(('pattern -> str))
-        case func: Function0[_] => Some(('pattern -> func.asInstanceOf[() => scala.util.matching.Regex]().toString))
+        case str: String => Some(('pattern -> Messages(str)(lang)))
+        case func: Function0[_] => Some(('pattern -> Messages(func.asInstanceOf[() => scala.util.matching.Regex]().toString)(lang)))
         case _ => None
       }
       case _ => None
