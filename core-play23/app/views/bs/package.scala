@@ -142,10 +142,10 @@ package object bs {
     /* Generates automatically the input attributes for the constraints of a field */
     def constraintsArgs(field: Field, lang: Lang): Seq[(Symbol, Any)] = field.constraints.map {
       case ("constraint.required", params) => Some(('required -> true))
-      case ("constraint.min", params: Seq[Any]) => Some(('min -> Messages(params.head)(lang)))
-      case ("constraint.max", params: Seq[Any]) => Some(('max -> Messages(params.head)(lang)))
-      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> Messages(params.head)(lang)))
-      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> Messages(params.head)(lang)))
+      case ("constraint.min", params: Seq[Any]) => Some(('min -> Messages(params.head.toString)(lang)))
+      case ("constraint.max", params: Seq[Any]) => Some(('max -> Messages(params.head.toString)(lang)))
+      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> Messages(params.head.toString)(lang)))
+      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> Messages(params.head.toString)(lang)))
       case ("constraint.pattern", params: Seq[Any]) => params.head match {
         case str: String => Some(('pattern -> Messages(str)(lang)))
         case func: Function0[_] => Some(('pattern -> Messages(func.asInstanceOf[() => scala.util.matching.Regex]().toString)(lang)))
@@ -156,7 +156,7 @@ package object bs {
 
     private def translateMsgArg(msgArg: Any, lang: Lang) = msgArg match {
       case key: String => Messages(key)(lang)
-      case keys: Seq[String] => keys.map(key => Messages(key)(lang))
+      case keys: Seq[_] => keys.map(key => Messages(key.toString)(lang))
       case _ => msgArg
     }
   }
