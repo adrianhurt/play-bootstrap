@@ -1,0 +1,9 @@
+@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@b3.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
+	<div class="input-text-checkbox input-group" @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+		<span class="input-group-addon">
+			@b3.checkbox(checkboxField, checkboxArgs:_*)
+		</span>
+		@b3.text(textField, textArgs:_*)
+	</div>
+}

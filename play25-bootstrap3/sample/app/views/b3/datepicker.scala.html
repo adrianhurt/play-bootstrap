@@ -1,0 +1,8 @@
+@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@b3.multifield( startField, endField )(globalArgs, startArgs ++ endArgs) { implicit cfc =>
+	<div class="input-daterange input-group" @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+		@b3.text(startField, startArgs:_*)
+		<span class="input-group-addon">to</span>
+		@b3.text(endField, endArgs:_*)
+	</div>
+}

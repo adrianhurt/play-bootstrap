@@ -1,0 +1,5 @@
+@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: b4.B4FieldConstructor, request: RequestHeader)
+@form(action, args:_*) {
+	@helper.CSRF.formField
+	@body
+}(fc)

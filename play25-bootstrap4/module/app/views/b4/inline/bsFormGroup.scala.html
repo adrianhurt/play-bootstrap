@@ -1,0 +1,7 @@
+@(contentHtml: Html, argsMap: Map[Symbol, Any])
+@b4.bsFormGroupCommon(contentHtml, argsMap) { content =>
+	@argsMap.get('_label).map { label =>
+		<label class="control-label@if(bs.ArgsMap.isTrue(argsMap, '_hideLabel)){ sr-only}">@label</label>
+	}
+	@content
+}
