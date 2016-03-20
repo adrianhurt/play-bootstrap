@@ -1,2 +1,2 @@
 @(folder: String, text: String = "")
-@path(s"tree/${utils.BSVersion.gitBranch}/$folder", text)
+@resource(utils.BSVersion.repositoryFile(folder), text)

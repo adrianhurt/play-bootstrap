@@ -1,2 +1,2 @@
 @(text: String = "Github", theClass: String = "")
-<a class="@theClass" href="https://github.com/adrianhurt/play-bootstrap" target="_blank">@Html(text)</a>
+@resource(utils.BSVersion.repository, text, theClass)

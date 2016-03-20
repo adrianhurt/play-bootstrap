@@ -16,13 +16,19 @@
 package utils
 
 object BSVersion {
-  final val code = "1.0-P24-B4"
+  final val code = "1.0-P25-B4"
   final val library = "1.0"
-  final val play = "Play 2.4"
-  final val play_code = "2.4"
+  final val play = "Play 2.5"
+  final val play_code = "2.5"
   final val bootstrap = "Bootstrap 4"
   final val bootstrap_code = "4"
-  final val gitBranch = code
+
+  final val repositoryBase = "master/play25-bootstrap4/module"
+
+  final val repository = "https://github.com/adrianhurt/play-bootstrap"
+  def repositoryPath(path: String) = s"$repository/$path"
+  def repositoryFile(file: String) = s"$repository/blob/$repositoryBase/$file"
+  def repositoryFolder(folder: String) = s"$repository/tree/$repositoryBase/$folder"
 
   final val msgsName = "messages"
   final val msgsClass = "Messages"

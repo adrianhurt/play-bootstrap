@@ -16,14 +16,14 @@
 package utils
 
 object BSVersion {
-  final val code = "1.0-P24-B3"
+  final val code = "1.0-P25-B3"
   final val library = "1.0"
-  final val play = "Play 2.4"
-  final val play_code = "2.4"
+  final val play = "Play 2.5"
+  final val play_code = "2.5"
   final val bootstrap = "Bootstrap 3"
   final val bootstrap_code = "3"
 
-  final val repositoryBase = "master/play24-bootstrap3/module"
+  final val repositoryBase = "master/play25-bootstrap3/module"
 
   final val repository = "https://github.com/adrianhurt/play-bootstrap"
   def repositoryPath(path: String) = s"$repository/$path"

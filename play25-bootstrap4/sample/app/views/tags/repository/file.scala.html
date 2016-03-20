@@ -1,2 +1,2 @@
 @(file: String, text: String = "")
-@path(s"blob/${utils.BSVersion.gitBranch}/$file", text)
+@resource(utils.BSVersion.repositoryFile(file), text)
