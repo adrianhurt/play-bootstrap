@@ -6,7 +6,11 @@
   bullets:
     - type: add
       text: |
-        Added support to `Bootstrap 4`. Now there is a new version `X-P24-B4` where every helpers are moved from `b3` to `b4` path.
+        [#54](https://github.com/adrianhurt/play-bootstrap/pull/54){:target="_blank"}
+        Added support to `Play 2.5`. Now there is a new version `X-P25-B3`.
+    - type: add
+      text: |
+        Added support to `Bootstrap 4`. Now there are the new versions `X-P25-B4` and `X-P24-B4` where every helpers are moved from `b3` to `b4` path.
     - type: add
       text: |
         Added support to new custom forms in `Bootstrap 4`. You only need to add the new `'_custom -> true` special argument.

@@ -1,8 +1,8 @@
 ---
-title: "Play-Bootstrap 1.0-P24-B4 | Readonly attributes example"
-layout: default_b4
-permalink: /1.0-P24-B4/readonly/
-version: "1.0-P24-B4"
+title: "Play-Bootstrap 1.0-P25-B3 | Readonly attributes example"
+layout: default_b3
+permalink: /1.0-P25-B3/readonly/
+version: "1.0-P25-B3"
 uri: /readonly/
 tab: readonly
 ---
@@ -45,14 +45,15 @@ tab: readonly
   </ul>
 </div>
 <form action="" method="GET" class="form-horizontal " role="form" id="form-readonly">
-  <div class="bd-example">
-    <fieldset class="form-group row always-editable " id="text_field">
-      <label class="control-label form-control-label col-md-2" for="text">Always editable</label>
+  <input type="hidden" name="csrfToken" value="7535ade310a35d567be10a0b580e882bbd17e8c8-1448839960330-18cac7dcb1c36bf39efbe063">
+  <div class="bs-example">
+    <div class="form-group always-editable " id="text_field">
+      <label class="control-label col-md-2" for="text">Always editable</label>
       <div class="col-md-10">
         <input type="text" id="text" name="text" value="demo text" class="form-control" placeholder="A simple text...">
       </div>
-    </fieldset>
-    <fieldset class="form-group row  " id="checkbox_field">
+    </div>
+    <div class="form-group  " id="checkbox_field">
       <div class="col-md-10 col-md-offset-2">
         <div class="checkbox checkbox-group disabled">
           <label for="checkbox">
@@ -61,9 +62,9 @@ tab: readonly
           <input type="hidden" name="checkbox" value="true">
         </div>
       </div>
-    </fieldset>
-    <fieldset class="form-group row  " id="radio_field">
-      <label class="control-label form-control-label col-md-2">Radio Group</label>
+    </div>
+    <div class="form-group  " id="radio_field">
+      <label class="control-label col-md-2">Radio Group</label>
       <div class="col-md-10">
         <div class="radio-group">
           <div class="radio disabled">
@@ -79,9 +80,9 @@ tab: readonly
           <input type="hidden" name="radio" value="M">
         </div>
       </div>
-    </fieldset>
-    <fieldset class="form-group row  " id="select_field">
-      <label class="control-label form-control-label col-md-2" for="select">Select</label>
+    </div>
+    <div class="form-group  " id="select_field">
+      <label class="control-label col-md-2" for="select">Select</label>
       <div class="col-md-10">
         <div class="select-group">
           <select id="select" name="select" disabled="true" class="form-control" readonly="true">
@@ -92,27 +93,26 @@ tab: readonly
           <input type="hidden" name="select" value="A">
         </div>
       </div>
-    </fieldset>
-    <fieldset class="form-group row">
+    </div>
+    <div class="form-group ">
       <div class="col-md-10 col-md-offset-2">
-        <button type="submit" class="btn btn-secondary"><i class="fa fa-ok"></i> Submit me!</button>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Submit me!</button>
         <a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
       </div>
-    </fieldset>
+    </div>
   </div>
   <div class="highlight">
-<pre><code>@b4.text( fooForm("text"), '_label -&gt; "Always editable", '_class -&gt; "always-editable", 'value -&gt; "demo text", 'placeholder -&gt; "A simple text..." )
-@b4.checkbox( fooForm("checkbox"), '_text -&gt; "Checkbox", 'value -&gt; true, 'readonly -&gt; true )
-@b4.radio( fooForm("radio"), options = Seq("M"-&gt;"Male","F"-&gt;"Female"), 'value -&gt; "M", '_label -&gt; "Radio Group", 'readonly -&gt; true )
-@b4.select( fooForm("select"), options = fruits, '_label -&gt; "Select", 'value -&gt; "A", 'readonly -&gt; true )
-@b4.free() {
-  &lt;button type="submit" class="btn btn-secondary"&gt;&lt;i class="fa fa-ok"&gt;&lt;/i&gt; Submit me!&lt;/button&gt;
+<pre><code>@b3.text( fooForm("text"), '_label -&gt; "Always editable", '_class -&gt; "always-editable", 'value -&gt; "demo text", 'placeholder -&gt; "A simple text..." )
+@b3.checkbox( fooForm("checkbox"), '_text -&gt; "Checkbox", 'value -&gt; true, 'readonly -&gt; true )
+@b3.radio( fooForm("radio"), options = Seq("M"-&gt;"Male","F"-&gt;"Female"), 'value -&gt; "M", '_label -&gt; "Radio Group", 'readonly -&gt; true )
+@b3.select( fooForm("select"), options = fruits, '_label -&gt; "Select", 'value -&gt; "A", 'readonly -&gt; true )
+@b3.free() {
+  &lt;button type="submit" class="btn btn-default"&gt;&lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Submit me!&lt;/button&gt;
   &lt;a class="btn btn-primary btn-readonly-unlock locked"&gt;Unlock readonly fields&lt;/a&gt;
 }</code></pre>
   </div>
-  <input type="hidden" name="csrfToken" value="f9aca003bec64a832c7b56518390ee4004f1aca9-1448848197689-19223a16d1ea75b16b8f4d98">
 </form>
 <p>
   Check
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play24-bootstrap4/module/sample/app/assets/javascripts/main.coffee" target="_blank">here</a> the CoffeScript code used for lock and unlock the fields.
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap3/module/sample/app/assets/javascripts/main.coffee" target="_blank">here</a> the CoffeScript code used for lock and unlock the fields.
 </p>
