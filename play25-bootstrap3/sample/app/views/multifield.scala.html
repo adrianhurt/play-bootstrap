@@ -1,0 +1,364 @@
+@(fooForm: Form[String])(implicit messages: Messages)
+@import utils.BSVersion
+@import tags._
+@import helper.Implicits._
+@implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+
+@main("Multifield", tab = "multifield") {
+	
+	@b3.form(routes.Application.multifield) {
+		
+		<h1 id="multifield-support" class="page-header">Multifield support</h1>
+		<p class="lead">
+			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of
+			checkboxes, a date range, ...). That is the purpose of the helper <code>b3.multifield</code>.
+		</p>
+		<p>
+			The helper <code>b3.multifield</code> tries to:
+			<ul>
+				<li>Manage a <strong>set of fields</strong> and group them within the same <code>form-group</code>.</li>
+				<li>
+					Manage all of their <strong>errors</strong>, <strong>infos</strong> and <strong>constraints</strong> at
+					the end of the <code>form-group</code> as if they were only one.
+				</li>
+				<li>Take advantage of the helpers that are already implemented.</li>
+				<li>Be a tool to create <strong>your custom multifield helpers</strong>.</li>
+			</ul>
+		</p>
+		<p>
+			To see how it works take a look to the arguments it takes:
+		</p>
+		
+		@code {
+			@@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: ClearFieldConstructor => Html)(implicit fc: B4FieldConstructor, @BSVersion.msgsArg)
+		}
+		
+		<p>
+			<ul>
+				<li><strong>fields:</strong> the list of <code>play.api.data.Field</code> used.</li>
+				<li>
+					<strong>globalArgs:</strong> the list of arguments to decorate the <code>form-group</code>, not for any internal
+					helper you could use. You can use the <code>_id</code>, <code>_class</code>, <code>_label</code>,
+					<code>_showConstraints</code> and <code>_help</code> arguments as you do with any other field constructor,
+					and add any other that could be useful for your custom helper.
+				</li>
+				<li><strong>fieldsArgs:</strong> the list of arguments for every inner field.</li>
+				<li><strong>inputsHtml:</strong> a function that takes a <strong>Clear Field Constructor</strong> and generates the HMTL for the field.</li>
+				<li><strong>fc and @BSVersion.msgsName:</strong> the field constructor used for the outer form.</li>
+			</ul>
+			Here are the special arguments you can use as <code>globalArgs</code> (check their functionality at the docs):
+			<ul>
+				<li><code>_id</code></li>
+				<li><code>_class</code></li>
+				<li><code>_label</code></li>
+				<li><code>_help</code></li>
+				<li><code>_success</code></li>
+				<li><code>_warning</code></li>
+				<li><code>_error</code></li>
+				<li><code>_hasFeedback</code>: use it when you need feedback icons for validation states (see more below).</li>
+			</ul>
+			All of these arguments parametrize the global <code>form-group</code> for the set of the fields, so they will affect
+			to every field. Thus, you can't set different validation status for different fields, for example.
+		</p>
+		
+		
+		<h2 id="examples">Let's see a couple of examples</h2>
+		
+		<p>
+			Remember the code of this web with these examples is available on @repository.home().
+			To see more details about creating your own helpers you can check before the <a href="@routes.Application.extendIt">Extend it</a> section.
+		</p>
+		
+		<h3 id="daterange">A date range</h3>
+		
+		<p>
+			We are going to implement our own custom helper to use a date range with the
+			<a href="http://bootstrap-datepicker.readthedocs.org/en/release/">bootstrap-datepicker</a> plugin.
+			Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. This is what we want to get:
+		</p>
+		
+		@bsExampleWithCode {
+			@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-12-2014" )(
+				'_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
+		}{
+			@@b3.datepicker( fooForm("dateStart"), 'value -> "31-10-2014" )(
+				fooForm("dateEnd"), 'value -> "31-12-2014" )(
+				'_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
+		}
+		
+		<p>
+			As you can see we have 2 fields with their own specific arguments for their corresponding inputs, and then
+			a list of general arguments to decorate the <code>form-group</code>.
+		</p>
+		<p>
+			Seeing the plugin, we need to generate a code like this one within the <code>form-group</code>:
+		</p>
+		
+		@code {
+			<div class="input-daterange input-group" id="datepicker">
+			    <input type="text" class="form-control" name="start" />
+			    <span class="input-group-addon">to</span>
+			    <input type="text" class="form-control" name="end" />
+			</div>
+		}
+		
+		<p>
+			Then, to implement our own <code>b3.datepicker</code> helper we would only need to create a the file
+			<code>b3/datepicker.scala.html</code> within our <code>views</code> folder with the following code:
+		</p>
+			
+		@code {
+			@@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @BSVersion.msgsArg)
+			@@b3.multifield(startField, endField)(globalArgs, startArgs ++ endArgs) { implicit cfc =>
+				<div class="input-daterange input-group" @@toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+					@@b3.text(startField, startArgs:_*)
+					<span class="input-group-addon">to</span>
+					@@b3.text(endField, endArgs:_*)
+				</div>
+			}
+		}
+		
+		<p>
+			<code>toHtmlArgs()</code> function helps you to render a list of arguments from a <code>Map</code> of arguments,
+			and <code>bs.Args.inner()</code> filters the underscored arguments used for decorating the <code>form-group</code>
+			(<code>_id</code>, <code>_class</code>, <code>_label</code>, <code>_showConstraints</code> and <code>_help</code>).
+		</p>
+		
+		@javaMessagesWarning("1")
+		
+		<p>
+			So for the <code>b3.datepicker</code> used before we get rendered the following code (for a horizontal form):
+		</p>
+		
+		@code {
+			<div class="form-group" id="">
+				<label class="control-label col-md-2">Date range</label>
+				<div class="col-md-10">
+					<div class="input-daterange input-group" data-date-start-date="10-11-2014">
+						<input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
+						<span class="input-group-addon">to</span>
+						<input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
+					</div>
+					<span class="help-block">Select a date range from 10-11-2014</span>
+				</div>
+			</div>
+		}
+		
+		
+		<h3 id="set-checkboxes">A set of checkboxes</h3>
+		
+		<p>
+			This is a classic one. A set of checkboxes within the same <code>form-group</code>. Note you can choose to display
+			them vertically or inline simply by using CSS.
+		</p>
+		
+		@bsExampleWithCode {
+			@b3.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)( '_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want" )
+			@b3.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+		}{
+			@@b3.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+			@@b3.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+		}
+		
+		<p>
+			In this case we have a list of fields with their corresponding <strong>Seq</strong> of arguments and then a list of
+      general arguments to decorate the <code>form-group</code>.
+		</p>
+		
+		<p>
+			Then, to implement our own <code>b3.multiCheckbox</code> helper we would only need to create a the file
+			<code>b3/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
+		</p>
+		
+		@code {
+			@@(fieldsWithArgs: (Field, Seq[Symbol,Any])*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @BSVersion.msgsArg)
+			@@b3.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =>
+				<div @@toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+					@@fieldsWithArgs.map { case (field, fieldArgs) =>
+						@@b3.checkbox(field, fieldArgs:_*)
+					}
+				</div>
+			}
+		}
+		
+		@javaMessagesWarning("2")
+		
+		<p>
+			So for the example:
+		</p>
+		@code {
+			@@b3.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+		}
+		<p>
+			We will get the following HTML code (for a horizontal form):
+		</p>
+		@code {
+			<div class="form-group" id="">
+				<label class="control-label col-md-2">Checkboxes</label>
+				<div class="col-md-10">
+					<div class="multi-checkbox-list">
+						<div class="checkbox">
+							<label for="foo">
+								<input type="checkbox" id="foo" name="foo" value="true">
+								Foo
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="bar">
+								<input type="checkbox" id="bar" name="bar" value="true">
+								Bar
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="beer">
+								<input type="checkbox" id="beer" name="beer" value="true">
+								Beer
+							</label>
+						</div>
+					</div>
+					<span class="help-block">Mark what you want</span>
+				</div>
+			</div>
+		}
+		
+		
+		
+		<h3 id="text-with-checkbox">A textfield with a checkbox addon</h3>
+		
+		<p>
+			In this example we have a checkbox within an input group's addon instead of text.
+			Then, we need a helper with 2 fields: <code>foo</code> and <code>fooSelected</code>. This is what we want to get:
+		</p>
+		
+		@bsExampleWithCode {
+			@b3.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+		}{
+			@@b3.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+		}
+		
+		<p>
+			Then, to implement our own <code>b3.textWithCheckbox</code> helper we would only need to create a the file
+			<code>b3/textWithCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
+		</p>
+			
+		@code {
+			@@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, @BSVersion.msgsArg)
+			@@b3.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
+				<div class="input-text-checkbox input-group" @@toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+					<span class="input-group-addon">
+						@@b3.checkbox(checkboxField, checkboxArgs:_*)
+					</span>
+					@@b3.text(textField, textArgs:_*)
+				</div>
+			}
+		}
+		
+		@javaMessagesWarning("3")
+		
+		<p>
+			So for the <code>b3.textWithCheckbox</code> used before we get rendered the following code (for a horizontal form):
+		</p>
+		
+		@code {
+			<div class="form-group" id="">
+				<label class="control-label col-md-2">New task to do</label>
+				<div class="col-md-10">
+					<div class="input-text-checkbox input-group">
+						<span class="input-group-addon">
+							<div class="checkbox">
+								<label for="fooSelected">
+									<input type="checkbox" id="fooSelected" name="fooSelected" value="true">
+								</label>
+							</div>
+						</span>
+						<input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
+					</div>
+				</div>
+			</div>
+		}
+		
+		<p>
+			For this helper we need also to fix a bit the CSS manually. In the Boostrap example, the checkbox is direcly
+			within the <code>.input-group-addon</code>. But I have prefered to use the default <code>b3.checkbox</code> helper
+			to implement the multifield easily.
+		</p>
+		@code {
+			.input-text-checkbox > .input-group-addon {
+				.checkbox { display: inline; }
+				label {
+					display: inline;
+					padding: 0;
+					input {
+						position: relative;
+						margin-left: 0;
+					}
+				}
+			}
+		}
+		
+		
+		<h3 id="validation-states">Validation states and feedback icons</h3>
+		<p>
+			You can also manage the validation state for a multifield. However, you have <strong>two limitations</strong>:
+			<ul>
+				<li>
+					The <strong>validation state is global</strong> for the multifield because it is set on the
+					<code>form-group</code>. Thus, you can't have different validation states for each field.
+				</li>
+				<li>
+					<strong>Manual positioning of feedback icons</strong> is required for each input field <strong>using CSS</strong>.
+				</li>
+			</ul>
+			You also must add the special argument <code>'_hasFeedback</code>.
+		</p>
+		
+		@bsExampleWithCode {
+			@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_showIconWarning -> true )(
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
+				'_label -> "Date range", '_hasFeedback -> true )
+				
+			@b3.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
+				fooForm("fooSelected") )(
+				'_label -> "New task", '_hasFeedback -> true )
+		}{
+			@@b3.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_showIconWarning -> true )(
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
+				'_label -> "Date range", '_hasFeedback -> true )
+				
+			@@b3.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
+				fooForm("fooSelected") )(
+				'_label -> "New task", '_hasFeedback -> true )
+		}
+		<p>
+			The CSS needed for this last example:
+		</p>
+		@code {
+			.input-daterange #dateStart + .form-control-feedback { right: 395px; }
+			.input-daterange #dateEnd + .form-control-feedback { right: 0px; }
+			.input-text-checkbox #foo + .form-control-feedback { right: 0px; }
+		}
+		
+	}
+}
