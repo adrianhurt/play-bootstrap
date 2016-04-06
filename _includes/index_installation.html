@@ -1,7 +1,7 @@
 {% assign version = site.data.versions | first %}
 <h2 id="installation">Installation</h2>
 <p>
-  You only need to add it as a dependency in your <code>build.sbt</code> file. It is cross compiled against Scala 2.11.7 and 2.10.5.
+  You only need to add it as a dependency in your <code>build.sbt</code> file.
 </p>
 <div class="highlight">
 <pre><code>{% if version.snapshot %}// Resolver is needed only for SNAPSHOT versions
@@ -39,8 +39,6 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 <div class="highlight">
 <pre><code>"com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24"</code></pre>
 </div>
-{% assign versions_old = site.data.versions | where: "legacy", false | where: "artifact", "play-bootstrap3" %}
-{% include version_table.html versions=versions_old %}
 <p>
   You can check the change log <a href="{{ site.baseurl }}/changelog">here</a> to see all versions.
 </p>
