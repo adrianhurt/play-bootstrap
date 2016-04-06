@@ -1,0 +1,458 @@
+---
+title: "Play-Bootstrap 1.1-P24-B4 | Multifield, create your own helpers"
+layout: default_b4
+permalink: /1.1-P24-B4/multifield/
+version: "1.1-P24-B4"
+uri: /multifield/
+tab: multifield
+---
+<form action="/multifield" method="GET" class="form-horizontal " role="form">
+  <h1 id="multifield-support" class="page-header">Multifield support</h1>
+  <p class="lead">
+    Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...). That is the purpose of the helper <code>b4.multifield</code>.
+  </p>
+  <p>
+    The helper <code>b4.multifield</code> tries to:
+  </p>
+  <ul>
+    <li>Manage a <strong>set of fields</strong> and group them within the same <code>form-group</code>.</li>
+    <li>
+      Manage all of their <strong>errors</strong>, <strong>infos</strong> and <strong>constraints</strong> at the end of the <code>form-group</code> as if they were only one.
+    </li>
+    <li>Take advantage of the helpers that are already implemented.</li>
+    <li>Be a tool to create <strong>your custom multifield helpers</strong>.</li>
+  </ul>
+  <p></p>
+  <p>
+    To see how it works take a look to the arguments it takes:
+  </p>
+  <div class="highlight">
+<pre><code>@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: ClearFieldConstructor =&gt; Html)(implicit fc: B4FieldConstructor, messages: Messages)</code></pre>
+  </div>
+  <p>
+  </p>
+  <ul>
+    <li><strong>fields:</strong> the list of <code>play.api.data.Field</code> used.</li>
+    <li>
+      <strong>globalArgs:</strong> the list of arguments to decorate the <code>form-group</code>, not for any internal helper you could use. You can use the <code>_id</code>, <code>_class</code>, <code>_label</code>,
+      <code>_showConstraints</code> and <code>_help</code> arguments as you do with any other field constructor, and add any other that could be useful for your custom helper.
+    </li>
+    <li><strong>fieldsArgs:</strong> the list of arguments for every inner field.</li>
+    <li><strong>inputsHtml:</strong> a function that takes a <strong>Clear Field Constructor</strong> and generates the HMTL for the field.</li>
+    <li><strong>fc and messages:</strong> the field constructor used for the outer form.</li>
+  </ul>
+  Here are the special arguments you can use as <code>globalArgs</code> (check their functionality at the docs):
+  <ul>
+    <li><code>_id</code>
+    </li>
+    <li><code>_class</code>
+    </li>
+    <li><code>_label</code>
+    </li>
+    <li><code>_help</code>
+    </li>
+    <li><code>_success</code>
+    </li>
+    <li><code>_warning</code>
+    </li>
+    <li><code>_error</code>
+    </li>
+  </ul>
+  All of these arguments parametrize the global <code>form-group</code> for the set of the fields, so they will affect to every field. Thus, you can't set different validation status for different fields, for example.
+  <p></p>
+
+  
+
+
+
+  <h2 id="examples">Let's see a couple of examples</h2>
+  <p>
+    Remember the code of this web with these examples is available on
+    <a class="" href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>. To see more details about creating your own helpers you can check before the <a href="/extend-it">Extend it</a> section.
+  </p>
+
+  
+
+
+  <h3 id="daterange">A date range</h3>
+  <p>
+    We are going to implement our own custom helper to use a date range with the
+    <a href="http://bootstrap-datepicker.readthedocs.org/en/release/">bootstrap-datepicker</a> plugin. Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. This is what we want to get:
+  </p>
+  <div class="bd-example">
+    <fieldset class="form-group row">
+      <label class="control-label form-control-label col-md-2">Date range</label>
+      <div class="col-md-10">
+        <div class="input-daterange input-group" data-date-start-date="10-11-2014">
+          <input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
+          <span class="input-group-addon">to</span>
+          <input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
+        </div>
+        <span class="help-block">Select a date range from 10-11-2014</span>
+      </div>
+    </fieldset>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.datepicker( fooForm("dateStart"), 'value -&gt; "31-10-2014" )(
+  fooForm("dateEnd"), 'value -&gt; "31-12-2014" )(
+  '_label -&gt; "Date range", "data-date-start-date" -&gt; "01-01-2014", '_help -&gt; "Select a date range from 10-11-2014" )</code></pre>
+  </div>
+  <p>
+    As you can see we have 2 fields with their own specific arguments for their corresponding inputs, and then a list of general arguments to decorate the <code>form-group</code>.
+  </p>
+  <p>
+    Seeing the plugin, we need to generate a code like this one within the <code>form-group</code>:
+  </p>
+  <div class="highlight">
+<pre><code>&lt;div class="input-daterange input-group" id="datepicker"&gt;
+    &lt;input type="text" class="form-control" name="start" /&gt;
+    &lt;span class="input-group-addon"&gt;to&lt;/span&gt;
+    &lt;input type="text" class="form-control" name="end" /&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <p>
+    Then, to implement our own <code>b4.datepicker</code> helper we would only need to create a the file
+    <code>b4/datepicker.scala.html</code> within our <code>views</code> folder with the following code:
+  </p>
+  <div class="highlight">
+<pre><code>@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+@b4.multifield(startField, endField)(globalArgs, startArgs ++ endArgs) { implicit cfc =&gt;
+  &lt;div class="input-daterange input-group" @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
+    @b4.text(startField, startArgs:_*)
+    &lt;span class="input-group-addon"&gt;to&lt;/span&gt;
+    @b4.text(endField, endArgs:_*)
+  &lt;/div&gt;
+}</code></pre>
+  </div>
+  <p>
+    <code>toHtmlArgs()</code> function helps you to render a list of arguments from a <code>Map</code> of arguments, and <code>b4.Args.inner()</code> filters the underscored arguments used for decorating the <code>form-group</code> (
+    <code>_id</code>, <code>_class</code>, <code>_label</code>, <code>_showConstraints</code> and <code>_help</code>).
+  </p>
+  <div class="card">
+    <div class="card-header card-danger" id="java_messages_warning_1">
+      <a class="collapsed" data-toggle="collapse" href="#collapse_java_messages_warning_1" aria-expanded="false" aria-controls="collapse_java_messages_warning_1">
+				Note for Java version from Play 2.4
+				<i class="fa fa-caret"></i>
+			</a>
+    </div>
+    <div id="collapse_java_messages_warning_1" class="card-collapse collapse">
+      <div class="card-block">
+        From Play 2.4, the implicit <code>Messages</code> argument defined in your custom template collides with the implicit one taken from <code>PlayMagicForJava</code> object, and it raises a compilation error. So you only need to remove this implicit argument from your custom template.
+      </div>
+    </div>
+  </div>
+  <p>
+    So for the <code>b4.datepicker</code> used before we get rendered the following code (for a horizontal form):
+  </p>
+  <div class="highlight">
+<pre><code>&lt;div class="form-group" id=""&gt;
+  &lt;label class="control-label col-md-2"&gt;Date range&lt;/label&gt;
+  &lt;div class="col-md-10"&gt;
+    &lt;div class="input-daterange input-group" data-date-start-date="10-11-2014"&gt;
+      &lt;input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control"&gt;
+      &lt;span class="input-group-addon"&gt;to&lt;/span&gt;
+      &lt;input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control"&gt;
+    &lt;/div&gt;
+    &lt;span class="help-block"&gt;Select a date range from 10-11-2014&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  
+
+
+  <h3 id="set-checkboxes">A set of checkboxes</h3>
+  <p>
+    This is a classic one. A set of checkboxes within the same <code>form-group</code>. Note you can choose to display them vertically or inline simply by using CSS.
+  </p>
+  <div class="bd-example">
+    <fieldset class="form-group row">
+      <label class="control-label form-control-label col-md-2">Checkboxes</label>
+      <div class="col-md-10">
+        <div class="multi-checkbox-list">
+          <div class="checkbox">
+            <label for="foo">
+              <input type="checkbox" id="foo" name="foo" value="true"> Foo
+            </label>
+          </div>
+          <div class="checkbox">
+            <label for="bar">
+              <input type="checkbox" id="bar" name="bar" value="true"> Bar
+            </label>
+          </div>
+          <div class="checkbox">
+            <label for="beer">
+              <input type="checkbox" id="beer" name="beer" value="true"> Beer
+            </label>
+          </div>
+        </div>
+        <span class="help-block">Mark what you want</span>
+      </div>
+    </fieldset>
+    <fieldset class="form-group row">
+      <label class="control-label form-control-label col-md-2">Inline</label>
+      <div class="col-md-10">
+        <div class="multi-checkbox-list inline">
+          <div class="checkbox">
+            <label for="foo">
+              <input type="checkbox" id="foo" name="foo" value="true"> Foo
+            </label>
+          </div>
+          <div class="checkbox">
+            <label for="bar">
+              <input type="checkbox" id="bar" name="bar" value="true"> Bar
+            </label>
+          </div>
+          <div class="checkbox">
+            <label for="beer">
+              <input type="checkbox" id="beer" name="beer" value="true"> Beer
+            </label>
+          </div>
+        </div>
+        <span class="help-block">Mark what you want</span>
+      </div>
+    </fieldset>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.multiCheckbox(
+  (fooForm("foo"), Seq('_text -&gt; "Foo")),
+  (fooForm("bar"), Seq('_text -&gt; "Bar")),
+  (fooForm("beer"), Seq('_text -&gt; "Beer"))
+  )('_label -&gt; "Checkboxes", 'class -&gt; "multi-checkbox-list", '_help -&gt; "Mark what you want")
+@b4.multiCheckbox(
+  (fooForm("foo"), Seq('_text -&gt; "Foo")),
+  (fooForm("bar"), Seq('_text -&gt; "Bar")),
+  (fooForm("beer"), Seq('_text -&gt; "Beer"))
+  )('_label -&gt; "Inline", 'class -&gt; "multi-checkbox-list inline", '_help -&gt; "Mark what you want")</code></pre>
+  </div>
+  <p>
+    In this case we have a list of fields with their corresponding <strong>Seq</strong> of arguments and then a list of general arguments to decorate the <code>form-group</code>.
+  </p>
+  <p>
+    Then, to implement our own <code>b4.multiCheckbox</code> helper we would only need to create a the file
+    <code>b4/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
+  </p>
+  <div class="highlight">
+<pre><code>@(fieldsWithArgs: (Field, Seq[Symbol,Any])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+@b4.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =&gt;
+  &lt;div @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
+    @fieldsWithArgs.map { case (field, fieldArgs) =&gt;
+      @b4.checkbox(field, fieldArgs:_*)
+    }
+  &lt;/div&gt;
+}</code></pre>
+  </div>
+  <div class="card">
+    <div class="card-header card-danger" id="java_messages_warning_2">
+      <a class="collapsed" data-toggle="collapse" href="#collapse_java_messages_warning_2" aria-expanded="false" aria-controls="collapse_java_messages_warning_2">
+				Note for Java version from Play 2.4
+				<i class="fa fa-caret"></i>
+			</a>
+    </div>
+    <div id="collapse_java_messages_warning_2" class="card-collapse collapse">
+      <div class="card-block">
+        From Play 2.4, the implicit <code>Messages</code> argument defined in your custom template collides with the implicit one taken from <code>PlayMagicForJava</code> object, and it raises a compilation error. So you only need to remove this implicit argument from your custom template.
+      </div>
+    </div>
+  </div>
+  <p>
+    So for the example:
+  </p>
+  <div class="highlight">
+<pre><code>@b4.multiCheckbox(
+  (fooForm("foo"), Map('_text -&gt; "Foo")),
+  (fooForm("bar"), Map('_text -&gt; "Bar")),
+  (fooForm("beer"), Map('_text -&gt; "Beer"))
+  )('_label -&gt; "Checkboxes", 'class -&gt; "multi-checkbox-list", '_help -&gt; "Mark what you want")</code></pre>
+  </div>
+  <p>
+    We will get the following HTML code (for a horizontal form):
+  </p>
+  <div class="highlight">
+<pre><code>&lt;div class="form-group" id=""&gt;
+  &lt;label class="control-label col-md-2"&gt;Checkboxes&lt;/label&gt;
+  &lt;div class="col-md-10"&gt;
+    &lt;div class="multi-checkbox-list"&gt;
+      &lt;div class="checkbox"&gt;
+        &lt;label for="foo"&gt;
+          &lt;input type="checkbox" id="foo" name="foo" value="true"&gt;
+          Foo
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="checkbox"&gt;
+        &lt;label for="bar"&gt;
+          &lt;input type="checkbox" id="bar" name="bar" value="true"&gt;
+          Bar
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="checkbox"&gt;
+        &lt;label for="beer"&gt;
+          &lt;input type="checkbox" id="beer" name="beer" value="true"&gt;
+          Beer
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="help-block"&gt;Mark what you want&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  
+
+
+  <h3 id="text-with-checkbox">A textfield with a checkbox addon</h3>
+  <p>
+    In this example we have a checkbox within an input group's addon instead of text. Then, we need a helper with 2 fields: <code>foo</code> and <code>fooSelected</code>. This is what we want to get:
+  </p>
+  <div class="bd-example">
+    <fieldset class="form-group row">
+      <label class="control-label form-control-label col-md-2">New task</label>
+      <div class="col-md-10">
+        <div class="input-text-checkbox input-group">
+          <span class="input-group-addon">
+			
+	
+		<div class="checkbox">
+			<label for="fooSelected">
+				<input type="checkbox" id="fooSelected" name="fooSelected" value="true">
+				
+        
+			</label>
+			
+		</div>
+	
+		</span>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.textWithCheckbox( fooForm("foo"), 'placeholder -&gt; "a foo value" )( fooForm("fooSelected") )('_label -&gt; "New task" )</code></pre>
+  </div>
+  <p>
+    Then, to implement our own <code>b4.textWithCheckbox</code> helper we would only need to create a the file
+    <code>b4/textWithCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
+  </p>
+  <div class="highlight">
+<pre><code>@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+@b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =&gt;
+  &lt;div class="input-text-checkbox input-group" @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
+    &lt;span class="input-group-addon"&gt;
+      @b4.checkbox(checkboxField, checkboxArgs:_*)
+    &lt;/span&gt;
+    @b4.text(textField, textArgs:_*)
+  &lt;/div&gt;
+}</code></pre>
+  </div>
+  <div class="card">
+    <div class="card-header card-danger" id="java_messages_warning_3">
+      <a class="collapsed" data-toggle="collapse" href="#collapse_java_messages_warning_3" aria-expanded="false" aria-controls="collapse_java_messages_warning_3">
+				Note for Java version from Play 2.4
+				<i class="fa fa-caret"></i>
+			</a>
+    </div>
+    <div id="collapse_java_messages_warning_3" class="card-collapse collapse">
+      <div class="card-block">
+        From Play 2.4, the implicit <code>Messages</code> argument defined in your custom template collides with the implicit one taken from <code>PlayMagicForJava</code> object, and it raises a compilation error. So you only need to remove this implicit argument from your custom template.
+      </div>
+    </div>
+  </div>
+  <p>
+    So for the <code>b4.textWithCheckbox</code> used before we get rendered the following code (for a horizontal form):
+  </p>
+  <div class="highlight">
+<pre><code>&lt;div class="form-group" id=""&gt;
+  &lt;label class="control-label col-md-2"&gt;New task to do&lt;/label&gt;
+  &lt;div class="col-md-10"&gt;
+    &lt;div class="input-text-checkbox input-group"&gt;
+      &lt;span class="input-group-addon"&gt;
+        &lt;div class="checkbox"&gt;
+          &lt;label for="fooSelected"&gt;
+            &lt;input type="checkbox" id="fooSelected" name="fooSelected" value="true"&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+      &lt;/span&gt;
+      &lt;input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <p>
+    For this helper we need also to fix a bit the CSS manually. In the Boostrap example, the checkbox is direcly within the <code>.input-group-addon</code>. But I have prefered to use the default <code>b4.checkbox</code> helper to implement the multifield easily.
+  </p>
+  <div class="highlight">
+<pre><code>.input-text-checkbox &gt; .input-group-addon {
+  .checkbox { display: inline; }
+  label {
+    display: inline;
+    padding: 0;
+    input {
+      position: relative;
+      margin-left: 0;
+    }
+  }
+}</code></pre>
+  </div>
+
+  
+
+
+  <h3 id="validation-states">Validation states and feedback icons</h3>
+  <p>
+    You can also manage the validation state for a multifield. However, you have <strong>two limitations</strong>:
+  </p>
+  <ul>
+    <li>
+      The <strong>validation state is global</strong> for the multifield because it is set on the
+      <code>form-group</code>. Thus, you can't have different validation states for each field.
+    </li>
+  </ul>
+  <p></p>
+  <div class="bd-example">
+    <fieldset class="form-group row has-warning">
+      <label class="control-label form-control-label col-md-2">Date range</label>
+      <div class="col-md-10">
+        <div class="input-daterange input-group">
+          <input type="text" id="dateStart" name="dateStart" value="15-11-2014" aria-describedby="dateStart_status" class="form-control-warning form-control">
+          <span id="dateStart_status" class="sr-only">(warning)</span>
+          <span class="input-group-addon">to</span>
+          <input type="text" id="dateEnd" name="dateEnd" value="31-10-2014" aria-describedby="dateEnd_status" class="form-control-warning form-control">
+          <span id="dateEnd_status" class="sr-only">(warning)</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group row has-error">
+      <label class="control-label form-control-label col-md-2">New task</label>
+      <div class="col-md-10">
+        <div class="input-text-checkbox input-group">
+          <span class="input-group-addon">
+			
+	
+		<div class="checkbox">
+			<label for="fooSelected">
+				<input type="checkbox" id="fooSelected" name="fooSelected" value="true">
+				
+        
+			</label>
+			
+		</div>
+	
+		</span>
+          <input type="text" id="foo" name="foo" value="an incorrect value" aria-describedby="foo_status foo_error_0" aria-invalid="true" class="form-control-error form-control">
+          <span id="foo_status" class="sr-only">(error)</span>
+        </div>
+        <span class="help-block">The value is incorrect</span>
+      </div>
+    </fieldset>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.datepicker( fooForm("dateStart"), 'value -&gt; "15-11-2014", '_showIconWarning -&gt; true )(
+  fooForm("dateEnd"), 'value -&gt; "31-10-2014", '_showIconWarning -&gt; true )(
+  '_label -&gt; "Date range" )
+  
+@b4.textWithCheckbox( fooForm("foo"), 'value -&gt; "an incorrect value", '_error -&gt; "The value is incorrect", '_showIconOnError -&gt; true )(
+  fooForm("fooSelected") )(
+  '_label -&gt; "New task" )</code></pre>
+  </div>
+</form>

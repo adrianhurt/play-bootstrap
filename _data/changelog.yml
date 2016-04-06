@@ -1,3 +1,15 @@
+- id: 1-1-P2X-BX
+  library: "1.0"
+  title: 1.1-P2X-BX-SNAPSHOT
+  released: In development...
+  bullets:
+    - type: change
+      text: |
+        Improvements in the checked attribute for `checkbox` helper.
+  migration: |
+    For `checkbox` helpers, check the docs to know the new behaviour for `'value`, `'checked` and `'_default` arguments.
+    
+    
 - id: 1-0-P2X-BX
   library: "1.0"
   title: 1.0-P2X-BX
