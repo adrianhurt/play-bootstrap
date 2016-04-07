@@ -175,14 +175,20 @@ object HelpersSpec extends Specification {
       body must contain("value=\"true\"")
     }
 
-    "allow setting a default value" in {
-      val body = b4.checkbox(boolField, 'value -> true).body
+    "allow setting a default custom value" in {
+      val body = b4.checkbox(boolField, 'value -> "bar").body
+      body must not contain ("checked")
+      body must contain("value=\"bar\"")
+    }
+
+    "allow setting a default value for checked attribute" in {
+      val body = b4.checkbox(boolField, '_default -> true).body
       body must contain("checked")
       body must contain("value=\"true\"")
     }
 
-    "allow setting a default custom value" in {
-      val body = b4.checkbox(boolField, 'value -> "bar").body
+    "allow setting a default value for checked attribute with a custom value" in {
+      val body = b4.checkbox(boolField, 'value -> "bar", '_default -> true).body
       body must contain("checked")
       body must contain("value=\"bar\"")
     }
@@ -197,6 +203,26 @@ object HelpersSpec extends Specification {
       val body = b4.checkbox(stringFieldFilled("bar"), 'value -> "bar").body
       body must contain("checked")
       body must contain("value=\"bar\"")
+    }
+
+    "ignore default checked value if it is filled" in {
+      val body1 = b4.checkbox(boolFieldFilled(false), '_default -> true).body
+      body1 must not contain ("checked")
+      body1 must contain("value=\"true\"")
+      val body2 = b4.checkbox(stringFieldFilled(""), 'value -> "bar", '_default -> true).body
+      body2 must not contain ("checked")
+      body2 must contain("value=\"bar\"")
+    }
+
+    "allow setting a forced value for checked attribute (always true)" in {
+      val body = b4.checkbox(boolField, 'checked -> true).body
+      body must contain("checked")
+      body must contain("value=\"true\"")
+    }
+    "allow setting a forced value for checked attribute (always false)" in {
+      val body = b4.checkbox(boolField, 'checked -> false).body
+      body must not contain ("checked")
+      body must contain("value=\"true\"")
     }
 
     "add support to readonly attribute" in {

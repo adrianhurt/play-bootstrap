@@ -613,12 +613,16 @@
 
 			<h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
-				It renders a checkbox. It has the attribute value set to true by default, but you can use
-        another one using the <code>'value</code> argument.
+				It renders a checkbox. It has the attribute <code>value</code> set to <strong>true</strong> by default,
+        but you can use another one using the <code>'value</code> argument.
 			</p>
 			<p>
 				The special <code>'_text</code> argument lets you put a text after the checkbox.
 			</p>
+      <p>
+        Regarding to the <code>checked</code> attribute, if you want to set it to <strong>true</strong> as default, use <code>'_default -> true</code>.
+        And if you need to force its value use directly the <code>'checked</code> argument.
+      </p>
 			<p>
 				It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a
 				<code>&lt;input type="hidden"&gt;</code>.
@@ -632,7 +636,7 @@
 				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'value -> "bar" )
 				
 				// checked by default (if the form is filled, this value will be taken)
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'value -> true )
+				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", '_default -> true )
         
 				// always checked (even if the form has been filled with a false)
 				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'checked -> true )
