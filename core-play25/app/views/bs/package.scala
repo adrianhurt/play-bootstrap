@@ -27,7 +27,7 @@ package object bs {
    * Class with relevant variables for a field to pass it to the helper and field constructor
    * - args: list of available arguments for the helper and field constructor
    */
-  class BSFieldInfo(field: Field, args: Seq[(Symbol, Any)], messages: Messages) {
+  class BSFieldInfo(field: Field, args: Seq[(Symbol, Any)], val messages: Messages) {
 
     /* A map with the args to work easily with them */
     val argsMap: Map[Symbol, Any] = Args.withoutNones(args).toMap
@@ -223,7 +223,7 @@ package object bs {
    */
   trait BSFieldConstructor[F <: BSFieldInfo] {
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: F, inputHtml: Html): Html
+    def apply(fieldInfo: F, inputHtml: Html)(implicit messages: Messages): Html
     /* Renders the corresponding template of a fake field constructor (i.e. with the same structure but without the field) */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any]): Html
   }
@@ -234,7 +234,7 @@ package object bs {
    * - inputDef: function that returns a Html from the BSFieldInfo.
    */
   def inputFormField[F <: BSFieldInfo](fieldInfo: F)(inputDef: F => Html)(implicit fc: BSFieldConstructor[F]) =
-    fc(fieldInfo, inputDef(fieldInfo))
+    fc(fieldInfo, inputDef(fieldInfo))(fieldInfo.messages)
 
   /**
    * Renders a fake field constructor using the BSFieldConstructor.
