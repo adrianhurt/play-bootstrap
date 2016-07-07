@@ -2,7 +2,7 @@ name := """play-bootstrap-sample"""
 
 version := "1.1"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 routesGenerator := InjectedRoutesGenerator
 
@@ -13,7 +13,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 libraryDependencies ++= Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.1-P25-B4-SNAPSHOT",
-  "org.webjars" % "font-awesome" % "4.5.0",
+  "org.webjars" % "font-awesome" % "4.6.3",
   "org.webjars" % "bootstrap-datepicker" % "1.4.0"
 )
 
