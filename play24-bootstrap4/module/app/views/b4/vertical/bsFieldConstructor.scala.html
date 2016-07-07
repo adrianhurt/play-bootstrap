@@ -1,7 +1,8 @@
-@(fieldInfo: b4.B4FieldInfo, inputHtml: Html)
+@(fieldInfo: b4.B4FieldInfo, inputHtml: Html)(implicit messages: Messages)
+@msg(label: Any) = @{ label match { case label: String => messages(label); case _ => label } }
 @b4.bsFieldConstructorCommon(fieldInfo, inputHtml) { content =>
 	@fieldInfo.labelOpt.map { label =>
-		<label class="control-label@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@label</label>
+		<label class="control-label@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@msg(label)</label>
 	}
 	@content
 }

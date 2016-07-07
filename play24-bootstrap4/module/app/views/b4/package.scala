@@ -30,7 +30,7 @@ package object b4 {
    * - withLabelFor: indicates if the label's "for" attribute should be shown
    * - args: list of available arguments for the helper and field constructor
    */
-  case class B4FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], messages: Messages) extends BSFieldInfo(field, args, messages) {
+  case class B4FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
 
     /* Indicates if it's a custom element */
     val isCustom: Boolean = isTrue(argsMap, '_custom)
