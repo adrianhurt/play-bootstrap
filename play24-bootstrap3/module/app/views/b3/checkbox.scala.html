@@ -1,4 +1,5 @@
 @(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@msg(text: Any) = @{ text match { case text: String => messages(text); case _ => text } }
 @defining({
 	val argsMap = args.toMap
   val value = argsMap.get('value).getOrElse("true").toString
@@ -12,7 +13,7 @@
 		<div class="checkbox@if(containsReadonly){ checkbox-group}@if(disabled){ disabled}">
 			<label for="@fieldInfo.id">
 				<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="@value" @toHtmlArgs(fieldInfo.innerArgsMap)>
-				@argsMap.get('_text)
+				@argsMap.get('_text).map(msg(_)).getOrElse("")
 			</label>
 			@if(containsReadonly) {
 				<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse(if (checked) value else "")}"@if(!disabled){ disabled}/>

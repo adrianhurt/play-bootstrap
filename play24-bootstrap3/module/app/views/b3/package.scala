@@ -30,7 +30,7 @@ package object b3 {
    * - withLabelFor: indicates if the label's "for" attribute should be shown
    * - args: list of available arguments for the helper and field constructor
    */
-  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], messages: Messages) extends BSFieldInfo(field, args, messages) {
+  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
 
     /* The optional validation state ("success", "warning" or "error") */
     override lazy val status: Option[String] = B3FieldInfo.status(hasErrors, argsMap)
