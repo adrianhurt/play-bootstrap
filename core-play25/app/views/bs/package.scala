@@ -27,7 +27,7 @@ package object bs {
    * Class with relevant variables for a field to pass it to the helper and field constructor
    * - args: list of available arguments for the helper and field constructor
    */
-  class BSFieldInfo(field: Field, args: Seq[(Symbol, Any)], messages: Messages) {
+  class BSFieldInfo(field: Field, args: Seq[(Symbol, Any)], val messages: Messages) {
 
     /* A map with the args to work easily with them */
     val argsMap: Map[Symbol, Any] = Args.withoutNones(args).toMap
@@ -87,7 +87,8 @@ package object bs {
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, messages) ++
-      args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
+      args.filter { case (key, _) => key == 'placeholder } .map(arg => ( arg._1 -> (arg._2 match { case placeholder: String => messages(placeholder); case _ => }))) ++
+      args.filterNot { case (key, _) => key == 'id || key == 'value || key == 'placeholder || key.name.startsWith("_") }
     ).toMap.filterNot { case (_, value) => value == false }
   }
 
@@ -222,7 +223,7 @@ package object bs {
    */
   trait BSFieldConstructor[F <: BSFieldInfo] {
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: F, inputHtml: Html): Html
+    def apply(fieldInfo: F, inputHtml: Html)(implicit messages: Messages): Html
     /* Renders the corresponding template of a fake field constructor (i.e. with the same structure but without the field) */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any]): Html
   }
@@ -233,7 +234,7 @@ package object bs {
    * - inputDef: function that returns a Html from the BSFieldInfo.
    */
   def inputFormField[F <: BSFieldInfo](fieldInfo: F)(inputDef: F => Html)(implicit fc: BSFieldConstructor[F]) =
-    fc(fieldInfo, inputDef(fieldInfo))
+    fc(fieldInfo, inputDef(fieldInfo))(fieldInfo.messages)
 
   /**
    * Renders a fake field constructor using the BSFieldConstructor.

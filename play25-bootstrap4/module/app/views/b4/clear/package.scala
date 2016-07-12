@@ -18,6 +18,7 @@ package views.html.b4
 package object clear {
 
   import play.twirl.api.Html
+  import play.api.i18n.Messages
   import play.api.mvc.{ Call, RequestHeader }
   import views.html.helper._
 
@@ -28,7 +29,7 @@ package object clear {
     /* Define the class of the corresponding form */
     val formClass = "form-clear"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B4FieldInfo, inputHtml: Html) = inputHtml
+    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = inputHtml
     /* Renders the corresponding template of the form group */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any]) = contentHtml
   }
