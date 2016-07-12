@@ -94,7 +94,7 @@ package object b4 {
    * - fields: list of Fields
    * - args: list of available arguments for the helper and the form-group
    */
-  case class B4MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
+  case class B4MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
     /* The optional validation state ("success", "warning" or "error") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
@@ -128,8 +128,8 @@ package object b4 {
    * - args: list of available arguments for the helper and the form-group
    * - contentDef: function that returns a Html from a map of arguments
    */
-  def freeFormGroup(args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: B4FieldConstructor) =
-    freeFormField(args)(contentDef)(fc)
+  def freeFormGroup(args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
+    freeFormField(args)(contentDef)(fc, messages)
 
   def multifieldFormGroup(fields: Seq[Field], globalArgs: Seq[(Symbol, Any)], fieldsArgs: Seq[(Symbol, Any)])(contentDef: BSMultifieldInfo => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
     multifieldFormField(B4MultifieldInfo(fields, globalArgs, fieldsArgs, messages))(contentDef)(fc)
@@ -163,14 +163,14 @@ package object b4 {
   def select(field: Field, args: (Symbol, Any)*)(content: Set[String] => Html)(implicit fc: B4FieldConstructor, messages: Messages) = selectWithContent(field, args: _*)(content)(fc, messages)
   def select(field: Field, options: Seq[(String, String)], args: (Symbol, Any)*)(implicit fc: B4FieldConstructor, messages: Messages) = selectWithOptions(field, options, args: _*)(fc, messages)
 
-  def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = buttonType("submit", args: _*)(text)(fc)
-  def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = buttonType("reset", args: _*)(text)(fc)
-  def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = buttonType("button", args: _*)(text)(fc)
+  def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = buttonType("submit", args: _*)(text)(fc, messages)
+  def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = buttonType("reset", args: _*)(text)(fc, messages)
+  def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = buttonType("button", args: _*)(text)(fc, messages)
 
-  def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = staticBasic(args: _*)(text)(fc)
-  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc)
-  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc)
+  def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = staticBasic(args: _*)(text)(fc, messages)
+  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, messages)
+  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, messages)
 
-  def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B4FieldConstructor) = freeFormGroup(args)(_ => content)(fc)
+  def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = freeFormGroup(args)(_ => content)(fc, messages)
 
 }

@@ -37,7 +37,7 @@ package object horizontal {
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(messages)
     /* Renders the corresponding template of the form group */
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any]) = bsFormGroup(contentHtml, argsMap, colLabel, colOffset, colInput)
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap, colLabel, colOffset, colInput)(messages)
   }
 
   /**

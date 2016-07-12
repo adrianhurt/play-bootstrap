@@ -168,7 +168,7 @@ package object bs {
    * - globalArguments: list of available arguments for the global helper
    * - fieldsArguments: list of available arguments for every specific field
    */
-  class BSMultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], messages: Messages) {
+  class BSMultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], val messages: Messages) {
 
     /* A map with the args to work easily with them. The '_help is removed because the helper freeFormFieldormField will add it */
     val argsMap: Map[Symbol, Any] = Args.withoutNones(fieldsArguments ++ globalArguments).toMap
@@ -225,7 +225,7 @@ package object bs {
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: F, inputHtml: Html)(implicit messages: Messages): Html
     /* Renders the corresponding template of a fake field constructor (i.e. with the same structure but without the field) */
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any]): Html
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages): Html
   }
 
   /**
@@ -241,9 +241,9 @@ package object bs {
    * - args: list of available arguments for the helper and the form-group
    * - contentDef: function that returns a Html from a map of arguments
    */
-  def freeFormField[F <: BSFieldInfo](args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: BSFieldConstructor[F]) = {
+  def freeFormField[F <: BSFieldInfo](args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: BSFieldConstructor[F], messages: Messages) = {
     val argsWithoutNones = Args.withoutNones(args)
-    fc(contentDef(Args.inner(argsWithoutNones).toMap), argsWithoutNones.toMap)
+    fc(contentDef(Args.inner(argsWithoutNones).toMap), argsWithoutNones.toMap)(messages)
   }
 
   /**
@@ -252,5 +252,5 @@ package object bs {
    * - contentDef: function that returns a Html from the BSMultifieldInfo
    */
   def multifieldFormField[F <: BSFieldInfo, M <: BSMultifieldInfo](multifieldInfo: M)(contentDef: M => Html)(implicit fc: BSFieldConstructor[F]) =
-    freeFormField(multifieldInfo.globalArgs)(_ => contentDef(multifieldInfo))(fc)
+    freeFormField(multifieldInfo.globalArgs)(_ => contentDef(multifieldInfo))(fc, multifieldInfo.messages)
 }

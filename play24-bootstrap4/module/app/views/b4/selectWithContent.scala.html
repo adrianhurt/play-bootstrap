@@ -25,7 +25,7 @@
 				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
 					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
 						@argsMap.get('_default).map { v =>
-							@selectOption("", v, 'class -> "blank")
+							@selectOption("", bs.Args.msg(v)(messages), 'class -> "blank")
 						}
 						@content(values)
 					</select>
