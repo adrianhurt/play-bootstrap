@@ -1,8 +1,7 @@
 @(fieldInfo: b3.B3FieldInfo, inputHtml: Html, colLabel: String, colOffset: String, colInput: String)(implicit messages: Messages)
-@msg(label: Any) = @{ label match { case label: String => messages(label); case _ => label } }
 @b3.bsFieldConstructorCommon(fieldInfo, inputHtml) { content =>
 	@fieldInfo.labelOpt.map { label =>
-		<label class="control-label @colLabel@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@msg(label)</label>
+		<label class="control-label @colLabel@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@bs.Args.msg(label)(messages)</label>
 		<div class="@colInput">
 			@content
 		</div>

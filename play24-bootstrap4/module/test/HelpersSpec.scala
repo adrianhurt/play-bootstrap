@@ -42,7 +42,7 @@ object HelpersSpec extends Specification {
    */
   implicit val testFieldConstructor = new B4FieldConstructor {
     val formClass = ""
-    def apply(fieldInfo: B4FieldInfo, inputHtml: Html) = inputHtml
+    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = inputHtml
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any]) = contentHtml
   }
 

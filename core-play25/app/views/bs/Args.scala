@@ -17,6 +17,8 @@ package views.html.bs
 
 object Args {
 
+  import play.api.i18n.Messages
+
   /**
    * Adds some default arguments to the parameter 'args'
    */
@@ -60,6 +62,22 @@ object Args {
    * Returns true only if exists a pair with that key and its value is true.
    */
   def isTrue(args: Seq[(Symbol, Any)], key: Symbol) = args.exists(_ == (key, true))
+
+  /**
+   * Localizes an argument
+   */
+  def msg(arg: (Symbol, Any))(implicit msgs: Messages): (Symbol, Any) = arg match {
+    case (sym, str: String) => (sym, msgs(str))
+    case _ => arg
+  }
+
+  /**
+   * Localizes a value
+   */
+  def msg(a: Any)(implicit msgs: Messages): Any = a match {
+    case str: String => msgs(str)
+    case _ => a
+  }
 }
 
 object ArgsMap {

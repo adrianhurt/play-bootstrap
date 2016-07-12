@@ -87,9 +87,9 @@ package object bs {
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, messages) ++
-      args.filter { case (key, _) => key == 'placeholder } .map(arg => ( arg._1 -> (arg._2 match { case placeholder: String => messages(placeholder); case _ => }))) ++
+      args.filter(_._1 == 'placeholder).map(Args.msg(_)(messages)) ++
       args.filterNot { case (key, _) => key == 'id || key == 'value || key == 'placeholder || key.name.startsWith("_") }
-    ).toMap.filterNot { case (_, value) => value == false }
+    ).toMap.filterNot(_._2 == false)
   }
 
   /**
