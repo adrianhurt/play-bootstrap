@@ -12,14 +12,15 @@ $ ->
 	defaultVersion = $('body').attr('default-version')
 	currentVersion = getVersionFromUrlParams() ? getVersionFromUri() ? defaultVersion
 	$('a').click (e) ->
-		version = $(this).attr('version') ? currentVersion
 		href = hrefWithoutBaseurl $(this).attr('href')
 		if href.charAt(0) == '/'
+			version = $(this).attr('version') ? currentVersion
 			slug = firstSlug(href)
-			if isVersionedUri(firstSlug(href))
-				$(this).attr('href', baseurl+'/'+version+href)
-			else if version != defaultVersion
-				$(this).attr('href', baseurl+href+'?version='+version)
+			newHref = switch
+				when isVersionedUri(firstSlug(href)) then '/'+version+href
+				when version != defaultVersion then href+'?version='+version
+				else href
+			$(this).attr('href', baseurl+newHref)
 	$badge = $('#current-version .version-badge')
 	if $badge.find('.code').text() != currentVersion
 		$.getJSON baseurl+'/versions.json', (versions) ->

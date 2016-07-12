@@ -167,7 +167,7 @@ tab: extendit
   Modify <code>bsFieldConstructor.scala.html</code> and <code>bsFormGroup.scala.html</code> to get the functionality you want. For this example, the first one would be re-written to something like this:
 </p>
 <div class="highlight">
-<pre><code>@(fieldInfo: b4.BSFieldInfo, inputHtml: Html)
+<pre><code>@(fieldInfo: b4.BSFieldInfo, inputHtml: Html)(implicit messages: Messages)
 @alertStatus = @{
   if (fieldInfo.hasErrors)
     "alert-danger"
@@ -176,20 +176,20 @@ tab: extendit
   else
     "alert-info"
 }
-&lt;div class="my-form-group form-group @fieldInfo.argsMap.get('_class) @fieldInfo.status.map("has-"+_)" id="@fieldInfo.idFormGroup"&gt;
+&lt;div class="my-form-group form-group @fieldInfo.argsMap.get('_class) @fieldInfo.status.map("has-"+_)" id="@fieldInfo.idFormField"&gt;
   &lt;div class="field-container"&gt;
     @fieldInfo.labelOpt.map { label =&gt;
-      &lt;label class="control-label @if(fieldInfo.hideLabel){sr-only}" @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}&gt;@label&lt;/label&gt;
+      &lt;label class="control-label @if(fieldInfo.hideLabel){sr-only}" @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}&gt;@bs.Args.msg(label)(messages)&lt;/label&gt;
     }
     @inputHtml
   &lt;/div&gt;
   &lt;div class="alert @alertStatus" role="alert"&gt;
     &lt;ul&gt;
       @fieldInfo.errors.map { case (id, error) =&gt;
-        &lt;li&gt;&lt;span id="@id" class="help-error"&gt;&lt;i class="fa fa-remove"&gt;&lt;/i&gt; @error&lt;/li&gt;
+        &lt;li&gt;&lt;span id="@id" class="help-error"&gt;&lt;i class="fa fa-remove"&gt;&lt;/i&gt; @bs.Args.msg(error)(messages)&lt;/li&gt;
       }
       @fieldInfo.infos.map { case (id, info) =&gt;
-        &lt;li&gt;&lt;span id="@id" class="help-info"&gt;&lt;i class="fa fa-warning-sign"&gt;&lt;/i&gt; @info&lt;/li&gt;
+        &lt;li&gt;&lt;span id="@id" class="help-info"&gt;&lt;i class="fa fa-warning-sign"&gt;&lt;/i&gt; @bs.Args.msg(info)(messages)&lt;/li&gt;
       }
     &lt;/ul&gt;
   &lt;/div&gt;

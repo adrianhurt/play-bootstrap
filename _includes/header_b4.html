@@ -29,7 +29,7 @@
             {% for version in versions %}
               <a class="dropdown-item" version="{{ version.code }}" href="{{ page.uri }}">{% include version_badge.html version=version %}</a>
 						{% endfor %}
-            <a class="dropdown-item legacy" href="{{ site.baseurl }}/changelog">View legacy versions</a>
+            <a class="dropdown-item legacy" href="/changelog">View legacy versions</a>
           </div>
         </li>
         <li class="nav-item github"><a class="nav-link" href="https://github.com/adrianhurt/play-bootstrap" target="_blank"><i class="fa fa-github fa-2x"></i> Github</a></li>

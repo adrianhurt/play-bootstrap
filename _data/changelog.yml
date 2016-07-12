@@ -6,8 +6,14 @@
     - type: change
       text: |
         Improvements in the checked attribute for `checkbox` helper.
+    - type: change
+      text: |
+        Arguments are now automatically internationalized (`'_label`, `'_hiddenLabel`, `'placeholder`, `'_help`, `'_success`, `'_warning`, `'_error`, `'_text` for `checkbox`, texts for `radio`, `radioOption`, `select` and `selectOption`)
   migration: |
     For `checkbox` helpers, check the docs to know the new behaviour for `'value`, `'checked` and `'_default` arguments.
+    
+    If you have implemented your own _field constructors_ or _form group_, they now have to include an implicit `Messages` object.
+    
     
     
 - id: 1-0-P2X-BX

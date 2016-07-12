@@ -430,6 +430,18 @@ tab: index
   
   
   
+  <h3 id="auto-i18n">Auto internationalization</h3>
+  <p>
+    Most of arguments used in helpers are automatically internationalized. So you can simply write:
+  </p>
+  <div class="highlight">
+<pre><code>@b3.text( loginForm("username"), '_label -> "field.username.label", '_help -> "field.username.help" )
+@b3.email( loginForm("email"), '_label -> "field.email.label", 'placeholder -> "field.email.placeholder" )
+@b3.password( loginForm("password"), '_label -> "field.pwd.label", 'placeholder -> "field.pwd.placeholder" )
+@b3.checkbox( loginForm("remember"), '_text -> "field.remember", 'value -> true )</code></pre>
+  </div>
+  
+  
   
   <h3 id="aria">With ARIA attributes</h3>
   <p>
@@ -478,6 +490,6 @@ tab: index
   
   <h2 id="changelog">Change Log</h2>
   <p>
-    You can check the change log <a href="{{ site.baseurl }}/changelog">here</a>.
+    You can check the change log <a href="/changelog">here</a>.
   </p>
 </div>

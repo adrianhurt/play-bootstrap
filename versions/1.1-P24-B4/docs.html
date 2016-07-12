@@ -154,25 +154,25 @@ b4.clear.fieldConstructorSpecific</code></pre>
       <ul>
         <li><code>_id</code>: the id for the form-group. If it isn't present, the default value will be the input's id with the suffix <strong>"_field"</strong>.</li>
         <li><code>_class</code>: the class for the form-group (the <code>form-group</code> class is always added).</li>
-        <li><code>_label</code>: the text for the label.</li>
+        <li><code>_label</code>: the text for the label. It's automatically internationalized.</li>
         <li>
           <code>_hideLabel</code>: a boolean indicating if the label must be hidden. It will be rendered into the DOM, but it will add the class <code>sr-only</code> to the label to hide it.
         </li>
-        <li><code>_hiddenLabel</code>: a shortcut to use a hidden label instead of using <code>_label</code> and <code>_hideLabel</code>.</li>
+        <li><code>_hiddenLabel</code>: a shortcut to use a hidden label instead of using <code>_label</code> and <code>_hideLabel</code>. It's automatically internationalized.</li>
         <li><code>_showConstraints</code>: indicates if the constraints are shown.</li>
-        <li><code>_help</code>: a help text below the input.</li>
+        <li><code>_help</code>: a help text below the input. It's automatically internationalized.</li>
         <li>
           <code>_success</code>: could be:
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>success</em> validation status.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
         <li>
           <code>_warning</code>: could be:
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>warning</em> validation status.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
         <li>
@@ -180,7 +180,7 @@ b4.clear.fieldConstructorSpecific</code></pre>
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>error</em> validation status.</li>
             <li><code>Option[play.api.data.FormError]</code>: shows the corresponding error as a help text if it's defined.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
         <li><code>_showErrors</code>: boolean indicating if the errors should be shown. True is the default value.</li>
@@ -515,14 +515,14 @@ input:invalid { color: red; }</code></pre>
           <code>_success</code>: could be:
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>success</em> validation status.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
         <li>
           <code>_warning</code>: could be:
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>warning</em> validation status.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
         <li>
@@ -530,7 +530,7 @@ input:invalid { color: red; }</code></pre>
           <ul>
             <li><code>Boolean</code>: indicates if the field should show an <em>error</em> validation status.</li>
             <li><code>Option[play.api.data.FormError]</code>: shows the corresponding error as a help text if it's defined.</li>
-            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
+            <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>internationalized</strong> help text.</li>
           </ul>
         </li>
       </ul>
@@ -593,6 +593,9 @@ input:invalid { color: red; }</code></pre>
       <h4 id="helper-inputtype"><code>b4.inputType</code> <span class="def">@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default, but you can add an extra class with <code>'class -&gt; "extra_class"</code>.
+      </p>
+      <p>
+        The argument <code>'placeholder</code> is automatically internationalized.
       </p>
       <div class="bd-example">
         <fieldset class="form-group   " id="name_field">
@@ -715,7 +718,7 @@ input:invalid { color: red; }</code></pre>
         but you can use another one using the <code>'value</code> argument.
 			</p>
 			<p>
-				The special <code>'_text</code> argument lets you put a text after the checkbox.
+				The special <code>'_text</code> argument lets you put a text after the checkbox. It is automatically internationalized.
 			</p>
       <p>
         Regarding to the <code>checked</code> attribute, if you want to set it to <strong>true</strong> as default, use <code>'_default -&gt; true</code>.
@@ -821,7 +824,7 @@ input:invalid { color: red; }</code></pre>
 @b4.radio( fooForm("foo"), options = opts, '_label -&gt; "Radio Group", 'readonly -&gt; true )</code></pre>
       </div>
       <p>
-        Note you can use any value for the <code>options</code> argument.
+        Note you can use any value for the <code>options</code> argument. But they are automatically internationalized only for _String_ values.
       </p>
       <div class="bd-example">
         <fieldset class="form-group   " id="foo_radio2_field">
@@ -870,7 +873,7 @@ input:invalid { color: red; }</code></pre>
       
 
       <h5 id="helper-radio-customizable" style="margin-top:40px"><code>b4.radio</code> <span class="def">@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] =&gt; Html)(implicit handler: BSFieldConstructor, messages: Messages)</span></h5>
-      <h5><code>b4.radioOption</code> <span class="def">@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]))</span></h5>
+      <h5><code>b4.radioOption</code> <span class="def">@(inputValue: Any, text: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]), messages: Messages)</span></h5>
       <p>
         If you need more versatility you can fully customize your radio options:
       </p>
@@ -895,12 +898,18 @@ input:invalid { color: red; }</code></pre>
   @b4.radioOption("B", Html("Coffee &lt;i class=\"fa fa-coffee\"&gt;&lt;/i&gt;"), 'disabled -&gt; true)
 }</code></pre>
       </div>
+      <p>
+        Note you can use any value for the <code>text</code> argument. But it is automatically internationalized only for _String_ values.
+      </p>
 
       
 
       <h4 id="helper-select"><code>b4.select</code> <span class="def">@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders a select. It supports <code>readonly</code> attribute adding an additional <code>disabled</code> one and a <code>&lt;input type="hidden"&gt;</code>.
+      </p>
+      <p>
+        Note the value for each <code>option</code> argument is automatically internationalized.
       </p>
       <div class="bd-example">
         <fieldset class="form-group   " id="foo_field">
@@ -941,7 +950,8 @@ input:invalid { color: red; }</code></pre>
       </div>
       <p>
         You can add a default first value using the argument <code>'_default</code> with a string. It will add a first option to the select with an empty string value. So you could add a
-        <strong><em>required</em></strong> constraint to the field to force the user to select one other option. In addition, this default option is always disable to avoid the user to select it, and if any other option is selected this default one will not appear at all.
+        <strong><em>required</em></strong> constraint to the field to force the user to select one other option. In addition, this default option is always disable to avoid the user to
+        select it, and if any other option is selected this default one will not appear at all. Note it's automatically internationalized.
       </p>
       <div class="bd-example">
         <fieldset class="form-group   " id="foo_field">
@@ -1011,7 +1021,7 @@ input:invalid { color: red; }</code></pre>
       
 
       <h5 id="helper-select-customizable" style="margin-top:40px"><code>b4.select</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(content: Set[String] =&gt; Html)(implicit handler: BSFieldConstructor, messages: Messages)</span></h5>
-      <h5><code>b4.selectOption</code> <span class="def">@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String])</span></h5>
+      <h5><code>b4.selectOption</code> <span class="def">@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String], messages: Messages)</span></h5>
       <p>
         If you need more versatility you can fully customize your select options:
       </p>
@@ -1078,6 +1088,9 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
   &lt;/optgroup&gt;
 }</code></pre>
       </div>
+      <p>
+        Note the value for the <code>name</code> is automatically internationalized.
+      </p>
 
       
 
@@ -1340,7 +1353,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-static"><code>b4.static</code> <span class="def">@(label: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor)</span></h4>
+      <h4 id="more-static"><code>b4.static</code> <span class="def">@(label: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders a static control to place within your form. It takes a <code>HTML</code> as parameter, so you can render whatever you want. Actually, it is like a wrapper for a static <code>HTML</code>.
       </p>
@@ -1378,7 +1391,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-buttontype"><code>b4.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b4.BSFieldConstructor)</span></h4>
+      <h4 id="more-buttontype"><code>b4.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b4.BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders a simple button to place within your form. It takes a <code>HTML</code> as parameter, so you can render whatever you want.
       </p>
@@ -1393,7 +1406,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-submit"><code>b4.submit</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor)</span></h4>
+      <h4 id="more-submit"><code>b4.submit</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It is a short version of b4.buttonType for type="submit".
       </p>
@@ -1408,7 +1421,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-reset"><code>b4.reset</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor)</span></h4>
+      <h4 id="more-reset"><code>b4.reset</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It is a short version of b4.buttonType for type="reset".
       </p>
@@ -1423,7 +1436,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-button"><code>b4.button</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor)</span></h4>
+      <h4 id="more-button"><code>b4.button</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It is a short version of b4.buttonType for type="button".
       </p>
@@ -1438,7 +1451,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-free"><code>b4.free</code> <span class="def">@(args: (Symbol,Any)*)(content: =&gt; Html)(implicit fc: BSFieldConstructor)</span></h4>
+      <h4 id="more-free"><code>b4.free</code> <span class="def">@(args: (Symbol,Any)*)(content: =&gt; Html)(implicit fc: BSFieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders whatever you want within a <code>form-group</code> div.
       </p>
