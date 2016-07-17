@@ -233,7 +233,7 @@ tab: multifield
     <code>b4/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
   </p>
   <div class="highlight">
-<pre><code>@(fieldsWithArgs: (Field, Seq[Symbol,Any])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+<pre><code>@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
 @b4.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =&gt;
   &lt;div @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
     @fieldsWithArgs.map { case (field, fieldArgs) =&gt;
