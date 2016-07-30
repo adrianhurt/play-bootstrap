@@ -55,7 +55,7 @@ object FieldConstructorsSpec extends Specification {
 
     "have the basic structure" in {
       simpleInput must contain("class=\"form-group")
-      simpleInput must not contain ("has-error")
+      simpleInput must not contain ("has-danger")
       simpleInput must not contain ("aria-invalid")
       simpleInput must contain(testInputString)
       simpleInput must not contain ("class=\"help-block\"")
@@ -90,31 +90,31 @@ object FieldConstructorsSpec extends Specification {
 
     "allow rendering errors" in {
       val test = simpleInputWithError()
-      test must contain("has-error")
-      test must contain("<span id=\"foo_error_0\" class=\"help-block\">test-error-0</span>")
-      test must contain("<span id=\"foo_error_1\" class=\"help-block\">test-error-1</span>")
+      test must contain("has-danger")
+      test must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</span>")
+      test must contain("<span id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</span>")
     }
 
     "allow showing constraints" in {
       val test = simpleInputWithArgs('_showConstraints -> true)
-      test must contain("<span id=\"foo_info_0\" class=\"help-block\">")
-      test must contain("<span id=\"foo_info_1\" class=\"help-block\">")
-      test must contain("class=\"help-block\">" + messages("constraint.required") + "</span>")
-      test must contain("class=\"help-block\">" + messages("constraint.maxLength", 8) + "</span>")
+      test must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">")
+      test must contain("<span id=\"foo_info_1\" class=\"form-control-feedback\">")
+      test must contain("class=\"form-control-feedback\">" + messages("constraint.required") + "</span>")
+      test must contain("class=\"form-control-feedback\">" + messages("constraint.maxLength", 8) + "</span>")
     }
 
     "allow showing help info" in {
-      simpleInputWithArgs('_help -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_success -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_warning -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_error -> "test-help") must contain("<span id=\"foo_error_0\" class=\"help-block\">test-help</span>")
+      simpleInputWithArgs('_help -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
+      simpleInputWithArgs('_success -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
+      simpleInputWithArgs('_warning -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
+      simpleInputWithArgs('_error -> "test-help") must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-help</span>")
     }
 
     "allow rendering erros and hide constraints when help info is present" in {
       val test = simpleInputWithError('_showConstraints -> true, '_help -> "test-help")
-      test must contain("<span id=\"foo_error_0\" class=\"help-block\">test-error-0</span>")
-      test must contain("<span id=\"foo_error_1\" class=\"help-block\">test-error-1</span>")
-      test must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
+      test must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</span>")
+      test must contain("<span id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</span>")
+      test must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
       test must not contain ("<span id=\"foo_info_1\"")
     }
 
@@ -135,16 +135,16 @@ object FieldConstructorsSpec extends Specification {
       testStatus("success", withIcon = false, '_success -> "test-help")
       testStatus("warning", withIcon = false, '_warning -> true)
       testStatus("warning", withIcon = false, '_warning -> "test-help")
-      testStatus("error", withIcon = false, '_error -> true)
-      testStatus("error", withIcon = false, '_error -> "test-help")
+      testStatus("danger", withIcon = false, '_error -> true)
+      testStatus("danger", withIcon = false, '_error -> "test-help")
 
       "with feedback icons" in {
         testStatus("success", withIcon = true, '_showIconValid -> true)
         testStatus("success", withIcon = true, '_success -> "test-help", '_showIconValid -> true)
         testStatus("warning", withIcon = true, '_showIconWarning -> true)
         testStatus("warning", withIcon = true, '_warning -> "test-help", '_showIconWarning -> true)
-        testStatus("error", withIcon = true, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, '_error -> true, '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, '_error -> "test-help", '_showIconOnError -> true)
       }
     }
 

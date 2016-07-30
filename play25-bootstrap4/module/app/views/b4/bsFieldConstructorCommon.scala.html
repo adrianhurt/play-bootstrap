@@ -3,7 +3,7 @@
 	@wrap {
 		@inputHtml
 		@fieldInfo.errorsAndInfos.map { case (id, text) =>
-			<span id="@id" class="help-block">@text</span>
+			<span id="@id" class="form-control-feedback">@text</span>
 		}
 	}
 </div>

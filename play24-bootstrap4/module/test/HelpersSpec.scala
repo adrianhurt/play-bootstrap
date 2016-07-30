@@ -514,7 +514,7 @@ object HelpersSpec extends Specification {
     "horizontal: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, messages) must be equalTo clean("""
 	  <div class="form-group row theClass" id="theId">
-	  	<div class="col-md-10 col-md-offset-2">
+	  	<div class="col-md-10 offset-md-2">
 	  	  <content>
 	  	</div>
 	  </div>
@@ -656,7 +656,7 @@ object HelpersSpec extends Specification {
     "have the basic structure" in {
       val body = fooMultifield('_label -> "theLabel")
       body must contain("class=\"form-group")
-      body must not contain ("has-error")
+      body must not contain ("has-danger")
       body must contain("<label class=\"\">theLabel</label>")
       body must contain(testInputsString)
       body must not contain ("class=\"help-block\"")
@@ -688,7 +688,7 @@ object HelpersSpec extends Specification {
 
     "allow rendering errors" in {
       val body = multifield(fooFormWithError)(vfc, messages)
-      body must contain("has-error")
+      body must contain("has-danger")
       body must contain("<span class=\"help-block\">test-error</span>")
     }
 
@@ -730,10 +730,10 @@ object HelpersSpec extends Specification {
       testStatus("warning", withIcon = false, withFieldsArgs = true, '_warning -> true)
       testStatus("warning", withIcon = false, withFieldsArgs = false, '_warning -> "test-help")
       testStatus("warning", withIcon = false, withFieldsArgs = true, '_warning -> "test-help")
-      testStatus("error", withIcon = false, withFieldsArgs = false, '_error -> true)
-      testStatus("error", withIcon = false, withFieldsArgs = true, '_error -> true)
-      testStatus("error", withIcon = false, withFieldsArgs = false, '_error -> "test-help")
-      testStatus("error", withIcon = false, withFieldsArgs = true, '_error -> "test-help")
+      testStatus("danger", withIcon = false, withFieldsArgs = false, '_error -> true)
+      testStatus("danger", withIcon = false, withFieldsArgs = true, '_error -> true)
+      testStatus("danger", withIcon = false, withFieldsArgs = false, '_error -> "test-help")
+      testStatus("danger", withIcon = false, withFieldsArgs = true, '_error -> "test-help")
 
       "with feedback icons" in {
         testStatus("success", withIcon = true, withFieldsArgs = false, '_showIconValid -> true)
@@ -744,10 +744,10 @@ object HelpersSpec extends Specification {
         testStatus("warning", withIcon = true, withFieldsArgs = true, '_showIconWarning -> true)
         testStatus("warning", withIcon = true, withFieldsArgs = false, '_warning -> "test-help", '_showIconWarning -> true)
         testStatus("warning", withIcon = true, withFieldsArgs = true, '_warning -> "test-help", '_showIconWarning -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = false, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = true, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = false, '_error -> "test-help", '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = true, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = false, '_error -> true, '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = true, '_error -> true, '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = false, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = true, '_error -> "test-help", '_showIconOnError -> true)
       }
     }
 
