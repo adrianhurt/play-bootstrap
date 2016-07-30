@@ -383,7 +383,7 @@ object HelpersSpec extends Specification {
 
     "render custom select properly" in {
       val body = b4.select(fooField, fruits, '_custom -> true).body
-      body must contain("""<select id="foo" name="foo" class="c-select">""")
+      body must contain("""<select id="foo" name="foo" class="custom-select">""")
     }
   }
 
@@ -473,51 +473,51 @@ object HelpersSpec extends Specification {
 
     "vertical: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
-	  	<label class="control-label">theLabel</label>
+	  <div class="form-group theClass" id="theId">
+	  	<label class="">theLabel</label>
 	  	<content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "vertical: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(vfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
+	  <div class="form-group theClass" id="theId">
 	  	<content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "horizontal: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group row theClass" id="theId">
-	  	<label class="control-label form-control-label col-md-2">theLabel</label>
+	  <div class="form-group row theClass" id="theId">
+	  	<label class="col-form-label col-md-2">theLabel</label>
 	  	<div class="col-md-10">
 	  	  <content>
 	  	</div>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "horizontal: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group row theClass" id="theId">
-	  	<div class="col-md-10 col-md-offset-2">
+	  <div class="form-group row theClass" id="theId">
+	  	<div class="col-md-10 offset-md-2">
 	  	  <content>
 	  	</div>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "inline: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
-	  	<label class="control-label">theLabel</label>
+	  <div class="form-group theClass" id="theId">
+	  	<label class="">theLabel</label>
       <content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "inline: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(ifc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
+	  <div class="form-group theClass" id="theId">
       <content>
-	  </fieldset>
+	  </div>
 	  """)
     }
 
@@ -642,14 +642,14 @@ object HelpersSpec extends Specification {
       val body = fooMultifield('_label -> "theLabel")
       body must contain("class=\"form-group")
       body must not contain ("has-error")
-      body must contain("<label class=\"control-label\">theLabel</label>")
+      body must contain("<label class=\"\">theLabel</label>")
       body must contain(testInputsString)
       body must not contain ("class=\"help-block\"")
     }
 
     "behave as a horizontal field constructor" in {
       val body = multifield(fooForm, Seq('_label -> "theLabel"))(hfc, messages)
-      body must contain("<label class=\"control-label form-control-label " + colLabel + "\">theLabel</label>")
+      body must contain("<label class=\"col-form-label " + colLabel + "\">theLabel</label>")
       body must contain("<div class=\"" + colInput + "\">")
     }
 
@@ -662,8 +662,8 @@ object HelpersSpec extends Specification {
     }
 
     "show label" in {
-      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, messages) must contain("<label class=\"control-label\">fooLabel</label>")
-      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, messages) must contain("<label class=\"control-label form-control-label " + colLabel + "\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, messages) must contain("<label class=\"\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, messages) must contain("<label class=\"col-form-label " + colLabel + "\">fooLabel</label>")
     }
 
     "without label" in {
@@ -692,7 +692,7 @@ object HelpersSpec extends Specification {
     }
 
     "render validation states" in {
-      def withStatus(status: String) = contain(s"""<fieldset class="form-group has-$status"""")
+      def withStatus(status: String) = contain(s"""<div class="form-group has-$status"""")
       def withFeedbackIcon(status: String) = contain(s""" class="form-control-$status form-control"""")
       def testStatus(status: String, withIcon: Boolean, withFieldsArgs: Boolean, args: (Symbol, Any)*) = {
         val test = if (withFieldsArgs)
