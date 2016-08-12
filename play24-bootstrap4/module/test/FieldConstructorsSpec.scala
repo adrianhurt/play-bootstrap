@@ -91,31 +91,31 @@ object FieldConstructorsSpec extends Specification {
     "allow rendering errors" in {
       val test = simpleInputWithError()
       test must contain("has-danger")
-      test must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</span>")
-      test must contain("<span id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</span>")
+      test must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</div>")
+      test must contain("<div id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</div>")
     }
 
     "allow showing constraints" in {
       val test = simpleInputWithArgs('_showConstraints -> true)
-      test must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">")
-      test must contain("<span id=\"foo_info_1\" class=\"form-control-feedback\">")
-      test must contain("class=\"form-control-feedback\">" + messages("constraint.required") + "</span>")
-      test must contain("class=\"form-control-feedback\">" + messages("constraint.maxLength", 8) + "</span>")
+      test must contain("<div id=\"foo_info_0\" class=\"form-control-feedback\">")
+      test must contain("<div id=\"foo_info_1\" class=\"form-control-feedback\">")
+      test must contain("class=\"form-control-feedback\">" + messages("constraint.required") + "</div>")
+      test must contain("class=\"form-control-feedback\">" + messages("constraint.maxLength", 8) + "</div>")
     }
 
     "allow showing help info" in {
-      simpleInputWithArgs('_help -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
-      simpleInputWithArgs('_success -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
-      simpleInputWithArgs('_warning -> "test-help") must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
-      simpleInputWithArgs('_error -> "test-help") must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-help</span>")
+      simpleInputWithArgs('_help -> "test-help") must contain("<div id=\"foo_info_0\" class=\"form-control-feedback\">test-help</div>")
+      simpleInputWithArgs('_success -> "test-help") must contain("<div id=\"foo_info_0\" class=\"form-control-feedback\">test-help</div>")
+      simpleInputWithArgs('_warning -> "test-help") must contain("<div id=\"foo_info_0\" class=\"form-control-feedback\">test-help</div>")
+      simpleInputWithArgs('_error -> "test-help") must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-help</div>")
     }
 
     "allow rendering erros and hide constraints when help info is present" in {
       val test = simpleInputWithError('_showConstraints -> true, '_help -> "test-help")
-      test must contain("<span id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</span>")
-      test must contain("<span id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</span>")
-      test must contain("<span id=\"foo_info_0\" class=\"form-control-feedback\">test-help</span>")
-      test must not contain ("<span id=\"foo_info_1\"")
+      test must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</div>")
+      test must contain("<div id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</div>")
+      test must contain("<div id=\"foo_info_0\" class=\"form-control-feedback\">test-help</div>")
+      test must not contain ("<div id=\"foo_info_1\"")
     }
 
     "render validation states" in {
@@ -160,16 +160,16 @@ object FieldConstructorsSpec extends Specification {
       test1 must contain("aria-invalid=\"true\"")
       test1 must contain("aria-describedby=\"foo_status foo_info_0 foo_info_1 foo_error_0 foo_error_1\"")
       test1 must contain("<span id=\"foo_status\"")
-      test1 must contain("<span id=\"foo_info_0\"")
-      test1 must contain("<span id=\"foo_info_1\"")
-      test1 must contain("<span id=\"foo_error_0\"")
-      test1 must contain("<span id=\"foo_error_1\"")
+      test1 must contain("<div id=\"foo_info_0\"")
+      test1 must contain("<div id=\"foo_info_1\"")
+      test1 must contain("<div id=\"foo_error_0\"")
+      test1 must contain("<div id=\"foo_error_1\"")
 
       val test2 = simpleInputWithArgs('_help -> "test-help", '_showIconValid -> true)
       test2 must not contain ("aria-invalid")
       test2 must contain("aria-describedby=\"foo_status foo_info_0\"")
       test2 must contain("<span id=\"foo_status\"")
-      test2 must contain("<span id=\"foo_info_0\"")
+      test2 must contain("<div id=\"foo_info_0\"")
       test2 must not contain ("<span id=\"foo_error")
     }
   }
