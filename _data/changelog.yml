@@ -1,7 +1,7 @@
 - id: 1-1-P2X-BX
-  library: "1.0"
-  title: 1.1-P2X-BX-SNAPSHOT
-  released: In development...
+  library: "1.1"
+  title: 1.1-P2X-BX
+  released: 28 August 2016
   bullets:
     - type: change
       text: |

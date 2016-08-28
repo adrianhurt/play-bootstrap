@@ -6,7 +6,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "2.2.3"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1-P24-B3"
@@ -17,7 +17,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "2.2.3"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1-P25-B4"
@@ -28,7 +28,7 @@
   bootstrap_dependency: "4.0.0-alpha"
   jquery_dependency: "2.2.3"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1-P24-B4"
@@ -39,7 +39,7 @@
   bootstrap_dependency: "4.0.0-alpha"
   jquery_dependency: "2.2.3"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
   
   
