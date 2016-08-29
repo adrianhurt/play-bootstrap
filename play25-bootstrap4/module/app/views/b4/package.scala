@@ -43,7 +43,7 @@ package object b4 {
       else (false, false, isTrue(argsMap, '_showIconValid))
     }
 
-    /* The optional validation state ("success", "warning" or "error") */
+    /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
     /* Indicates if any of the previous feedback icons should be shown */
@@ -76,10 +76,10 @@ package object b4 {
    * Companion object for class B4FieldInfo
    */
   object B4FieldInfo {
-    /* The optional validation state ("success", "warning" or "error") */
+    /* The optional validation state ("success", "warning" or "danger") */
     def status(hasErrors: Boolean, argsMap: Map[Symbol, Any]): Option[String] = {
       if (hasErrors)
-        Some("error")
+        Some("danger")
       else if (ArgsMap.isNotFalse(argsMap, '_warning) || isTrue(argsMap, '_showIconWarning))
         Some("warning")
       else if (ArgsMap.isNotFalse(argsMap, '_success) || isTrue(argsMap, '_showIconValid))
@@ -95,7 +95,7 @@ package object b4 {
    * - args: list of available arguments for the helper and the form-group
    */
   case class B4MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
-    /* The optional validation state ("success", "warning" or "error") */
+    /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
     override lazy val globalArgs = {

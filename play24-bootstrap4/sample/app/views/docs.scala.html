@@ -49,7 +49,7 @@
 			</p>
 			@code {
 				<div class="form-group" id="foo_field">
-					<label class="control-label" for="foo">A simple text</label>
+					<label class="" for="foo">A simple text</label>
 					<input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing a help...">
 					<span id="foo_info_0" class="help-block">This is a help text</span>
 				</div>
@@ -67,7 +67,7 @@
 			</p>
 			@code {
 				<div class="form-group" id="foo_field">
-					<label class="control-label col-md-2" for="foo">A simple text</label>
+					<label class="col-md-2" for="foo">A simple text</label>
 					<div class="col-md-10">
 						<input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing a help...">
 						<span id="foo_info_0" class="help-block">This is a help text</span>
@@ -90,7 +90,7 @@
 			</p>
 			@code {
 				<div class="form-group" id="foo_field">
-					<label class="control-label sr-only" for="foo">A simple text</label>
+					<label class="sr-only" for="foo">A simple text</label>
 					<input type="text" id="foo" name="foo" value="" aria-describedby="foo_info_0" class="form-control" placeholder="A simple text showing a help...">
 					<span id="foo_info_0" class="help-block">This is a help text</span>
 				</div>
@@ -141,7 +141,7 @@
 			<p>The previous example outputs the HTML:</p>
 			@code {
 				<div class="form-group" id="foo_field">
-					<label class="control-label" for="foo">Constraints</label>
+					<label class="" for="foo">Constraints</label>
 					<input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text showing its constraints...">
 					<span class="help-block">Maximum length: 10</span>
 				</div>
@@ -358,8 +358,8 @@
 				And it will render the following if there is an error:
 			</p>
 			@code {
-				<div class="form-group has-error has-feedback" id="text_field">
-					<label class="control-label" for="text">A text</label>
+				<div class="form-group has-danger has-feedback" id="text_field">
+					<label class="" for="text">A text</label>
 					<input type="text" id="text" name="text" value="" aria-describedby="text_info_0 text_error_0" aria-invalid="true" class="form-control">
 					<span id="text_error_0" class="help-block">This field is required</span>
 					<span id="text_info_0" class="help-block">Something helpful</span>

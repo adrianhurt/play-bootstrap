@@ -102,9 +102,9 @@
 			@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@mail.com" )
 		}
 	}{
-		<div class="my-form-group form-group has-error" id="foo_field">
+		<div class="my-form-group form-group has-danger" id="foo_field">
 			<div class="field-container">
-				<label class="control-label" for="foo">Email</label>
+				<label class="" for="foo">Email</label>
 				<div class="input-group">
 					<span class="input-group-addon">@@</span>
 					<input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@@mail.com">
@@ -143,7 +143,7 @@
 		<div class="my-form-group form-group @@fieldInfo.argsMap.get('_class) @@fieldInfo.status.map("has-"+_)" id="@@fieldInfo.idFormGroup">
 			<div class="field-container">
 				@@fieldInfo.labelOpt.map { label =>
-					<label class="control-label @@if(fieldInfo.hideLabel){sr-only}" @@if(fieldInfo.withLabelFor){for="@@fieldInfo.id"}>@@label</label>
+					<label class="@@if(fieldInfo.hideLabel){sr-only}" @@if(fieldInfo.withLabelFor){for="@@fieldInfo.id"}>@@label</label>
 				}
 				@@inputHtml
 			</div>
