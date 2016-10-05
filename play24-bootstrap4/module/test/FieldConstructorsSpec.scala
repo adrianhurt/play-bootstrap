@@ -49,7 +49,7 @@ object FieldConstructorsSpec extends Specification {
       case _ => ""
     }
     val labelExtraClasses = fc match {
-      case hfc: b4.horizontal.HorizontalFieldConstructor => " form-control-label " + hfc.colLabel
+      case hfc: b4.horizontal.HorizontalFieldConstructor => "col-form-label " + hfc.colLabel
       case _ => ""
     }
 
@@ -70,15 +70,15 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow setting extra classes form-group" in {
-      clean(simpleInputWithArgs('_class -> "extra_class another_class")) must contain(s"""<fieldset class="form-group$fieldsetExtraClasses extra_class another_class" """)
+      clean(simpleInputWithArgs('_class -> "extra_class another_class")) must contain(s"""<div class="form-group$fieldsetExtraClasses extra_class another_class" """)
     }
 
     "render the label" in {
-      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(s"""<label class="control-label$labelExtraClasses" for="foo">theLabel</label>""")
+      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(s"""<label class="$labelExtraClasses" for="foo">theLabel</label>""")
     }
 
     "allow hide the label" in {
-      val labelString = s"""<label class="control-label$labelExtraClasses sr-only" for="foo">theLabel</label>"""
+      val labelString = s"""<label class="$labelExtraClasses sr-only" for="foo">theLabel</label>"""
       clean(simpleInputWithArgs('_label -> "theLabel", '_hideLabel -> true)) must contain(labelString)
       clean(simpleInputWithArgs('_hiddenLabel -> "theLabel")) must contain(labelString)
     }
@@ -118,7 +118,7 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "render validation states" in {
-      def withStatus(status: String) = contain(s"""<fieldset class="form-group$fieldsetExtraClasses has-$status"""")
+      def withStatus(status: String) = contain(s"""<div class="form-group$fieldsetExtraClasses has-$status"""")
       def withFeedbackIcon(status: String) = contain(s""" class="form-control-$status form-control"""")
       def testStatus(status: String, withIcon: Boolean, args: (Symbol, Any)*) = {
         val test = clean(simpleInputWithArgs(args: _*))
