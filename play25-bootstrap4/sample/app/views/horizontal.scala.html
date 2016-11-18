@@ -129,23 +129,23 @@
 				<div class="col-md-6">
 					@b4.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
 					@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-					@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+					@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
 				</div>
 				<div class="col-md-6">
 					@b4.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
 					@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-					@b4.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+					@b4.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
 				</div>
 			</div>
 		}{
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-			@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+			@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
 			
 			// With feedback icons
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-			@@b4.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+			@@b4.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
 		}
 
 		<h3 id="b4-custom">Bootstrap 4 custom forms (Beta)</h3>

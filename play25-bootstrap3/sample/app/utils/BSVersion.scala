@@ -16,8 +16,8 @@
 package utils
 
 object BSVersion {
-  final val code = "1.0-P25-B3"
-  final val library = "1.0"
+  final val code = "1.1.1-P25-B3"
+  final val library = "1.1"
   final val play = "Play 2.5"
   final val play_code = "2.5"
   final val bootstrap = "Bootstrap 3"

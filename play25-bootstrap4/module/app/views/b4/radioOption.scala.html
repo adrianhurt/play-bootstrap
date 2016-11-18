@@ -1,21 +1,24 @@
 @(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, b4.B4FieldInfo), messages: Messages)
-@displayInput(labelClass: String, fieldInfo: b4.B4FieldInfo) = {
-	<label class="@labelClass" for="@(fieldInfo.id)_@inputValue">
-		<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(fieldInfo.innerArgsMap ++ args.toMap)>
-    @if(fieldInfo.isCustom){<span class="c-indicator"></span>}
+@displayLabelWithInput(labelClass: String, fieldInfo: b4.B4FieldInfo) = {
+  <label class="@labelClass" for="@(fieldInfo.id)_@inputValue">
+		<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, "form-check-input"))>
 		@bs.Args.msg(label)(messages)
 	</label>
 }
 @defining(extraInfo) { case (inline, disabled, fieldInfo) =>
-	@if(inline) {
-		@displayInput(labelClass = "radio-inline" + (if (disabled) " disabled" else ""), fieldInfo)
-	} else {
-    @if(fieldInfo.isCustom) {
-      @displayInput(labelClass = "c-input c-radio" + (if (disabled) " disabled" else ""), fieldInfo)
+  @if(fieldInfo.isCustom) {
+    <label class="custom-control custom-radio" for="@(fieldInfo.id)_@inputValue">
+  		<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, "custom-control-input"))>
+      <span class="custom-control-indicator"></span>
+      <span class="custom-control-description">@bs.Args.msg(label)(messages)</span>
+  	</label>
+  } else {
+    @if(inline) {
+      @displayLabelWithInput("form-check-inline" + (if (disabled) " disabled" else ""), fieldInfo)
     } else {
-      <div class="radio@if(disabled){ disabled}">
-		    @displayInput(labelClass = "", fieldInfo)
+      <div class="form-check@if(disabled){ disabled}">
+        @displayLabelWithInput("form-check-label", fieldInfo)
       </div>
     }
-	}
+  }
 }

@@ -9,18 +9,19 @@
 }
 @defining({
 	val argsMap = args.toMap
+  val inline = bs.ArgsMap.isTrue(argsMap, '_inline) || fc.formClass == "form-inline"
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
-	(argsMap, disabled)
-}) { case (argsMap, disabled) =>
+	(argsMap, inline, disabled)
+}) { case (argsMap, inline, disabled) =>
 	@inputFormGroup(field, withFeedback = false, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
 		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
-      @if(fieldInfo.isCustom && (fc.formClass == "form-vertical" || fc.formClass == "form-horizontal")) {
-        <div class="c-inputs-stacked">
-          @content(bs.ArgsMap.isTrue(argsMap, '_inline), disabled, fieldInfo)
+      @if(fieldInfo.isCustom && !inline) {
+        <div class="custom-controls-stacked">
+          @content(inline, disabled, fieldInfo)
         </div>
       } else {
-        @content(bs.ArgsMap.isTrue(argsMap, '_inline), disabled, fieldInfo)
+        @content(inline, disabled, fieldInfo)
       }
 		}
 	}(fc, messages)

@@ -50,18 +50,10 @@ package object bs {
     /* Value of the input */
     val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
 
-    /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val infos: Seq[(String, String)] = BSFieldInfo.infos(Some(field), argsMap, messages).zipWithIndex.map {
-      case (info, i) => (ariaInfoId(i), info)
-    }
-
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
     val errors: Seq[(String, String)] = BSFieldInfo.errors(Some(field), argsMap, messages).zipWithIndex.map {
-      case (error, i) => (ariaErrorId(i), error)
+      case (error, i) => (id + "_error_" + i, error)
     }
-
-    /* List with the errors and infos */
-    def errorsAndInfos = errors ++ infos
 
     /* Indicates if there is any error */
     val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, '_error)
@@ -69,14 +61,8 @@ package object bs {
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
 
-    /* ARIA id for an "info" given an index (ex: "foo_info_0") */
-    def ariaInfoId(index: Int): String = id + "_info_" + index
-
-    /* ARIA id for an error given an index (ex: "foo_error_0") */
-    def ariaErrorId(index: Int): String = id + "_error_" + index
-
     /* List of every ARIA id */
-    val ariaIds: Seq[String] = infos.map(_._1) ++ errors.map(_._1)
+    val ariaIds: Seq[String] = errors.map(_._1)
 
     /*
     * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
@@ -101,19 +87,6 @@ package object bs {
       new BSFieldInfo(field, args, messages)
     }
 
-    /* List with every "info" */
-    def infos(maybeField: Option[Field], argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
-      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(messages(m.toString))).getOrElse(
-        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(messages(m.toString))).getOrElse(
-          argsMap.get('_help).map(m => Seq(messages(m.toString))).getOrElse {
-            maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
-              field.constraints.map(c => messages(c._1, c._2.map(a => translateMsgArg(a, messages)): _*)) ++ field.format.map(f => messages(f._1, f._2.map(a => translateMsgArg(a, messages)): _*))
-            }.getOrElse(Nil)
-          }
-        )
-      )
-    }
-
     /* List with every error */
     def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
@@ -124,6 +97,22 @@ package object bs {
       }.getOrElse {
         maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
           field.errors.map { e => messages(e.message, e.args.map(a => translateMsgArg(a, messages)): _*) }
+        }.getOrElse(Nil)
+      }
+    }
+
+    /* List with every "feedback info" except "errors" */
+    def feedbackInfosButErrors(argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
+      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(messages(m.toString))).getOrElse(
+        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(messages(m.toString))).getOrElse(Nil)
+      )
+    }
+    
+    /* List with every "help info", i.e. a help text or constraints */
+    def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
+      argsMap.get('_help).map(m => Seq(messages(m.toString))).getOrElse {
+        maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
+          field.constraints.map(c => messages(c._1, c._2.map(a => translateMsgArg(a, messages)): _*)) ++ field.format.map(f => messages(f._1, f._2.map(a => translateMsgArg(a, messages)): _*))
         }.getOrElse(Nil)
       }
     }
@@ -173,17 +162,6 @@ package object bs {
     /* A map with the args to work easily with them. The '_help is removed because the helper freeFormFieldormField will add it */
     val argsMap: Map[Symbol, Any] = Args.withoutNones(fieldsArguments ++ globalArguments).toMap
 
-    /* List with every "info" */
-    val infos: Seq[String] = {
-      val globalInfos = BSFieldInfo.infos(None, argsMap, messages)
-      if (globalInfos.size > 0)
-        globalInfos
-      else
-        fields.flatMap { field =>
-          BSFieldInfo.infos(Some(field), argsMap, messages)
-        }
-    }
-
     /* List with every error */
     val errors: Seq[String] = {
       val globalErrors = BSFieldInfo.errors(None, argsMap, messages)
@@ -191,12 +169,9 @@ package object bs {
         globalErrors
       else
         fields.flatMap { field =>
-          BSFieldInfo.errors(Some(field), Map(), messages)
+          BSFieldInfo.errors(Some(field), argsMap, messages)
         }
     }
-
-    /* List with the errors and infos */
-    def errorsAndInfos: Seq[String] = errors ++ infos
 
     /* Indicates if there is any error */
     val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, '_error)

@@ -32,6 +32,20 @@ package object b4 {
    */
   case class B4FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
 
+    /* List with every "feedback info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
+    val feedbackInfos: Seq[(String, String)] =
+      if (errors.size > 0)
+        errors
+      else
+        BSFieldInfo.feedbackInfosButErrors(argsMap, messages).zipWithIndex.map {
+          case (info, i) => (id + "_feedback_" + i, info)
+        }
+
+    /* List with every "help info" (i.e. a help text or constraints) and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
+    val helpInfos: Seq[(String, String)] = BSFieldInfo.helpInfos(Some(field), argsMap, messages).zipWithIndex.map {
+      case (info, i) => (id + "_info_" + i, info)
+    }
+
     /* Indicates if it's a custom element */
     val isCustom: Boolean = isTrue(argsMap, '_custom)
 
@@ -43,7 +57,7 @@ package object b4 {
       else (false, false, isTrue(argsMap, '_showIconValid))
     }
 
-    /* The optional validation state ("success", "warning" or "error") */
+    /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
     /* Indicates if any of the previous feedback icons should be shown */
@@ -53,7 +67,7 @@ package object b4 {
     def ariaFeedbackId: String = id + "_status"
 
     /* List of every ARIA id */
-    override val ariaIds: Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ infos.map(_._1) ++ errors.map(_._1)
+    override val ariaIds: Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ feedbackInfos.map(_._1) ++ helpInfos.map(_._1)
 
     /*
     * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
@@ -76,10 +90,10 @@ package object b4 {
    * Companion object for class B4FieldInfo
    */
   object B4FieldInfo {
-    /* The optional validation state ("success", "warning" or "error") */
+    /* The optional validation state ("success", "warning" or "danger") */
     def status(hasErrors: Boolean, argsMap: Map[Symbol, Any]): Option[String] = {
       if (hasErrors)
-        Some("error")
+        Some("danger")
       else if (ArgsMap.isNotFalse(argsMap, '_warning) || isTrue(argsMap, '_showIconWarning))
         Some("warning")
       else if (ArgsMap.isNotFalse(argsMap, '_success) || isTrue(argsMap, '_showIconValid))
@@ -95,7 +109,27 @@ package object b4 {
    * - args: list of available arguments for the helper and the form-group
    */
   case class B4MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
-    /* The optional validation state ("success", "warning" or "error") */
+
+    /* List with every "feedback info"  */
+    val feedbackInfos: Seq[String] = {
+      if (errors.size > 0)
+        errors
+      else
+        BSFieldInfo.feedbackInfosButErrors(argsMap, messages)
+    }
+
+    /* List with every "help info" (i.e. a help text or constraints) */
+    val helpInfos: Seq[String] = {
+      val globalHelpInfos = BSFieldInfo.helpInfos(None, argsMap, messages)
+      if (globalHelpInfos.size > 0)
+        globalHelpInfos
+      else
+        fields.flatMap { field =>
+          BSFieldInfo.helpInfos(Some(field), argsMap, messages)
+        }
+    }
+
+    /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
     override lazy val globalArgs = {
@@ -131,7 +165,7 @@ package object b4 {
   def freeFormGroup(args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
     freeFormField(args)(contentDef)(fc, messages)
 
-  def multifieldFormGroup(fields: Seq[Field], globalArgs: Seq[(Symbol, Any)], fieldsArgs: Seq[(Symbol, Any)])(contentDef: BSMultifieldInfo => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
+  def multifieldFormGroup(fields: Seq[Field], globalArgs: Seq[(Symbol, Any)], fieldsArgs: Seq[(Symbol, Any)])(contentDef: B4MultifieldInfo => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
     multifieldFormField(B4MultifieldInfo(fields, globalArgs, fieldsArgs, messages))(contentDef)(fc)
 
   /**
@@ -172,4 +206,5 @@ package object b4 {
   def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, messages)
 
   def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B4FieldConstructor, messages: Messages) = freeFormGroup(args)(_ => content)(fc, messages)
+
 }

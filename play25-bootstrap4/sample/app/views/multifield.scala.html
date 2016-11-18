@@ -19,7 +19,7 @@
 			<ul>
 				<li>Manage a <strong>set of fields</strong> and group them within the same <code>form-group</code>.</li>
 				<li>
-					Manage all of their <strong>errors</strong>, <strong>infos</strong> and <strong>constraints</strong> at
+					Manage all of their <strong>validations texts</strong>, <strong>help texts</strong> and <strong>constraints</strong> at
 					the end of the <code>form-group</code> as if they were only one.
 				</li>
 				<li>Take advantage of the helpers that are already implemented.</li>
@@ -133,14 +133,14 @@
 		
 		@code {
 			<div class="form-group" id="">
-				<label class="control-label col-md-2">Date range</label>
+				<label class="form-control-label col-md-2">Date range</label>
 				<div class="col-md-10">
 					<div class="input-daterange input-group" data-date-start-date="10-11-2014">
 						<input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
 						<span class="input-group-addon">to</span>
 						<input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
 					</div>
-					<span class="help-block">Select a date range from 10-11-2014</span>
+					<small class="form-text text-muted">Select a date range from 10-11-2014</small>
 				</div>
 			</div>
 		}
@@ -215,29 +215,29 @@
 		</p>
 		@code {
 			<div class="form-group" id="">
-				<label class="control-label col-md-2">Checkboxes</label>
+				<label class="form-control-label col-md-2">Checkboxes</label>
 				<div class="col-md-10">
 					<div class="multi-checkbox-list">
-						<div class="checkbox">
-							<label for="foo">
-								<input type="checkbox" id="foo" name="foo" value="true">
+						<div class="form-check">
+							<label class="form-check-label" for="foo">
+								<input type="checkbox" id="foo" name="foo" value="true" class="form-check-input">
 								Foo
 							</label>
 						</div>
-						<div class="checkbox">
-							<label for="bar">
-								<input type="checkbox" id="bar" name="bar" value="true">
+						<div class="form-check">
+							<label class="form-check-label" for="bar">
+								<input type="checkbox" id="bar" name="bar" value="true" class="form-check-input">
 								Bar
 							</label>
 						</div>
-						<div class="checkbox">
-							<label for="beer">
-								<input type="checkbox" id="beer" name="beer" value="true">
+						<div class="form-check">
+							<label class="form-check-label" for="beer">
+								<input type="checkbox" id="beer" name="beer" value="true" class="form-check-input">
 								Beer
 							</label>
 						</div>
 					</div>
-					<span class="help-block">Mark what you want</span>
+					<small class="form-text text-muted">Mark what you want</small>
 				</div>
 			</div>
 		}
@@ -266,10 +266,10 @@
 			@@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
 				<div class="input-text-checkbox input-group" @@toHtmlArgs(b4.Args.inner(globalArgs).toMap)>
-					<span class="input-group-addon">
+					<span class="input-group-addon" id="checkbox-addon">
 						@@b4.checkbox(checkboxField, checkboxArgs:_*)
 					</span>
-					@@b4.text(textField, textArgs:_*)
+					@@b4.text(textField, bs.Args.withDefault(textArgs, Symbol("aria-describedby") -> "checkbox-addon"):_*)
 				</div>
 			}
 		}
@@ -282,17 +282,17 @@
 		
 		@code {
 			<div class="form-group" id="">
-				<label class="control-label col-md-2">New task to do</label>
+				<label class="form-control-label col-md-2">New task to do</label>
 				<div class="col-md-10">
 					<div class="input-text-checkbox input-group">
-						<span class="input-group-addon">
-							<div class="checkbox">
-								<label for="fooSelected">
-									<input type="checkbox" id="fooSelected" name="fooSelected" value="true">
+						<span class="input-group-addon" id="checkbox-addon">
+							<div class="form-check">
+								<label class="form-check-label" for="fooSelected">
+									<input type="checkbox" id="fooSelected" name="fooSelected" value="true" class="form-check-input">
 								</label>
 							</div>
 						</span>
-						<input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
+						<input type="text" id="foo" name="foo" value="" class="form-control" aria-describedby="checkbox-addon" placeholder="a foo value">
 					</div>
 				</div>
 			</div>
@@ -305,7 +305,7 @@
 		</p>
 		@code {
 			.input-text-checkbox > .input-group-addon {
-				.checkbox { display: inline; }
+				.form-check { display: inline; }
 				label {
 					display: inline;
 					padding: 0;

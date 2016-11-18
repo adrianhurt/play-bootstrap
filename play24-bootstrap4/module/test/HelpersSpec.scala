@@ -124,9 +124,9 @@ object HelpersSpec extends Specification {
     }
     "render custom file properly" in {
       val customFile = b4.file(fooField, (('_custom -> true) +: ('class -> "form-control") +: sampleArgs): _*).body.trim
-      customFile must contain(b4.inputType("file", fooField, (('class -> "form-control") +: sampleArgs): _*).body.trim.replaceFirst("form-control", "form-control-file"))
-      customFile must contain("""<label class="file">""")
-      customFile must contain("""<span class="file-custom"></span>""")
+      customFile must contain(b4.inputType("file", fooField, (('class -> "form-control") +: sampleArgs): _*).body.trim.replaceFirst("form-control", "custom-file-input"))
+      customFile must contain("""<label class="custom-file">""")
+      customFile must contain("""<span class="custom-file-control"></span>""")
     }
   }
 
@@ -242,26 +242,26 @@ object HelpersSpec extends Specification {
 
     "add support to readonly attribute" in {
       val bodyWithoutReadonly = b4.checkbox(boolField, 'value -> true).body
-      bodyWithoutReadonly must contain("<div class=\"checkbox")
+      bodyWithoutReadonly must contain("<div class=\"form-check")
       bodyWithoutReadonly must not contain ("checkbox-group")
       bodyWithoutReadonly must not contain ("disabled")
       bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
 
       val bodyReadonlyFalse = b4.checkbox(boolField, 'readonly -> false, 'value -> true).body
-      bodyReadonlyFalse must contain("<div class=\"checkbox checkbox-group")
+      bodyReadonlyFalse must contain("<div class=\"form-check checkbox-group")
       bodyReadonlyFalse must not contain ("disabled=\"true\"")
       bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"true\" disabled/>")
 
       val bodyReadonlyTrue = b4.checkbox(boolField, 'readonly -> true, 'value -> true).body
-      bodyReadonlyTrue must contain("<div class=\"checkbox checkbox-group disabled\">")
+      bodyReadonlyTrue must contain("<div class=\"form-check checkbox-group disabled\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
       bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"true\"/>")
     }
 
     "render custom checkbox properly" in {
       val body = b4.checkbox(boolField, '_custom -> true).body
-      body must contain("""<label class="c-input c-checkbox"""")
-      body must contain("""<span class="c-indicator"></span>""")
+      body must contain("""<label class="custom-control custom-checkbox"""")
+      body must contain("""<span class="custom-control-indicator"></span>""")
     }
   }
 
@@ -297,11 +297,11 @@ object HelpersSpec extends Specification {
     }
 
     "not be inline by default" in {
-      b4.radio(fooField, fruits).body must not contain ("radio-inline")
+      b4.radio(fooField, fruits).body must not contain ("form-check-inline")
     }
 
     "allow be inline" in {
-      b4.radio(fooField, fruits, '_inline -> true).body must contain("radio-inline")
+      b4.radio(fooField, fruits, '_inline -> true).body must contain("form-check-inline")
     }
 
     "add support to readonly attribute" in {
@@ -313,21 +313,21 @@ object HelpersSpec extends Specification {
       val bodyReadonlyFalse = b4.radio(fooField, fruits, 'readonly -> false, 'value -> "B").body
       bodyReadonlyFalse must contain("<div class=\"radio-group\">")
       bodyReadonlyFalse must not contain ("disabled=\"true\"")
-      bodyReadonlyFalse must contain("<div class=\"radio")
-      bodyReadonlyFalse must not contain ("<div class=\"radio disabled\"")
+      bodyReadonlyFalse must contain("<div class=\"form-check")
+      bodyReadonlyFalse must not contain ("<div class=\"form-check disabled\"")
       bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" disabled/>")
 
       val bodyReadonlyTrue = b4.radio(fooField, fruits, 'readonly -> true, 'value -> "B").body
       bodyReadonlyTrue must contain("<div class=\"radio-group\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
-      bodyReadonlyTrue must contain("<div class=\"radio disabled\"")
+      bodyReadonlyTrue must contain("<div class=\"form-check disabled\"")
       bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
     }
 
     "render custom radio properly" in {
       val body = b4.radio(fooField, fruits, '_custom -> true).body
-      body must contain("""<label class="c-input c-radio"""")
-      body must contain("""<span class="c-indicator"></span>""")
+      body must contain("""<label class="custom-control custom-radio"""")
+      body must contain("""<span class="custom-control-indicator"></span>""")
     }
   }
 
@@ -398,7 +398,7 @@ object HelpersSpec extends Specification {
 
     "render custom select properly" in {
       val body = b4.select(fooField, fruits, '_custom -> true).body
-      body must contain("""<select id="foo" name="foo" class="c-select">""")
+      body must contain("""<select id="foo" name="foo" class="custom-select">""")
     }
   }
 
@@ -488,51 +488,51 @@ object HelpersSpec extends Specification {
 
     "vertical: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
-	  	<label class="control-label">theLabel</label>
+	  <div class="form-group theClass" id="theId">
+	  	<label class="form-control-label">theLabel</label>
 	  	<content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "vertical: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(vfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
+	  <div class="form-group theClass" id="theId">
 	  	<content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "horizontal: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group row theClass" id="theId">
-	  	<label class="control-label form-control-label col-md-2">theLabel</label>
+	  <div class="form-group row theClass" id="theId">
+	  	<label class="col-form-label col-md-2">theLabel</label>
 	  	<div class="col-md-10">
 	  	  <content>
 	  	</div>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "horizontal: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, messages) must be equalTo clean("""
-	  <fieldset class="form-group row theClass" id="theId">
-	  	<div class="col-md-10 col-md-offset-2">
+	  <div class="form-group row theClass" id="theId">
+	  	<div class="col-md-10 offset-md-2">
 	  	  <content>
 	  	</div>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "inline: show label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
-	  	<label class="control-label">theLabel</label>
+	  <div class="form-group theClass" id="theId">
+	  	<label class="form-control-label">theLabel</label>
       <content>
-	  </fieldset>
+	  </div>
 	  """)
     }
     "inline: without label" in {
       testFormGroup('_class -> "theClass", '_id -> "theId")(ifc, messages) must be equalTo clean("""
-	  <fieldset class="form-group theClass" id="theId">
+	  <div class="form-group theClass" id="theId">
       <content>
-	  </fieldset>
+	  </div>
 	  """)
     }
 
@@ -656,15 +656,16 @@ object HelpersSpec extends Specification {
     "have the basic structure" in {
       val body = fooMultifield('_label -> "theLabel")
       body must contain("class=\"form-group")
-      body must not contain ("has-error")
-      body must contain("<label class=\"control-label\">theLabel</label>")
+      body must not contain ("has-danger")
+      body must contain("<label class=\"form-control-label\">theLabel</label>")
       body must contain(testInputsString)
-      body must not contain ("class=\"help-block\"")
+      body must not contain ("class=\"form-control-feedback\"")
+      body must not contain ("class=\"form-text\"")
     }
 
     "behave as a horizontal field constructor" in {
       val body = multifield(fooForm, Seq('_label -> "theLabel"))(hfc, messages)
-      body must contain("<label class=\"control-label form-control-label " + colLabel + "\">theLabel</label>")
+      body must contain("<label class=\"col-form-label " + colLabel + "\">theLabel</label>")
       body must contain("<div class=\"" + colInput + "\">")
     }
 
@@ -677,8 +678,8 @@ object HelpersSpec extends Specification {
     }
 
     "show label" in {
-      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, messages) must contain("<label class=\"control-label\">fooLabel</label>")
-      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, messages) must contain("<label class=\"control-label form-control-label " + colLabel + "\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, messages) must contain("<label class=\"form-control-label\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, messages) must contain("<label class=\"col-form-label " + colLabel + "\">fooLabel</label>")
     }
 
     "without label" in {
@@ -688,26 +689,26 @@ object HelpersSpec extends Specification {
 
     "allow rendering errors" in {
       val body = multifield(fooFormWithError)(vfc, messages)
-      body must contain("has-error")
-      body must contain("<span class=\"help-block\">test-error</span>")
+      body must contain("has-danger")
+      body must contain("<div class=\"form-control-feedback\">test-error</div>")
     }
 
     "allow showing constraints" in {
-      fooMultifield('_showConstraints -> true) must contain("<span class=\"help-block\">" + messages("constraint.required") + "</span>")
+      fooMultifield('_showConstraints -> true) must contain("<small class=\"form-text text-muted\">" + messages("constraint.required") + "</small>")
     }
 
     "allow showing help info" in {
-      fooMultifield('_help -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifield('_success -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifieldWithFielsArgs('_success -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifield('_warning -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifieldWithFielsArgs('_warning -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifield('_error -> "test-help") must contain("""<span class="help-block">test-help</span>""")
-      fooMultifieldWithFielsArgs('_error -> "test-help") must contain("""<span class="help-block">test-help</span>""")
+      fooMultifield('_help -> "test-help") must contain("""<small class="form-text text-muted">test-help</small>""")
+      fooMultifield('_success -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs('_success -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
+      fooMultifield('_warning -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs('_warning -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
+      fooMultifield('_error -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs('_error -> "test-help") must contain("""<div class="form-control-feedback">test-help</div>""")
     }
 
     "render validation states" in {
-      def withStatus(status: String) = contain(s"""<fieldset class="form-group has-$status"""")
+      def withStatus(status: String) = contain(s"""<div class="form-group has-$status"""")
       def withFeedbackIcon(status: String) = contain(s""" class="form-control-$status form-control"""")
       def testStatus(status: String, withIcon: Boolean, withFieldsArgs: Boolean, args: (Symbol, Any)*) = {
         val test = if (withFieldsArgs)
@@ -730,10 +731,10 @@ object HelpersSpec extends Specification {
       testStatus("warning", withIcon = false, withFieldsArgs = true, '_warning -> true)
       testStatus("warning", withIcon = false, withFieldsArgs = false, '_warning -> "test-help")
       testStatus("warning", withIcon = false, withFieldsArgs = true, '_warning -> "test-help")
-      testStatus("error", withIcon = false, withFieldsArgs = false, '_error -> true)
-      testStatus("error", withIcon = false, withFieldsArgs = true, '_error -> true)
-      testStatus("error", withIcon = false, withFieldsArgs = false, '_error -> "test-help")
-      testStatus("error", withIcon = false, withFieldsArgs = true, '_error -> "test-help")
+      testStatus("danger", withIcon = false, withFieldsArgs = false, '_error -> true)
+      testStatus("danger", withIcon = false, withFieldsArgs = true, '_error -> true)
+      testStatus("danger", withIcon = false, withFieldsArgs = false, '_error -> "test-help")
+      testStatus("danger", withIcon = false, withFieldsArgs = true, '_error -> "test-help")
 
       "with feedback icons" in {
         testStatus("success", withIcon = true, withFieldsArgs = false, '_showIconValid -> true)
@@ -744,10 +745,10 @@ object HelpersSpec extends Specification {
         testStatus("warning", withIcon = true, withFieldsArgs = true, '_showIconWarning -> true)
         testStatus("warning", withIcon = true, withFieldsArgs = false, '_warning -> "test-help", '_showIconWarning -> true)
         testStatus("warning", withIcon = true, withFieldsArgs = true, '_warning -> "test-help", '_showIconWarning -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = false, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = true, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = false, '_error -> "test-help", '_showIconOnError -> true)
-        testStatus("error", withIcon = true, withFieldsArgs = true, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = false, '_error -> true, '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = true, '_error -> true, '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = false, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("danger", withIcon = true, withFieldsArgs = true, '_error -> "test-help", '_showIconOnError -> true)
       }
     }
 

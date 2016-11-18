@@ -32,6 +32,22 @@ package object b3 {
    */
   case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
 
+    /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
+    val infos: Seq[(String, String)] = {
+      val feedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, messages).zipWithIndex.map {
+        case (info, i) => (id + "_info_" + i, info)
+      }
+      if (feedbackInfosButErrors.size > 0)
+        feedbackInfosButErrors
+      else
+        BSFieldInfo.helpInfos(Some(field), argsMap, messages).zipWithIndex.map {
+          case (info, i) => (id + "_info_" + i, info)
+        }
+    }
+
+    /* List with the errors and infos */
+    def errorsAndInfos = errors ++ infos
+
     /* The optional validation state ("success", "warning" or "error") */
     override lazy val status: Option[String] = B3FieldInfo.status(hasErrors, argsMap)
 
@@ -92,6 +108,27 @@ package object b3 {
    * - args: list of available arguments for the helper and the form-group
    */
   case class B3MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
+
+    /* List with every "info" */
+    val infos: Seq[String] = {
+      val globalFeedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, messages)
+      if (globalFeedbackInfosButErrors.size > 0)
+        globalFeedbackInfosButErrors
+      else {
+        val globalHelpInfos = BSFieldInfo.helpInfos(None, argsMap, messages)
+        if (globalHelpInfos.size > 0)
+          globalHelpInfos
+        else {
+          fields.flatMap { field =>
+            BSFieldInfo.helpInfos(Some(field), argsMap, messages)
+          }
+        }
+      }
+    }
+
+    /* List with the errors and infos */
+    def errorsAndInfos: Seq[String] = errors ++ infos
+
     /* The optional validation state ("success", "warning" or "error") */
     override lazy val status: Option[String] = B3FieldInfo.status(hasErrors, argsMap)
 
