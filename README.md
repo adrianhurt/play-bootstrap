@@ -9,5 +9,5 @@ The documentation and examples are [here](https://adrianhurt.github.io/play-boot
 
 Also check my other templates projects:
 
-* [Play API REST Template [Play 2.4 - Scala]](https://github.com/adrianhurt/play-api-rest-seed)
-* [Play Multidomain Seed [Play 2.4 - Scala]](https://github.com/adrianhurt/play-multidomain-seed)
+* [Play API REST Template [Play 2.5 - Scala]](https://github.com/adrianhurt/play-api-rest-seed)
+* [Play Multidomain Seed [Play 2.5 - Scala]](https://github.com/adrianhurt/play-multidomain-seed)
