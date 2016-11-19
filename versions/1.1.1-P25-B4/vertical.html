@@ -221,8 +221,9 @@ tab: vertical
         </div>
         <div class="form-group   has-danger" id="foo_field">
           <label class="form-control-label" for="foo">Error</label>
-          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_error_0" aria-invalid="true" class="form-control" placeholder="Error text...">
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_error_0 foo_info_0" aria-invalid="true" class="form-control" placeholder="Error text...">
           <div id="foo_error_0" class="form-control-feedback">An error occurred!</div>
+          <small id="foo_info_0" class="form-text text-muted">Another help text</small>
         </div>
       </div>
       <div class="col-md-6">
@@ -239,9 +240,10 @@ tab: vertical
         </div>
         <div class="form-group   has-danger" id="foo_field">
           <label class="form-control-label" for="foo">Error</label>
-          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status foo_error_0" aria-invalid="true" class="form-control-danger form-control" placeholder="Error text...">
+          <input type="text" id="foo" name="foo" value="" aria-describedby="foo_status foo_error_0 foo_info_0" aria-invalid="true" class="form-control-danger form-control" placeholder="Error text...">
           <span id="foo_status" class="sr-only">(error)</span>
           <div id="foo_error_0" class="form-control-feedback">An error occurred!</div>
+          <small id="foo_info_0" class="form-text text-muted">Another help text</small>
         </div>
       </div>
     </div>
@@ -253,7 +255,7 @@ tab: vertical
 // With feedback icons
 @b4.text( fooForm("foo"), '_label -&gt; "Success", '_showIconValid -&gt; true, 'placeholder -&gt; "Success text..." )
 @b4.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
-@b4.text( fooForm("foo"), '_label -&gt; "Error", '_showIconOnError -&gt; true, '_error -&gt; "An error occurred!", '_help -&gt; "Another help text", 'placeholder -&gt; "Error text..." )</code></pre>
+@b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_showIconOnError -&gt; true, '_help -&gt; "Another help text", 'placeholder -&gt; "Error text..." )</code></pre>
   </div>
 
   
