@@ -1,3 +1,16 @@
+- id: 1-1-1-P2X-BX-SNAPSHOT
+  library: "1.1.1"
+  title: 1.1.1-P2X-BX
+  released: In development...
+  bullets:
+    - type: change
+      text: |
+        Update to Bootstrap 4 Alpha 5.
+  migration: |
+    Please, check the documentation for Bootstrap 4 Alpha.
+    
+
+
 - id: 1-1-P2X-BX
   library: "1.1"
   title: 1.1-P2X-BX

@@ -4,10 +4,10 @@
   You only need to add it as a dependency in your <code>build.sbt</code> file.
 </p>
 <div class="highlight">
-<pre><code>{% if version.snapshot %}// Resolver is needed only for SNAPSHOT versions
+<pre><code>// Resolver is needed only for SNAPSHOT versions
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
-{% endif %}libraryDependencies ++= Seq(
+libraryDependencies ++= Seq(
   "com.adrianhurt" %% "{{ version.artifact }}" % "{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}"
 )</code></pre>
 </div>
