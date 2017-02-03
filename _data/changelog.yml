@@ -5,7 +5,13 @@
   bullets:
     - type: change
       text: |
+        Update to Play 2.5.12 (and 2.4.10).
+    - type: change
+      text: |
         Update to Bootstrap 4 Alpha 5.
+    - type: change
+      text: |
+        Update to jQuery 3.1.1.
   migration: |
     Please, check the documentation for Bootstrap 4 Alpha.
     
