@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   filters,
   "com.adrianhurt" %% "play-bootstrap-core" % "1.1.1-P24-SNAPSHOT",
   "org.webjars" % "bootstrap" % "4.0.0-alpha.5" exclude("org.webjars", "jquery"),
-  "org.webjars" % "jquery" % "2.2.4",
+  "org.webjars" % "jquery" % "3.1.1-1",
   specs2 % Test
 )
 
