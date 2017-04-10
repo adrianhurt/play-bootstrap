@@ -1,0 +1,8 @@
+@(field: Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, messages: Messages)
+@b3.inputWrapped("text", field, args:_*) { input =>
+	<div class="input-number input-group">
+		<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+		@input
+		<span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+	</div>
+}
