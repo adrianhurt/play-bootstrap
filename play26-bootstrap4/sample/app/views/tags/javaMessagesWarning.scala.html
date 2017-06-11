@@ -1,0 +1,17 @@
+@(id: String = "")
+@if(utils.BSVersion.play_code == "2.4") {
+	<div class="card">
+		<div class="card-header card-danger" id="java_messages_warning_@id">
+			<a class="collapsed" data-toggle="collapse" href="#collapse_java_messages_warning_@id" aria-expanded="false" aria-controls="collapse_java_messages_warning_@id">
+				Note for Java version from Play 2.4
+				<i class="fa fa-caret"></i>
+			</a>
+		</div>
+		<div id="collapse_java_messages_warning_@id" class="card-collapse collapse">
+			<div class="card-block">
+				From Play 2.4, the implicit <code>Messages</code> argument defined in your custom template collides with the implicit one taken from <code>PlayMagicForJava</code> object, and it raises
+				a compilation error. So you only need to remove this implicit argument from your custom template.
+			</div>
+		</div>
+	</div>
+}

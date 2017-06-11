@@ -1,0 +1,27 @@
+@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(implicit messages: Messages)
+@alertStatus = @{
+	if (fieldInfo.hasErrors)
+		"alert-danger"
+	else if (bs.ArgsMap.isTrue(fieldInfo.argsMap, '_success))
+		"alert-success"
+	else
+		"alert-info"
+}
+<div class="my-form-group form-group @fieldInfo.argsMap.get('_class) @fieldInfo.statusWithFeedback" id="@fieldInfo.idFormField">
+	<div class="field-container">
+		@fieldInfo.labelOpt.map { label =>
+			<label class="control-label @if(fieldInfo.hideLabel){sr-only}" @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}>@bs.Args.msg(label)(messages)</label>
+		}
+		@inputHtml
+	</div>
+	<div class="alert @alertStatus" role="alert">
+		<ul>
+			@fieldInfo.errors.map { case (id, error) =>
+				<li><span id="@id" class="help-error"><span class="glyphicon glyphicon-remove"> @bs.Args.msg(error)(messages)</span></li>
+			}
+			@fieldInfo.infos.map { case (id, info) =>
+				<li><span id="@id" class="help-info"><span class="glyphicon glyphicon-warning-sign"> @bs.Args.msg(info)(messages)</span></li>
+			}
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,194 @@
+@(fooForm: Form[String])(implicit messages: Messages)
+@import utils.BSVersion
+@import tags._
+@import helper.Implicits._
+@import b3.vertical.fieldConstructor
+
+
+@main("Extend it", tab = "extendit") {
+	
+	@b3.form(routes.Application.extendIt) {
+		
+		<h1 id="extend-it" class="page-header">Implement your own helpers or field constructors</h1>
+		<p class="lead">
+			This library tries to be an out-of-the-box plugin. You simply need to install the library and you can
+			start to write your forms. However, although it is a very versatile library, you may have different
+			necessities. Thus, let's see some examples to know how you could extend it.
+		</p>
+		
+		<h2 id="create-helper">Create your own helper</h2>
+		<p>
+			To create a helper is very easy. You only have to look the helpers within the @repository.home("Github repository").
+			Let's suppose you want to add an input group for every email input. And you would like
+			to create your own email helper like this one: 
+		</p>
+		@bsExample {
+			@b3.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+		}
+		<p>
+			So let's add a file within your <code>views</code> folder. For example <code>app/views/b3/my/email.scala.html</code>,
+			and write the following code:
+		</p>		
+		@code {
+			@@(field: Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, @BSVersion.msgsArg)
+			@@b3.inputFormGroup(field, withFeedback = false, withLabelFor = true, bs.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+				<div class="input-group">
+					<span class="input-group-addon">@@@@</span>
+					<input type="email" id="@@fieldInfo.id" name="@@fieldInfo.name" value="@@fieldInfo.value" @@toHtmlArgs(fieldInfo.innerArgsMap)>
+				</div>
+			}
+		}
+		<p>
+			The code is a reduced version of <code>b3.inputWrapped</code> adapted to this purpose (you can see it
+      @repository.file("app/views/b3/inputWrapped.scala.html", "here")).
+			The library is very easy and it's documented, so you can check it to understand how it works. The main concept
+			is that <code>b3.inputFormGroup</code> will generate the whole <code>form-group</code>. For that it needs
+			the field, some arguments and a function that returns the input HTML with the field information. All that
+			field information is stored in a <code>B3FieldInfo</code>.
+		</p>
+		<p>
+			And that's all! All you need now is to call it from your templates:
+		</p>
+		@code {
+			@@b3.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+		}
+		
+		@javaMessagesWarning()
+		
+		<h3 id="input-wrapped">The use of <code>b3.inputWrapped</code></h3>
+		<p>
+			The <code>b3.inputWrapped</code> is a helper that lets you to customize easily a <strong>textual input</strong>.
+			But it is really helpful for creating your own helper. It is easier to implement than the previous example and it
+			also lets you to add the optional feedback icons in case you need them. Now let's suppose you want create your own
+			number helper like this one (note this example requires some extra JavaScript for the functionality and CSS):
+		</p>
+		@bsExampleWithCode {
+			@b3.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+		}{
+			@@b3.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+		}
+		<p>
+			Then we could create the file <code>app/views/b3/my/number.scala.html</code> with the following code:
+		</p>
+		@code {
+			@@(field: Field, args: (Symbol,Any)*)(implicit handler: b3.B3FieldConstructor, @BSVersion.msgsArg)
+			@@b3.inputWrapped("text", field, args:_*) { input =>
+				<div class="input-number input-group">
+					<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+					@@input
+					<span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+				</div>
+			}
+		}
+		
+		<h3 id="multifield">Create your multifield helper</h3>
+		<p>
+			The purpose of <code>b3.multifield</code> helper is to be a tool for creating multifield helpers. The
+			method is exactly the same as the previous one for <code>b3.inputWrapped</code>. You can see more
+			information and examples at the <a href="@routes.Application.multifield">Multifield</a> section.
+		</p>
+	}	
+	
+	
+	<h2 id="create-field-constructor">Create your own field constructor</h2>
+	<p>
+		Creating new helpers is useful for adding or customizing the input structure of a field, but you may need your
+		own field constructor, with another <code>form-group</code> structure. Let's see another example. Imagine that
+		you want a vertical form but with any help information (errors, constraints and help @BSVersion.msgsName) at a side panel.
+		Something like this:
+	</p>
+	@bsExampleWithCode {
+		@b3.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
+			@b3.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@mail.com" )
+		}
+	}{
+		<div class="my-form-group form-group has-error" id="foo_field">
+			<div class="field-container">
+				<label class="control-label" for="foo">Email</label>
+				<div class="input-group">
+					<span class="input-group-addon">@@</span>
+					<input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@@mail.com">
+				</div>
+			</div>
+			<div class="alert alert-danger" role="alert">
+				<ul>
+					<li><span id="foo_error_0" class="help-error"><span class="glyphicon glyphicon-remove"> And error occurred!</span></span></li>
+					<li><span id="foo_info_0" class="help-info"><span class="glyphicon glyphicon-warning-sign"> Maximum length: 10</span></span></li>
+				</ul>
+			</div>
+		</div>
+	}
+	<p>
+		We are going to make it easy. Let's going to copy the files for the vertical field constructor and modify them. You can
+		see the files @repository.folder("app/views/b3/vertical", "here").
+		So create a folder <code>views/b3/my/vertical</code> and copy there the files
+    @repository.file("app/views/b3/vertical/bsFieldConstructor.scala.html"),
+    @repository.file("app/views/b3/vertical/bsFormGroup.scala.html") and
+    @repository.file("app/views/b3/vertical/package.scala").
+	</p>
+	<p>
+		Modify <code>bsFieldConstructor.scala.html</code> and <code>bsFormGroup.scala.html</code> to get the functionality you want. For
+		this example, the first one would be re-written to something like this:
+	</p>
+	@code {
+		@@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)
+		@@alertStatus = @@{
+			if (fieldInfo.hasErrors)
+				"alert-danger"
+			else if (bs.ArgsMap.isTrue(fieldInfo.argsMap, '_success))
+				"alert-success"
+			else
+				"alert-info"
+		}
+		<div class="my-form-group form-group @@fieldInfo.argsMap.get('_class) @@fieldInfo.statusWithFeedback" id="@@fieldInfo.idFormGroup">
+			<div class="field-container">
+				@@fieldInfo.labelOpt.map { label =>
+					<label class="control-label @@if(fieldInfo.hideLabel){sr-only}" @@if(fieldInfo.withLabelFor){for="@@fieldInfo.id"}>@@label</label>
+				}
+				@@inputHtml
+			</div>
+			<div class="alert @@alertStatus" role="alert">
+				<ul>
+					@@fieldInfo.errors.map { case (id, error) =>
+						<li><span id="@@id" class="help-error"><span class="glyphicon glyphicon-remove"> @@error</span></li>
+					}
+					@@fieldInfo.infos.map { case (id, info) =>
+						<li><span id="@@id" class="help-info"><span class="glyphicon glyphicon-warning-sign"> @@info</span></li>
+					}
+				</ul>
+			</div>
+		</div>
+	}
+	<p>
+		Do the same with <code>bsFormGroup.scala.html</code>. You can check them at the Github repository here:
+    @repository.file("sample/app/views/b3/my/vertical/bsFieldConstructor.scala.html") and
+    @repository.file("sample/app/views/b3/my/vertical/bsFormGroup.scala.html").
+	</p>
+	<p>
+		Finally, the modifications for this examples to <code>package.scala</code> are minimal:
+		<ul>
+			<li>Modify the package from <code>package views.html.b3</code> to <code>package views.html.b3.my</code></li>
+			<li>Add the import <code>views.html.b3._</code></li>
+			<li>Change the value of <code>formClass</code> to <code>"form-my-vertical"</code></li>
+		</ul>
+		You can check the code @repository.file("sample/app/views/b3/my/vertical/package.scala", "here").
+	</p>
+			
+	<p>
+		And that's all, you now can use your own field constructor as any other with:
+	</p>
+	@code {
+		@@import b3.my.vertical.fieldConstructor		// Declare it as default
+		
+		@@b3.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+	}
+	<p>
+		Or even using it for specific forms:
+	</p>
+	@code {
+		@@b3.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
+			@@b3.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+		}
+	}
+	
+}
