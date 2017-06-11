@@ -194,6 +194,9 @@ package object b3 {
   def url(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("url", field, args: _*)(fc, messages)
   def week(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("week", field, args: _*)(fc, messages)
 
+  def hidden(name: Any, value: Any, args: (Symbol, Any)*) = hiddenInput(name, value, args: _*)
+  def hidden(field: Field, args: (Symbol, Any)*) = hiddenInput(name = field.name, value = field.value.orElse(bs.Args.get(args, 'value)), (bs.Args.inner(bs.Args.remove(args, 'value))): _*)
+
   def radio(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, B3FieldInfo] => Html)(implicit fc: B3FieldConstructor, messages: Messages) = radioWithContent(field, args: _*)(content)(fc, messages)
   def radio(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = radioWithOptions(field, options, args: _*)(fc, messages)
 

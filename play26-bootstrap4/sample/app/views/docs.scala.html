@@ -879,6 +879,22 @@
 			@code {
 				<input type="hidden" name="fooName" value="fooValue" fooAttr="fooAttrValue">
 			}
+			<h5 id="helper-hidden-field"><code>b4.hidden</code> <span class="def">@@(field: Field, args: (Symbol, Any)*)</span></h5>
+			<p>
+				You can also render a hidden input directly with a <code>Field</code> as you could do with a <code>b4.text</code> helper, for example.
+        It lets you be able to simply change a <code>b4.text</code> for a <code>b4.hidden</code> to hide it.
+			</p>
+      <p>
+        It will automatically take the name of the <code>Field</code> and it's value if present. You can set a default value using the argument
+        <code>'value</code>. Finally, take into account that every "underscored" argument (with "_" as preffix) will be removed.
+      </p>
+			@code {
+				@@b4.hidden( fooForm("name"), '_label -> "Name", 'value -> "defaultValue", 'placeholder -> "John Doe" )
+			}
+			<p>Renders to:</p>
+			@code {
+				<input type="hidden" name="name" value="fieldValue_or_defaultValue" placeholder="John Doe">
+			}
 			
 			<h4 id="helper-hiddens"><code>b4.hiddens</code> <span class="def">@@(namesAndValues: (Any, Any)*)</span></h4>
 			<p>
