@@ -48,7 +48,7 @@
   play_full: "2.5.12"
   bootstrap: "3"
   bootstrap_dependency: "3.3.7"
-  jquery_dependency: "3.3.1"
+  jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: true
   legacy: false
@@ -59,7 +59,7 @@
   play_full: "2.4.10"
   bootstrap: "3"
   bootstrap_dependency: "3.3.7"
-  jquery_dependency: "3.3.1"
+  jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: true
   legacy: false
@@ -70,7 +70,7 @@
   play_full: "2.5.12"
   bootstrap: "4"
   bootstrap_dependency: "4.0.0-alpha.5"
-  jquery_dependency: "3.3.1"
+  jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: true
   legacy: false
@@ -81,7 +81,7 @@
   play_full: "2.4.10"
   bootstrap: "4"
   bootstrap_dependency: "4.0.0-alpha.5"
-  jquery_dependency: "3.3.1"
+  jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: true
   legacy: false
@@ -213,7 +213,7 @@
   play: "2.3"
   play_full: "2.3.6"
   bootstrap: "3"
-  bootstrap_dependency: "3.3.1"
+  bootstrap_dependency: "3.1.1"
   jquery_dependency: "2.1.1"
   artifact: "play-bootstrap3"
   legacy: true
@@ -223,7 +223,7 @@
   play: "2.3"
   play_full: "2.3.6"
   bootstrap: "3"
-  bootstrap_dependency: "3.3.1"
+  bootstrap_dependency: "3.1.1"
   jquery_dependency: "2.1.1"
   artifact: "play-bootstrap3"
   legacy: true
