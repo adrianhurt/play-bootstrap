@@ -19,7 +19,7 @@ package object horizontal {
 
   import play.twirl.api.Html
   import play.api.mvc.{ Call, RequestHeader }
-  import play.api.i18n.Messages
+  import play.api.i18n.MessagesProvider
   import views.html.helper._
 
   /**
@@ -32,9 +32,9 @@ package object horizontal {
     /* Define the class of the corresponding form */
     val formClass = "form-horizontal"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(messages)
+    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(msgsProv)
     /* Renders the corresponding template of the form group */
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap, colLabel, colOffset, colInput)(messages)
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit msgsProv: MessagesProvider) = bsFormGroup(contentHtml, argsMap, colLabel, colOffset, colInput)(msgsProv)
   }
 
   /**

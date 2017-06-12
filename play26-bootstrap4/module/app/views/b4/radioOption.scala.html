@@ -1,8 +1,8 @@
-@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, b4.B4FieldInfo), messages: Messages)
+@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, b4.B4FieldInfo), msgsProv: MessagesProvider)
 @displayLabelWithInput(labelClass: String, fieldInfo: b4.B4FieldInfo) = {
   <label class="@labelClass" for="@(fieldInfo.id)_@inputValue">
 		<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, "form-check-input"))>
-		@bs.Args.msg(label)(messages)
+		@bs.Args.msg(label)(msgsProv)
 	</label>
 }
 @defining(extraInfo) { case (inline, disabled, fieldInfo) =>
@@ -10,7 +10,7 @@
     <label class="custom-control custom-radio" for="@(fieldInfo.id)_@inputValue">
   		<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, "custom-control-input"))>
       <span class="custom-control-indicator"></span>
-      <span class="custom-control-description">@bs.Args.msg(label)(messages)</span>
+      <span class="custom-control-description">@bs.Args.msg(label)(msgsProv)</span>
   	</label>
   } else {
     @if(inline) {

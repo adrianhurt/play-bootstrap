@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, b4.B4FieldInfo] => Html)(implicit fc: b4.B4FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, b4.B4FieldInfo] => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @readonlyWrapper(name: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(contentWrapped: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="radio-group">
@@ -24,5 +24,5 @@
         @content(inline, disabled, fieldInfo)
       }
 		}
-	}(fc, messages)
+	}(fc, msgsProv)
 }

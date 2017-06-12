@@ -1,4 +1,4 @@
-@(fooForm: Form[String])(implicit messages: Messages)
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
 @import utils.BSVersion
 @import tags._
 @implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }

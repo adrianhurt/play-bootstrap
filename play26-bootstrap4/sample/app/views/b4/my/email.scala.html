@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.B4FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @b4.inputFormGroup(field, withFeedback = false, withLabelFor = true, bs.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
 	<div class="input-group">
 		<span class="input-group-addon">@@</span>

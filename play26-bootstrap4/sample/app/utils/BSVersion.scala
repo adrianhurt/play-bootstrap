@@ -30,7 +30,7 @@ object BSVersion {
   def repositoryFile(file: String) = s"$repository/blob/$repositoryBase/$file"
   def repositoryFolder(folder: String) = s"$repository/tree/$repositoryBase/$folder"
 
-  final val msgsName = "messages"
-  final val msgsClass = "Messages"
+  final val msgsName = "msgsProv"
+  final val msgsClass = "MessagesProvider"
   final val msgsArg = s"$msgsName: $msgsClass"
 }

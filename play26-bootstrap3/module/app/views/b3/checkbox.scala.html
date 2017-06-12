@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
 @defining({
 	val argsMap = args.toMap
   val value = argsMap.get('value).getOrElse("true").toString

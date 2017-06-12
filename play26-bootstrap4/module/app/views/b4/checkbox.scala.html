@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @defining({
 	val argsMap = args.toMap
   val value = argsMap.get('value).getOrElse("true").toString
@@ -15,18 +15,18 @@
   				<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="@value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, "custom-control-input"))>
           <span class="custom-control-indicator"></span>
           @argsMap.get('_text).map { text =>
-            <span class="custom-control-description">@bs.Args.msg(text)(messages)</span>
+            <span class="custom-control-description">@bs.Args.msg(text)(msgsProv)</span>
           }
         </label>
       } else {
   			<label class="form-check-label" for="@fieldInfo.id">
   				<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="@value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, "form-check-input"))>
-  				@argsMap.get('_text).map(bs.Args.msg(_)(messages))
+  				@argsMap.get('_text).map(bs.Args.msg(_)(msgsProv))
   			</label>
       }
 			@if(containsReadonly) {
 				<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse(if (checked) value else "")}"@if(!disabled){ disabled}/>
 			}
 		</div>
-	}(fc, messages)
+	}(fc, msgsProv)
 }

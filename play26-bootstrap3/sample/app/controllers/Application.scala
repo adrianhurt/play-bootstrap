@@ -23,7 +23,7 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 
-class Application @Inject() (cc: ControllerComponents) extends AbstractController(cc) with I18nSupport {
+class Application @Inject() (mcc: MessagesControllerComponents) extends MessagesAbstractController(mcc) {
 
   val fooForm = Form(single("foo" -> text(maxLength = 20)))
 

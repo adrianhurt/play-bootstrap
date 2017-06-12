@@ -17,7 +17,7 @@ package views.html.bs
 
 object Args {
 
-  import play.api.i18n.Messages
+  import play.api.i18n.MessagesProvider
 
   /**
    * Adds some default arguments to the parameter 'args'
@@ -66,16 +66,16 @@ object Args {
   /**
    * Localizes an argument
    */
-  def msg(arg: (Symbol, Any))(implicit msgs: Messages): (Symbol, Any) = arg match {
-    case (sym, str: String) => (sym, msgs(str))
+  def msg(arg: (Symbol, Any))(implicit msgsProv: MessagesProvider): (Symbol, Any) = arg match {
+    case (sym, str: String) => (sym, msgsProv.messages(str))
     case _ => arg
   }
 
   /**
    * Localizes a value
    */
-  def msg(a: Any)(implicit msgs: Messages): Any = a match {
-    case str: String => msgs(str)
+  def msg(a: Any)(implicit msgsProv: MessagesProvider): Any = a match {
+    case str: String => msgsProv.messages(str)
     case _ => a
   }
 }

@@ -19,7 +19,7 @@ package object b3 {
 
   import play.api.data.{ Field, FormError }
   import play.twirl.api.Html
-  import play.api.i18n.{ Lang, Messages }
+  import play.api.i18n.MessagesProvider
   import bs._
   import bs.ArgsMap.isTrue
   import play.api.mvc.Call
@@ -30,17 +30,17 @@ package object b3 {
    * - withLabelFor: indicates if the label's "for" attribute should be shown
    * - args: list of available arguments for the helper and field constructor
    */
-  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
+  case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSFieldInfo(field, args, msgsProv) {
 
     /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
     val infos: Seq[(String, String)] = {
-      val feedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, messages).zipWithIndex.map {
+      val feedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, msgsProv).zipWithIndex.map {
         case (info, i) => (id + "_info_" + i, info)
       }
       if (feedbackInfosButErrors.size > 0)
         feedbackInfosButErrors
       else
-        BSFieldInfo.helpInfos(Some(field), argsMap, messages).zipWithIndex.map {
+        BSFieldInfo.helpInfos(Some(field), argsMap, msgsProv).zipWithIndex.map {
           case (info, i) => (id + "_info_" + i, info)
         }
     }
@@ -107,20 +107,20 @@ package object b3 {
    * - fields: list of Fields
    * - args: list of available arguments for the helper and the form-group
    */
-  case class B3MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val messages: Messages) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, messages) {
+  case class B3MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, msgsProv) {
 
     /* List with every "info" */
     val infos: Seq[String] = {
-      val globalFeedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, messages)
+      val globalFeedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, msgsProv)
       if (globalFeedbackInfosButErrors.size > 0)
         globalFeedbackInfosButErrors
       else {
-        val globalHelpInfos = BSFieldInfo.helpInfos(None, argsMap, messages)
+        val globalHelpInfos = BSFieldInfo.helpInfos(None, argsMap, msgsProv)
         if (globalHelpInfos.size > 0)
           globalHelpInfos
         else {
           fields.flatMap { field =>
-            BSFieldInfo.helpInfos(Some(field), argsMap, messages)
+            BSFieldInfo.helpInfos(Some(field), argsMap, msgsProv)
           }
         }
       }
@@ -157,59 +157,59 @@ package object b3 {
    * - args: list of available arguments for the helper and field constructor
    * - inputDef: function that returns a Html from a B3FieldInfo that contains all the information about the field
    */
-  def inputFormGroup(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B3FieldInfo => Html)(implicit fc: B3FieldConstructor, messages: Messages) =
-    inputFormField(B3FieldInfo(field, withFeedback, withLabelFor, Args.withoutNones(args), messages))(inputDef)(fc)
+  def inputFormGroup(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B3FieldInfo => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) =
+    inputFormField(B3FieldInfo(field, withFeedback, withLabelFor, Args.withoutNones(args), msgsProv))(inputDef)(fc)
 
   /**
    * Renders a form-group using the B3FieldConstructor.
    * - args: list of available arguments for the helper and the form-group
    * - contentDef: function that returns a Html from a map of arguments
    */
-  def freeFormGroup(args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: B3FieldConstructor, messages: Messages) =
-    freeFormField(args)(contentDef)(fc, messages)
+  def freeFormGroup(args: Seq[(Symbol, Any)])(contentDef: Map[Symbol, Any] => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) =
+    freeFormField(args)(contentDef)(fc, msgsProv)
 
-  def multifieldFormGroup(fields: Seq[Field], globalArgs: Seq[(Symbol, Any)], fieldsArgs: Seq[(Symbol, Any)])(contentDef: B3MultifieldInfo => Html)(implicit fc: B3FieldConstructor, messages: Messages) =
-    multifieldFormField(B3MultifieldInfo(fields, globalArgs, fieldsArgs, messages))(contentDef)(fc)
+  def multifieldFormGroup(fields: Seq[Field], globalArgs: Seq[(Symbol, Any)], fieldsArgs: Seq[(Symbol, Any)])(contentDef: B3MultifieldInfo => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) =
+    multifieldFormField(B3MultifieldInfo(fields, globalArgs, fieldsArgs, msgsProv))(contentDef)(fc)
 
   /**
    * **********************************************************************************************************************************
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def inputType(inputType: String, field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputWrapped(inputType, field, args: _*)(html => html)(fc, messages)
+  def inputType(inputType: String, field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputWrapped(inputType, field, args: _*)(html => html)(fc, msgsProv)
 
-  def text(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("text", field, args: _*)(fc, messages)
-  def password(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("password", field.copy(value = Some("")), args: _*)(fc, messages)
-  def color(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("color", field, args: _*)(fc, messages)
-  def date(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("date", field, args: _*)(fc, messages)
-  def datetime(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("datetime", field, args: _*)(fc, messages)
-  def datetimeLocal(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("datetime-local", field, args: _*)(fc, messages)
-  def email(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("email", field, args: _*)(fc, messages)
-  def month(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("month", field, args: _*)(fc, messages)
-  def number(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("number", field, args: _*)(fc, messages)
-  def range(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("range", field, args: _*)(fc, messages)
-  def search(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("search", field, args: _*)(fc, messages)
-  def tel(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("tel", field, args: _*)(fc, messages)
-  def time(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("time", field, args: _*)(fc, messages)
-  def url(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("url", field, args: _*)(fc, messages)
-  def week(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = inputType("week", field, args: _*)(fc, messages)
+  def text(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("text", field, args: _*)(fc, msgsProv)
+  def password(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("password", field.copy(value = Some("")), args: _*)(fc, msgsProv)
+  def color(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("color", field, args: _*)(fc, msgsProv)
+  def date(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("date", field, args: _*)(fc, msgsProv)
+  def datetime(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("datetime", field, args: _*)(fc, msgsProv)
+  def datetimeLocal(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("datetime-local", field, args: _*)(fc, msgsProv)
+  def email(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("email", field, args: _*)(fc, msgsProv)
+  def month(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("month", field, args: _*)(fc, msgsProv)
+  def number(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("number", field, args: _*)(fc, msgsProv)
+  def range(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("range", field, args: _*)(fc, msgsProv)
+  def search(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("search", field, args: _*)(fc, msgsProv)
+  def tel(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("tel", field, args: _*)(fc, msgsProv)
+  def time(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("time", field, args: _*)(fc, msgsProv)
+  def url(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("url", field, args: _*)(fc, msgsProv)
+  def week(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("week", field, args: _*)(fc, msgsProv)
 
   def hidden(name: Any, value: Any, args: (Symbol, Any)*) = hiddenInput(name, value, args: _*)
   def hidden(field: Field, args: (Symbol, Any)*) = hiddenInput(name = field.name, value = field.value.orElse(bs.Args.get(args, 'value)), (bs.Args.inner(bs.Args.remove(args, 'value))): _*)
 
-  def radio(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, B3FieldInfo] => Html)(implicit fc: B3FieldConstructor, messages: Messages) = radioWithContent(field, args: _*)(content)(fc, messages)
-  def radio(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = radioWithOptions(field, options, args: _*)(fc, messages)
+  def radio(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, B3FieldInfo] => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = radioWithContent(field, args: _*)(content)(fc, msgsProv)
+  def radio(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = radioWithOptions(field, options, args: _*)(fc, msgsProv)
 
-  def select(field: Field, args: (Symbol, Any)*)(content: Set[String] => Html)(implicit fc: B3FieldConstructor, messages: Messages) = selectWithContent(field, args: _*)(content)(fc, messages)
-  def select(field: Field, options: Seq[(String, String)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, messages: Messages) = selectWithOptions(field, options, args: _*)(fc, messages)
+  def select(field: Field, args: (Symbol, Any)*)(content: Set[String] => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = selectWithContent(field, args: _*)(content)(fc, msgsProv)
+  def select(field: Field, options: Seq[(String, String)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = selectWithOptions(field, options, args: _*)(fc, msgsProv)
 
-  def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = buttonType("submit", args: _*)(text)(fc, messages)
-  def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = buttonType("reset", args: _*)(text)(fc, messages)
-  def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = buttonType("button", args: _*)(text)(fc, messages)
+  def submit(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = buttonType("submit", args: _*)(text)(fc, msgsProv)
+  def reset(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = buttonType("reset", args: _*)(text)(fc, msgsProv)
+  def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = buttonType("button", args: _*)(text)(fc, msgsProv)
 
-  def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = staticBasic(args: _*)(text)(fc, messages)
-  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, messages)
-  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, messages)
+  def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(args: _*)(text)(fc, msgsProv)
+  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, msgsProv)
+  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, msgsProv)
 
-  def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B3FieldConstructor, messages: Messages) = freeFormGroup(args)(_ => content)(fc, messages)
+  def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = freeFormGroup(args)(_ => content)(fc, msgsProv)
 }

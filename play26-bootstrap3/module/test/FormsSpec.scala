@@ -22,7 +22,7 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.{ Configuration, Environment }
 import play.api.http.HttpConfiguration
-import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider }
+import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider, MessagesProvider }
 import play.twirl.api.Html
 import play.api.mvc.Call
 
@@ -34,7 +34,7 @@ object FormsSpec extends Specification {
 
   val httpConfiguration = HttpConfiguration.fromConfiguration(conf, environment)
   val messagesApi = new DefaultMessagesApiProvider(environment, conf, langs, httpConfiguration).get
-  implicit val messages = messagesApi.preferred(Seq.empty)
+  implicit val msgsProv: MessagesProvider = messagesApi.preferred(Seq.empty)
 
   val vfc = b3.vertical.fieldConstructor
   val (colLabel, colInput) = ("col-md-2", "col-md-10")

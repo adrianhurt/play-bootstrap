@@ -23,7 +23,7 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.{ Configuration, Environment }
 import play.api.http.HttpConfiguration
-import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider }
+import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider, MessagesProvider }
 import play.twirl.api.Html
 import play.api.mvc.Call
 
@@ -35,7 +35,7 @@ object FieldConstructorsSpec extends Specification {
 
   val httpConfiguration = HttpConfiguration.fromConfiguration(conf, environment)
   val messagesApi = new DefaultMessagesApiProvider(environment, conf, langs, httpConfiguration).get
-  implicit val messages = messagesApi.preferred(Seq.empty)
+  implicit val msgsProv: MessagesProvider = messagesApi.preferred(Seq.empty)
 
   def testFielConstructor(implicit fc: B3FieldConstructor) = {
 
@@ -100,8 +100,8 @@ object FieldConstructorsSpec extends Specification {
       val test = simpleInputWithArgs('_showConstraints -> true)
       test must contain("<span id=\"foo_info_0\" class=\"help-block\">")
       test must contain("<span id=\"foo_info_1\" class=\"help-block\">")
-      test must contain("class=\"help-block\">" + messages("constraint.required") + "</span>")
-      test must contain("class=\"help-block\">" + messages("constraint.maxLength", 8) + "</span>")
+      test must contain("class=\"help-block\">" + msgsProv.messages("constraint.required") + "</span>")
+      test must contain("class=\"help-block\">" + msgsProv.messages("constraint.maxLength", 8) + "</span>")
     }
 
     "allow showing help info" in {

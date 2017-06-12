@@ -1,4 +1,4 @@
-@(contentHtml: Html, argsMap: Map[Symbol, Any])(wrap: Html => Html)(implicit messages: Messages)
+@(contentHtml: Html, argsMap: Map[Symbol, Any])(wrap: Html => Html)(implicit messages: MessagesProvider)
 @defining(argsMap.get('_id).map(_.toString).orElse(argsMap.get('id).map(_.toString + "_field"))) { idFormField =>
 	<div class="form-group @argsMap.get('_class)" @idFormField.map{id=>id="@id"}>
 		@wrap {

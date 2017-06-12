@@ -19,7 +19,7 @@ package object vertical {
 
   import play.twirl.api.Html
   import play.api.mvc.{ Call, RequestHeader }
-  import play.api.i18n.Messages
+  import play.api.i18n.MessagesProvider
   import views.html.helper._
 
   /**
@@ -29,9 +29,9 @@ package object vertical {
     /* Define the class of the corresponding form */
     val formClass = "form-vertical"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(messages)
+    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = bsFieldConstructor(fieldInfo, inputHtml)(msgsProv)
     /* Renders the corresponding template of the form group */
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap)(messages)
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit msgsProv: MessagesProvider) = bsFormGroup(contentHtml, argsMap)(msgsProv)
   }
 
   /**

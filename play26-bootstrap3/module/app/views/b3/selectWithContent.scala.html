@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit fc: b3.B3FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
 @readonlyWrapper(selectName: String, value: Option[String], disabled: Boolean, argsMap: Map[Symbol, Any])(contentWrapped: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">

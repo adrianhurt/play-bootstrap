@@ -1,4 +1,4 @@
-@(fooForm: Form[String], validationForm: Form[(String, String, Int, String)])(implicit messages: Messages)
+@(fooForm: Form[String], validationForm: Form[(String, String, Int, String)])(implicit request: MessagesRequestHeader)
 
 @import utils.BSVersion
 @import models._

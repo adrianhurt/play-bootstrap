@@ -1,4 +1,4 @@
-@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: b4.clear.ClearFieldConstructor => Html)(implicit fc: b4.B4FieldConstructor, messages: Messages)
+@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: b4.clear.ClearFieldConstructor => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @multifieldFormGroup(fields, globalArgs, fieldsArgs) { multifieldInfo =>
 	@inputsHtml(b4.clear.fieldConstructorSpecific)
 	@multifieldInfo.feedbackInfos.map { text =>
@@ -7,4 +7,4 @@
 	@multifieldInfo.helpInfos.map { text =>
 		<small class="form-text text-muted">@text</small>
 	}
-}(fc, messages)
+}(fc, msgsProv)

@@ -1,4 +1,4 @@
-@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit fc: b4.B4FieldConstructor, messages: Messages)
+@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @readonlyWrapper(selectName: String, value: Option[String], disabled: Boolean, argsMap: Map[Symbol, Any])(contentWrapped: Html) = {
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
@@ -25,12 +25,12 @@
 				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
 					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
 						@argsMap.get('_default).map { v =>
-							@selectOption("", bs.Args.msg(v)(messages), 'class -> "blank", 'selected -> true, 'disabled -> "disabled")
+							@selectOption("", bs.Args.msg(v)(msgsProv), 'class -> "blank", 'selected -> true, 'disabled -> "disabled")
 						}
 						@content(values)
 					</select>
 				}
 			}
 		}
-	}(fc, messages)
+	}(fc, msgsProv)
 }

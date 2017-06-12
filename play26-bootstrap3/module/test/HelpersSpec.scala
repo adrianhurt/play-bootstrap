@@ -23,7 +23,7 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.{ Configuration, Environment }
 import play.api.http.HttpConfiguration
-import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider, Messages }
+import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider, MessagesProvider }
 import play.twirl.api.{ Html, HtmlFormat }
 import play.api.mvc.Call
 
@@ -35,7 +35,7 @@ object HelpersSpec extends Specification {
 
   val httpConfiguration = HttpConfiguration.fromConfiguration(conf, environment)
   val messagesApi = new DefaultMessagesApiProvider(environment, conf, langs, httpConfiguration).get
-  implicit val messages = messagesApi.preferred(Seq.empty)
+  implicit val msgsProv: MessagesProvider = messagesApi.preferred(Seq.empty)
 
   val vfc = b3.vertical.fieldConstructor
   val (colLabel, colInput) = ("col-md-2", "col-md-10")
@@ -48,8 +48,8 @@ object HelpersSpec extends Specification {
    */
   implicit val testFieldConstructor = new B3FieldConstructor {
     val formClass = ""
-    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = inputHtml
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = contentHtml
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = inputHtml
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit msgsProv: MessagesProvider) = contentHtml
   }
 
   val fooField = Form(single("foo" -> Forms.text))("foo")
@@ -451,11 +451,11 @@ object HelpersSpec extends Specification {
 
   "@formGroup" should {
 
-    def testFormGroup(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor, msgs: Messages) =
-      clean(b3.freeFormGroup(args)(innerArgs => Html("<content>"))(fc, msgs).body)
+    def testFormGroup(args: (Symbol, Any)*)(fc: b3.B3FieldConstructor, msgsProv: MessagesProvider) =
+      clean(b3.freeFormGroup(args)(innerArgs => Html("<content>"))(fc, msgsProv).body)
 
     "vertical: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<label class="control-label">theLabel</label>
 	  	<content>
@@ -463,14 +463,14 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "vertical: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(vfc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId")(vfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<content>
 	  </div>
 	  """)
     }
     "horizontal: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<label class="control-label col-md-2">theLabel</label>
 	  	<div class="col-md-10">
@@ -480,7 +480,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "horizontal: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<div class="col-md-10 col-md-offset-2">
 	  	  <content>
@@ -489,7 +489,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "inline: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<label class="control-label">theLabel</label>
 		<content>
@@ -497,7 +497,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "inline: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(ifc, messages) must be equalTo clean("""
+      testFormGroup('_class -> "theClass", '_id -> "theId")(ifc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 		<content>
 	  </div>
@@ -505,7 +505,7 @@ object HelpersSpec extends Specification {
     }
 
     "get the inner arguments for the content" in {
-      val body = b3.freeFormGroup(Seq('_class -> "theClass", '_underscored -> "underscored", 'foo -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc, messages).body
+      val body = b3.freeFormGroup(Seq('_class -> "theClass", '_underscored -> "underscored", 'foo -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc, msgsProv).body
       body must not contain "_class=\"theClass\""
       body must not contain "_underscored=\"underscored\""
       body must contain("foo=\"foo\"")
@@ -514,22 +514,22 @@ object HelpersSpec extends Specification {
 
   "@free" should {
     "be rendered correctly" in {
-      clean(b3.free('foo -> "fooValue")(Html("<content>"))(vfc, messages).body) must be equalTo clean(b3.freeFormGroup(Seq('foo -> "fooValue"))(_ => Html("<content>"))(vfc, messages).body)
+      clean(b3.free('foo -> "fooValue")(Html("<content>"))(vfc, msgsProv).body) must be equalTo clean(b3.freeFormGroup(Seq('foo -> "fooValue"))(_ => Html("<content>"))(vfc, msgsProv).body)
     }
   }
 
   "@static" should {
 
     "render with form-control-static class as default" in {
-      b3.static("theLabel")(Html("theText"))(vfc, messages).body must contain("<p class=\"form-control-static\">theText</p>")
+      b3.static("theLabel")(Html("theText"))(vfc, msgsProv).body must contain("<p class=\"form-control-static\">theText</p>")
     }
 
     "allow setting additional classes" in {
-      b3.static("theLabel", 'class -> "extra_class")(Html("theText"))(vfc, messages).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
+      b3.static("theLabel", 'class -> "extra_class")(Html("theText"))(vfc, msgsProv).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
     }
 
     "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
-      val body = b3.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(Html("theText"))(vfc, messages).body
+      val body = b3.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(Html("theText"))(vfc, msgsProv).body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
@@ -541,7 +541,7 @@ object HelpersSpec extends Specification {
 
     val sampleType = "myButtonType"
     val sampleContent = "sample-content"
-    def buttonTypeBody(args: (Symbol, Any)*) = b3.buttonType(sampleType, args: _*)(Html(sampleContent))(vfc, messages).body
+    def buttonTypeBody(args: (Symbol, Any)*) = b3.buttonType(sampleType, args: _*)(Html(sampleContent))(vfc, msgsProv).body
 
     "allow setting a custom type" in {
       val body = buttonTypeBody()
@@ -568,21 +568,21 @@ object HelpersSpec extends Specification {
     }
   }
 
-  def sampleButtonTypeBody(theType: String) = b3.buttonType(theType, sampleArgs: _*)(Html("content"))(vfc, messages).body.trim
+  def sampleButtonTypeBody(theType: String) = b3.buttonType(theType, sampleArgs: _*)(Html("content"))(vfc, msgsProv).body.trim
 
   "@submit" should {
     "be equivalent to buttonType with submit type" in {
-      b3.submit(sampleArgs: _*)(Html("content"))(vfc, messages).body.trim must be equalTo sampleButtonTypeBody("submit")
+      b3.submit(sampleArgs: _*)(Html("content"))(vfc, msgsProv).body.trim must be equalTo sampleButtonTypeBody("submit")
     }
   }
   "@reset" should {
     "be equivalent to buttonType with reset type" in {
-      b3.reset(sampleArgs: _*)(Html("content"))(vfc, messages).body.trim must be equalTo sampleButtonTypeBody("reset")
+      b3.reset(sampleArgs: _*)(Html("content"))(vfc, msgsProv).body.trim must be equalTo sampleButtonTypeBody("reset")
     }
   }
   "@button" should {
     "be equivalent to buttonType with button type" in {
-      b3.button(sampleArgs: _*)(Html("content"))(vfc, messages).body.trim must be equalTo sampleButtonTypeBody("button")
+      b3.button(sampleArgs: _*)(Html("content"))(vfc, msgsProv).body.trim must be equalTo sampleButtonTypeBody("button")
     }
   }
 
@@ -616,10 +616,10 @@ object HelpersSpec extends Specification {
     val fooForm = Form(tuple("foo" -> Forms.nonEmptyText, "bar" -> Forms.nonEmptyText))
     val fooFormWithError = fooForm.withError("foo", "test-error")
 
-    def multifield(form: Form[(String, String)], globalArgs: Seq[(Symbol, Any)] = Seq(), fieldsArgs: Seq[(Symbol, Any)] = Seq())(fc: b3.B3FieldConstructor, messages: Messages) =
-      clean(b3.multifield(form("foo"), form("bar"))(globalArgs, fieldsArgs)(cfc => Html(testInputsString))(fc, messages).body)
-    def fooMultifield(globalArgs: (Symbol, Any)*) = multifield(fooForm, globalArgs)(vfc, messages)
-    def fooMultifieldWithFielsArgs(fieldsArgs: (Symbol, Any)*) = multifield(fooForm, fieldsArgs = fieldsArgs)(vfc, messages)
+    def multifield(form: Form[(String, String)], globalArgs: Seq[(Symbol, Any)] = Seq(), fieldsArgs: Seq[(Symbol, Any)] = Seq())(fc: b3.B3FieldConstructor, msgsProv: MessagesProvider) =
+      clean(b3.multifield(form("foo"), form("bar"))(globalArgs, fieldsArgs)(cfc => Html(testInputsString))(fc, msgsProv).body)
+    def fooMultifield(globalArgs: (Symbol, Any)*) = multifield(fooForm, globalArgs)(vfc, msgsProv)
+    def fooMultifieldWithFielsArgs(fieldsArgs: (Symbol, Any)*) = multifield(fooForm, fieldsArgs = fieldsArgs)(vfc, msgsProv)
 
     "have the basic structure" in {
       val body = fooMultifield('_label -> "theLabel")
@@ -631,7 +631,7 @@ object HelpersSpec extends Specification {
     }
 
     "behave as a horizontal field constructor" in {
-      val body = multifield(fooForm, Seq('_label -> "theLabel"))(hfc, messages)
+      val body = multifield(fooForm, Seq('_label -> "theLabel"))(hfc, msgsProv)
       body must contain("<label class=\"control-label " + colLabel + "\">theLabel</label>")
       body must contain("<div class=\"" + colInput + "\">")
     }
@@ -645,23 +645,23 @@ object HelpersSpec extends Specification {
     }
 
     "show label" in {
-      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, messages) must contain("<label class=\"control-label\">fooLabel</label>")
-      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, messages) must contain("<label class=\"control-label " + colLabel + "\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, msgsProv) must contain("<label class=\"control-label\">fooLabel</label>")
+      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, msgsProv) must contain("<label class=\"control-label " + colLabel + "\">fooLabel</label>")
     }
 
     "without label" in {
-      multifield(fooForm)(vfc, messages) must not contain ("label")
-      multifield(fooForm)(hfc, messages) must not contain ("label")
+      multifield(fooForm)(vfc, msgsProv) must not contain ("label")
+      multifield(fooForm)(hfc, msgsProv) must not contain ("label")
     }
 
     "allow rendering errors" in {
-      val body = multifield(fooFormWithError)(vfc, messages)
+      val body = multifield(fooFormWithError)(vfc, msgsProv)
       body must contain("has-error")
       body must contain("<span class=\"help-block\">test-error</span>")
     }
 
     "allow showing constraints" in {
-      multifield(fooForm, fieldsArgs = Seq('_showConstraints -> true))(vfc, messages) must contain("<span class=\"help-block\">" + messages("constraint.required") + "</span>")
+      multifield(fooForm, fieldsArgs = Seq('_showConstraints -> true))(vfc, msgsProv) must contain("<span class=\"help-block\">" + msgsProv.messages("constraint.required") + "</span>")
     }
 
     "allow showing help info" in {
@@ -688,9 +688,9 @@ object HelpersSpec extends Specification {
       ))
       def testStatus(status: String, withIcon: Boolean, withFieldsArgs: Boolean, args: (Symbol, Any)*) = {
         val test = if (withFieldsArgs)
-          clean(b3.multifield(fooForm("foo"))(globalArgs = if (withIcon) Seq('_hasFeedback -> true) else Seq(), fieldsArgs = args)(cfc => b3.text(fooForm("foo"), args: _*))(vfc, messages).body)
+          clean(b3.multifield(fooForm("foo"))(globalArgs = if (withIcon) Seq('_hasFeedback -> true) else Seq(), fieldsArgs = args)(cfc => b3.text(fooForm("foo"), args: _*))(vfc, msgsProv).body)
         else
-          clean(b3.multifield(fooForm("foo"))(globalArgs = if (withIcon) (('_hasFeedback -> true) +: args) else args, fieldsArgs = Seq())(cfc => b3.text(fooForm("foo"), args: _*))(vfc, messages).body)
+          clean(b3.multifield(fooForm("foo"))(globalArgs = if (withIcon) (('_hasFeedback -> true) +: args) else args, fieldsArgs = Seq())(cfc => b3.text(fooForm("foo"), args: _*))(vfc, msgsProv).body)
         test must withStatus(status, withIcon)
         if (withIcon) {
           test must withFeedbackIcon(status)

@@ -23,7 +23,7 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.{ Configuration, Environment }
 import play.api.http.HttpConfiguration
-import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider }
+import play.api.i18n.{ DefaultLangsProvider, DefaultMessagesApiProvider, MessagesProvider }
 import play.twirl.api.Html
 import play.api.mvc.Call
 
@@ -35,7 +35,7 @@ object FieldConstructorsSpec extends Specification {
 
   val httpConfiguration = HttpConfiguration.fromConfiguration(conf, environment)
   val messagesApi = new DefaultMessagesApiProvider(environment, conf, langs, httpConfiguration).get
-  implicit val messages = messagesApi.preferred(Seq.empty)
+  implicit val msgsProv: MessagesProvider = messagesApi.preferred(Seq.empty)
 
   def testFielConstructor(implicit fc: B4FieldConstructor) = {
 
@@ -105,8 +105,8 @@ object FieldConstructorsSpec extends Specification {
       val test = simpleInputWithArgs('_showConstraints -> true)
       test must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">")
       test must contain("<small id=\"foo_info_1\" class=\"form-text text-muted\">")
-      test must contain("class=\"form-text text-muted\">" + messages("constraint.required") + "</small>")
-      test must contain("class=\"form-text text-muted\">" + messages("constraint.maxLength", 8) + "</small>")
+      test must contain("class=\"form-text text-muted\">" + msgsProv.messages("constraint.required") + "</small>")
+      test must contain("class=\"form-text text-muted\">" + msgsProv.messages("constraint.maxLength", 8) + "</small>")
     }
 
     "allow showing help info" in {
