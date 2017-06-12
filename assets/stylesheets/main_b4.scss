@@ -36,6 +36,7 @@ body {
 		}
 	}
 	.navbar-nav {
+    text-align: right;
 		& > li > a {
 			color: $nav-color;
 			&:hover, &:focus {
@@ -56,6 +57,7 @@ body {
 	.dropdown-menu {
     font-size: 14px;
 		background-color: $nav-bg-color;
+    border: 0;
 		& > a {
       background-color: $nav-bg-color !important;
 			color: $nav-color;
@@ -85,6 +87,12 @@ body {
     font-style: italic;
     color: #ddd !important;
   }
+  .navbar-toggler {
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+  }
+  .navbar-collapse.show .dropdown-item, & > .collapse.in .dropdown-item { text-align: right; }
 }
 .container {
 	max-width: 960px;
@@ -311,6 +319,7 @@ $sidebar-active-color: $nav-bg-color;
 .affix { position: fixed; }
 
 #sidebar {
+  .nav { flex-direction: column; }
   .nav-link, .dropdown-item {
     background-color: inherit;
     color: $sidebar-color;

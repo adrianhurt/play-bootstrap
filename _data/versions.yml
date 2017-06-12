@@ -1,47 +1,3 @@
-- code: "1.1-P25-B3"
-  library: "1.1"
-  play: "2.5"
-  play_full: "2.5.6"
-  bootstrap: "3"
-  bootstrap_dependency: "3.3.7"
-  jquery_dependency: "2.2.3"
-  artifact: "play-bootstrap"
-  snapshot: false
-  legacy: false
-
-- code: "1.1-P24-B3"
-  library: "1.1"
-  play: "2.4"
-  play_full: "2.4.8"
-  bootstrap: "3"
-  bootstrap_dependency: "3.3.7"
-  jquery_dependency: "2.2.3"
-  artifact: "play-bootstrap"
-  snapshot: false
-  legacy: false
-
-- code: "1.1-P25-B4"
-  library: "1.1"
-  play: "2.5"
-  play_full: "2.5.6"
-  bootstrap: "4"
-  bootstrap_dependency: "4.0.0-alpha"
-  jquery_dependency: "2.2.3"
-  artifact: "play-bootstrap"
-  snapshot: false
-  legacy: false
-
-- code: "1.1-P24-B4"
-  library: "1.1"
-  play: "2.4"
-  play_full: "2.4.8"
-  bootstrap: "4"
-  bootstrap_dependency: "4.0.0-alpha"
-  jquery_dependency: "2.2.3"
-  artifact: "play-bootstrap"
-  snapshot: false
-  legacy: false
-
 - code: "1.1.1-P25-B3"
   library: "1.1.1"
   play: "2.5"
@@ -50,7 +6,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1.1-P24-B3"
@@ -61,7 +17,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1.1-P25-B4"
@@ -72,7 +28,7 @@
   bootstrap_dependency: "4.0.0-alpha.5"
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
-  snapshot: true
+  snapshot: false
   legacy: false
 
 - code: "1.1.1-P24-B4"
@@ -83,11 +39,123 @@
   bootstrap_dependency: "4.0.0-alpha.5"
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+  
+  
+
+- code: "1.1.2-P26-B3"
+  library: "1.1.2"
+  play: "2.6"
+  play_full: "2.6.0-RC2"
+  bootstrap: "3"
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.1.2-P25-B3"
+  library: "1.1.2"
+  play: "2.5"
+  play_full: "2.5.15"
+  bootstrap: "3"
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.1.2-P24-B3"
+  library: "1.1.2"
+  play: "2.4"
+  play_full: "2.4.11"
+  bootstrap: "3"
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.1.2-P26-B4"
+  library: "1.1.2"
+  play: "2.6"
+  play_full: "2.6.0-RC2"
+  bootstrap: "4"
+  bootstrap_dependency: "4.0.0-alpha.6"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.1.2-P25-B4"
+  library: "1.1.2"
+  play: "2.5"
+  play_full: "2.5.15"
+  bootstrap: "4"
+  bootstrap_dependency: "4.0.0-alpha.6"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.1.2-P24-B4"
+  library: "1.1.2"
+  play: "2.4"
+  play_full: "2.4.11"
+  bootstrap: "4"
+  bootstrap_dependency: "4.0.0-alpha.6"
+  jquery_dependency: "3.2.1"
+  artifact: "play-bootstrap"
   snapshot: true
   legacy: false
   
   
-   
+
+
+- code: "1.1-P25-B3"
+  library: "1.1"
+  play: "2.5"
+  play_full: "2.5.6"
+  bootstrap: "3"
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "2.2.3"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: true
+
+- code: "1.1-P24-B3"
+  library: "1.1"
+  play: "2.4"
+  play_full: "2.4.8"
+  bootstrap: "3"
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "2.2.3"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: true
+
+- code: "1.1-P25-B4"
+  library: "1.1"
+  play: "2.5"
+  play_full: "2.5.6"
+  bootstrap: "4"
+  bootstrap_dependency: "4.0.0-alpha"
+  jquery_dependency: "2.2.3"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: true
+
+- code: "1.1-P24-B4"
+  library: "1.1"
+  play: "2.4"
+  play_full: "2.4.8"
+  bootstrap: "4"
+  bootstrap_dependency: "4.0.0-alpha"
+  jquery_dependency: "2.2.3"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: true
   
 
 - code: "1.0-P25-B3"

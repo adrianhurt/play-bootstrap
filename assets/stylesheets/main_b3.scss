@@ -37,6 +37,7 @@ body {
 		}
 	}
 	.navbar-nav {
+    text-align: right;
 		& > li > a {
 			color: $nav-color;
 			&:hover, &:focus {
@@ -78,7 +79,9 @@ body {
     font-style: italic;
     color: #ddd !important;
   }
+  .navbar-collapse.in .dropdown-menu > li { text-align: right; }
 }
+.navbar-default .navbar-toggle .icon-bar { background: white; }
 .container {
 	max-width: 960px;
 }

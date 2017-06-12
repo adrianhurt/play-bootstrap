@@ -1,6 +1,6 @@
 ---
 title: "Play-Bootstrap 1.1.1-P25-B4 | Documents"
-layout: default_b4
+layout: default_b4_old
 permalink: /1.1.1-P25-B4/docs/
 version: "1.1.1-P25-B4"
 uri: /docs/
@@ -240,7 +240,7 @@ b4.clear.fieldConstructorSpecific</code></pre>
         <li><code>pattern</code> &rarr; <code>pattern="XXX"</code></li>
       </ul>
       <p>
-        Remember you have also the specific <code>b3.email</code>, <code>b3.url</code> and <code>b3.number</code> helpers for the corresponding validations.
+        Remember you have also the specific <code>b4.email</code>, <code>b4.url</code> and <code>b4.number</code> helpers for the corresponding validations.
       </p>
       <p>
         For example, if you have this form
@@ -287,10 +287,10 @@ input:invalid { color: red; }</code></pre>
         </div>
       </div>
       <div class="highlight">
-<pre><code>@b3.text( validationForm("username"), '_label -&gt; "Username", '_help -&gt; "A username between 1 and 20 characters" )
-@b3.email( validationForm("email"), '_label -&gt; "Email" )
-@b3.number( validationForm("age"), '_label -&gt; "Age", '_help -&gt; "From 18 to 99 years old" )
-@b3.text( validationForm("color"), '_label -&gt; "Hexadecimal color", '_help -&gt; "Format is #CCC or #CCCCCC" )</code></pre>
+<pre><code>@b4.text( validationForm("username"), '_label -&gt; "Username", '_help -&gt; "A username between 1 and 20 characters" )
+@b4.email( validationForm("email"), '_label -&gt; "Email" )
+@b4.number( validationForm("age"), '_label -&gt; "Age", '_help -&gt; "From 18 to 99 years old" )
+@b4.text( validationForm("color"), '_label -&gt; "Hexadecimal color", '_help -&gt; "Format is #CCC or #CCCCCC" )</code></pre>
       </div>
 
       

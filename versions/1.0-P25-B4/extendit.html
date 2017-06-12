@@ -1,6 +1,6 @@
 ---
 title: "Play-Bootstrap 1.0-P25-B4 | Extend it creating your own custom helpers"
-layout: default_b4
+layout: default_b4_old
 permalink: /1.0-P25-B4/extend-it/
 version: "1.0-P25-B4"
 uri: /extend-it/
@@ -158,10 +158,10 @@ tab: extendit
 </div>
 <p>
   We are going to make it easy. Let's going to copy the files for the vertical field constructor and modify them. You can see the files
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b3/vertical" target="_blank">here</a>. So create a folder <code>views/b4/my/vertical</code> and copy there the files
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b3/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a>,
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b3/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a> and
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b3/vertical/package.scala" target="_blank">package.scala</a>.
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical" target="_blank">here</a>. So create a folder <code>views/b4/my/vertical</code> and copy there the files
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a>,
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a> and
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/package.scala" target="_blank">package.scala</a>.
 </p>
 <p>
   Modify <code>bsFieldConstructor.scala.html</code> and <code>bsFormGroup.scala.html</code> to get the functionality you want. For this example, the first one would be re-written to something like this:
@@ -197,8 +197,8 @@ tab: extendit
 </div>
 <p>
   Do the same with <code>bsFormGroup.scala.html</code>. You can check them at the Github repository here:
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b3/my/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a> and
-  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b3/my/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a>.
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a> and
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a>.
 </p>
 <p>
   Finally, the modifications for this examples to <code>package.scala</code> are minimal:
@@ -212,7 +212,7 @@ tab: extendit
   </li>
 </ul>
 You can check the code
-<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b3/my/vertical/package.scala" target="_blank">here</a>.
+<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/package.scala" target="_blank">here</a>.
 <p></p>
 <p>
   And that's all, you now can use your own field constructor as any other with:
