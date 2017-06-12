@@ -35,9 +35,9 @@
           <ul class="dropdown-menu" role="menu">
             {% assign versions = site.data.versions | where: "legacy", false %}
             {% for version in versions %}
-              <li><a version="{{ version.code }}" href="{{ page.uri }}">{% include version_badge.html version=version %}</a></li>
+              <li class="text-right"><a version="{{ version.code }}" href="{{ page.uri }}">{% include version_badge.html version=version %}</a></li>
 						{% endfor %}
-            <li><a class="legacy" href="/changelog">View legacy versions</a></li>
+            <li class="text-right"><a class="legacy" href="/changelog">View legacy versions</a></li>
           </ul>
         </li>
         <li class="github"><a href="https://github.com/adrianhurt/play-bootstrap" target="_blank"><i class="fa fa-github fa-2x"></i></a></li>

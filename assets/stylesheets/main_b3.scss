@@ -88,6 +88,11 @@ body {
     font-weight: bold;
     color: $nav-bg-color;
   }
+  .snapshot {
+    color: #f8a;
+    font-weight: normal;
+    font-style: italic;
+  }
   .play-bootstrap {
     & > span {
       font-size: 0.9em;

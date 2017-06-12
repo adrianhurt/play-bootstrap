@@ -24,6 +24,7 @@ body {
 	background-color: $bg-color;
 }
 .navbar {
+  font-size: 14px;
 	background-color: $nav-bg-color;
 	.navbar-brand {
 		color: white;
@@ -53,6 +54,7 @@ body {
 		}
 	}
 	.dropdown-menu {
+    font-size: 14px;
 		background-color: $nav-bg-color;
 		& > a {
       background-color: $nav-bg-color !important;
@@ -64,6 +66,9 @@ body {
 				color: $nav-color-active;
 			}
 		}
+    .dropdow-item {
+      text-align: right;
+    }
 	}
 	.github a {
 		color: white !important;
@@ -89,6 +94,11 @@ body {
     font-size: 1.1em;
     font-weight: bold;
     color: $nav-bg-color;
+  }
+  .snapshot {
+    color: #f8a;
+    font-weight: normal;
+    font-style: italic;
   }
   .play-bootstrap {
     & > span {
