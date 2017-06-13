@@ -191,7 +191,7 @@ package object b4 {
   def url(field: Field, args: (Symbol, Any)*)(implicit fc: B4FieldConstructor, msgsProv: MessagesProvider) = inputType("url", field, args: _*)(fc, msgsProv)
   def week(field: Field, args: (Symbol, Any)*)(implicit fc: B4FieldConstructor, msgsProv: MessagesProvider) = inputType("week", field, args: _*)(fc, msgsProv)
 
-  def hidden(name: Any, value: Any, args: (Symbol, Any)*) = hiddenInput(name, value, args: _*)
+  def hidden(name: String, value: Any, args: (Symbol, Any)*) = hiddenInput(name, value, args: _*)
   def hidden(field: Field, args: (Symbol, Any)*) = hiddenInput(name = field.name, value = field.value.orElse(bs.Args.get(args, 'value)), (bs.Args.inner(bs.Args.remove(args, 'value))): _*)
 
   def radio(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, B4FieldInfo] => Html)(implicit fc: B4FieldConstructor, msgsProv: MessagesProvider) = radioWithContent(field, args: _*)(content)(fc, msgsProv)
