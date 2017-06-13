@@ -413,6 +413,14 @@ object HelpersSpec extends Specification {
       val body = clean(b4.hidden("testName", "testValue", 'foo -> "bar").body)
       body must be equalTo """<input type="hidden" name="testName" value="testValue" foo="bar">"""
     }
+    "with Field object" in {
+      val body = clean(b4.hidden(fooField, 'value -> "testValue", 'foo -> "bar").body)
+      body must be equalTo """<input type="hidden" name="foo" value="testValue" foo="bar">"""
+    }
+    "with filled Field object" in {
+      val body = clean(b4.hidden(fooFieldFilled("filledValue"), 'value -> "testValue", 'foo -> "bar").body)
+      body must be equalTo """<input type="hidden" name="foo" value="filledValue" foo="bar">"""
+    }
   }
   "@hiddens" should {
     "be rendered correctly" in {
