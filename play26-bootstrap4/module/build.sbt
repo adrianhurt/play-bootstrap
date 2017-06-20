@@ -12,7 +12,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  filters,
+  filters % "provided",
   "com.adrianhurt" %% "play-bootstrap-core" % "1.1.2-P26-SNAPSHOT",
   "org.webjars" % "bootstrap" % "4.0.0-alpha.6-1" exclude("org.webjars", "jquery"),
   "org.webjars" % "jquery" % "3.2.1",
