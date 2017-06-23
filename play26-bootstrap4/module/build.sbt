@@ -1,6 +1,6 @@
 name := """play-bootstrap"""
 
-version := "1.1.2-P26-B4-SNAPSHOT"
+version := "1.2-P26-B4-SNAPSHOT"
 
 scalaVersion := "2.12.2"
 
@@ -13,9 +13,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.1.2-P26-SNAPSHOT",
-  "org.webjars" % "bootstrap" % "4.0.0-alpha.6-1" exclude("org.webjars", "jquery"),
-  "org.webjars" % "jquery" % "3.2.1",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.2-P26-SNAPSHOT",
   specs2 % Test
 )
 
