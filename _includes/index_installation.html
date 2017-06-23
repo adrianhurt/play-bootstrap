@@ -33,12 +33,14 @@ libraryDependencies ++= Seq(
 </p>
 {% assign versions = site.data.versions | where: "legacy", false | where: "artifact", "play-bootstrap" %}
 {% include version_table.html versions=versions %}
+{% comment %}
 <p>
   The previous versions are within the artifact <code>play-bootstrap3</code>:
 </p>
 <div class="highlight">
 <pre><code>"com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24"</code></pre>
 </div>
+{% endcomment %}
 <p>
   You can check the change log <a href="/changelog">here</a> to see all versions.
 </p>

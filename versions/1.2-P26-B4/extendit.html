@@ -1,0 +1,231 @@
+---
+title: "Play-Bootstrap 1.2-P26-B4 | Extend it creating your own custom helpers"
+layout: default_b4
+permalink: /1.2-P26-B4/extend-it/
+version: "1.2-P26-B4"
+uri: /extend-it/
+tab: extendit
+---
+	
+<form action="/extend-it" method="GET" class="form-vertical " role="form">
+  <h1 id="extend-it" class="page-header">Implement your own helpers or field constructors</h1>
+  <p class="lead">
+    This library tries to be an out-of-the-box plugin. You simply need to install the library and you can start to write your forms. However, although it is a very versatile library, you may have different necessities. Thus, let's see some examples to know how you could extend it.
+  </p>
+
+  
+
+
+
+  <h2 id="create-helper">Create your own helper</h2>
+  <p>
+    To create a helper is very easy. You only have to look the helpers within the
+    <a class="" href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github repository</a>. Let's suppose you want to add an input group for every email input. And you would like to create your own email helper like this one:
+  </p>
+  <div class="bd-example">
+    <div class="form-group   " id="foo_field">
+      <label class="form-control-label" for="foo">Email</label>
+      <div class="input-group">
+        <span class="input-group-addon">@</span>
+        <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="example@mail.com">
+      </div>
+    </div>
+  </div>
+  <p>
+    So let's add a file within your <code>views</code> folder. For example <code>app/views/b4/my/email.scala.html</code>, and write the following code:
+  </p>
+  <div class="highlight">
+<pre><code>@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.BSFieldConstructor, messages: Messages)
+@b4.inputFormGroup(field, withFeedback = false, withLabelFor = true, b4.Args.withDefault(args, 'class -&gt; "form-control")) { fieldInfo =&gt;
+  &lt;div class="input-group"&gt;
+    &lt;span class="input-group-addon"&gt;@@&lt;/span&gt;
+    &lt;input type="email" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)&gt;
+  &lt;/div&gt;
+}</code></pre>
+  </div>
+  <p>
+    The code is a reduced version of <code>b4.inputWrapped</code> adapted to this purpose (you can see it
+    <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/inputWrapped.scala.html" target="_blank">here</a>). The library is very easy and it's documented, so you can check it to understand how it works. The main concept is that <code>b4.inputFormGroup</code> will generate the whole <code>form-group</code>. For that it needs the field, some arguments and a function that returns the input HTML with the field information. All that field information is stored in a <code>BSFieldInfo</code>.
+  </p>
+  <p>
+    And that's all! All you need now is to call it from your templates:
+  </p>
+  <div class="highlight">
+<pre><code>@b4.my.email( fooForm("foo"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )</code></pre>
+  </div>
+  <div class="card">
+    <div class="card-header card-danger" id="java_messages_warning_">
+      <a class="collapsed" data-toggle="collapse" href="#collapse_java_messages_warning_" aria-expanded="false" aria-controls="collapse_java_messages_warning_">
+				Note for Java version from Play 2.4
+				<i class="fa fa-caret"></i>
+			</a>
+    </div>
+    <div id="collapse_java_messages_warning_" class="card-collapse collapse">
+      <div class="card-block">
+        From Play 2.4, the implicit <code>Messages</code> argument defined in your custom template collides with the implicit one taken from <code>PlayMagicForJava</code> object, and it raises a compilation error. So you only need to remove this implicit argument from your custom template.
+      </div>
+    </div>
+  </div>
+
+  
+
+
+  <h3 id="input-wrapped">The use of <code>b4.inputWrapped</code></h3>
+  <p>
+    The <code>b4.inputWrapped</code> is a helper that lets you to customize easily a <strong>textual input</strong>. But it is really helpful for creating your own helper. It is easier to implement than the previous example and it also lets you to add the optional feedback icons in case you need them. Now let's suppose you want create your own number helper like this one (note this example requires some extra JavaScript for the functionality and CSS):
+  </p>
+  <div class="bd-example">
+    <div class="form-group   " id="foo_field">
+      <label class="form-control-label" for="foo">Number</label>
+      <div class="input-number input-group">
+        <span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+        <input type="text" id="foo" name="foo" value="0" class="form-control">
+        <span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.my.number( fooForm("foo"), '_label -&gt; "Number", 'value -&gt; 0 )</code></pre>
+  </div>
+  <p>
+    Then we could create the file <code>app/views/b4/my/number.scala.html</code> with the following code:
+  </p>
+  <div class="highlight">
+<pre><code>@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.BSFieldConstructor, messages: Messages)
+@b4.inputWrapped("text", field, args:_*) { input =&gt;
+  &lt;div class="input-number input-group"&gt;
+    &lt;span class="input-group-addon input-number-minus"&gt;&lt;i class="fa fa-minus"&gt;&lt;/i&gt;&lt;/span&gt;
+    @input
+    &lt;span class="input-group-addon input-number-plus"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt;&lt;/span&gt;
+  &lt;/div&gt;
+}</code></pre>
+  </div>
+
+  
+
+
+  <h3 id="multifield">Create your multifield helper</h3>
+  <p>
+    The purpose of <code>b4.multifield</code> helper is to be a tool for creating multifield helpers. The method is exactly the same as the previous one for <code>b4.inputWrapped</code>. You can see more information and examples at the <a href="/multifield">Multifield</a> section.
+  </p>
+</form>
+
+  
+
+
+
+<h2 id="create-field-constructor">Create your own field constructor</h2>
+<p>
+  Creating new helpers is useful for adding or customizing the input structure of a field, but you may need your own field constructor, with another <code>form-group</code> structure. Let's see another example. Imagine that you want a vertical form but with any help information (errors, constraints and help messages) at a side panel. Something like this:
+</p>
+<div class="bd-example">
+  <form action="/extend-it" method="GET" class="form-my-vertical " role="form">
+    <div class="my-form-group form-group  has-danger" id="foo_field">
+      <div class="field-container">
+        <label class="form-control-label " for="foo">Email</label>
+        <div class="input-group">
+          <span class="input-group-addon">@</span>
+          <input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@mail.com">
+        </div>
+      </div>
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li><span id="foo_error_0" class="help-error"><i class="fa fa-remove"> And error occurred!</i></span>
+          </li>
+          <li><span id="foo_info_0" class="help-info"><i class="fa fa-warning-sign"> Maximum length: 10</i></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="highlight">
+<pre><code>&lt;div class="my-form-group form-group has-danger" id="foo_field"&gt;
+  &lt;div class="field-container"&gt;
+    &lt;label class="form-control-label" for="foo"&gt;Email&lt;/label&gt;
+    &lt;div class="input-group"&gt;
+      &lt;span class="input-group-addon"&gt;@&lt;/span&gt;
+      &lt;input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@mail.com"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="alert alert-danger" role="alert"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;span id="foo_error_0" class="help-error"&gt;&lt;i class="fa fa-remove"&gt;&lt;/i&gt; And error occurred!&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;span id="foo_info_0" class="help-info"&gt;&lt;i class="fa fa-warning-sign"&gt;&lt;/i&gt; Maximum length: 10&lt;/span&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>
+  We are going to make it easy. Let's going to copy the files for the vertical field constructor and modify them. You can see the files
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical" target="_blank">here</a>. So create a folder <code>views/b4/my/vertical</code> and copy there the files
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a>,
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a> and
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/app/views/b4/vertical/package.scala" target="_blank">package.scala</a>.
+</p>
+<p>
+  Modify <code>bsFieldConstructor.scala.html</code> and <code>bsFormGroup.scala.html</code> to get the functionality you want. For this example, the first one would be re-written to something like this:
+</p>
+<div class="highlight">
+<pre><code>@(fieldInfo: b4.BSFieldInfo, inputHtml: Html)(implicit messages: Messages)
+@alertStatus = @{
+  if (fieldInfo.hasErrors)
+    "alert-danger"
+  else if (b4.ArgsMap.isTrue(fieldInfo.argsMap, '_success))
+    "alert-success"
+  else
+    "alert-info"
+}
+&lt;div class="my-form-group form-group @fieldInfo.argsMap.get('_class) @fieldInfo.status.map("has-"+_)" id="@fieldInfo.idFormField"&gt;
+  &lt;div class="field-container"&gt;
+    @fieldInfo.labelOpt.map { label =&gt;
+      &lt;label class="form-control-label @if(fieldInfo.hideLabel){sr-only}" @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}&gt;@bs.Args.msg(label)(messages)&lt;/label&gt;
+    }
+    @inputHtml
+  &lt;/div&gt;
+  &lt;div class="alert @alertStatus" role="alert"&gt;
+    &lt;ul&gt;
+      @fieldInfo.feedbackInfos.map { case (id, text) =&gt;
+        &lt;li&gt;&lt;span id="@id" class="form-control-feedback"&gt;@bs.Args.msg(text)(messages)&lt;/span&gt;&lt;/li&gt;
+      }
+      @fieldInfo.helpInfos.map { case (id, text) =&gt;
+        &lt;li&gt;&lt;span id="@id" class="form-text text-muted"&gt;@bs.Args.msg(text)(messages)&lt;/span&gt;&lt;/li&gt;
+      }
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p>
+  Do the same with <code>bsFormGroup.scala.html</code>. You can check them at the Github repository here:
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/bsFieldConstructor.scala.html" target="_blank">bsFieldConstructor.scala.html</a> and
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/bsFormGroup.scala.html" target="_blank">bsFormGroup.scala.html</a>.
+</p>
+<p>
+  Finally, the modifications for this examples to <code>package.scala</code> are minimal:
+</p>
+<ul>
+  <li>Modify the package from <code>package views.html.b4</code> to <code>package views.html.b4.my</code>
+  </li>
+  <li>Add the import <code>views.html.b4._</code>
+  </li>
+  <li>Change the value of <code>formClass</code> to <code>"form-my-vertical"</code>
+  </li>
+</ul>
+You can check the code
+<a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/views/b4/my/vertical/package.scala" target="_blank">here</a>.
+<p></p>
+<p>
+  And that's all, you now can use your own field constructor as any other with:
+</p>
+<div class="highlight">
+<pre><code>@import b4.my.vertical.fieldConstructor    // Declare it as default
+@b4.my.email( fooForm("foo"), '_label -&gt; "Email", '_error -&gt; "And error occurred!", '_showConstraints -&gt; true, 'placeholder -&gt; "example@mail.com" )</code></pre>
+</div>
+<p>
+  Or even using it for specific forms:
+</p>
+<div class="highlight">
+<pre><code>@b4.my.vertical.form(routes.Application.extendIt) { implicit myfc =&gt;
+  @b4.my.email( fooForm("foo"), '_label -&gt; "Email", '_error -&gt; "And error occurred!", '_showConstraints -&gt; true, 'placeholder -&gt; "example@mail.com" )
+}</code></pre>
+</div>
