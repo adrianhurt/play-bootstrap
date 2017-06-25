@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters)
 
 
 

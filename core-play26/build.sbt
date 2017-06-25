@@ -9,7 +9,7 @@ crossScalaVersions := Seq("2.12.2", "2.11.8")
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters)
 
 
 
