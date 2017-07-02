@@ -4,7 +4,7 @@ version := "1.2-P26-B3-RC1"
 
 scalaVersion := "2.12.2"
 
-crossScalaVersions := Seq("2.12.2")
+crossScalaVersions := Seq("2.12.2", "2.11.8")
 
 resolvers ++= Seq(
   "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases",

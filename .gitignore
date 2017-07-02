@@ -35,6 +35,8 @@ activator*
 # Ignore Play Modules within Modules #
 modules/*/modules
 
+# Ignore Jekyll directories #
+_site
 
 
 # Compiled source #
