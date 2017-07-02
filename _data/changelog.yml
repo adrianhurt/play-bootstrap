@@ -1,4 +1,4 @@
-- id: 1-2-P2X-BX-SNAPSHOT
+- id: 1-2-P2X-BX-RC1
   library: "1.1.2"
   title: 1.2-P2X-BX
   claim: Welcome to Play 2.6
@@ -94,7 +94,7 @@
       text: |
         Multifield support has been rewritten and modified a bit, so if you use your custom multifield helpers, please check the docs again.
   migration: |
-    If you want to bump to [Bootstrap 4](http://v4-alpha.getbootstrap.com) you need to use the `1.0-P24-B4-SNAPSHOT` version and replace every `b3` for `b4`.
+    If you want to bump to [Bootstrap 4](http://v4-alpha.getbootstrap.com) you need to use the `1.0-P24-B4` version and replace every `b3` for `b4`.
     
     If you have your own custom helpers or field constructors, not that `b3.Args` and `b3.ArgsMap` are now `bs.Args` and `bs.ArgsMap`.
 
@@ -195,7 +195,7 @@
         [#18](https://github.com/adrianhurt/play-bootstrap/issues/18){:target="_blank"} Added the possibility to omit the label for the [`b3.static`](/docs#more-static){:target="_blank"} helper.
     - type: change
       text: |
-        [#25](https://github.com/adrianhurt/play-bootstrap/issues/18){:target="_blank"} From 0.4.2-SNAPSHOT, forms always include its corresponding required class (`form-vertical`, `form-horizontal`, \.\.\.).
+        [#25](https://github.com/adrianhurt/play-bootstrap/issues/18){:target="_blank"} From 0.4.2, forms always include its corresponding required class (`form-vertical`, `form-horizontal`, \.\.\.).
   migration: |
     The __mixed forms__ now require a HTML given a `B3FieldConstructor` that you can declare it as implicit, so
     there is no need to declare the `B3FieldConstructor` and `Lang` explicitly for every helper within the mixed form.

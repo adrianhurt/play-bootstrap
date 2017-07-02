@@ -4,18 +4,26 @@
       <th>Version</th>
       <th>Artifact</th>
       <th>Play version</th>
+      {% if include.withDependencies %}
       <th colspan="2">Added dependencies</th>
+      {% endif %}
       <th>Documentation</th>
     </tr>
   </thead>
   <tbody>
     {% for version in include.versions %}
       <tr>
-        <td><strong>{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}</strong></td>
+        <td><strong>{{ version.code }}{% if version.release_candidate %}-{{version.release_candidate}}{% endif %}{% if version.snapshot %}-SNAPSHOT{% endif %}</strong></td>
         <td><small>{{ version.artifact }}</small></td>
         <td>Play {{ version.play_full }}</td>
-        <td>Bootstrap {{ version.bootstrap_dependency }}</td>
-        <td>jQuery {{ version.jquery_dependency }}</td>
+        {% if include.withDependencies %}
+          {% if version.with_dependencies %}
+            <td>{% if version.bootstrap_dependency %}Bootstrap {{ version.bootstrap_dependency }}{% endif %}</td>
+            <td>{% if version.jquery_dependency %}jQuery {{ version.jquery_dependency }}{% endif %}</td>
+          {% else %}
+            <td colspan="2"></td>
+          {% endif %}
+        {% endif %}
         <td><a version="{{ version.code }}" href="{{ site.baseurl }}/docs">See {{ version.code }} docs</a>
         </td>
       </tr>

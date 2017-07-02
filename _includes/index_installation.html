@@ -1,5 +1,6 @@
 {% assign version = site.data.versions | first %}
 <h2 id="installation">Installation</h2>
+<h3 id="installation-1-2">Version 1.2 for Play 2.5 or Play 2.6</h3>
 <p>
   You only need to add it as a dependency in your <code>build.sbt</code> file.
 </p>
@@ -11,15 +12,26 @@ libraryDependencies ++= Seq(
   "com.adrianhurt" %% "{{ version.artifact }}" % "{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}"
 )</code></pre>
 </div>
+
 <p>
-  Note the <code>play-bootstrap</code> has <strong>filters</strong>, <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> and
+  There are different versions of the library depending on the which version of Play Framework and Bootstrap you need:
+</p>
+{% assign versions = site.data.versions | where: "with_dependencies", false | where: "legacy", false %}
+{% include version_table.html versions=versions %}
+<p>
+  You can check the change log <a href="/changelog">here</a> to see all versions.
+</p>
+
+<h3 id="installation-prior-1-2">Prior to version 1.2 or versions for Play 2.4</h3>
+<p>
+  For versions prior to 1.2 or for Play 2.4, <code>play-bootstrap</code> has <strong>filters</strong>, <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> and
   <a href="https://jquery.org" target="_blank">jQuery</a> as dependencies, so they are included automatically. Specifically, it adds the
   following dependencies for you:
 </p>
 <div class="highlight">
 <pre><code>filters,
-"org.webjars" % "bootstrap" % "{{ version.bootstrap_dependency }}",
-"org.webjars" % "jquery" % "{{ version.jquery_dependency }}"</code></pre>
+"org.webjars" % "bootstrap" % "3.3.7",
+"org.webjars" % "jquery" % "3.2.1"</code></pre>
 </div>
 <p>
   You can use different versions of jQuery or even Bootstrap. For example, if you prefer to use jQuery 2.1.0:
@@ -28,11 +40,12 @@ libraryDependencies ++= Seq(
 <pre><code>"com.adrianhurt" %% "play-bootstrap" % "{{ version.code }}{% if version.snapshot %}-SNAPSHOT{% endif %}" exclude("org.webjars", "jquery"),
 "org.webjars" % "jquery" % "2.1.0"</code></pre>
 </div>
+
 <p>
   There are different versions of the library depending on the which version of Play Framework and Bootstrap you need:
 </p>
-{% assign versions = site.data.versions | where: "legacy", false | where: "artifact", "play-bootstrap" %}
-{% include version_table.html versions=versions %}
+{% assign versions = site.data.versions | where: "with_dependencies", true | where: "legacy", false %}
+{% include version_table.html versions=versions withDependencies=true %}
 {% comment %}
 <p>
   The previous versions are within the artifact <code>play-bootstrap3</code>:

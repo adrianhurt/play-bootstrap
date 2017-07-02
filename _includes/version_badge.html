@@ -1,5 +1,6 @@
 <span class="version-badge">
   <span class="code">{{ include.version.code }}</span>
+  {% if include.version.release_candidate %}<span class="snapshot">({{include.version.release_candidate}})</span>{% endif %}
   {% if include.version.snapshot %}<span class="snapshot">(dev)</span>{% endif %}
   <span class="play-bootstrap">
     {% if include.explicit %}

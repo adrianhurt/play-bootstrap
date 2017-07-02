@@ -6,490 +6,488 @@ version: "1.1-P25-B3"
 uri: /
 tab: index
 ---
-<div class="container">
-  <div class="header-with-logo">
-    <div class="header-logo">
-      <img src="{{ site.baseurl }}/assets/images/logo.gif" width="100">
-    </div>
-    <div class="header-title">
-      <h1 id="play-bootstrap">Play-Bootstrap</h1>
-      <p class="lead">Play Framework library for Bootstrap</p>
-    </div>
+<div class="header-with-logo">
+  <div class="header-logo">
+    <img src="{{ site.baseurl }}/assets/images/logo.gif" width="100">
   </div>
-  <p>
-    This is a collection of input helpers and field constructors for
-    <a href="http://www.playframework.com" target="_blank">Play Framework</a> to render
-    <a href="http://getbootstrap.com" target="_blank">Bootstrap</a> HTML code.
-  </p>
-  <div id="github-buttons">
-    <iframe src="https://ghbtns.com/github-btn.html?user=adrianhurt&amp;repo=play-bootstrap&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="160" height="30"></iframe>
-    <iframe src="https://ghbtns.com/github-btn.html?user=adrianhurt&amp;repo=play-bootstrap&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
-    <img src="{{ site.baseurl }}/assets/images/please_star.png" style="z-index:-1">
+  <div class="header-title">
+    <h1 id="play-bootstrap">Play-Bootstrap</h1>
+    <p class="lead">Play Framework library for Bootstrap</p>
   </div>
-  {% include index_new_features.html %}
-  
-  
-  
-  
-  <h2 id="features">Features</h2>
-  
-  
-  
-  
-  <h3 id="simple-to-use">Simple to use</h3>
-  <p>
-    It tries to follow the same rules as the helper library from Play Framework.
-  </p>
-  <div class="highlight">
+</div>
+<p>
+  This is a collection of input helpers and field constructors for
+  <a href="http://www.playframework.com" target="_blank">Play Framework</a> to render
+  <a href="http://getbootstrap.com" target="_blank">Bootstrap</a> HTML code.
+</p>
+<div id="github-buttons">
+  <iframe src="https://ghbtns.com/github-btn.html?user=adrianhurt&amp;repo=play-bootstrap&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="160" height="30"></iframe>
+  <iframe src="https://ghbtns.com/github-btn.html?user=adrianhurt&amp;repo=play-bootstrap&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+  <img src="{{ site.baseurl }}/assets/images/please_star.png" style="z-index:-1">
+</div>
+{% include index_new_features.html %}
+
+
+
+
+<h2 id="features">Features</h2>
+
+
+
+
+<h3 id="simple-to-use">Simple to use</h3>
+<p>
+  It tries to follow the same rules as the helper library from Play Framework.
+</p>
+<div class="highlight">
 <pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
 @b3.form(routes.Application.login) {
-  @b3.email( loginForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( loginForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( loginForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.email( loginForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( loginForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.checkbox( loginForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+@b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
+</div>
+
+
+
+
+<h3 id="horizontal-vertical-inline">Horizontal, vertical or inline forms</h3>
+<p>
+  There is a different field constructor for each kind of form. Normally, you will declare one of them as default for each of your templates, but you can mix them if you want.
+</p>
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#vertical" role="tab" data-toggle="tab">Vertical</a>
+  </li>
+  <li><a href="#horizontal" role="tab" data-toggle="tab">Horizontal</a>
+  </li>
+  <li><a href="#inline" role="tab" data-toggle="tab">Inline</a>
+  </li>
+  <li><a href="#mixed" role="tab" data-toggle="tab">Mixed</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active fade in" id="vertical">
+    <div class="bs-example">
+      <form action="" method="GET" class="form-vertical " role="form">
+        <div class="form-group  " id="email_field">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+        <div class="form-group  " id="password_field">
+          <label class="control-label" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group  " id="remember_field">
+          <div class="checkbox">
+            <label for="remember">
+              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
+            </label>
+          </div>
+        </div>
+        <div class="form-group  ">
+          <button type="submit" class="btn btn-default"> Sign in </button>
+        </div>
+      </form>
+    </div>
+    <div class="highlight">
+<pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
+
+@b3.form(routes.Application.index) {
+@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+}</code></pre>
+    </div>
   </div>
-  
-  
-  
-  
-  <h3 id="horizontal-vertical-inline">Horizontal, vertical or inline forms</h3>
-  <p>
-    There is a different field constructor for each kind of form. Normally, you will declare one of them as default for each of your templates, but you can mix them if you want.
-  </p>
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#vertical" role="tab" data-toggle="tab">Vertical</a>
-    </li>
-    <li><a href="#horizontal" role="tab" data-toggle="tab">Horizontal</a>
-    </li>
-    <li><a href="#inline" role="tab" data-toggle="tab">Inline</a>
-    </li>
-    <li><a href="#mixed" role="tab" data-toggle="tab">Mixed</a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active fade in" id="vertical">
-      <div class="bs-example">
-        <form action="" method="GET" class="form-vertical " role="form">
-          <div class="form-group  " id="email_field">
-            <label class="control-label" for="email">Email</label>
+  <div class="tab-pane fade in" id="horizontal">
+    <div class="bs-example">
+      <form action="" method="GET" class="form-horizontal " role="form">
+        <div class="form-group  " id="email_field">
+          <label class="control-label col-md-2" for="email">Email</label>
+          <div class="col-md-10">
             <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
           </div>
-          <div class="form-group  " id="password_field">
-            <label class="control-label" for="password">Password</label>
+        </div>
+        <div class="form-group  " id="password_field">
+          <label class="control-label col-md-2" for="password">Password</label>
+          <div class="col-md-10">
             <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
           </div>
-          <div class="form-group  " id="remember_field">
+        </div>
+        <div class="form-group  " id="remember_field">
+          <div class="col-md-10 col-md-offset-2">
             <div class="checkbox">
               <label for="remember">
                 <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
               </label>
             </div>
           </div>
-          <div class="form-group  ">
+        </div>
+        <div class="form-group  ">
+          <div class="col-md-10 col-md-offset-2">
             <button type="submit" class="btn btn-default"> Sign in </button>
           </div>
-        </form>
-      </div>
-      <div class="highlight">
-<pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
-
-@b3.form(routes.Application.index) {
-  @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
-}</code></pre>
-      </div>
+        </div>
+      </form>
     </div>
-    <div class="tab-pane fade in" id="horizontal">
-      <div class="bs-example">
-        <form action="" method="GET" class="form-horizontal " role="form">
-          <div class="form-group  " id="email_field">
-            <label class="control-label col-md-2" for="email">Email</label>
-            <div class="col-md-10">
-              <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
-            </div>
-          </div>
-          <div class="form-group  " id="password_field">
-            <label class="control-label col-md-2" for="password">Password</label>
-            <div class="col-md-10">
-              <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-            </div>
-          </div>
-          <div class="form-group  " id="remember_field">
-            <div class="col-md-10 col-md-offset-2">
-              <div class="checkbox">
-                <label for="remember">
-                  <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group  ">
-            <div class="col-md-10 col-md-offset-2">
-              <button type="submit" class="btn btn-default"> Sign in </button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="highlight">
+    <div class="highlight">
 <pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
 
 @b3.form(routes.Application.index) {
-  @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+@b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
-      </div>
     </div>
-    <div class="tab-pane fade" id="inline">
-      <div class="bs-example">
-        <form action="" method="GET" class="form-inline " role="form">
-          <div class="form-group  " id="email_field">
-            <label class="control-label sr-only" for="email">Email</label>
-            <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+  </div>
+  <div class="tab-pane fade" id="inline">
+    <div class="bs-example">
+      <form action="" method="GET" class="form-inline " role="form">
+        <div class="form-group  " id="email_field">
+          <label class="control-label sr-only" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+        <div class="form-group  " id="password_field">
+          <label class="control-label sr-only" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group  " id="remember_field">
+          <div class="checkbox">
+            <label for="remember">
+              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
+            </label>
           </div>
-          <div class="form-group  " id="password_field">
-            <label class="control-label sr-only" for="password">Password</label>
-            <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-          </div>
-          <div class="form-group  " id="remember_field">
-            <div class="checkbox">
-              <label for="remember">
-                <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-              </label>
-            </div>
-          </div>
-          <div class="form-group  ">
-            <button type="submit" class="btn btn-default"> Sign in </button>
-          </div>
-        </form>
-      </div>
-      <div class="highlight">
+        </div>
+        <div class="form-group  ">
+          <button type="submit" class="btn btn-default"> Sign in </button>
+        </div>
+      </form>
+    </div>
+    <div class="highlight">
 <pre><code>@import b3.inline.fieldConstructor  // Declares a inline field constructor as default
 
 @b3.form(routes.Application.index) {
-  @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+@b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
-      </div>
     </div>
-    <div class="tab-pane fade" id="mixed">
-      <div class="bs-example">
-        <form action="" method="GET" class="form-inline " role="form">
-          <div class="form-group  " id="email_field">
-            <label class="control-label sr-only" for="email">Email</label>
-            <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+  </div>
+  <div class="tab-pane fade" id="mixed">
+    <div class="bs-example">
+      <form action="" method="GET" class="form-inline " role="form">
+        <div class="form-group  " id="email_field">
+          <label class="control-label sr-only" for="email">Email</label>
+          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+        <div class="form-group  " id="password_field">
+          <label class="control-label sr-only" for="password">Password</label>
+          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group  " id="remember_field">
+          <div class="checkbox">
+            <label for="remember">
+              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
+            </label>
           </div>
-          <div class="form-group  " id="password_field">
-            <label class="control-label sr-only" for="password">Password</label>
-            <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-          </div>
-          <div class="form-group  " id="remember_field">
-            <div class="checkbox">
-              <label for="remember">
-                <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-              </label>
-            </div>
-          </div>
-          <div class="form-group  ">
-            <button type="submit" class="btn btn-default"> Sign in </button>
-          </div>
-        </form>
-        <form action="" method="GET" class="form-vertical " role="form">
-          <div class="form-group  " id="foo_field">
-            <label class="control-label" for="foo">Foo</label>
-            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Foo placeholder...">
-          </div>
-          <div class="form-group  " id="bar_field">
-            <label class="control-label" for="bar">Bar</label>
-            <input type="text" id="bar" name="bar" value="" class="form-control" placeholder="Bar placeholder...">
-          </div>
-          <div class="form-group  ">
-            <button type="submit" class="btn btn-default"> Send </button>
-          </div>
-        </form>
-      </div>
-      <div class="highlight">
+        </div>
+        <div class="form-group  ">
+          <button type="submit" class="btn btn-default"> Sign in </button>
+        </div>
+      </form>
+      <form action="" method="GET" class="form-vertical " role="form">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Foo</label>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Foo placeholder...">
+        </div>
+        <div class="form-group  " id="bar_field">
+          <label class="control-label" for="bar">Bar</label>
+          <input type="text" id="bar" name="bar" value="" class="form-control" placeholder="Bar placeholder...">
+        </div>
+        <div class="form-group  ">
+          <button type="submit" class="btn btn-default"> Send </button>
+        </div>
+      </form>
+    </div>
+    <div class="highlight">
 <pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
 @b3.inline.form(routes.Application.index) { implicit ifc =&gt;  // An inline form instead of the default one
-  @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+@b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+@b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }
 @b3.form(routes.Application.index) {  // Uses the default field constructor (vertical in that case)
-  @b3.text( fooForm("foo"), '_label -&gt; "Foo", 'placeholder -&gt; "Foo placeholder..." )
-  @b3.text( fooForm("bar"), '_label -&gt; "Bar", 'placeholder -&gt; "Bar placeholder..." )
-  @b3.submit('class -&gt; "btn btn-default"){ Send }
+@b3.text( fooForm("foo"), '_label -&gt; "Foo", 'placeholder -&gt; "Foo placeholder..." )
+@b3.text( fooForm("bar"), '_label -&gt; "Bar", 'placeholder -&gt; "Bar placeholder..." )
+@b3.submit('class -&gt; "btn btn-default"){ Send }
 }</code></pre>
-      </div>
     </div>
   </div>
-  
-  
-  
-  
-  <h3 id="every-helper-you-need">Every helper you need</h3>
-  <p>
-    Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ... You have the essential input helpers you could need. But this library is for the community, so you can collaborate or ask for others.
-  </p>
-  <p>
-    See the list of available helpers <a href="{{ site.baseurl }}/docs#helpers" target="_blank">here</a>.
-  </p>
-  
-  
-  
-  
-  <h3 id="coherence-consistency">Coherence and consistency</h3>
-  
-  
-  <h4 id="boolean-attributes">Boolean attributes</h4>
-  <p>
-    Sometimes the HTML syntax could be confusing. For example, all of the following codes are equivalent:
-  </p>
-  <div class="highlight">
+</div>
+
+
+
+
+<h3 id="every-helper-you-need">Every helper you need</h3>
+<p>
+  Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ... You have the essential input helpers you could need. But this library is for the community, so you can collaborate or ask for others.
+</p>
+<p>
+  See the list of available helpers <a href="{{ site.baseurl }}/docs#helpers" target="_blank">here</a>.
+</p>
+
+
+
+
+<h3 id="coherence-consistency">Coherence and consistency</h3>
+
+
+<h4 id="boolean-attributes">Boolean attributes</h4>
+<p>
+  Sometimes the HTML syntax could be confusing. For example, all of the following codes are equivalent:
+</p>
+<div class="highlight">
 <pre><code>&lt;input type="text" name="foo" disabled&gt;
 &lt;input type="text" name="foo" disabled="true"&gt;
 &lt;input type="text" name="foo" disabled="false"&gt;
 &lt;input type="text" name="foo" disabled="blah"&gt;</code></pre>
-  </div>
-  <p>
-    For that reason, <code>b3</code> helpers will simply remove the attribute with false values and put <code>"true"</code> value for true ones. So you can do:
-  </p>
-  <div class="highlight">
+</div>
+<p>
+  For that reason, <code>b3</code> helpers will simply remove the attribute with false values and put <code>"true"</code> value for true ones. So you can do:
+</p>
+<div class="highlight">
 <pre><code>@b3.text( fooForm("foo"), '_label -&gt; "A maybe disabled text", 'disabled -&gt; maybeTrueFunction(...) )</code></pre>
-  </div>
-  <p>
-    See more about <a href="{{ site.baseurl }}/docs#arguments-boolean" target="_blank">Boolean arguments</a>.
-  </p>
-  
-  
-  <h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
-  <p>
-    Another frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
-    <code>&lt;input type="hidden"&gt;</code> if you need to send its value within your POST request. For that cases, <code>b3</code> helpers for checkboxes, radio buttons and selects automatically add that input for you when the attribute <code>readonly</code> is present.
-  </p>
-  <p>
-    Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers will also add the <code>disabled</code> attribute. Then, Bootstrap will avoid their interactability.
-  </p>
-  <p>
-    See more <a href="{{ site.baseurl }}/docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
-  </p>
-  
-  
-  
-  
-  <h3 id="html5-validation">HTML5 data form validation</h3>
-  <p>
-    If a field has <strong>validation constraints</strong> they will be added automatically as
-    <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Data_form_validation" target="_blank">HTML5 data form validation</a>.
-  </p>
-  <p>
-    For example, if you have this form
-  </p>
-  <div class="highlight">
+</div>
+<p>
+  See more about <a href="{{ site.baseurl }}/docs#arguments-boolean" target="_blank">Boolean arguments</a>.
+</p>
+
+
+<h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
+<p>
+  Another frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute for checkboxes, radio buttons or selects. It isn't implemented, so you usually need to add an extra
+  <code>&lt;input type="hidden"&gt;</code> if you need to send its value within your POST request. For that cases, <code>b3</code> helpers for checkboxes, radio buttons and selects automatically add that input for you when the attribute <code>readonly</code> is present.
+</p>
+<p>
+  Additionally, in that cases, when you add the <code>readonly</code> attribute, <code>b3</code> helpers will also add the <code>disabled</code> attribute. Then, Bootstrap will avoid their interactability.
+</p>
+<p>
+  See more <a href="{{ site.baseurl }}/docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
+</p>
+
+
+
+
+<h3 id="html5-validation">HTML5 data form validation</h3>
+<p>
+  If a field has <strong>validation constraints</strong> they will be added automatically as
+  <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Data_form_validation" target="_blank">HTML5 data form validation</a>.
+</p>
+<p>
+  For example, if you have this form
+</p>
+<div class="highlight">
 <pre><code>val validationForm = Form(tuple(
-  "username" -&gt; nonEmptyText(maxLength = 20),
-  "email" -&gt; email,
-  "age" -&gt; number(min = 18, max = 99),
-  "color" -&gt; nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
+"username" -&gt; nonEmptyText(maxLength = 20),
+"email" -&gt; email,
+"age" -&gt; number(min = 18, max = 99),
+"color" -&gt; nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
 ))</code></pre>
-  </div>
-  <p>
-    The constraints will be automatically added as you can see here:
-  </p>
-  <div class="bs-example">
-    <div class="row example-html5-validation">
-      <div class="col-md-6">
-        <div class="form-group  " id="username_field">
-          <label class="control-label" for="username">Username</label>
-          <input type="text" id="username" name="username" value="" aria-describedby="username_info_0" maxlength="20" required="true" class="form-control">
-          <span id="username_info_0" class="help-block">A username between 1 and 20 characters</span>
-        </div>
-        <div class="form-group  " id="email_field">
-          <label class="control-label" for="email">Email</label>
-          <input type="email" id="email" name="email" value="" class="form-control">
-        </div>
+</div>
+<p>
+  The constraints will be automatically added as you can see here:
+</p>
+<div class="bs-example">
+  <div class="row example-html5-validation">
+    <div class="col-md-6">
+      <div class="form-group  " id="username_field">
+        <label class="control-label" for="username">Username</label>
+        <input type="text" id="username" name="username" value="" aria-describedby="username_info_0" maxlength="20" required="true" class="form-control">
+        <span id="username_info_0" class="help-block">A username between 1 and 20 characters</span>
       </div>
-      <div class="col-md-6">
-        <div class="form-group  " id="age_field">
-          <label class="control-label" for="age">Age</label>
-          <input type="number" id="age" name="age" value="" aria-describedby="age_info_0" min="18" max="99" class="form-control">
-          <span id="age_info_0" class="help-block">From 18 to 99 years old</span>
-        </div>
-        <div class="form-group  " id="color_field">
-          <label class="control-label" for="color">Hexadecimal color</label>
-          <input type="text" id="color" name="color" value="" aria-describedby="color_info_0" required="true" pattern="^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" class="form-control">
-          <span id="color_info_0" class="help-block">Format is #CCC or #CCCCCC</span>
-        </div>
+      <div class="form-group  " id="email_field">
+        <label class="control-label" for="email">Email</label>
+        <input type="email" id="email" name="email" value="" class="form-control">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group  " id="age_field">
+        <label class="control-label" for="age">Age</label>
+        <input type="number" id="age" name="age" value="" aria-describedby="age_info_0" min="18" max="99" class="form-control">
+        <span id="age_info_0" class="help-block">From 18 to 99 years old</span>
+      </div>
+      <div class="form-group  " id="color_field">
+        <label class="control-label" for="color">Hexadecimal color</label>
+        <input type="text" id="color" name="color" value="" aria-describedby="color_info_0" required="true" pattern="^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" class="form-control">
+        <span id="color_info_0" class="help-block">Format is #CCC or #CCCCCC</span>
       </div>
     </div>
   </div>
-  <div class="highlight">
+</div>
+<div class="highlight">
 <pre><code>@b3.text( validationForm("username"), '_label -&gt; "Username", '_help -&gt; "A username between 1 and 20 characters" )
 @b3.email( validationForm("email"), '_label -&gt; "Email" )
 @b3.number( validationForm("age"), '_label -&gt; "Age", '_help -&gt; "From 18 to 99 years old" )
 @b3.text( validationForm("color"), '_label -&gt; "Hexadecimal color", '_help -&gt; "Format is #CCC or #CCCCCC" )</code></pre>
-  </div>
-  <p>
-    See more about <a href="/docs#arguments-validation" target="_blank">Validation arguments</a>.
-  </p>
-  
-  
-  
-  
-  <h3 id="multifield">Multifield support</h3>
-  <p>
-    Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...). With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
-  </p>
-  <div class="bs-example">
-    <form action="" method="GET" class="form-horizontal " role="form">
-      <div class="form-group  ">
-        <label class="control-label col-md-2">Inline</label>
-        <div class="col-md-10">
-          <div class="multi-checkbox-list inline">
-            <div class="checkbox-wrap">
-              <div class="checkbox">
-                <label for="foo">
-                  <input type="checkbox" id="foo" name="foo" value="true"> Foo
-                </label>
-              </div>
-            </div>
-            <div class="checkbox-wrap">
-              <div class="checkbox">
-                <label for="bar">
-                  <input type="checkbox" id="bar" name="bar" value="true"> Bar
-                </label>
-              </div>
-            </div>
-            <div class="checkbox-wrap">
-              <div class="checkbox">
-                <label for="beer">
-                  <input type="checkbox" id="beer" name="beer" value="true"> Beer
-                </label>
-              </div>
+</div>
+<p>
+  See more about <a href="/docs#arguments-validation" target="_blank">Validation arguments</a>.
+</p>
+
+
+
+
+<h3 id="multifield">Multifield support</h3>
+<p>
+  Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...). With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
+</p>
+<div class="bs-example">
+  <form action="" method="GET" class="form-horizontal " role="form">
+    <div class="form-group  ">
+      <label class="control-label col-md-2">Inline</label>
+      <div class="col-md-10">
+        <div class="multi-checkbox-list inline">
+          <div class="checkbox-wrap">
+            <div class="checkbox">
+              <label for="foo">
+                <input type="checkbox" id="foo" name="foo" value="true"> Foo
+              </label>
             </div>
           </div>
-          <span class="help-block">Mark what you want</span>
-        </div>
-      </div>
-      <div class="form-group  ">
-        <label class="control-label col-md-2">Date range</label>
-        <div class="col-md-10">
-          <div class="input-daterange input-group" data-date-start-date="10-11-2014">
-            <input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
-            <span class="input-group-addon">to</span>
-            <input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
+          <div class="checkbox-wrap">
+            <div class="checkbox">
+              <label for="bar">
+                <input type="checkbox" id="bar" name="bar" value="true"> Bar
+              </label>
+            </div>
           </div>
-          <span class="help-block">Select a date range from 10-11-2014</span>
-        </div>
-      </div>
-      <div class="form-group  ">
-        <label class="control-label col-md-2">New task</label>
-        <div class="col-md-10">
-          <div class="input-text-checkbox input-group">
-            <span class="input-group-addon">
-			        <div class="checkbox">
-                <label for="fooSelected">
-                  <input type="checkbox" id="fooSelected" name="fooSelected" value="true">
-                </label>
-			        </div>
-	          </span>
-            <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
+          <div class="checkbox-wrap">
+            <div class="checkbox">
+              <label for="beer">
+                <input type="checkbox" id="beer" name="beer" value="true"> Beer
+              </label>
+            </div>
           </div>
         </div>
+        <span class="help-block">Mark what you want</span>
       </div>
-    </form>
-  </div>
-  <div class="highlight">
+    </div>
+    <div class="form-group  ">
+      <label class="control-label col-md-2">Date range</label>
+      <div class="col-md-10">
+        <div class="input-daterange input-group" data-date-start-date="10-11-2014">
+          <input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
+          <span class="input-group-addon">to</span>
+          <input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
+        </div>
+        <span class="help-block">Select a date range from 10-11-2014</span>
+      </div>
+    </div>
+    <div class="form-group  ">
+      <label class="control-label col-md-2">New task</label>
+      <div class="col-md-10">
+        <div class="input-text-checkbox input-group">
+          <span class="input-group-addon">
+		        <div class="checkbox">
+              <label for="fooSelected">
+                <input type="checkbox" id="fooSelected" name="fooSelected" value="true">
+              </label>
+		        </div>
+          </span>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="highlight">
 <pre><code>@b3.multiCheckbox(
-  (fooForm("foo"), Map('_text -&gt; "Foo")),
-  (fooForm("bar"), Map('_text -&gt; "Bar")),
-  (fooForm("beer"), Map('_text -&gt; "Beer"))
-  )('_label -&gt; "Inline", 'class -&gt; "multi-checkbox-list inline", '_help -&gt; "Mark what you want")
-  
+(fooForm("foo"), Map('_text -&gt; "Foo")),
+(fooForm("bar"), Map('_text -&gt; "Bar")),
+(fooForm("beer"), Map('_text -&gt; "Beer"))
+)('_label -&gt; "Inline", 'class -&gt; "multi-checkbox-list inline", '_help -&gt; "Mark what you want")
+
 @b3.datepicker( fooForm("dateStart"), 'value -&gt; "15-11-2014" )(
-  fooForm("dateEnd"), 'value -&gt; "31-12-2014" )(
-  '_label -&gt; "Date range", "data-date-start-date" -&gt; "10-11-2014", '_help -&gt; "Select a date range from 10-11-2014" )
-  
+fooForm("dateEnd"), 'value -&gt; "31-12-2014" )(
+'_label -&gt; "Date range", "data-date-start-date" -&gt; "10-11-2014", '_help -&gt; "Select a date range from 10-11-2014" )
+
 @b3.textWithCheckbox( fooForm("foo"), 'placeholder -&gt; "a foo value" )( fooForm("fooSelected") )('_label -&gt; "New task" )</code></pre>
-  </div>
-  <p>
-    <strong>Note:</strong> these helpers (<code>b3.multiCheckbox</code>, <code>b3.datepicker</code> and <code>b3.textWithCheckbox</code>) are not part of the library, but <a href="{{ site.baseurl }}/multifield" target="_blank">here</a> it is explained how to easily implement them (or just copy them).
-  </p>
-  <p>
-    See more about <a href="{{ site.baseurl }}/multifield" target="_blank">Multifield</a> support.
-  </p>
-  
-  
-  
-  <h3 id="auto-i18n">Auto internationalization</h3>
-  <p>
-    Most of arguments used in helpers are automatically internationalized. So you can simply write:
-  </p>
-  <div class="highlight">
+</div>
+<p>
+  <strong>Note:</strong> these helpers (<code>b3.multiCheckbox</code>, <code>b3.datepicker</code> and <code>b3.textWithCheckbox</code>) are not part of the library, but <a href="{{ site.baseurl }}/multifield" target="_blank">here</a> it is explained how to easily implement them (or just copy them).
+</p>
+<p>
+  See more about <a href="{{ site.baseurl }}/multifield" target="_blank">Multifield</a> support.
+</p>
+
+
+
+<h3 id="auto-i18n">Auto internationalization</h3>
+<p>
+  Most of arguments used in helpers are automatically internationalized. So you can simply write:
+</p>
+<div class="highlight">
 <pre><code>@b3.text( loginForm("username"), '_label -> "field.username.label", '_help -> "field.username.help" )
 @b3.email( loginForm("email"), '_label -> "field.email.label", 'placeholder -> "field.email.placeholder" )
 @b3.password( loginForm("password"), '_label -> "field.pwd.label", 'placeholder -> "field.pwd.placeholder" )
 @b3.checkbox( loginForm("remember"), '_text -> "field.remember", 'value -> true )</code></pre>
-  </div>
-  
-  
-  
-  <h3 id="aria">With ARIA attributes</h3>
-  <p>
-    The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility. However we know it could be difficult and boring to integrate it everywhere within your web. Because of that, <strong>the library
-			will do automatically for you</strong> for any field constructor.
-  </p>
-  <p>
-    See more about <a href="{{ site.baseurl }}/docs#aria" target="_blank">ARIA attributes</a> support.
-  </p>
-  
-  
-  {% include index_installation.html %}
-  
-  
-  
-  
-  <h2 id="examples">Examples</h2>
-  <p>
-    This web is an example. You can see on the top menu an example of each kind of form (
-    <a href="{{ site.baseurl }}/vertical">vertical</a>, <a href="{{ site.baseurl }}/horizontal">horizontal</a>,
-    <a href="{{ site.baseurl }}/inline">inline</a>) and one more for a single view with
-    <a href="{{ site.baseurl }}/mixed">different mixed forms</a>.
-  </p>
-  <p>
-    You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>.
-  </p>
-  <p>
-    More examples:
-  </p>
-  <ul>
-    <li><a href="https://github.com/adrianhurt/play-multidomain-auth" target="_blank">Play Multidomain Auth</a>
-    </li>
-  </ul>
-  
-  
-  
-  
-  <h2 id="customization">Customization</h2>
-  <p>
-    This is a very simple library, and you have all the code on
-    <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>. So you can use it as inspiration and create your own field constructors and/or helpers.
-  </p>
-  
-  
-  
-  
-  <h2 id="changelog">Change Log</h2>
-  <p>
-    You can check the change log <a href="/changelog">here</a>.
-  </p>
 </div>
+
+
+
+<h3 id="aria">With ARIA attributes</h3>
+<p>
+  The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility. However we know it could be difficult and boring to integrate it everywhere within your web. Because of that, <strong>the library
+		will do automatically for you</strong> for any field constructor.
+</p>
+<p>
+  See more about <a href="{{ site.baseurl }}/docs#aria" target="_blank">ARIA attributes</a> support.
+</p>
+
+
+{% include index_installation.html %}
+
+
+
+
+<h2 id="examples">Examples</h2>
+<p>
+  This web is an example. You can see on the top menu an example of each kind of form (
+  <a href="{{ site.baseurl }}/vertical">vertical</a>, <a href="{{ site.baseurl }}/horizontal">horizontal</a>,
+  <a href="{{ site.baseurl }}/inline">inline</a>) and one more for a single view with
+  <a href="{{ site.baseurl }}/mixed">different mixed forms</a>.
+</p>
+<p>
+  You can check the whole code on <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>.
+</p>
+<p>
+  More examples:
+</p>
+<ul>
+  <li><a href="https://github.com/adrianhurt/play-multidomain-auth" target="_blank">Play Multidomain Auth</a>
+  </li>
+</ul>
+
+
+
+
+<h2 id="customization">Customization</h2>
+<p>
+  This is a very simple library, and you have all the code on
+  <a href="https://github.com/adrianhurt/play-bootstrap" target="_blank">Github</a>. So you can use it as inspiration and create your own field constructors and/or helpers.
+</p>
+
+
+
+
+<h2 id="changelog">Change Log</h2>
+<p>
+  You can check the change log <a href="/changelog">here</a>.
+</p>

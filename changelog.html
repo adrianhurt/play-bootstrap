@@ -14,7 +14,7 @@ uri: /changelog/
   			<p class="lead">{{ v.released }}</p>
         
         {% assign versions = site.data.versions | where: "library", v.library %}
-        {% include version_table.html versions=versions %}
+        {% include version_table.html versions=versions withDependencies=true %}
         
         {% include changelog_bullets.html bullets=v.bullets %}
         

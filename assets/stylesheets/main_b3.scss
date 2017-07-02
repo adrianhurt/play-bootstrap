@@ -37,6 +37,7 @@ body {
 		}
 	}
 	.navbar-nav {
+    height: 50px;
     text-align: right;
 		& > li > a {
 			color: $nav-color;
@@ -64,6 +65,9 @@ body {
 			}
 		}
 	}
+  #current-version {
+    height: 50px;
+  }
 	.github a {
 		padding-top: 10px;
 		padding-bottom: 10px;
@@ -86,6 +90,7 @@ body {
 	max-width: 960px;
 }
 .version-badge {
+  & > * { vertical-align: middle }
   .code {
     font-size: 1.1em;
     font-weight: bold;

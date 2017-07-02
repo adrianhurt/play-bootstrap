@@ -72,6 +72,10 @@ body {
       text-align: right;
     }
 	}
+  #current-version {
+    height: 35px;
+    margin-top: -2px;
+  }
 	.github a {
 		color: white !important;
     margin: -3px 0;
@@ -98,6 +102,7 @@ body {
 	max-width: 960px;
 }
 .version-badge {
+  & > * { vertical-align: text-top }
   .code {
     font-size: 1.1em;
     font-weight: bold;
