@@ -12,7 +12,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies ++= Seq(
-  "com.adrianhurt" %% "play-bootstrap" % "1.2-P24-B4-RC1",
+  "com.adrianhurt" %% "play-bootstrap" % "1.2-P24-B4-RC2",
   "org.webjars" % "bootstrap" % "4.0.0-alpha.6-1" exclude("org.webjars", "jquery"),
   "org.webjars" % "jquery" % "3.2.1",
   "org.webjars" % "font-awesome" % "4.7.0",
