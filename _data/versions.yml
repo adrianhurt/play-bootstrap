@@ -7,7 +7,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
@@ -20,7 +20,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
@@ -33,7 +33,7 @@
   bootstrap_dependency: "3.3.7"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
@@ -46,7 +46,7 @@
   bootstrap_dependency: "4.0.0-alpha.6"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
@@ -59,7 +59,7 @@
   bootstrap_dependency: "4.0.0-alpha.6"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
@@ -72,7 +72,7 @@
   bootstrap_dependency: "4.0.0-alpha.6"
   jquery_dependency: "3.2.1"
   artifact: "play-bootstrap"
-  release_candidate: "RC1"
+  release_candidate: "RC2"
   snapshot: false
   legacy: false
 
