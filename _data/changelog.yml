@@ -1,15 +1,15 @@
-- id: 1-2-P2X-BX-RC2
+- id: 1-2-P2X-BX
   library: "1.1.2"
   title: 1.2-P2X-BX
   claim: Welcome to Play 2.6
-  released: In development...
+  released: 23 July 2017
   bullets:
     - type: add
       text: |
-        New versions for Play 2.6.0.
+        New versions for Play 2.6.2.
     - type: change
       text: |
-        Update to Play 2.5.15 (and 2.4.11).
+        Update to Play 2.5.16 (and 2.4.11).
     - type: change
       text: |
         Now, for Play 2.5 and 2.6, the dependencies `filters`, `bootstrap` and `jquery` have been removed from the library, so you must now include them explicitly in your project. It lets you to decouple the library and you can select the exact version of Bootstrap and jQuery you want.

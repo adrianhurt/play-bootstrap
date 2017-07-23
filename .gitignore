@@ -92,3 +92,4 @@ resources
 # Jekyll #
 ######################
 _site
+Gemfile*
