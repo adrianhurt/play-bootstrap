@@ -2,7 +2,7 @@
 @multifieldFormGroup(fields, globalArgs, fieldsArgs) { multifieldInfo =>
 	@inputsHtml(b4.clear.fieldConstructorSpecific)
 	@multifieldInfo.feedbackInfos.map { text =>
-		<div class="form-control-feedback">@text</div>
+		<div class="@multifieldInfo.statusB4Feedback">@text</div>
 	}
 	@multifieldInfo.helpInfos.map { text =>
 		<small class="form-text text-muted">@text</small>

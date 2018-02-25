@@ -6,21 +6,21 @@
 
 
 @main("Extend it", tab = "extendit") {
-	
+
 	@b4.form(routes.Application.extendIt) {
-		
+
 		<h1 id="extend-it" class="page-header">Implement your own helpers or field constructors</h1>
 		<p class="lead">
 			This library tries to be an out-of-the-box plugin. You simply need to install the library and you can
 			start to write your forms. However, although it is a very versatile library, you may have different
 			necessities. Thus, let's see some examples to know how you could extend it.
 		</p>
-		
+
 		<h2 id="create-helper">Create your own helper</h2>
 		<p>
 			To create a helper is very easy. You only have to look the helpers within the @repository.home("Github repository").
 			Let's suppose you want to add an input group for every email input. And you would like
-			to create your own email helper like this one: 
+			to create your own email helper like this one:
 		</p>
 		@bsExample {
 			@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
@@ -28,10 +28,10 @@
 		<p>
 			So let's add a file within your <code>views</code> folder. For example <code>app/views/b4/my/email.scala.html</code>,
 			and write the following code:
-		</p>		
+		</p>
 		@code {
 			@@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.BSFieldConstructor, @BSVersion.msgsArg)
-			@@b4.inputFormGroup(field, withFeedback = false, withLabelFor = true, b4.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+			@@b4.inputFormGroup(field, withLabelFor = true, b4.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
 				<div class="input-group">
 					<span class="input-group-addon">@@@@</span>
 					<input type="email" id="@@fieldInfo.id" name="@@fieldInfo.name" value="@@fieldInfo.value" @@toHtmlArgs(fieldInfo.innerArgsMap)>
@@ -52,9 +52,9 @@
 		@code {
 			@@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 		}
-		
+
 		@javaMessagesWarning()
-		
+
 		<h3 id="input-wrapped">The use of <code>b4.inputWrapped</code></h3>
 		<p>
 			The <code>b4.inputWrapped</code> is a helper that lets you to customize easily a <strong>textual input</strong>.
@@ -80,16 +80,16 @@
 				</div>
 			}
 		}
-		
+
 		<h3 id="multifield">Create your multifield helper</h3>
 		<p>
 			The purpose of <code>b4.multifield</code> helper is to be a tool for creating multifield helpers. The
 			method is exactly the same as the previous one for <code>b4.inputWrapped</code>. You can see more
 			information and examples at the <a href="@routes.Application.multifield">Multifield</a> section.
 		</p>
-	}	
-	
-	
+	}
+
+
 	<h2 id="create-field-constructor">Create your own field constructor</h2>
 	<p>
 		Creating new helpers is useful for adding or customizing the input structure of a field, but you may need your
@@ -173,13 +173,13 @@
 		</ul>
 		You can check the code @repository.file("sample/app/views/b4/my/vertical/package.scala", "here").
 	</p>
-			
+
 	<p>
 		And that's all, you now can use your own field constructor as any other with:
 	</p>
 	@code {
 		@@import b4.my.vertical.fieldConstructor		// Declare it as default
-		
+
 		@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
 	}
 	<p>
@@ -190,5 +190,5 @@
 			@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
 		}
 	}
-	
+
 }

@@ -3,7 +3,7 @@
 	@wrap {
 		@inputHtml
 		@fieldInfo.feedbackInfos.map { case (id, text) =>
-			<div id="@id" class="form-control-feedback">@text</div>
+			<div id="@id" class="@fieldInfo.statusB4Feedback">@text</div>
 		}
 		@fieldInfo.helpInfos.map { case (id, text) =>
 			<small id="@id" class="form-text text-muted">@text</small>

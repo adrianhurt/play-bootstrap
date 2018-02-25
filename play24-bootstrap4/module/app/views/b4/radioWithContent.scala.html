@@ -14,15 +14,9 @@
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
 	(argsMap, inline, disabled)
 }) { case (argsMap, inline, disabled) =>
-	@inputFormGroup(field, withFeedback = false, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
 		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
-      @if(fieldInfo.isCustom && !inline) {
-        <div class="custom-controls-stacked">
-          @content(inline, disabled, fieldInfo)
-        </div>
-      } else {
-        @content(inline, disabled, fieldInfo)
-      }
+      @content(inline, disabled, fieldInfo)
 		}
 	}(fc, messages)
 }

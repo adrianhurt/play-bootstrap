@@ -61,6 +61,9 @@ package object bs {
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
 
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    lazy val statusB4Feedback: Option[String] = BSFieldInfo.statusB4Feedback(status)
+
     /* List of every ARIA id */
     val ariaIds: Seq[String] = errors.map(_._1)
 
@@ -73,9 +76,13 @@ package object bs {
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, msgsProv) ++
-      args.filter(_._1 == 'placeholder).map(Args.msg(_)(msgsProv.messages)) ++
-      args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
-    ).toMap.filterNot(_._2 == false)
+      Args.inner(
+        Args.remove(args, 'id, 'value).map {
+          case arg if arg._1 == 'placeholder => Args.msg(arg)(msgsProv.messages)
+          case other => other
+        }
+      )
+    ).toMap
   }
 
   /**
@@ -129,6 +136,13 @@ package object bs {
         None
     }
 
+    /* The corresponding feedback class for helpers */
+    def statusB4Feedback(status: Option[String]): Option[String] = status.map {
+        case "success" => "valid-feedback"
+        case "warning" => "warning-feedback"
+        case _ => "invalid-feedback"
+    }
+
     /* Generates automatically the input attributes for the constraints of a field */
     def constraintsArgs(field: Field, msgsProv: MessagesProvider): Seq[(Symbol, Any)] = field.constraints.map {
       case ("constraint.required", params) => Some(('required -> true))
@@ -178,6 +192,9 @@ package object bs {
 
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
+
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    lazy val statusB4Feedback: Option[String] = BSFieldInfo.statusB4Feedback(status)
 
     lazy val globalArgs = globalArguments
 

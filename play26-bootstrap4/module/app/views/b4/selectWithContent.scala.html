@@ -15,7 +15,7 @@
   val defaultClass = if (bs.ArgsMap.isTrue(argsMap, '_custom)) "custom-select" else "form-control"
 	(argsMap, disabled, multiple, defaultClass)
 }) { case (argsMap, disabled, multiple, defaultClass) =>
-	@inputFormGroup(field, withFeedback = false, withLabelFor = true, bs.Args.withDefault(bs.Args.withAddingStringValue(args, 'class, defaultClass), 'disabled -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withLabelFor = true, bs.Args.withDefault(bs.Args.withAddingStringValue(args, 'class, defaultClass), 'disabled -> disabled)) { fieldInfo =>
 		@defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
 			@defining( ( !field.indexes.isEmpty && multiple ) match {
 				case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
