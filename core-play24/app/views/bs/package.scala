@@ -74,7 +74,7 @@ package object bs {
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, messages) ++
       args.filter(_._1 == 'placeholder).map(Args.msg(_)(messages)) ++
-      args.filterNot { case (key, _) => key == 'id || key == 'value || key == 'placeholder || key.name.startsWith("_") }
+      args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
     ).toMap.filterNot(_._2 == false)
   }
 

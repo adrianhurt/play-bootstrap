@@ -74,7 +74,7 @@ package object bs {
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, msgsProv) ++
       args.filter(_._1 == 'placeholder).map(Args.msg(_)(msgsProv.messages)) ++
-      args.filterNot { case (key, _) => key == 'id || key == 'value || key == 'placeholder || key.name.startsWith("_") }
+      args.filterNot { case (key, _) => key == 'id || key == 'value || key.name.startsWith("_") }
     ).toMap.filterNot(_._2 == false)
   }
 
@@ -107,7 +107,7 @@ package object bs {
         argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(Nil)
       )
     }
-    
+
     /* List with every "help info", i.e. a help text or constraints */
     def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
       argsMap.get('_help).map(m => Seq(msgsProv.messages(m.toString))).getOrElse {

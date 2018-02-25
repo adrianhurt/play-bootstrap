@@ -1,6 +1,6 @@
 name := """play-bootstrap-sample"""
 
-version := "1.1"
+version := "1.2"
 
 scalaVersion := "2.11.11"
 
@@ -13,7 +13,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 libraryDependencies ++= Seq(
   filters,
-  "com.adrianhurt" %% "play-bootstrap" % "1.2-P25-B3",
+  "com.adrianhurt" %% "play-bootstrap" % "1.2.1-P25-B3-SNAPSHOT",
   "org.webjars" % "bootstrap" % "3.3.7-1" exclude("org.webjars", "jquery"),
   "org.webjars" % "jquery" % "3.2.1",
   "org.webjars" % "font-awesome" % "4.7.0",

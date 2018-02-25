@@ -1,6 +1,6 @@
 name := """play-bootstrap-core"""
 
-version := "1.2-P26"
+version := "1.2.1-P26-SNAPSHOT"
 
 scalaVersion := "2.12.2"
 
