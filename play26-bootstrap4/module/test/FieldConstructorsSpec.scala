@@ -109,6 +109,11 @@ object FieldConstructorsSpec extends Specification {
       test must contain("class=\"form-text text-muted\">" + msgsProv.messages("constraint.maxLength", 8) + "</small>")
     }
 
+    "localize placeholder property" in {
+      val test = simpleInputWithArgs('placeholder -> "simpleInputWithArgs.placeholder.value")
+      test must contain("placeholder=\"Placeholder value\"")
+    }
+
     "allow showing help info" in {
       simpleInputWithArgs('_help -> "test-help") must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
       simpleInputWithArgs('_success -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"form-control-feedback\">test-help</div>")
