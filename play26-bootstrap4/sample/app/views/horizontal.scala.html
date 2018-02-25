@@ -9,7 +9,7 @@
 @main("Horizontal Form", tab = "horizontal") {
 
 	@b4.form(routes.Application.horizontal) {
-		
+
 		<h1 id="horizontal-form" class="page-header">Horizontal Form</h1>
 		<p class="lead">This page its an example to show how to use a horizontal form.</p>
 
@@ -20,7 +20,7 @@
 		@code {
 			@@implicitFieldConstructor = @@{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 		}
-		
+
 		<p>
 			<strong>Tip:</strong> You could create your own default horizontal field constructor and
 			import it with something like:
@@ -38,8 +38,8 @@
 				implicit val fieldConstructor = views.html.b4.horizontal.fieldConstructor("col-md-2", "col-md-10")
 			}
 		}
-		
-		
+
+
 		<h3 id="simple-inputs">Simple inputs</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -98,7 +98,7 @@
 			@@b4.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
 			@@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@@b4.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
-	
+
 			@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 			...
 			@@b4.select( fooForm("foo"), options = fruits, '_label -> "Select" )
@@ -122,7 +122,7 @@
 			@@b4.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
 			@@b4.select( fooForm("foo"), options = fruits, '_label -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
 		}
-		
+
 		<h3 id="validation-states">Validation states</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -141,7 +141,7 @@
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
-			
+
 			// With feedback icons
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
@@ -166,7 +166,7 @@
 			@@b4.select( fooForm("foo_select_custom_1"), options = fruits, '_label -> "Select", '_custom -> true )
 			@@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", '_custom -> true )
     }
-    
+
 		<h3 id="customize">Customize them</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -182,7 +182,7 @@
 							<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
 							@input
 							<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
-						</div>	
+						</div>
 					}
 				</div>
 				<div class="col-md-6">
@@ -212,7 +212,7 @@
 				<div class="input-group">
 					<span class="input-group-addon">@@@@</span>
 					@@input
-				</div>	
+				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
 				<div class="input-group">
@@ -221,14 +221,14 @@
 					<div class="input-group-btn">
 						<!-- Button and dropdown menu -->
 					</div>
-				</div>	
+				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Number", 'value -> 0, '_help -> "This needs some JavaScript and CSS" ) { input =>
 				<div class="input-number input-group">
 					<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
 					@@input
 					<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
-				</div>	
+				</div>
 			}
 		}
 

@@ -61,6 +61,9 @@ package object bs {
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
 
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    lazy val statusB4Feedback: Option[String] = BSFieldInfo.statusB4Feedback(status)
+
     /* List of every ARIA id */
     val ariaIds: Seq[String] = errors.map(_._1)
 
@@ -107,7 +110,7 @@ package object bs {
         argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(messages(m.toString))).getOrElse(Nil)
       )
     }
-    
+
     /* List with every "help info", i.e. a help text or constraints */
     def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], messages: Messages): Seq[String] = {
       argsMap.get('_help).map(m => Seq(messages(m.toString))).getOrElse {
@@ -127,6 +130,13 @@ package object bs {
         Some("success")
       else
         None
+    }
+
+    /* The corresponding feedback class for helpers */
+    def statusB4Feedback(status: Option[String]): Option[String] = status.map {
+        case "success" => "valid-feedback"
+        case "warning" => "warning-feedback"
+        case _ => "invalid-feedback"
     }
 
     /* Generates automatically the input attributes for the constraints of a field */
@@ -178,6 +188,9 @@ package object bs {
 
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
+
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    lazy val statusB4Feedback: Option[String] = BSFieldInfo.statusB4Feedback(status)
 
     lazy val globalArgs = globalArguments
 

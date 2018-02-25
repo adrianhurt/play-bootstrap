@@ -26,11 +26,10 @@ package object b4 {
 
   /**
    * Class with relevant variables for a field to pass it to the helper and field constructor
-   * - withFeedbak: indicates if the feedback icons are allowed
    * - withLabelFor: indicates if the label's "for" attribute should be shown
    * - args: list of available arguments for the helper and field constructor
    */
-  case class B4FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
+  case class B4FieldInfo(field: Field, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val messages: Messages) extends BSFieldInfo(field, args, messages) {
 
     /* List with every "feedback info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
     val feedbackInfos: Seq[(String, String)] =
@@ -49,25 +48,11 @@ package object b4 {
     /* Indicates if it's a custom element */
     val isCustom: Boolean = isTrue(argsMap, '_custom)
 
-    /* Each boolean indicate if a any of the corresponding feedback icons should be shown */
-    val (showIconError, showIconWarning, showIconValid) = {
-      if (!withFeedback) (false, false, false)
-      else if (hasErrors) (isTrue(argsMap, '_showIconOnError), false, false)
-      else if (isTrue(argsMap, '_showIconWarning)) (false, true, false)
-      else (false, false, isTrue(argsMap, '_showIconValid))
-    }
-
     /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
-    /* Indicates if any of the previous feedback icons should be shown */
-    val hasFeedback: Boolean = showIconError || showIconWarning || showIconValid
-
-    /* ARIA id for the feedback icons (ex: "foo_status") */
-    def ariaFeedbackId: String = id + "_status"
-
     /* List of every ARIA id */
-    override val ariaIds: Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ feedbackInfos.map(_._1) ++ helpInfos.map(_._1)
+    override val ariaIds: Seq[String] = feedbackInfos.map(_._1) ++ helpInfos.map(_._1)
 
     /*
     * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
@@ -79,7 +64,7 @@ package object b4 {
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       (BSFieldInfo.constraintsArgs(field, messages) ++ Args.inner(
         Args.remove(
-          (if (hasFeedback) Args.withAddingStringValue(args, 'class, status.map("form-control-" + _).getOrElse("")) else args),
+          status.map(s => Args.withAddingStringValue(args, 'class, if (s == "danger") "is-invalid" else if (s == "success") "is-valid" else "")).getOrElse(args),
           'id, 'value
         )
       ))
@@ -154,8 +139,8 @@ package object b4 {
    * - args: list of available arguments for the helper and field constructor
    * - inputDef: function that returns a Html from a B4FieldInfo that contains all the information about the field
    */
-  def inputFormGroup(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B4FieldInfo => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
-    inputFormField(B4FieldInfo(field, withFeedback, withLabelFor, Args.withoutNones(args), messages))(inputDef)(fc)
+  def inputFormGroup(field: Field, withLabelFor: Boolean, args: Seq[(Symbol, Any)])(inputDef: B4FieldInfo => Html)(implicit fc: B4FieldConstructor, messages: Messages) =
+    inputFormField(B4FieldInfo(field, withLabelFor, Args.withoutNones(args), messages))(inputDef)(fc)
 
   /**
    * Renders a form-group using the B4FieldConstructor.

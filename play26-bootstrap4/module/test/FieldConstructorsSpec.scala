@@ -41,7 +41,7 @@ object FieldConstructorsSpec extends Specification {
 
     val testInputString = "<input>"
     def testInput(field: Field, args: (Symbol, Any)*) =
-      b4.inputFormGroup(field, false, true, args) { _ => Html(testInputString) }
+      b4.inputFormGroup(field, true, args) { _ => Html(testInputString) }
 
     val fooForm = Form(single("foo" -> Forms.nonEmptyText(maxLength = 8)))
     val fooField = fooForm("foo")
@@ -56,7 +56,7 @@ object FieldConstructorsSpec extends Specification {
     }
     val labelExtraClasses = fc match {
       case hfc: b4.horizontal.HorizontalFieldConstructor => "col-form-label " + hfc.colLabel
-      case _ => "form-control-label"
+      case _ => ""
     }
 
     "have the basic structure" in {
@@ -81,11 +81,11 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "render the label" in {
-      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(s"""<label class="$labelExtraClasses" for="foo">theLabel</label>""")
+      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(if (labelExtraClasses == "") """<label for="foo">theLabel</label>""" else s"""<label class="$labelExtraClasses" for="foo">theLabel</label>""")
     }
 
     "allow hide the label" in {
-      val labelString = s"""<label class="$labelExtraClasses sr-only" for="foo">theLabel</label>"""
+      val labelString = if (labelExtraClasses == "") """<label class="sr-only" for="foo">theLabel</label>""" else s"""<label class="$labelExtraClasses sr-only" for="foo">theLabel</label>"""
       clean(simpleInputWithArgs('_label -> "theLabel", '_hideLabel -> true)) must contain(labelString)
       clean(simpleInputWithArgs('_hiddenLabel -> "theLabel")) must contain(labelString)
     }
@@ -97,8 +97,8 @@ object FieldConstructorsSpec extends Specification {
     "allow rendering errors" in {
       val test = simpleInputWithError()
       test must contain("has-danger")
-      test must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</div>")
-      test must contain("<div id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</div>")
+      test must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-error-0</div>")
+      test must contain("<div id=\"foo_error_1\" class=\"invalid-feedback\">test-error-1</div>")
     }
 
     "allow showing constraints" in {
@@ -111,47 +111,32 @@ object FieldConstructorsSpec extends Specification {
 
     "allow showing help info" in {
       simpleInputWithArgs('_help -> "test-help") must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
-      simpleInputWithArgs('_success -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"form-control-feedback\">test-help</div>")
-      simpleInputWithArgs('_warning -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"form-control-feedback\">test-help</div>")
-      simpleInputWithArgs('_error -> "test-help") must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-help</div>")
+      simpleInputWithArgs('_success -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"valid-feedback\">test-help</div>")
+      simpleInputWithArgs('_warning -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"warning-feedback\">test-help</div>")
+      simpleInputWithArgs('_error -> "test-help") must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-help</div>")
     }
 
     "allow rendering erros and hide constraints when help info is present" in {
       val test = simpleInputWithError('_showConstraints -> true, '_help -> "test-help")
-      test must contain("<div id=\"foo_error_0\" class=\"form-control-feedback\">test-error-0</div>")
-      test must contain("<div id=\"foo_error_1\" class=\"form-control-feedback\">test-error-1</div>")
+      test must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-error-0</div>")
+      test must contain("<div id=\"foo_error_1\" class=\"invalid-feedback\">test-error-1</div>")
       test must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
       test must not contain ("<small id=\"foo_info_1\"")
     }
 
     "render validation states" in {
       def withStatus(status: String) = contain(s"""<div class="form-group${fieldsetExtraClasses} has-${status}"""")
-      def withFeedbackIcon(status: String) = contain(s""" class="form-control-$status form-control"""")
-      def testStatus(status: String, withIcon: Boolean, args: (Symbol, Any)*) = {
+      def testStatus(status: String, args: (Symbol, Any)*) = {
         val test = clean(simpleInputWithArgs(args: _*))
         test must withStatus(status)
-        if (withIcon) {
-          test must withFeedbackIcon(status)
-        } else {
-          test must not(withFeedbackIcon(status))
-        }
       }
 
-      testStatus("success", withIcon = false, '_success -> true)
-      testStatus("success", withIcon = false, '_success -> "test-help")
-      testStatus("warning", withIcon = false, '_warning -> true)
-      testStatus("warning", withIcon = false, '_warning -> "test-help")
-      testStatus("danger", withIcon = false, '_error -> true)
-      testStatus("danger", withIcon = false, '_error -> "test-help")
-
-      "with feedback icons" in {
-        testStatus("success", withIcon = true, '_showIconValid -> true)
-        testStatus("success", withIcon = true, '_success -> "test-help", '_showIconValid -> true)
-        testStatus("warning", withIcon = true, '_showIconWarning -> true)
-        testStatus("warning", withIcon = true, '_warning -> "test-help", '_showIconWarning -> true)
-        testStatus("danger", withIcon = true, '_error -> true, '_showIconOnError -> true)
-        testStatus("danger", withIcon = true, '_error -> "test-help", '_showIconOnError -> true)
-      }
+      testStatus("success", '_success -> true)
+      testStatus("success", '_success -> "test-help")
+      testStatus("warning", '_warning -> true)
+      testStatus("warning", '_warning -> "test-help")
+      testStatus("danger", '_error -> true)
+      testStatus("danger", '_error -> "test-help")
     }
 
     "render aria attributes" in {
@@ -162,19 +147,16 @@ object FieldConstructorsSpec extends Specification {
       test0 must not contain ("<span id=\"foo_info")
       test0 must not contain ("<span id=\"foo_error")
 
-      val test1 = simpleInputWithError('_showConstraints -> true, '_showIconOnError -> true)
+      val test1 = simpleInputWithError('_showConstraints -> true)
       test1 must contain("aria-invalid=\"true\"")
-      test1 must contain("aria-describedby=\"foo_status foo_error_0 foo_error_1 foo_info_0 foo_info_1\"")
-      test1 must contain("<span id=\"foo_status\"")
+      test1 must contain("aria-describedby=\"foo_error_0 foo_error_1 foo_info_0 foo_info_1\"")
       test1 must contain("<small id=\"foo_info_0\"")
       test1 must contain("<small id=\"foo_info_1\"")
       test1 must contain("<div id=\"foo_error_0\"")
       test1 must contain("<div id=\"foo_error_1\"")
 
-      val test2 = simpleInputWithArgs('_help -> "test-help", '_showIconValid -> true)
-      test2 must not contain ("aria-invalid")
-      test2 must contain("aria-describedby=\"foo_status foo_info_0\"")
-      test2 must contain("<span id=\"foo_status\"")
+      val test2 = simpleInputWithArgs('_help -> "test-help")
+      test2 must contain("aria-describedby=\"foo_info_0\"")
       test2 must contain("<small id=\"foo_info_0\"")
       test2 must not contain ("<div id=\"foo_feedback")
     }
