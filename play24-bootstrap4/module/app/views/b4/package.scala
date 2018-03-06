@@ -131,10 +131,7 @@ package object b4 {
   /**
    * Custom FieldConstructor for the library. Every FieldConstructor must extend this functionality.
    */
-  trait B4FieldConstructor extends BSFieldConstructor[B4FieldInfo] {
-    /* Define the class of the corresponding form (ex: "form-horizontal", "form-inline", ...) */
-    val formClass: String
-  }
+  trait B4FieldConstructor extends BSFieldConstructor[B4FieldInfo]
 
   /**
    * Renders an input form-group using the B4FieldConstructor.

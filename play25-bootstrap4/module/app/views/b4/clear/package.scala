@@ -26,8 +26,6 @@ package object clear {
    * Declares the class for the Clear FieldConstructor.
    */
   class ClearFieldConstructor extends B4FieldConstructor {
-    /* Define the class of the corresponding form */
-    val formClass = "form-clear"
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = inputHtml
     /* Renders the corresponding template of the form group */

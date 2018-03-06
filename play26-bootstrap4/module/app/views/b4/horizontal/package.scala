@@ -29,8 +29,6 @@ package object horizontal {
   case class HorizontalFieldConstructor(colLabel: String, colInput: String) extends B4FieldConstructor {
     /* The equivalent offset if label is not present (ex: colLabel = "col-md-2"  =>  colOffset = "offset-md-2") */
     val colOffset: String = colLabel.replace("col", "offset")
-    /* Define the class of the corresponding form */
-    val formClass = "form-horizontal"
     /* Renders the corresponding template of the field constructor */
     def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(msgsProv)
     /* Renders the corresponding template of the form group */

@@ -57,15 +57,8 @@ object FormsSpec extends Specification {
       simple must contain("method=\"" + method + "\"")
     }
 
-    "add default class for each field constructor" in {
-      fooFormBody()(vfc) must contain("class=\"form-vertical")
-      fooFormBody()(hfc) must contain("class=\"form-horizontal")
-      fooFormBody()(ifc) must contain("class=\"form-inline")
-      fooFormBody()(cfc) must contain("class=\"form-clear")
-    }
-
     "allow setting custom class" in {
-      fooFormBody('class -> "customClass")(vfc) must contain("class=\"form-vertical customClass\"")
+      fooFormBody('class -> "customClass")(vfc) must contain("class=\"customClass\"")
     }
 
     "add form role as default" in {
