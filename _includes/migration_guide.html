@@ -1,14 +1,10 @@
-<div class="panel panel-info">
-	<div class="panel-heading" role="tab" id="migration_{{ include.id }}">
-		<h4 class="panel-title">
-			<a class="collapsed" data-toggle="collapse" href="#collapse_{{ include.id }}" aria-expanded="false" aria-controls="collapse_{{ include.id }}">
-				{{ include.id }} Migration guide <i class="fa fa-caret"></i>
-			</a>
-		</h4>
+<div class="card bg-light">
+	<div class="card-header" role="tab" id="migration_{{ include.id }}" class="collapsed" data-toggle="collapse" href="#collapse_{{ include.id }}" aria-expanded="false" aria-controls="collapse_{{ include.id }}">
+		{{ include.id }} Migration guide <i class="fa fa-caret"></i>
 	</div>
-	<div id="collapse_{{ include.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="migration_{{ include.id }}">
-		<div class="panel-body">
-      {{ include.text | markdownify }}
+	<div id="collapse_{{ include.id }}" class="collapse" role="tabpanel" aria-labelledby="migration_{{ include.id }}">
+		<div class="card-body">
+      		{{ include.text | markdownify }}
 		</div>
 	</div>
 </div>

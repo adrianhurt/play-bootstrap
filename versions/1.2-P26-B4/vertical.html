@@ -1,5 +1,4 @@
 ---
-redirect_from: "/vertical/"
 title: "Play-Bootstrap 1.2-P26-B4 | Vertical forms examples"
 layout: default_b4
 permalink: /1.2-P26-B4/vertical/
@@ -23,7 +22,7 @@ tab: vertical
 <pre><code>@import b4.vertical.fieldConstructor</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="simple-inputs">Simple inputs</h3>
@@ -58,7 +57,7 @@ tab: vertical
 @b4.file( fooForm("foo"), '_label -&gt; "File" )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="more-options">More options</h3>
@@ -99,7 +98,7 @@ tab: vertical
 @b4.text( fooForm("foo"), '_label -&gt; "A big text", 'class -&gt; "form-control form-control-lg", 'placeholder -&gt; "An awesome field..." )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
@@ -155,14 +154,14 @@ tab: vertical
 <pre><code>@b4.textarea( fooForm("foo"), '_label -&gt; "Textarea", 'rows -&gt; 3 )
 @b4.checkbox( fooForm("foo"), '_text -&gt; "Checkbox", 'checked -&gt; true )
 @b4.radio( fooForm("foo"), options = Seq("M"-&gt;"Male","F"-&gt;"Female"), '_label -&gt; "Radio Group" )
-    
+
 @fruits = @{ Seq("A"-&gt;"Apples","P"-&gt;"Pears","B"-&gt;"Bananas") }
 ...
 @b4.select( fooForm("foo"), options = fruits, '_label -&gt; "Select" )
 @b4.select( fooForm("foo"), options = fruits, '_label -&gt; "Multiple Select", 'multiple -&gt; true )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
@@ -204,7 +203,7 @@ tab: vertical
 @b4.select( fooForm("foo"), options = fruits, '_label -&gt; "Select", 'multiple -&gt; true, 'readonly -&gt; true, 'value -&gt; "B,P" )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="validation-states">Validation states</h3>
@@ -259,7 +258,7 @@ tab: vertical
 @b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_showIconOnError -&gt; true, '_help -&gt; "Another help text", 'placeholder -&gt; "Error text..." )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="b4-custom">Bootstrap 4 custom forms (Beta)</h3>
@@ -314,7 +313,7 @@ tab: vertical
 @b4.file( fooForm("foo_file_custom_1"), '_label -&gt; "File", '_custom -&gt; true )</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="customize">Customize them</h3>
@@ -367,7 +366,7 @@ tab: vertical
   &lt;div class="input-group"&gt;
     &lt;span class="input-group-addon"&gt;@@&lt;/span&gt;
     @input
-  &lt;/div&gt;  
+  &lt;/div&gt;
 }
 @b4.inputWrapped( "text", fooForm("foo"), '_label -&gt; "Fully customized", 'placeholder -&gt; "A complicated one..." ) { input =&gt;
   &lt;div class="input-group"&gt;
@@ -376,18 +375,18 @@ tab: vertical
     &lt;div class="input-group-btn"&gt;
       &lt;!-- Button and dropdown menu --&gt;
     &lt;/div&gt;
-  &lt;/div&gt;  
+  &lt;/div&gt;
 }
 @b4.inputWrapped( "text", fooForm("foo"), '_label -&gt; "Number", 'value -&gt; 0, '_help -&gt; "This needs some JavaScript and CSS" ) { input =&gt;
   &lt;div class="input-number input-group"&gt;
     &lt;span class="input-group-addon input-number-minus"&gt;&lt;i class="fa fa-minus"&gt;&lt;/i&gt;&lt;/span&gt;
     @input
     &lt;span class="input-group-addon input-number-plus"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt;&lt;/span&gt;
-  &lt;/div&gt;  
+  &lt;/div&gt;
 }</code></pre>
   </div>
 
-  
+
 
 
   <h3 id="more-helpers">More helpers</h3>

@@ -83,7 +83,7 @@ body {
   .version-badge .code {
     color: white;
   }
-  
+
   a[version] {
     padding: 5px 20px;
   }
@@ -169,7 +169,7 @@ i.fa-github {
 
 h3, h4 { margin-top: 35px; }
 h1 + h2, h2 + h3, h3 + h4 { margin-top: 15px; }
- 
+
 input:invalid { color: red !important; }
 .example-html5-validation input:valid { color: green !important; }
 
@@ -246,9 +246,10 @@ span.def {
 			font-size: 15px;
 		}
 	}
-  .panel ul { list-style-type: square; }
+	.panel ul { list-style-type: square; }
 }
 
+.card { margin-bottom: 35px; }
 
 // For the examples:
 
@@ -257,6 +258,16 @@ span.def {
 	margin-right: 20px;
 }
 
+.input-text-checkbox {
+	.form-check {
+		padding: 0;
+	}
+	input {
+		position: relative !important;
+		margin: 0;
+	}
+}
+// legacy
 .input-text-checkbox > .input-group-addon {
 	.form-check { display: inline; }
 	label {
@@ -345,7 +356,7 @@ $sidebar-active-color: $nav-bg-color;
     padding-top: 1px;
     padding-bottom: 1px;
   }
-  
+
   .bd-sublinks { display: none; }
   .nav-link.active + .bd-sublinks { display: inherit; }
 }

@@ -16,6 +16,7 @@ markdown: kramdown
 sass:
   style: compressed
 
-gems:
+plugins:
+  - jekyll-coffeescript
   - jekyll-sitemap
   - jekyll-redirect-from

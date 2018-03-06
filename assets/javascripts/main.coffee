@@ -24,7 +24,7 @@ enableForm = ($form) ->
 ## DOCUMENT IS READY - INIT APP
 ############################################################################################################
 $ ->
-	
+
 	## For readonly example
 	$('.btn-readonly-unlock').click (e) ->
 		if $(this).hasClass('locked')
@@ -50,7 +50,7 @@ $ ->
 			$data.find('#data-radio').text radio
 			$data.find('#data-select').text select
 			$data.removeAttr('hidden')
-				
+
 	# Change also the value of its companion input
 	$('.checkbox-group input[type="checkbox"]').change ->
 		$(this).parents('.checkbox-group').find('input[type="hidden"]').val $(this).prop('checked')
@@ -59,7 +59,7 @@ $ ->
 		$radioGroup.find('input[type="hidden"]').val $radioGroup.find('input[type="radio"]:checked').val()
 	$('.select-group select').change ->
 		$(this).parents('.select-group').find('input[type="hidden"]').val $(this).val()
-	
+
 	$('.input-daterange').datepicker
 		format: "dd-mm-yyyy"
 		todayBtn: "linked"
@@ -73,11 +73,11 @@ $ ->
 			target = if target.length then target else $('[name=' + this.hash.slice(1) +']')
 			if (target.length)
 				scrollWithAnimation(target, 500)
-	
+
 	hash = location.hash
 	if hash.length > 0
 		scrollWithAnimation($(hash), 10)
-	
+
 	$('.apply-tweak').click (e) ->
 		if $(this).hasClass('active')
 			$('.form-inline').removeClass('align-top')
@@ -85,15 +85,15 @@ $ ->
 		else
 			$('.form-inline').addClass('align-top')
 			$(this).removeClass('btn-info').addClass('btn-danger')
-	
-	
-	
+
+
+
 	$('.input-number-plus').click (e) ->
-		$input = $(this).parent().find('input')
+		$input = $(this).parents('.input-number').find('input')
 		current = parseInt $input.val(), 10
 		$input.val current+1
-		
+
 	$('.input-number-minus').click (e) ->
-		$input = $(this).parent().find('input')
+		$input = $(this).parents('.input-number').find('input')
 		current = parseInt $input.val(), 10
 		$input.val current-1

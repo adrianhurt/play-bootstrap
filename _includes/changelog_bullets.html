@@ -1,7 +1,7 @@
 {% if include.bullets %}
   <ul>
     {% for b in include.bullets %}
-      <li><span class="glyphicon glyphicon-{% if b.type == 'add' %}plus{% elsif b.type == 'delete' %}trash{% else %}chevron-right{% endif %}"></span> {{ b.text | markdownify | remove: '<p>' | remove: '</p>' }}</li>
+      <li><span class="fa fa-{% if b.type == 'add' %}plus{% elsif b.type == 'delete' %}trash text-danger{% else %}chevron-right{% endif %}"></span> {{ b.text | markdownify | remove: '<p>' | remove: '</p>' }}</li>
       {% include changelog_bullets.html bullets=b.bullets %}
     {% endfor %}
   </ul>

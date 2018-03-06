@@ -1,5 +1,41 @@
+- id: 1-3-P2X-BX
+  library: "1.3"
+  title: 1.3-P2X-BX
+  claim: And finally, Bootstrap 4
+  released: 4 March 2018
+  bullets:
+    - type: change
+      text: |
+        Update to Bootstrap 4.0.0 (for versions 1.3-P2X-B4).
+    - type: change
+      text: |
+        Update to Play 2.6.12 / 2.5.16 / 2.4.11.
+    - type: change
+      text: |
+        Form groups have still classes "has-danger", "has-success" and "has-warning". Due to it is automatically managed by the plugin, it lets you easily to style the whole form group, such the label as it was previously (only for versions using B4).
+    - type: change
+      text: |
+        Form groups have still support for warning state, although it will be necessary a custom css not provided by this plugin (only for versions using B4).
+    - type: delete
+      text: |
+        Validation feedback icons have been removed (only for versions using B4).
+    - type: add
+      text: |
+        You can use 'placeholder for custom file helper (only for versions using B4).
+    - type: add
+      text: |
+        Multifield has now the ability of showing the validation states independently for each field (only for versions using B4).
+    - type: add
+      text: |
+        You can now remove the default classes for forms ("form-vertical", "form-horizontal", "form-inline") with <code>'_disableDefaultClass -> true</code> argument.
+  migration: |
+    Please, check the documentation for Bootstrap 4.
+
+    If you are still using the warning state for form-groups with Bootstrap 4, you will need to add the styling explicitly by yourself. Remember you will have the `has-warning` class added to the form-group.
+
+
 - id: 1-2-P2X-BX
-  library: "1.1.2"
+  library: "1.2"
   title: 1.2-P2X-BX
   claim: Welcome to Play 2.6
   released: 23 July 2017
@@ -15,14 +51,14 @@
         Now, for Play 2.5 and 2.6, the dependencies `filters`, `bootstrap` and `jquery` have been removed from the library, so you must now include them explicitly in your project. It lets you to decouple the library and you can select the exact version of Bootstrap and jQuery you want.
   migration: |
     Please, check the documentation for Play 2.6.
-    
+
     Now, for Play 2.5 and 2.6, the dependencies `filters`, `bootstrap` and `jquery` have been removed from the library, so you must now include them explicitly in your project if you need them.
     <div class="highlight">
     <pre><code>filters,
     "org.webjars" % "bootstrap" % "3.3.7-1" exclude("org.webjars", "jquery"),
     "org.webjars" % "jquery" % "3.2.1"</code></pre>
     </div>
-    
+
 
 - id: 1-1-1-P2X-BX
   library: "1.1.1"
@@ -40,7 +76,7 @@
         Update to jQuery 3.1.1.
   migration: |
     Please, check the documentation for Bootstrap 4 Alpha.
-    
+
 
 
 - id: 1-1-P2X-BX
@@ -56,11 +92,11 @@
         Arguments are now automatically internationalized (`'_label`, `'_hiddenLabel`, `'placeholder`, `'_help`, `'_success`, `'_warning`, `'_error`, `'_text` for `checkbox`, texts for `radio`, `radioOption`, `select` and `selectOption`)
   migration: |
     For `checkbox` helpers, check the docs to know the new behaviour for `'value`, `'checked` and `'_default` arguments.
-    
+
     If you have implemented your own _field constructors_ or _form group_, they now have to include an implicit `Messages` object.
-    
-    
-    
+
+
+
 - id: 1-0-P2X-BX
   library: "1.0"
   title: 1.0-P2X-BX
@@ -95,7 +131,7 @@
         Multifield support has been rewritten and modified a bit, so if you use your custom multifield helpers, please check the docs again.
   migration: |
     If you want to bump to [Bootstrap 4](http://v4-alpha.getbootstrap.com) you need to use the `1.0-P24-B4` version and replace every `b3` for `b4`.
-    
+
     If you have your own custom helpers or field constructors, not that `b3.Args` and `b3.ArgsMap` are now `bs.Args` and `bs.ArgsMap`.
 
 
@@ -121,7 +157,7 @@
         Added a new version of [`b3.select`](/docs#helper-select-customizable){:target="_blank"} with customizable `b3.selectOption`.
   migration: |
     Now the `"form-control"` default class is added to any other. So change your old code `'class -> "form-control extra_class"` for this one `'class -> "extra_class"`.
-    
+
     Now `b3.file` helper doesn\'t add the `"form-control"` default class, so you need to add it explicitly if you want it.
 
 
@@ -135,13 +171,13 @@
     - type: add
       text: Added support to `Play 2.4` final version.
     - type: change
-      text: Removed unnecessary whitespaces.        
+      text: Removed unnecessary whitespaces.
   migration: |
     Basically, if you want to bump to Play 2.4, the only difference is that every `Lang` object has been replaced with new `Messages` (note that class `Messages` has changed in Play 2.4).
     That means you need to follow the section about [I18n](https://www.playframework.com/documentation/2.4.x/Migration24#I18n){:target="_blank"} from the
     [Play 2.4 Migration Guide](https://www.playframework.com/documentation/2.4.x/Migration24){:target="_blank"} and change every `Lang` for `Messages` in
     your own custom helpers.
-    
+
     Of course, you will need to use the `0.4.4-P24` version.
 
 
@@ -153,7 +189,7 @@
   bullets:
     - type: change
       text: |
-        The forms now always include the required class (`form-vertical`, `form-horizontal`, \.\.\.) instead of adding it simply as default.        
+        The forms now always include the required class (`form-vertical`, `form-horizontal`, \.\.\.) instead of adding it simply as default.
   migration: |
     You need to add a custom class to a form you can do it with simply `'class -> "another-class"` instead of `'class -> "form-vertical another-class"`.
 
@@ -200,7 +236,7 @@
     The __mixed forms__ now require a HTML given a `B3FieldConstructor` that you can declare it as implicit, so
     there is no need to declare the `B3FieldConstructor` and `Lang` explicitly for every helper within the mixed form.
     Then a code like:
-    
+
     <div class="highlight">
     <pre><code>@b3.inline.form(routes.Application.index) { (ifc, lang) =>
       @b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )(ifc, lang)
@@ -209,9 +245,9 @@
     }
     </code></pre>
     </div>
-    
+
     Is now simplified to:
-    
+
     <div class="highlight">
     <pre><code>@b3.inline.form(routes.Application.index) { implicit ifc =>
       @b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
@@ -219,9 +255,9 @@
       @b3.submit('class -> "btn btn-default"){ Sign in }
     }</code></pre>
     </div>
-    
+
     It also happens with `b3.multifield`. Let\'s see how we should modify the `b3.datepicker` example that previously was:
-    
+
     <div class="highlight">
     <pre><code>@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
     @b3.multifield( startField, endField )(args:_*) { (cfc, lang) =>
@@ -232,9 +268,9 @@
       &lt;/div&gt;
     }</code></pre>
     </div>
-    
+
     And now would be:
-    
+
     <div class="highlight">
     <pre><code>@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, lang: play.api.i18n.Lang)
     @b3.multifield( startField, endField )(args:_*) { implicit cfc =>
@@ -245,25 +281,25 @@
       &lt;/div&gt;
     }</code></pre>
     </div>
-    
-    
+
+
     In addition, the rendering of labels have been reimplemented. Now there are 3 arguments to parametrize them:
-    
+
     * `_label`: the text for the label.
     * `_hideLabel`: a boolean indicating if the label must be hidden. It will be rendered into the DOM, but it will add the class `sr-only` to the label to hide it.
     * `_hiddenLabel`: a shortcut to use a hidden label instead of using `_label` and `_hideLabel`.
-    
+
     Thus, you must take into account these changes for labels in __inline forms__:
-    
+
     * `'_label` -> `'_hiddenLabel`
     * `'_label` with `'_showLabel` -> simply `'_label`
-    
+
     And you can ommit every `'_label -> None` because it will be ignored.
-    
+
     Finally, take into account now every argument with a `None` value will be ommited (see more about [Optional arguments](/docs#arguments-optional) support).
-    
- 
-    
+
+
+
 - id: 0-3
   library: "0.3"
   title: "0.3"
@@ -300,15 +336,15 @@
         Added [`b3.hiddens`](/docs#helper-hiddens){:target="_blank"} helper.
     - type: change
       text: |
-        Improvements with the `'_default` value for [`b3.select`](/docs#helper-select){:target="_blank"} helper.        
+        Improvements with the `'_default` value for [`b3.select`](/docs#helper-select){:target="_blank"} helper.
   migration: |
     __Changes in helper\'s names:__ in 0.3, the names and the structure of some helpers have been simplified.
     If you want to get this working with the new version you need to do the following:
-    * For every `static`, `submit`, `reset` and `actions` helper within a `formWithFC` now need to include explicitly the corresponding field constructor. 
+    * For every `static`, `submit`, `reset` and `actions` helper within a `formWithFC` now need to include explicitly the corresponding field constructor.
       For example:<br>`@b3.submit('class -> "btn btn-default"){ Send }` -> `@b3.submit('class -> "btn btn-default"){ Send }(fc)`
-    
+
     And then, replace the following (the first 2 ones in first place):
-      
+
     1. `b3.horizontal.form(` -> `b3.form(` <small>(its important to add the `(` to avoid replace `formWithFC` as well)</small>
     2. `b3.inline.form(` -> `b3.form(` <small>(its important to add the `(` to avoid replace `formWithFC` as well)</small>
     3. `b3.vertical.formWithFC` -> `b3.vertical.form`

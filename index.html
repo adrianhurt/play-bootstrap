@@ -1,8 +1,8 @@
 ---
 title: "Play-Bootstrap, a Play Framework library for Bootstrap"
-layout: default_b3
+layout: default_b4
 permalink: /
-version: "1.1-P25-B3"
+version: "1.3-P26-B4"
 uri: /
 tab: index
 ---
@@ -43,10 +43,10 @@ tab: index
 <pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
 @b3.form(routes.Application.login) {
-@b3.email( loginForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-@b3.password( loginForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-@b3.checkbox( loginForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+  @b3.email( loginForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( loginForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.checkbox( loginForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
 </div>
 
@@ -58,175 +58,110 @@ tab: index
   There is a different field constructor for each kind of form. Normally, you will declare one of them as default for each of your templates, but you can mix them if you want.
 </p>
 <ul class="nav nav-tabs" role="tablist">
-  <li class="active"><a href="#vertical" role="tab" data-toggle="tab">Vertical</a>
-  </li>
-  <li><a href="#horizontal" role="tab" data-toggle="tab">Horizontal</a>
-  </li>
-  <li><a href="#inline" role="tab" data-toggle="tab">Inline</a>
-  </li>
-  <li><a href="#mixed" role="tab" data-toggle="tab">Mixed</a>
-  </li>
+  <li class="nav-item"><a data-toggle="tab" class="nav-link active" href="#vertical">Vertical</a></li>
+  <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#horizontal">Horizontal</a></li>
+  <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#inline">Inline</a></li>
+  <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#mixed">Mixed</a></li>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane active fade in" id="vertical">
-    <div class="bs-example">
-      <form action="" method="GET" class="form-vertical " role="form">
-        <div class="form-group  " id="email_field">
-          <label class="control-label" for="email">Email</label>
-          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+  <div class="tab-pane active fade show active" id="vertical">
+      <div class="bd-example"><form action="/" method="GET">
+        <div id="email_field" class="form-group "><label for="email">Email</label> <input id="email" class="form-control" name="email" type="email" value="" placeholder="example@mail.com" /></div>
+        <div id="password_field" class="form-group "><label for="password">Password</label> <input id="password" class="form-control" name="password" type="password" value="" placeholder="Password" /></div>
+        <div id="remember_field" class="form-group ">
+        <div class="form-check"><input id="remember" class="form-check-input" name="remember" type="checkbox" value="true" /> <label class="form-check-label" for="remember"> Remember me </label></div>
         </div>
-        <div class="form-group  " id="password_field">
-          <label class="control-label" for="password">Password</label>
-          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-        </div>
-        <div class="form-group  " id="remember_field">
-          <div class="checkbox">
-            <label for="remember">
-              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-            </label>
-          </div>
-        </div>
-        <div class="form-group  ">
-          <button type="submit" class="btn btn-default"> Sign in </button>
-        </div>
-      </form>
+        <div class="form-group "><button class="btn btn-secondary" type="submit"> Sign in </button></div>
+        </form>
     </div>
     <div class="highlight">
 <pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
 @b3.form(routes.Application.index) {
-@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-@b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+  @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
     </div>
   </div>
   <div class="tab-pane fade in" id="horizontal">
-    <div class="bs-example">
-      <form action="" method="GET" class="form-horizontal " role="form">
-        <div class="form-group  " id="email_field">
-          <label class="control-label col-md-2" for="email">Email</label>
-          <div class="col-md-10">
-            <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
-          </div>
+      <div class="bd-example"><form action="/" method="GET">
+        <div id="email_field" class="form-group row "><label class="col-form-label col-md-2" for="email">Email</label>
+        <div class="col-md-10"><input id="email" class="form-control" name="email" type="email" value="" placeholder="example@mail.com" /></div>
         </div>
-        <div class="form-group  " id="password_field">
-          <label class="control-label col-md-2" for="password">Password</label>
-          <div class="col-md-10">
-            <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-          </div>
+        <div id="password_field" class="form-group row "><label class="col-form-label col-md-2" for="password">Password</label>
+        <div class="col-md-10"><input id="password" class="form-control" name="password" type="password" value="" placeholder="Password" /></div>
         </div>
-        <div class="form-group  " id="remember_field">
-          <div class="col-md-10 col-md-offset-2">
-            <div class="checkbox">
-              <label for="remember">
-                <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-              </label>
-            </div>
-          </div>
+        <div id="remember_field" class="form-group row ">
+        <div class="col-md-10 offset-md-2">
+        <div class="form-check"><input id="remember" class="form-check-input" name="remember" type="checkbox" value="true" /> <label class="form-check-label" for="remember"> Remember me </label></div>
         </div>
-        <div class="form-group  ">
-          <div class="col-md-10 col-md-offset-2">
-            <button type="submit" class="btn btn-default"> Sign in </button>
-          </div>
         </div>
-      </form>
+        <div class="form-group row">
+        <div class="col-md-10 offset-md-2"><button class="btn btn-secondary" type="submit"> Sign in </button></div>
+        </div>
+        </form>
     </div>
     <div class="highlight">
 <pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
 
 @b3.form(routes.Application.index) {
-@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-@b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
-@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+  @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
     </div>
   </div>
   <div class="tab-pane fade" id="inline">
-    <div class="bs-example">
-      <form action="" method="GET" class="form-inline " role="form">
-        <div class="form-group  " id="email_field">
-          <label class="control-label sr-only" for="email">Email</label>
-          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+      <div class="bd-example"><form class="form-inline " action="/" method="GET">
+        <div id="email_field" class="form-group "><label class="sr-only" for="email">Email</label> <input id="email" class="form-control" name="email" type="email" value="" placeholder="example@mail.com" /></div>
+        <div id="password_field" class="form-group "><label class="sr-only" for="password">Password</label> <input id="password" class="form-control" name="password" type="password" value="" placeholder="Password" /></div>
+        <div id="remember_field" class="form-group ">
+        <div class="form-check"><input id="remember" class="form-check-input" name="remember" type="checkbox" value="true" /> <label class="form-check-label" for="remember"> Remember me </label></div>
         </div>
-        <div class="form-group  " id="password_field">
-          <label class="control-label sr-only" for="password">Password</label>
-          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-        </div>
-        <div class="form-group  " id="remember_field">
-          <div class="checkbox">
-            <label for="remember">
-              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-            </label>
-          </div>
-        </div>
-        <div class="form-group  ">
-          <button type="submit" class="btn btn-default"> Sign in </button>
-        </div>
-      </form>
+        <div class="form-group "><button class="btn btn-secondary" type="submit"> Sign in </button></div>
+        </form>
     </div>
     <div class="highlight">
 <pre><code>@import b3.inline.fieldConstructor  // Declares a inline field constructor as default
 
-@b3.form(routes.Application.index) {
-@b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-@b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
-@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.form(routes.Application.index, 'class -&gt; "form-inline") {
+  @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }</code></pre>
     </div>
   </div>
   <div class="tab-pane fade" id="mixed">
-    <div class="bs-example">
-      <form action="" method="GET" class="form-inline " role="form">
-        <div class="form-group  " id="email_field">
-          <label class="control-label sr-only" for="email">Email</label>
-          <input type="email" id="email" name="email" value="" class="form-control" placeholder="example@mail.com">
+      <div class="bd-example"><form class="form-inline " action="/" method="GET">
+        <div id="email_field" class="form-group "><label class="sr-only" for="email">Email</label> <input id="email" class="form-control" name="email" type="email" value="" placeholder="example@mail.com" /></div>
+        <div id="password_field" class="form-group "><label class="sr-only" for="password">Password</label> <input id="password" class="form-control" name="password" type="password" value="" placeholder="Password" /></div>
+        <div id="remember_field" class="form-group ">
+        <div class="form-check"><input id="remember" class="form-check-input" name="remember" type="checkbox" value="true" /> <label class="form-check-label" for="remember"> Remember me </label></div>
         </div>
-        <div class="form-group  " id="password_field">
-          <label class="control-label sr-only" for="password">Password</label>
-          <input type="password" id="password" name="password" value="" class="form-control" placeholder="Password">
-        </div>
-        <div class="form-group  " id="remember_field">
-          <div class="checkbox">
-            <label for="remember">
-              <input type="checkbox" id="remember" name="remember" value="true" checked=""> Remember me
-            </label>
-          </div>
-        </div>
-        <div class="form-group  ">
-          <button type="submit" class="btn btn-default"> Sign in </button>
-        </div>
-      </form>
-      <form action="" method="GET" class="form-vertical " role="form">
-        <div class="form-group  " id="foo_field">
-          <label class="control-label" for="foo">Foo</label>
-          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Foo placeholder...">
-        </div>
-        <div class="form-group  " id="bar_field">
-          <label class="control-label" for="bar">Bar</label>
-          <input type="text" id="bar" name="bar" value="" class="form-control" placeholder="Bar placeholder...">
-        </div>
-        <div class="form-group  ">
-          <button type="submit" class="btn btn-default"> Send </button>
-        </div>
-      </form>
+        <div class="form-group "><button class="btn btn-secondary" type="submit"> Sign in </button></div>
+        </form><form action="/" method="GET">
+        <div id="foo_field" class="form-group "><label for="foo">Foo</label> <input id="foo" class="form-control" maxlength="20" name="foo" type="text" value="" placeholder="Foo placeholder..." /></div>
+        <div id="bar_field" class="form-group "><label for="bar">Bar</label> <input id="bar" class="form-control" name="bar" type="text" value="" placeholder="Bar placeholder..." /></div>
+        <div class="form-group "><button class="btn btn-secondary" type="submit"> Send </button></div>
+        </form>
     </div>
     <div class="highlight">
 <pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
-@b3.inline.form(routes.Application.index) { implicit ifc =&gt;  // An inline form instead of the default one
-@b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-@b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
-@b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-@b3.submit('class -&gt; "btn btn-default"){ Sign in }
+@b3.inline.form(routes.Application.index, 'class -&gt; "form-inline") { implicit ifc =&gt;  // An inline form instead of the default one
+  @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
 }
 @b3.form(routes.Application.index) {  // Uses the default field constructor (vertical in that case)
-@b3.text( fooForm("foo"), '_label -&gt; "Foo", 'placeholder -&gt; "Foo placeholder..." )
-@b3.text( fooForm("bar"), '_label -&gt; "Bar", 'placeholder -&gt; "Bar placeholder..." )
-@b3.submit('class -&gt; "btn btn-default"){ Send }
+  @b3.text( fooForm("foo"), '_label -&gt; "Foo", 'placeholder -&gt; "Foo placeholder..." )
+  @b3.text( fooForm("bar"), '_label -&gt; "Bar", 'placeholder -&gt; "Bar placeholder..." )
+  @b3.submit('class -&gt; "btn btn-default"){ Send }
 }</code></pre>
     </div>
   </div>
@@ -348,63 +283,34 @@ tab: index
 <p>
   Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...). With the <code>b3.multifield</code> you will be able to create your own custom helpers in a very easy way.
 </p>
-<div class="bs-example">
-  <form action="" method="GET" class="form-horizontal " role="form">
-    <div class="form-group  ">
-      <label class="control-label col-md-2">Inline</label>
-      <div class="col-md-10">
-        <div class="multi-checkbox-list inline">
-          <div class="checkbox-wrap">
-            <div class="checkbox">
-              <label for="foo">
-                <input type="checkbox" id="foo" name="foo" value="true"> Foo
-              </label>
-            </div>
-          </div>
-          <div class="checkbox-wrap">
-            <div class="checkbox">
-              <label for="bar">
-                <input type="checkbox" id="bar" name="bar" value="true"> Bar
-              </label>
-            </div>
-          </div>
-          <div class="checkbox-wrap">
-            <div class="checkbox">
-              <label for="beer">
-                <input type="checkbox" id="beer" name="beer" value="true"> Beer
-              </label>
-            </div>
-          </div>
-        </div>
-        <span class="help-block">Mark what you want</span>
-      </div>
-    </div>
-    <div class="form-group  ">
-      <label class="control-label col-md-2">Date range</label>
-      <div class="col-md-10">
-        <div class="input-daterange input-group" data-date-start-date="10-11-2014">
-          <input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
-          <span class="input-group-addon">to</span>
-          <input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
-        </div>
-        <span class="help-block">Select a date range from 10-11-2014</span>
-      </div>
-    </div>
-    <div class="form-group  ">
-      <label class="control-label col-md-2">New task</label>
-      <div class="col-md-10">
-        <div class="input-text-checkbox input-group">
-          <span class="input-group-addon">
-		        <div class="checkbox">
-              <label for="fooSelected">
-                <input type="checkbox" id="fooSelected" name="fooSelected" value="true">
-              </label>
-		        </div>
-          </span>
-          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="a foo value">
-        </div>
-      </div>
-    </div>
+<div class="bd-example"><form class="form-horizontal " action="/" method="GET">
+  <div class="form-group row"><label class="col-form-label col-md-2">Inline</label>
+  <div class="col-md-10">
+  <div class="multi-checkbox-list inline">
+  <div class="form-check"><input id="foo" class="form-check-input" maxlength="20" name="foo" type="checkbox" value="true" /> <label class="form-check-label" for="foo"> Foo </label></div>
+  <div class="form-check"><input id="bar" class="form-check-input" name="bar" type="checkbox" value="true" /> <label class="form-check-label" for="bar"> Bar </label></div>
+  <div class="form-check"><input id="beer" class="form-check-input" name="beer" type="checkbox" value="true" /> <label class="form-check-label" for="beer"> Beer </label></div>
+  </div>
+  <small class="form-text text-muted">Mark what you want</small></div>
+  </div>
+  <div class="form-group row"><label class="col-form-label col-md-2">Date range</label>
+  <div class="col-md-10">
+  <div class="input-daterange input-group" data-date-start-date="10-11-2014"><input id="dateStart" class="form-control" name="dateStart" type="text" value="15-11-2014" />
+  <div class="input-group-prepend input-group-append"><span class="input-group-text">to</span></div>
+  <input id="dateEnd" class="form-control" name="dateEnd" type="text" value="31-12-2014" /></div>
+  <small class="form-text text-muted">Select a date range from 10-11-2014</small></div>
+  </div>
+  <div class="form-group row"><label class="col-form-label col-md-2">New task</label>
+  <div class="col-md-10">
+  <div class="input-text-checkbox input-group">
+  <div class="input-group-prepend">
+  <div class="input-group-text">
+  <div class="form-check"><input id="fooSelected" class="form-check-input position-static" name="fooSelected" type="checkbox" value="true" /></div>
+  </div>
+  </div>
+  <input id="foo" class="form-control" maxlength="20" name="foo" type="text" value="" placeholder="a foo value" /></div>
+  </div>
+  </div>
   </form>
 </div>
 <div class="highlight">

@@ -1,7 +1,83 @@
-- code: "1.2-P26-B3"
-  library: "1.1.2"
+- code: "1.3-P26-B4"
+  library: "1.3"
   play: "2.6"
-  play_full: "2.6.2"
+  play_full: "2.6.12"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.3-P25-B4"
+  library: "1.3"
+  play: "2.5"
+  play_full: "2.5.16"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.3-P24-B4"
+  library: "1.3"
+  play: "2.4"
+  play_full: "2.4.11"
+  bootstrap: "4"
+  with_dependencies: true
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.3-P26-B3"
+  library: "1.3"
+  play: "2.6"
+  play_full: "2.6.12"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.3-P25-B3"
+  library: "1.3"
+  play: "2.5"
+  play_full: "2.5.16"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+- code: "1.3-P24-B3"
+  library: "1.3"
+  play: "2.4"
+  play_full: "2.4.11"
+  bootstrap: "3"
+  with_dependencies: true
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: true
+  legacy: false
+
+
+
+
+
+- code: "1.2.1-P26-B3"
+  library: "1.2"
+  play: "2.6"
+  play_full: "2.6.12"
   bootstrap: "3"
   with_dependencies: false
   bootstrap_dependency: "3.3.7"
@@ -10,8 +86,8 @@
   snapshot: false
   legacy: false
 
-- code: "1.2-P25-B3"
-  library: "1.1.2"
+- code: "1.2.1-P25-B3"
+  library: "1.2"
   play: "2.5"
   play_full: "2.5.16"
   bootstrap: "3"
@@ -22,8 +98,8 @@
   snapshot: false
   legacy: false
 
-- code: "1.2-P24-B3"
-  library: "1.1.2"
+- code: "1.2.1-P24-B3"
+  library: "1.2"
   play: "2.4"
   play_full: "2.4.11"
   bootstrap: "3"
@@ -34,10 +110,10 @@
   snapshot: false
   legacy: false
 
-- code: "1.2-P26-B4"
-  library: "1.1.2"
+- code: "1.2.1-P26-B4"
+  library: "1.2"
   play: "2.6"
-  play_full: "2.6.2"
+  play_full: "2.6.12"
   bootstrap: "4"
   with_dependencies: false
   bootstrap_dependency: "4.0.0-alpha.6"
@@ -46,8 +122,8 @@
   snapshot: false
   legacy: false
 
-- code: "1.2-P25-B4"
-  library: "1.1.2"
+- code: "1.2.1-P25-B4"
+  library: "1.2"
   play: "2.5"
   play_full: "2.5.16"
   bootstrap: "4"
@@ -58,8 +134,8 @@
   snapshot: false
   legacy: false
 
-- code: "1.2-P24-B4"
-  library: "1.1.2"
+- code: "1.2.1-P24-B4"
+  library: "1.2"
   play: "2.4"
   play_full: "2.4.11"
   bootstrap: "4"
@@ -84,7 +160,7 @@
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.1.1-P24-B3"
   library: "1.1.1"
@@ -96,7 +172,7 @@
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.1.1-P25-B4"
   library: "1.1.1"
@@ -108,7 +184,7 @@
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.1.1-P24-B4"
   library: "1.1.1"
@@ -120,13 +196,13 @@
   jquery_dependency: "3.1.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
-  
-  
+  legacy: true
 
 
-  
-  
+
+
+
+
 
 
 - code: "1.1-P25-B3"
@@ -176,7 +252,7 @@
   artifact: "play-bootstrap"
   snapshot: false
   legacy: true
-  
+
 
 - code: "1.0-P25-B3"
   library: "1.0"
@@ -239,7 +315,7 @@
   legacy: true
 
 
-  
+
 
 - code: "0.4.5-P24"
   library: "0.4.5"
