@@ -15,32 +15,32 @@
 				<p class="lead">Play Framework library for Bootstrap</p>
 			</div>
 		</div>
-		
+
 		<p>
 			This is a collection of input helpers and field constructors for
 			<a href="http://www.playframework.com" target="_blank">Play Framework</a> to render
 			<a href="http://getbootstrap.com" target="_blank">Bootstrap</a> HTML code.
 		</p>
-		
+
 		<div id="github-buttons">
 			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap&type=watch&count=true&size=large"
 				allowtransparency="true" frameborder="0" scrolling="0" width="160" height="30"></iframe>
 			<iframe src="http://ghbtns.com/github-btn.html?user=adrianhurt&repo=play-bootstrap&type=fork&count=true&size=large"
 				allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
-			
+
 			<img src="@routes.Assets.at("images/please_star.png")" style="z-index:-1">
 		</div>
-		
-		
+
+
 		<h2 id="features">Features</h2>
-		
+
 		<h3 id="simple-to-use">Simple to use</h3>
 		<p>
 			It tries to follow the same rules as the helper library from Play Framework.
 		</p>
 		@code {
 			@@import b4.vertical.fieldConstructor  // Declares a vertical field constructor as default
-			
+
 			@@b4.form(routes.Application.login) {
 				@@b4.email( loginForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 				@@b4.password( loginForm("password"), '_label -> "Password", 'placeholder -> "Password" )
@@ -48,8 +48,8 @@
 				@@b4.submit('class -> "btn btn-secondary"){ Sign in }
 			}
 		}
-		
-		
+
+
 		<h3 id="horizontal-vertical-inline">Horizontal, vertical or inline forms</h3>
 		<p>
 			There is a different field constructor for each kind of form. Normally, you will declare one of
@@ -72,7 +72,7 @@
 					}
 				}{
 					@@import b4.vertical.fieldConstructor  // Declares a vertical field constructor as default
-					
+
 					@@b4.form(routes.Application.index) {
 						@@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
@@ -91,7 +91,7 @@
 					}
 				}{
 					@@implicitFieldConstructor = @@{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
-					
+
 					@@b4.form(routes.Application.index) {
 						@@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
@@ -102,7 +102,7 @@
 			</div>
 			<div class="tab-pane" id="inline" role="tabpanel">
 				@bsExampleWithCode {
-					@b4.inline.form(routes.Application.index) { implicit ifc =>
+					@b4.inline.form(routes.Application.index, 'class -> "form-inline") { implicit ifc =>
 						@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
 						@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
 						@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
@@ -110,8 +110,8 @@
 					}
 				}{
 					@@import b4.inline.fieldConstructor  // Declares a inline field constructor as default
-					
-					@@b4.form(routes.Application.index) {
+
+					@@b4.form(routes.Application.index, 'class -> "form-inline") {
 						@@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
 						@@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
@@ -121,7 +121,7 @@
 			</div>
 			<div class="tab-pane" id="mixed" role="tabpanel">
 				@bsExampleWithCode {
-					@b4.inline.form(routes.Application.index) { implicit ifc =>
+					@b4.inline.form(routes.Application.index, 'class -> "form-inline") { implicit ifc =>
 						@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
 						@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
 						@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
@@ -134,14 +134,14 @@
 					}
 				}{
 					@@import b4.vertical.fieldConstructor  // Declares a vertical field constructor as default
-					
-					@@b4.inline.form(routes.Application.index) { implicit ifc =>	// An inline form instead of the default one
+
+					@@b4.inline.form(routes.Application.index, 'class -> "form-inline") { implicit ifc =>	// An inline form instead of the default one
 						@@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
 						@@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
 						@@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
 						@@b4.submit('class -> "btn btn-secondary"){ Sign in }
 					}
-					
+
 					@@b4.form(routes.Application.index) {	// Uses the default field constructor (vertical in that case)
 						@@b4.text( fooForm("foo"), '_label -> "Foo", 'placeholder -> "Foo placeholder..." )
 						@@b4.text( fooForm("bar"), '_label -> "Bar", 'placeholder -> "Bar placeholder..." )
@@ -150,8 +150,8 @@
 				}
 			</div>
 		</div>
-		
-		
+
+
 		<h3 id="every-helper-you-need">Every helper you need</h3>
 		<p>
 			Inputs, checkboxes, radio buttons, selects, input-groups, custom inputs, ...
@@ -161,10 +161,10 @@
 		<p>
 			See the list of available helpers <a href="@routes.Application.docs#helpers" target="_blank">here</a>.
 		</p>
-		
-		
+
+
 		<h3 id="coherence-consistency">Coherence and consistency</h3>
-		
+
 		<h4 id="boolean-attributes">Boolean attributes</h4>
 		<p>
 			Sometimes the HTML syntax could be confusing. For example, all of the following codes are equivalent:
@@ -185,7 +185,7 @@
 		<p>
 			See more about <a href="@routes.Application.docs#arguments-boolean" target="_blank">Boolean arguments</a>.
 		</p>
-		
+
 		<h4 id="readonly">Readonly attribute for checkboxes, radio buttons and selects</h4>
 		<p>
 			Another frustrating and typical situation occurs when you try to use the <code>readonly</code> attribute
@@ -201,8 +201,8 @@
 		<p>
 			See more <a href="@routes.Application.docs#helpers-disabled-readonly" target="_blank">About disabled and readonly attributes</a>.
 		</p>
-    
-    
+
+
     <h3 id="html5-validation">HTML5 data form validation</h3>
 		<p>
       If a field has <strong>validation constraints</strong> they will be added automatically as
@@ -226,7 +226,7 @@
       <div class="row example-html5-validation">
         <div class="col-md-6">
           @b4.text( validationForm("username"), '_label -> "Username", '_help -> "A username between 1 and 20 characters" )
-          @b4.email( validationForm("email"), '_label -> "Email" )  
+          @b4.email( validationForm("email"), '_label -> "Email" )
         </div>
         <div class="col-md-6">
           @b4.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
@@ -242,8 +242,8 @@
 		<p>
 			See more about <a href="@routes.Application.docs#arguments-validation" target="_blank">Validation arguments</a>.
 		</p>
-		
-		
+
+
 		<h3 id="multifield">Multifield support</h3>
 		<p>
 			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
@@ -267,11 +267,11 @@
 				(fooForm("bar"), Map('_text -> "Bar")),
 				(fooForm("beer"), Map('_text -> "Beer"))
 				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
-				
+
 			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
 				fooForm("dateEnd"), 'value -> "31-12-2014" )(
 				'_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
-				
+
 			@@b4.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
 		}
 		<p>
@@ -280,8 +280,8 @@
 		<p>
 			See more about <a href="@routes.Application.multifield" target="_blank">Multifield</a> support.
 		</p>
-		
-		
+
+
 		<h3 id="aria">With ARIA attributes</h3>
 		<p>
 			The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility.
@@ -291,8 +291,8 @@
 		<p>
 			See more about <a href="@routes.Application.docs#aria" target="_blank">ARIA attributes</a> support.
 		</p>
-		
-     
+
+
 		<h2 id="examples">Examples</h2>
 		<p>
 			This web is an example. You can see on the top menu an example of each kind of form
@@ -309,14 +309,14 @@
 		<ul>
 			<li><a href="https://github.com/adrianhurt/play-multidomain-auth" target="_blank">Play Multidomain Auth</a></li>
 		</ul>
-		
-		
+
+
 		<h2 id="customization">Customization</h2>
 		<p>
 			This is a very simple library, and you have all the code on @repository.home(). So you can use it as
 			inspiration and create your own field constructors and/or helpers.
 		</p>
-		
+
 		<h2 id="changelog">Change Log</h2>
 		<p>
 			You can check the change log <a href="/changelog">here</a>.

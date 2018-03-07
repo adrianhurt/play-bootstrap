@@ -2,7 +2,7 @@
 <div class="my-form-group form-group @argsMap.get('_class)" id="@argsMap.get('_id)">
 	<div class="field-container">
 		@argsMap.get('_label).map { label =>
-			<label class="form-control-label">@bs.Args.msg(label)(msgsProv)</label>
+			<label>@bs.Args.msg(label)(msgsProv)</label>
 		}
 		@contentHtml
 	</div>

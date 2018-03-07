@@ -7,18 +7,18 @@
 
 
 @main("Demo for Readonly Attributes", tab = "readonly") {
-	
+
 	<h1 id="readonly-attributes" class="page-header">Demo for Readonly Attributes</h1>
 	<p class="lead">
 		This page its an example to show how to use the <strong>readonly attribute</strong> for
 		<code>checkbox</code>, <code>radio</code> and <code>select</code> helpers.
 	</p>
-	
+
 	<p>Taken from the docs:</p>
 	<div class="alert alert-info">
 		@docsReadonlyAttributes()
 	</div>
-	
+
 	<p>
 		This demo shows a form with a text field that is always editable and readonly <code>checkbox</code>,
 		<code>radio</code> and <code>select</code> fields. Submit the form to see that the readonly fields are
@@ -44,7 +44,7 @@
 			@b4.select( fooForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
 			@b4.free() {
 				<button type="submit" class="btn btn-secondary"><i class="fa fa-ok"></i> Submit me!</button>
-				<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
+				<a class="btn btn-primary btn-readonly-unlock locked" href>Unlock readonly fields</a>
 			}
 		}{
 			@@b4.text( fooForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
@@ -53,11 +53,11 @@
 			@@b4.select( fooForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
 			@@b4.free() {
 				<button type="submit" class="btn btn-secondary"><i class="fa fa-ok"></i> Submit me!</button>
-				<a class="btn btn-primary btn-readonly-unlock locked">Unlock readonly fields</a>
+				<a class="btn btn-primary btn-readonly-unlock locked" href>Unlock readonly fields</a>
 			}
 		}
   }
-	
+
 	<p>
 		Check @repository.file("sample/app/assets/javascripts/main.coffee", "here") the CoffeScript code used for lock and unlock the fields.
 	</p>

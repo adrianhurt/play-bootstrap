@@ -7,12 +7,12 @@
 
 
 @main("Vertical Form", tab = "vertical") {
-	
+
 	@b4.form(routes.Application.vertical) {
-		
+
 		<h1 id="vertical-form" class="page-header">Vertical Form</h1>
 		<p class="lead">This page its an example to show how to use a vertical form.</p>
-		
+
 		<p>
 			First of all, you need to declare the vertical field constructor as implicit.
 		</p>
@@ -25,7 +25,7 @@
 		@code {
 			@@import b4.vertical.fieldConstructor
 		}
-		
+
 
 		<h3 id="simple-inputs">Simple inputs</h3>
 		@bsExampleWithCode {
@@ -45,7 +45,7 @@
 			@@b4.password( fooForm("foo"), '_label -> "Password", 'placeholder -> "Password" )
 			@@b4.file( fooForm("foo"), '_label -> "File" )
 		}
-	
+
 		<h3 id="more-options">More options</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -66,7 +66,7 @@
 			@@b4.text( fooForm("foo"), 'placeholder -> "Without label" )
 			@@b4.text( fooForm("foo"), '_label -> "A big text", 'class -> "form-control form-control-lg", 'placeholder -> "An awesome field..." )
 		}
-	
+
 
 		<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
 		@bsExampleWithCode {
@@ -85,7 +85,7 @@
 			@@b4.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
 			@@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
 			@@b4.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
-		
+
 			@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 			...
 			@@b4.select( fooForm("foo"), options = fruits, '_label -> "Select" )
@@ -109,7 +109,7 @@
 			@@b4.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
 			@@b4.select( fooForm("foo"), options = fruits, '_label -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
 		}
-	
+
 		<h3 id="validation-states">Validation states</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -128,13 +128,13 @@
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
-			
+
 			// With feedback icons
 			@@b4.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
 			@@b4.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", '_help -> "Another help text", 'placeholder -> "Error text..." )
 		}
-    
+
 		<h3 id="b4-custom">Bootstrap 4 custom forms (Beta)</h3>
 		@bsExampleWithCode {
 			<div class="row">
@@ -153,33 +153,41 @@
 			@@b4.select( fooForm("foo_select_custom_1"), options = fruits, '_label -> "Select", '_custom -> true )
 			@@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", '_custom -> true )
     }
-	
+
 		<h3 id="customize">Customize them</h3>
 		@bsExampleWithCode {
 			<div class="row">
 				<div class="col-md-6">
 					@b4.inputWrapped( "email", fooForm("foo"), '_label -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
 						<div class="input-group">
-							<span class="input-group-addon">@@</span>
+							<div class="input-group-prepend">
+								<span class="input-group-text">@@</span>
+							</div>
 							@input
-						</div>	
+						</div>
 					}
 					@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Number", 'value -> 0, '_help -> "This needs some JavaScript and CSS" ) { input =>
 						<div class="input-number input-group">
-							<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+							<div class="input-group-prepend">
+								<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+							</div>
 							@input
-							<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
-						</div>	
+							<div class="input-group-append">
+								<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+							</div>
+						</div>
 					}
 				</div>
 				<div class="col-md-6">
 					@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-star"></i></span>
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-star"></i></span>
+							</div>
 							@input
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-secondary" tabindex="-1">Action</button>
-								<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary" tabindex="-1">Action</button>
+								<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" tabindex="-1">
 								  <span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" role="menu">
@@ -190,35 +198,43 @@
 									<a class="dropdown-item" href="#">Separated link</a>
                 </div>
 							</div>
-						</div>	
+						</div>
 					}
 				</div>
 			</div>
 		}{
 			@@b4.inputWrapped( "email", fooForm("foo"), '_label -> "Simple input group", 'placeholder -> "Custom input group for email..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon">@@@@</span>
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@@@</span>
+					</div>
 					@@input
-				</div>	
+				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-star"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-star"></i></span>
+					</div>
 					@@input
-					<div class="input-group-btn">
+					<div class="input-group-append">
 						<!-- Button and dropdown menu -->
 					</div>
-				</div>	
+				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Number", 'value -> 0, '_help -> "This needs some JavaScript and CSS" ) { input =>
 				<div class="input-number input-group">
-					<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+					</div>
 					@@input
-					<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
-				</div>	
+					<div class="input-group-append">
+						<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+					</div>
+				</div>
 			}
 		}
-	
+
 		<h3 id="more-helpers">More helpers</h3>
 		@bsExampleWithCode {
 			@b4.static("Static HTML"){ <a href="#"><i class="fa fa-star"></i> This is a link</a> }

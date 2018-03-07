@@ -98,7 +98,9 @@
 		@code {
 			<div class="input-daterange input-group" id="datepicker">
 			    <input type="text" class="form-control" name="start" />
-			    <span class="input-group-addon">to</span>
+			    <div class="input-group-prepend input-group-append">
+			        <span class="input-group-text">to</span>
+			    </div>
 			    <input type="text" class="form-control" name="end" />
 			</div>
 		}
@@ -113,7 +115,9 @@
 			@@b4.multifield(startField, endField)(globalArgs, startArgs ++ endArgs) { implicit cfc =>
 				<div class="input-daterange input-group" @@toHtmlArgs(b4.Args.inner(globalArgs).toMap)>
 					@@b4.text(startField, startArgs:_*)
-					<span class="input-group-addon">to</span>
+					<div class="input-group-prepend input-group-append">
+						<span class="input-group-text">to</span>
+					</div>
 					@@b4.text(endField, endArgs:_*)
 				</div>
 			}
@@ -137,7 +141,9 @@
 				<div class="col-md-10">
 					<div class="input-daterange input-group" data-date-start-date="10-11-2014">
 						<input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
-						<span class="input-group-addon">to</span>
+						<div class="input-group-prepend input-group-append">
+							<span class="input-group-text">to</span>
+						</div>
 						<input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
 					</div>
 					<small class="form-text text-muted">Select a date range from 10-11-2014</small>
@@ -266,7 +272,7 @@
 			@@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
 				<div class="input-text-checkbox input-group" @@toHtmlArgs(b4.Args.inner(globalArgs).toMap)>
-					<span class="input-group-addon" id="checkbox-addon">
+					<span class="input-group-prepend">
 						@@b4.checkbox(checkboxField, checkboxArgs:_*)
 					</span>
 					@@b4.text(textField, bs.Args.withDefault(textArgs, Symbol("aria-describedby") -> "checkbox-addon"):_*)
@@ -330,16 +336,16 @@
 		</p>
 
 		@bsExampleWithCode {
-			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_error -> "shit" )(
-				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
-				'_label -> "Date range" )
+			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-10-2014" )(
+				'_label -> "Date range", '_error -> "error!" )
 
 			@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
 				fooForm("fooSelected") )(
 				'_label -> "New task" )
 		}{
-			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_showIconWarning -> true )(
-				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
+			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_error -> true )(
+				fooForm("dateEnd"), 'value -> "31-10-2014" )(
 				'_label -> "Date range" )
 
 			@@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(

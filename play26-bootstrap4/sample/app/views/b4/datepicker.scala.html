@@ -2,7 +2,9 @@
 @b4.multifield( startField, endField )(globalArgs, startArgs ++ endArgs) { implicit cfc =>
 	<div class="input-daterange input-group" @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
 		@b4.text(startField, startArgs:_*)
-		<span class="input-group-addon">to</span>
+		<div class="input-group-prepend input-group-append">
+			<span class="input-group-text">to</span>
+		</div>
 		@b4.text(endField, endArgs:_*)
 	</div>
 }

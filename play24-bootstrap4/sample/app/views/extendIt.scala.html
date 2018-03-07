@@ -33,7 +33,9 @@
 			@@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.inputFormGroup(field, withLabelFor = true, b4.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
 				<div class="input-group">
-					<span class="input-group-addon">@@@@</span>
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@@@</span>
+					</div>
 					<input type="email" id="@@fieldInfo.id" name="@@fieldInfo.name" value="@@fieldInfo.value" @@toHtmlArgs(fieldInfo.innerArgsMap)>
 				</div>
 			}
@@ -74,9 +76,13 @@
 			@@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.inputWrapped("text", field, args:_*) { input =>
 				<div class="input-number input-group">
-					<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+					</div>
 					@@input
-					<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
+					<div class="input-group-append">
+						<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+					</div>
 				</div>
 			}
 		}
@@ -106,7 +112,9 @@
 			<div class="field-container">
 				<label class="form-control-label" for="foo">Email</label>
 				<div class="input-group">
-					<span class="input-group-addon">@@</span>
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@</span>
+					</div>
 					<input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@@mail.com">
 				</div>
 			</div>
@@ -169,7 +177,6 @@
 		<ul>
 			<li>Modify the package from <code>package views.html.b4</code> to <code>package views.html.b4.my</code></li>
 			<li>Add the import <code>views.html.b4._</code></li>
-			<li>Change the value of <code>formClass</code> to <code>"form-my-vertical"</code></li>
 		</ul>
 		You can check the code @repository.file("sample/app/views/b4/my/vertical/package.scala", "here").
 	</p>

@@ -6,9 +6,9 @@
 
 
 @main("Multifield", tab = "multifield") {
-	
+
 	@b4.form(routes.Application.multifield) {
-		
+
 		<h1 id="multifield-support" class="page-header">Multifield support</h1>
 		<p class="lead">
 			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of
@@ -29,11 +29,11 @@
 		<p>
 			To see how it works take a look to the arguments it takes:
 		</p>
-		
+
 		@code {
       @@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: ClearFieldConstructor => Html)(implicit fc: B4FieldConstructor, @BSVersion.msgsArg)
 		}
-		
+
 		<p>
 			<ul>
 				<li><strong>fields:</strong> the list of <code>play.api.data.Field</code> used.</li>
@@ -60,23 +60,23 @@
 			All of these arguments parametrize the global <code>form-group</code> for the set of the fields, so they will affect
 			to every field. Thus, you can't set different validation status for different fields, for example.
 		</p>
-		
-		
+
+
 		<h2 id="examples">Let's see a couple of examples</h2>
-		
+
 		<p>
 			Remember the code of this web with these examples is available on @repository.home().
 			To see more details about creating your own helpers you can check before the <a href="@routes.Application.extendIt">Extend it</a> section.
 		</p>
-		
+
 		<h3 id="daterange">A date range</h3>
-		
+
 		<p>
 			We are going to implement our own custom helper to use a date range with the
 			<a href="http://bootstrap-datepicker.readthedocs.org/en/release/">bootstrap-datepicker</a> plugin.
 			Then, we need a helper with 2 fields: <code>dateStart</code> and <code>dateEnd</code>. This is what we want to get:
 		</p>
-		
+
 		@bsExampleWithCode {
 			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
 				fooForm("dateEnd"), 'value -> "31-12-2014" )(
@@ -86,7 +86,7 @@
 				fooForm("dateEnd"), 'value -> "31-12-2014" )(
 				'_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
 		}
-		
+
 		<p>
 			As you can see we have 2 fields with their own specific arguments for their corresponding inputs, and then
 			a list of general arguments to decorate the <code>form-group</code>.
@@ -94,65 +94,71 @@
 		<p>
 			Seeing the plugin, we need to generate a code like this one within the <code>form-group</code>:
 		</p>
-		
+
 		@code {
 			<div class="input-daterange input-group" id="datepicker">
 			    <input type="text" class="form-control" name="start" />
-			    <span class="input-group-addon">to</span>
+			    <div class="input-group-prepend input-group-append">
+			        <span class="input-group-text">to</span>
+			    </div>
 			    <input type="text" class="form-control" name="end" />
 			</div>
 		}
-		
+
 		<p>
 			Then, to implement our own <code>b4.datepicker</code> helper we would only need to create a the file
 			<code>b4/datepicker.scala.html</code> within our <code>views</code> folder with the following code:
 		</p>
-			
+
 		@code {
 			@@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.multifield(startField, endField)(globalArgs, startArgs ++ endArgs) { implicit cfc =>
 				<div class="input-daterange input-group" @@toHtmlArgs(b4.Args.inner(globalArgs).toMap)>
 					@@b4.text(startField, startArgs:_*)
-					<span class="input-group-addon">to</span>
+					<div class="input-group-prepend input-group-append">
+						<span class="input-group-text">to</span>
+					</div>
 					@@b4.text(endField, endArgs:_*)
 				</div>
 			}
 		}
-		
+
 		<p>
 			<code>toHtmlArgs()</code> function helps you to render a list of arguments from a <code>Map</code> of arguments,
 			and <code>b4.Args.inner()</code> filters the underscored arguments used for decorating the <code>form-group</code>
 			(<code>_id</code>, <code>_class</code>, <code>_label</code>, <code>_showConstraints</code> and <code>_help</code>).
 		</p>
-		
+
 		@javaMessagesWarning("1")
-		
+
 		<p>
 			So for the <code>b4.datepicker</code> used before we get rendered the following code (for a horizontal form):
 		</p>
-		
+
 		@code {
 			<div class="form-group" id="">
 				<label class="form-control-label col-md-2">Date range</label>
 				<div class="col-md-10">
 					<div class="input-daterange input-group" data-date-start-date="10-11-2014">
 						<input type="text" id="dateStart" name="dateStart" value="15-11-2014" class="form-control">
-						<span class="input-group-addon">to</span>
+						<div class="input-group-prepend input-group-append">
+							<span class="input-group-text">to</span>
+						</div>
 						<input type="text" id="dateEnd" name="dateEnd" value="31-12-2014" class="form-control">
 					</div>
 					<small class="form-text text-muted">Select a date range from 10-11-2014</small>
 				</div>
 			</div>
 		}
-		
-		
+
+
 		<h3 id="set-checkboxes">A set of checkboxes</h3>
-		
+
 		<p>
 			This is a classic one. A set of checkboxes within the same <code>form-group</code>. Note you can choose to display
 			them vertically or inline simply by using CSS.
 		</p>
-		
+
 		@bsExampleWithCode {
 			@b4.multiCheckbox(
 				(fooForm("foo"), Seq('_text -> "Foo")),
@@ -176,17 +182,17 @@
 				(fooForm("beer"), Seq('_text -> "Beer"))
 				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
 		}
-		
+
 		<p>
 			In this case we have a list of fields with their corresponding <strong>Seq</strong> of arguments and then a list of
       general arguments to decorate the <code>form-group</code>.
 		</p>
-		
+
 		<p>
 			Then, to implement our own <code>b4.multiCheckbox</code> helper we would only need to create a the file
 			<code>b4/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
 		</p>
-		
+
 		@code {
 			@@(fieldsWithArgs: (Field, Seq[Symbol,Any])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =>
@@ -197,9 +203,9 @@
 				</div>
 			}
 		}
-		
+
 		@javaMessagesWarning("2")
-		
+
 		<p>
 			So for the example:
 		</p>
@@ -241,45 +247,45 @@
 				</div>
 			</div>
 		}
-		
-		
-		
+
+
+
 		<h3 id="text-with-checkbox">A textfield with a checkbox addon</h3>
-		
+
 		<p>
 			In this example we have a checkbox within an input group's addon instead of text.
 			Then, we need a helper with 2 fields: <code>foo</code> and <code>fooSelected</code>. This is what we want to get:
 		</p>
-		
+
 		@bsExampleWithCode {
 			@b4.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
 		}{
 			@@b4.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
 		}
-		
+
 		<p>
 			Then, to implement our own <code>b4.textWithCheckbox</code> helper we would only need to create a the file
 			<code>b4/textWithCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
 		</p>
-			
+
 		@code {
 			@@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, @BSVersion.msgsArg)
 			@@b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
 				<div class="input-text-checkbox input-group" @@toHtmlArgs(b4.Args.inner(globalArgs).toMap)>
-					<span class="input-group-addon" id="checkbox-addon">
+					<span class="input-group-prepend">
 						@@b4.checkbox(checkboxField, checkboxArgs:_*)
 					</span>
 					@@b4.text(textField, bs.Args.withDefault(textArgs, Symbol("aria-describedby") -> "checkbox-addon"):_*)
 				</div>
 			}
 		}
-		
+
 		@javaMessagesWarning("3")
-		
+
 		<p>
 			So for the <code>b4.textWithCheckbox</code> used before we get rendered the following code (for a horizontal form):
 		</p>
-		
+
 		@code {
 			<div class="form-group" id="">
 				<label class="form-control-label col-md-2">New task to do</label>
@@ -297,7 +303,7 @@
 				</div>
 			</div>
 		}
-		
+
 		<p>
 			For this helper we need also to fix a bit the CSS manually. In the Boostrap example, the checkbox is direcly
 			within the <code>.input-group-addon</code>. But I have prefered to use the default <code>b4.checkbox</code> helper
@@ -316,8 +322,8 @@
 				}
 			}
 		}
-		
-		
+
+
 		<h3 id="validation-states">Validation states and feedback icons</h3>
 		<p>
 			You can also manage the validation state for a multifield. However, you have <strong>two limitations</strong>:
@@ -328,24 +334,24 @@
 				</li>
 			</ul>
 		</p>
-		
+
 		@bsExampleWithCode {
-			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_showIconWarning -> true )(
-				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
-				'_label -> "Date range" )
-				
+			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-10-2014" )(
+				'_label -> "Date range", '_error -> "error!" )
+
 			@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
 				fooForm("fooSelected") )(
 				'_label -> "New task" )
 		}{
-			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_showIconWarning -> true )(
-				fooForm("dateEnd"), 'value -> "31-10-2014", '_showIconWarning -> true )(
+			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_error -> true )(
+				fooForm("dateEnd"), 'value -> "31-10-2014" )(
 				'_label -> "Date range" )
-				
+
 			@@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
 				fooForm("fooSelected") )(
 				'_label -> "New task" )
 		}
-		
+
 	}
 }

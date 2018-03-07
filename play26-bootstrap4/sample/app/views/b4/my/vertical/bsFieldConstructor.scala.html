@@ -10,7 +10,7 @@
 <div class="my-form-group form-group @fieldInfo.argsMap.get('_class) @fieldInfo.status.map("has-"+_)" id="@fieldInfo.idFormField">
 	<div class="field-container">
 		@fieldInfo.labelOpt.map { label =>
-			<label class="form-control-label @if(fieldInfo.hideLabel){sr-only}" @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}>@bs.Args.msg(label)(msgsProv)</label>
+			<label@if(fieldInfo.hideLabel){ class="sr-only"} @if(fieldInfo.withLabelFor){for="@fieldInfo.id"}>@bs.Args.msg(label)(msgsProv)</label>
 		}
 		@inputHtml
 	</div>

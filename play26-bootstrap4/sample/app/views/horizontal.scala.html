@@ -173,26 +173,34 @@
 				<div class="col-md-6">
 					@b4.inputWrapped( "email", fooForm("foo"), '_label -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
 						<div class="input-group">
-							<span class="input-group-addon">@@</span>
+							<div class="input-group-prepend">
+								<span class="input-group-text">@@</span>
+							</div>
 							@input
 						</div>
 					}
 					@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Number", 'value -> 0, '_help -> "This needs some JavaScript and CSS" ) { input =>
 						<div class="input-number input-group">
-							<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+							<div class="input-group-prepend">
+								<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+							</div>
 							@input
-							<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
+							<div class="input-group-append">
+								<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+							</div>
 						</div>
 					}
 				</div>
 				<div class="col-md-6">
 					@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-star"></i></span>
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-star"></i></span>
+							</div>
 							@input
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-secondary" tabindex="-1">Action</button>
-								<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary" tabindex="-1">Action</button>
+								<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" tabindex="-1">
 									<span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" role="menu">
@@ -210,24 +218,32 @@
 		}{
 			@@b4.inputWrapped( "email", fooForm("foo"), '_label -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon">@@@@</span>
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@@@</span>
+					</div>
 					@@input
 				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-star"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-star"></i></span>
+					</div>
 					@@input
-					<div class="input-group-btn">
+					<div class="input-group-append">
 						<!-- Button and dropdown menu -->
 					</div>
 				</div>
 			}
 			@@b4.inputWrapped( "text", fooForm("foo"), '_label -> "Number", 'value -> 0, '_help -> "This needs some JavaScript and CSS" ) { input =>
 				<div class="input-number input-group">
-					<span class="input-group-addon input-number-minus"><i class="fa fa-minus"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+					</div>
 					@@input
-					<span class="input-group-addon input-number-plus"><i class="fa fa-plus"></i></span>
+					<div class="input-group-append">
+						<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+					</div>
 				</div>
 			}
 		}
@@ -240,7 +256,7 @@
 					@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Submit me! }
 					@b4.free() {
 						<button type="submit" class="btn btn-primary"> <i class="fa fa-ok"></i> Save changes</button>
-						<a class="btn btn-secondary"> <i class="fa fa-remove"></i> Cancel</a>
+						<a class="btn btn-secondary" href> <i class="fa fa-remove"></i> Cancel</a>
 					}
 				</div>
 			</div>
@@ -249,7 +265,7 @@
 			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Submit me! }
 			@@b4.free() {
 				<button type="submit" class="btn btn-primary"> <i class="fa fa-ok"></i> Save changes</button>
-				<a class="btn btn-secondary"> <i class="fa fa-remove"></i> Cancel</a>
+				<a class="btn btn-secondary" href> <i class="fa fa-remove"></i> Cancel</a>
 			}
 		}
 

@@ -22,19 +22,19 @@
 <div class="row">
 	<div class="col-md-9" role="main" data-spy="scroll" data-target="#sidebar" data-offset="0">
 		@b4.form(routes.Application.docs) {
-		
+
 			<h1 id="documentation" class="page-header">
 				Documentation <small>@versionBadge(explicit = true)</small>
 			</h1>
 			<p class="lead">This page explains each component in more details.</p>
-			
-	
+
+
 			<h3 id="field-constructors">Field Constructors</h3>
 			<p>
 				There are 4 different field constructors you can use. You only need to declare any of them implicitly on
 				top of your template. Then every input will take it by default. All of them extend the <code>b4.BSFieldConstructor</code> class.
 			</p>
-			<h4 id="field-constructors-vertical">Vertical forms</h4> 
+			<h4 id="field-constructors-vertical">Vertical forms</h4>
 			@code {
 				@@implicitFieldConstructor = @@{ b4.vertical.fieldConstructor }
 			}
@@ -54,7 +54,7 @@
 					<small id="foo_info_0" class="form-text text-muted">This is a help text</small>
 				</div>
 			}
-		
+
 			<h4 id="field-constructors-horizontal">Horizontal forms</h4>
 			<p>
 				You have to specify its column widths for the <code>form-group</code>.
@@ -74,8 +74,8 @@
 					</div>
 				</div>
 			}
-		
-			<h4 id="field-constructors-inline">Inline forms</h4> 
+
+			<h4 id="field-constructors-inline">Inline forms</h4>
 			@code {
 				@@implicitFieldConstructor = @@{ b4.inline.fieldConstructor }
 			}
@@ -105,7 +105,7 @@
 			@code {
 				@@import b4.clear.fieldConstructor
 			}
-			
+
 			<h4 id="field-constructors-specific">Specific field constructors</h4>
 			<p>
 				There are also 4 extra field constructors reserved to use for specify them instead of the default one.
@@ -121,7 +121,7 @@
 			}
 
 
-	
+
 			<h3 id="arguments">Arguments (<code>args</code>)</h3>
 			<p>
 				For every component there is a list of arguments you can add and they will be put within the corresponding
@@ -146,8 +146,8 @@
 					<small id="foo_info_0" class="form-text text-muted">Maximum length: 10</small>
 				</div>
 			}
-			
-			
+
+
 			<h4 id="arguments-special">Special arguments (the underscored ones)</h4>
 			<p>
 				As we see before, there are some special arguments that are reserved to parametrize the corresponding
@@ -177,7 +177,7 @@
               <li><code>Boolean</code>: indicates if the field should show an <em>warning</em> validation status.</li>
               <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
             </ul>
-					</li>          
+					</li>
 					<li>
 						<code>_error</code>: could be:
             <ul>
@@ -210,7 +210,7 @@
 						you don't want the label to be displayed. For example when you use inline forms.
 						@code {
 							@@import b4.inline.fieldConstructor
-							
+
 							@@b4.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
 						}
 					</li>
@@ -227,8 +227,8 @@
 					</li>
 				</ul>
 			</p>
-			
-			
+
+
 			<h4 id="arguments-validation">Validation arguments</h4>
 			<p>
         If a field has <strong>validation constraints</strong> they will be added automatically as <strong>HTML5 data form validation</strong>
@@ -283,8 +283,8 @@
 				@@b4.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
 				@@b4.text( validationForm("color"), '_label -> "Hexadecimal color", '_help -> "Format is #CCC or #CCCCCC" )
 			}
-			
-			
+
+
 			<h4 id="arguments-optional">Optional arguments</h4>
 			<p>
 				In some cases, you may need to add an argument only if a condition happens. In this situation you can simply
@@ -295,8 +295,8 @@
 				'foo -> None                // (this argument is omitted)
 				'foo -> maybeValue(...)     // foo="result-value"  or  it's ommited
 			}
-			
-	
+
+
 			<h4 id="arguments-boolean">Boolean arguments</h4>
 			<p>
 				The boolean arguments are simply that, booleans. Let's see an example for the <code>disabled</code> attribute.
@@ -327,7 +327,7 @@
 				Note <strong>only regular arguments</strong> with <code>false</code> value are removed. It doesn't happen with
 				the special ones (i.e. the <strong><em>underscored</em></strong> ones).
 			</p>
-			
+
 			<h4 id="arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</h4>
 			<p>
 				You always add any argument to helpers using tuples of <code>(Symbol, Any)</code>, like <code>'class -> "foo-class"</code>.
@@ -343,8 +343,8 @@
 			</p>
 
 
-		
-			
+
+
 			<h3 id="aria">ARIA attributes</h3>
 			<p>
 				The <a href="http://www.w3.org/TR/wai-aria/" target="_blank">WAI-ARIA</a> attributes are a very helpful tool for accesibility.
@@ -378,9 +378,9 @@
 					<li>If there is any error, it is also added he <code>aria-invalid</code> attribute for the input setted to true.</li>
 				</ul>
 			</p>
-      
-			
-	
+
+
+
 			<h3 id="forms">Forms <span class="def">@@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: BSFieldConstructor)</span></h3>
 			<p>
 				The <code>b4.form</code> takes a <code>Call</code> object and a list of arguments. The implicit <code>BSFieldConstructor</code> argument is used to know which class is needed. Each <code>BSFieldConstructor</code> add its corresponding class:
@@ -460,7 +460,7 @@
 				<code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to
 				wrap them with a <code>div</code> with these classes.
 			</p>
-			
+
 			<h4 id="forms-csrf">Forms with CSRF token</h4>
 			<p>
         If you want to add automatically a CSRF token to a form, you can do it simply using the equivalent <code>formCSRF</code>.
@@ -477,19 +477,19 @@
       <p>
         It will simply add the helper <code>@@helper.CSRF.formField</code> within the form for you.
       </p>
-      
-      
+
+
 
 			<h3 id="helpers">Input helpers</h3>
-	
+
 			<h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
 			@docsReadonlyAttributes()
 			<p>
 				You can see an example in the <a href="@routes.Application.readonly">Readonly Demo</a>.
 			</p>
-	
-	
-	
+
+
+
 			<h4 id="helpers-validation-states">Validation states & feedback icons</h4>
 			<p>
 				You can set any validation state for a field with one of the following special arguments:
@@ -507,7 +507,7 @@
               <li><code>Boolean</code>: indicates if the field should show an <em>warning</em> validation status.</li>
               <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
             </ul>
-					</li>          
+					</li>
 					<li>
 						<code>_error</code>: could be:
             <ul>
@@ -516,7 +516,7 @@
               <li><code>Any</code>: calls <strong>toString</strong> method to show a <strong>localized</strong> help text.</li>
             </ul>
 					</li>
-				</ul> 
+				</ul>
 			</p>
 			@bsExampleWithCode {
 				@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_help -> "A help text", 'placeholder -> "Success text..." )
@@ -533,7 +533,7 @@
 					<li><code>_showIconValid</code>: a boolean indicating if a <em>success</em> icon should be shown <strong>if there is no error</strong>.</li>
 					<li><code>_showIconWarning</code>: a boolean indicating if a <em>warning</em> icon should be shown <strong>if there is no error</strong>.</li>
 					<li><code>_showIconOnError</code>: a boolean indicating if an <em>error</em> icon should be shown <strong>if there is any error</strong>.</li>
-				</ul> 
+				</ul>
 			</p>
 			@bsExampleWithCode {
 				@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_showIconValid -> true, '_help -> "A help text", 'placeholder -> "Success text..." )
@@ -544,8 +544,8 @@
 				@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, '_help -> "A help text", 'placeholder -> "Warning text..." )
 				@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_showIconOnError -> true, '_help -> "A help text", 'placeholder -> "Error text..." )
 			}
-			
-	
+
+
 
 			<h4 id="helper-inputtype"><code>b4.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
@@ -601,14 +601,15 @@
       <h5 id="helper-file-b4-custom">Bootstrap 4 custom file</h5>
 			<p>
 				For new Bootstrap 4 custom file, you only need to add <code>'_custom -> true</code>.
+				Additionally, you can use the argument <code>'placeholder</code>.
 			</p>
 			@bsExampleWithCode {
-				@b4.file( fooForm("file_custom"), '_label -> "File", '_custom -> true )
+				@b4.file( fooForm("file_custom"), '_label -> "File", '_custom -> true, 'placeholder -> "Select a file" )
 			}{
-				@@b4.file( fooForm("file"), '_label -> "File", '_custom -> true )
+				@@b4.file( fooForm("file"), '_label -> "File", '_custom -> true, 'placeholder -> "Select a file" )
 			}
 
-			
+
 			<h4 id="helper-textarea"><code>b4.textarea</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It renders a textarea and it adds <code>class="form-control"</code> by default.
@@ -643,10 +644,10 @@
 
 				// uses "bar" as value for the checkbox
 				@@b4.checkbox( fooForm("foo"), '_text -> "Remember me", 'value -> "bar" )
-				
+
 				// checked by default (if the form is filled, this value will be taken)
 				@@b4.checkbox( fooForm("foo"), '_text -> "Remember me", '_default -> true )
-        
+
 				// always checked (even if the form has been filled with a false)
 				@@b4.checkbox( fooForm("foo"), '_text -> "Remember me", 'checked -> true )
 
@@ -719,7 +720,7 @@
 			}{
 				@@b4.radio( fooForm("foo"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_custom -> true, '_label -> "What do you prefer?" )
 			}
-			
+
 			<h5 id="helper-radio-customizable" style="margin-top:40px"><code>b4.radio</code> <span class="def">@@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] => Html)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h5>
 			<h5><code>b4.radioOption</code> <span class="def">@@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]))</span></h5>
 			<p>
@@ -736,8 +737,8 @@
 					@@b4.radioOption("B", Html("Coffee <i class=\"fa fa-coffee\"></i>"), 'disabled -> true)
 				}
 			}
-			
-			
+
+
 
 
 			<h4 id="helper-select"><code>b4.select</code> <span class="def">@@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -817,7 +818,7 @@
 				    @b4.selectOption("opt_2-2", "Option 2.2")
 				  </optgroup>
 				}
-				
+
 				@b4.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
@@ -842,9 +843,9 @@
 				    @@b4.selectOption("opt_2-2", "Option 2.2")
 				  </optgroup>
 				}
-				
+
 				class Fruit (id: Long, name: String, isCitrus: Boolean)
-				
+
 				@@fruitsWithCitrus = @@{ Seq(
 					Fruit(1L, "Apple", false),
 					Fruit(2L, "Orange", true),
@@ -852,7 +853,7 @@
 					Fruit(4L, "Lemon", true),
 					Fruit(5L, "Banana", false)
 				)}
-				
+
 				@@b4.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @@fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
@@ -895,7 +896,7 @@
 			@code {
 				<input type="hidden" name="name" value="fieldValue_or_defaultValue" placeholder="John Doe">
 			}
-			
+
 			<h4 id="helper-hiddens"><code>b4.hiddens</code> <span class="def">@@(namesAndValues: (Any, Any)*)</span></h4>
 			<p>
 				Render a list of hidden inputs.
@@ -909,14 +910,14 @@
 				<input type="hidden" name="barId" value="2">
 			}
 
-	
-	
-	
+
+
+
 			<h3 id="html5-helpers">New HTML5 helpers</h3>
 			<p>
 				<strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
 			</p>
-			
+
 			<h4 id="html5-color"><code>b4.color</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="color"</code>.
@@ -936,7 +937,7 @@
 			}{
 				@@b4.date( fooForm("date"), '_label -> "Date" )
 			}
-			
+
 			<h4 id="html5-datetime"><code>b4.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="datetime"</code>.
@@ -946,7 +947,7 @@
 			}{
 				@@b4.datetime( fooForm("datetime"), '_label -> "Datetime" )
 			}
-			
+
 			<h4 id="html5-datetime-local"><code>b4.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="datetime-local"</code>.
@@ -966,7 +967,7 @@
 			}{
 				@@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
 			}
-			
+
 			<h4 id="html5-month"><code>b4.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="month"</code>.
@@ -976,7 +977,7 @@
 			}{
 				@@b4.month( fooForm("month"), '_label -> "Month" )
 			}
-			
+
 			<h4 id="html5-number"><code>b4.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="number"</code>.
@@ -986,7 +987,7 @@
 			}{
 				@@b4.number( fooForm("number"), '_label -> "Number", 'min -> 0, 'max -> 50, 'step -> 5 )
 			}
-			
+
 			<h4 id="html5-range"><code>b4.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="range"</code>.
@@ -996,7 +997,7 @@
 			}{
 				@@b4.range( fooForm("range"), '_label -> "Range", 'min -> 0, 'max -> 50 )
 			}
-			
+
 			<h4 id="html5-search"><code>b4.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="search"</code>.
@@ -1006,7 +1007,7 @@
 			}{
 				@@b4.search( fooForm("search"), '_label -> "Search" )
 			}
-			
+
 			<h4 id="html5-tel"><code>b4.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="tel"</code>.
@@ -1016,7 +1017,7 @@
 			}{
 				@@b4.tel( fooForm("tel"), '_label -> "Telephone" )
 			}
-			
+
 			<h4 id="html5-time"><code>b4.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="time"</code>.
@@ -1026,7 +1027,7 @@
 			}{
 				@@b4.time( fooForm("time"), '_label -> "Time" )
 			}
-			
+
 			<h4 id="html5-url"><code>b4.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="url"</code>.
@@ -1036,7 +1037,7 @@
 			}{
 				@@b4.url( fooForm("url"), '_label -> "URL" )
 			}
-			
+
 			<h4 id="html5-week"><code>b4.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				It is a short version of <code>b4.inputType</code> for <code>type="week"</code>.
@@ -1046,9 +1047,9 @@
 			}{
 				@@b4.week( fooForm("week"), '_label -> "Week" )
 			}
-			
-			
-	
+
+
+
 
 
 			<h3 id="more-helpers">More helpers</h3>
@@ -1062,7 +1063,7 @@
 					<li><code>_help</code>: a help text below the input.</li>
 				</ul>
 			</p>
-		
+
 			<h4 id="more-static"><code>b4.static</code> <span class="def">@@(label: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: BSFieldConstructor)</span></h4>
 			<p>
 				It renders a static control to place within your form. It takes a <code>HTML</code> as parameter, so you can
@@ -1085,8 +1086,8 @@
 				@@b4.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
 				@@b4.static(){ <a href="#">Basic control without label</a> }
 			}
-	
-	
+
+
 			<h4 id="more-buttontype"><code>b4.buttonType</code> <span class="def">@@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b4.BSFieldConstructor)</span></h4>
 			<p>
 				It renders a simple button to place within your form. It takes a <code>HTML</code> as parameter, so you can
@@ -1097,7 +1098,7 @@
 			}{
 				@@b4.buttonType("submit", 'class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Sign in }
 			}
-			
+
 			<h4 id="more-submit"><code>b4.submit</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: BSFieldConstructor)</span></h4>
 			<p>
 				It is a short version of b4.buttonType for type="submit".
@@ -1107,8 +1108,8 @@
 			}{
 				@@b4.submit('class -> "btn btn-primary"){ <i class="fa fa-ok"></i> Sign in }
 			}
-			
-			
+
+
 			<h4 id="more-reset"><code>b4.reset</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: BSFieldConstructor)</span></h4>
 			<p>
 				It is a short version of b4.buttonType for type="reset".
@@ -1118,7 +1119,7 @@
 			}{
 				@@b4.reset('class -> "btn btn-danger"){ <i class="fa fa-remove"></i> Reset }
 			}
-			
+
 			<h4 id="more-button"><code>b4.button</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: BSFieldConstructor)</span></h4>
 			<p>
 				It is a short version of b4.buttonType for type="button".
@@ -1128,8 +1129,8 @@
 			}{
 				@@b4.button('class -> "btn btn-secondary"){ <i class="fa fa-heart"></i> Favorite }
 			}
-		
-		
+
+
 			<h4 id="more-free"><code>b4.free</code> <span class="def">@@(args: (Symbol,Any)*)(content: => Html)(implicit fc: BSFieldConstructor)</span></h4>
 			<p>
 				It renders whatever you want within a <code>form-group</code> div.
@@ -1145,20 +1146,20 @@
 					<a class="btn btn-secondary"> <i class="fa fa-remove"></i> Cancel</a>
 				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
 			<h3 id="your-helpers">Your own custom helpers</h3>
 			<p>
 				The purpose of these helpers is to be a tool for creating your own helpers. Please see more about creating new helpers
 				<a href="@routes.Application.extendIt">here</a>.
 			</p>
-			
+
 			<h4 id="your-inputwrapped"><code>b4.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				This is the same as <code>b4.inputType</code> but specifying a custom wrapper for the input tag.
@@ -1167,10 +1168,12 @@
 			@bsExampleWithCode {
 				@b4.inputWrapped( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" ) { input =>
 					<div class="input-group">
-					  <span class="input-group-addon">@@</span>
+					  <div class="input-group-prepend">
+					  	<span class="input-group-text">@@</span>
+					  </div>
 					  @input
-					  <div class="input-group-btn">
-		          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">Action</button>
+					  <div class="input-group-append">
+		          <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">Action</button>
 		          <div class="dropdown-menu" role="menu">
 		            <a class="dropdown-item" href="#">Action</a>
 		            <a class="dropdown-item" href="#">Another action</a>
@@ -1184,10 +1187,12 @@
 			}{
 				@@b4.inputWrapped( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" ) { input =>
 					<div class="input-group">
-						<span class="input-group-addon">@@@@</span>
+						<div class="input-group-prepend">
+							<span class="input-group-text">@@@@</span>
+						</div>
 						@@input
-						<div class="input-group-btn">
-							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">Action</button>
+						<div class="input-group-append">
+							<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">Action</button>
 							<div class="dropdown-menu" role="menu">
 								<a class="dropdown-item" href="#">Action</a>
 								<a class="dropdown-item" href="#">Another action</a>
@@ -1199,7 +1204,7 @@
 					</div>
 				}
 			}
-			
+
 			<h4 id="your-multifield"><code>b4.multifield</code> <span class="def">@@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (BSFieldConstructor, @BSVersion.msgsClass) => Html)(implicit fc: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of checkboxes, a date range, ...).
@@ -1216,11 +1221,11 @@
 			<p>
 				To know how it works and how to use it go the the <a href="multifield">Multifield</a> section.
 			</p>
-			
+
 		}
 	</div>
-	
-	
+
+
 	<div class="col-md-3">
     <div id="sidebar" data-spy="affix" class="bd-sidebar" role="navigation">
     	<ul class="nav bd-links">

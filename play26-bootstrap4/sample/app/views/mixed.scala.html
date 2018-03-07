@@ -7,10 +7,10 @@
 
 
 @main("Mixed Forms", tab = "mixed") {
-	
+
 	<h1 id="mixed-forms" class="page-header">Mixed Forms</h1>
 	<p class="lead">This page its an example to show how to mix different forms within the same view.</p>
-	
+
 	<p>
 		This page will use a horizontal form as default. So first of all, it declares an implicit horizontal field constructor.
 		With that, every helper will take it implicitly.
@@ -18,8 +18,8 @@
 	@code {
 		@@implicitFC = @@{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
 	}
-	
-	
+
+
 	<h3 id="simple-form">A simple horizontal form</h3>
 	<p>
 		As we declared on top of the page an implicit horizontal field constructor, we can forget the field constructors
@@ -40,8 +40,8 @@
 			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
 		}
 	}
-	
-	
+
+
 	<h3 id="inline-form">The typical inline login form on top</h3>
 	<p>
 		Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor
@@ -60,8 +60,8 @@
 			@@b4.submit('class -> "btn btn-secondary"){ Sign in }
 		}
 	}
-	
-	
+
+
 	<h3 id="vertical-form">The typical vertical contact form on one side</h3>
 	<p>
 		In this case you need a contact form on one side. Now we need a vertical form. Here you can use the helper
@@ -88,8 +88,8 @@
 			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-envelope"></i> Send }
 		}
 	}
-	
-	
+
+
 	<h3 id="horizontal-form">A different horizontal form</h3>
 	<p>
 		And what happens if I need a horizontal form but with other column widths. Simple, create your own with
@@ -110,8 +110,8 @@
 			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
 		}
 	}
-	
-	
+
+
 	<h3 id="clear-form">A clear field constructor</h3>
 	<p>
 		Finally, if you would need to render a simple input, without any field constructor, you can use
@@ -122,11 +122,13 @@
 		@b4.clear.form(routes.Application.mixed) { implicit cfc =>
 			@b4.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-search"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-search"></i></span>
+					</div>
 					@input
-					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="button">Search</button>
-					</span>
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button">Search</button>
+					</div>
 				</div>
 			}
 		}
@@ -134,17 +136,19 @@
 		@@b4.clear.form(routes.Application.mixed) { implicit cfc =>
 			@@b4.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-search"></i></span>
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-search"></i></span>
+					</div>
 					@@input
-					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="button">Search</button>
-					</span>
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button">Search</button>
+					</div>
 				</div>
 			}
 		}
 	}
-	
-	
+
+
 	<h3 id="mixed-within-form">Mixed FieldConstructors within the same form</h3>
 	<p>
 		If you would need to that, you can make an <em>"inner section"</em> like this:
@@ -153,7 +157,7 @@
 		@@defining(b4.inline.fieldConstructorSpecific) { implicit ifc =>
 			@@b4.text( fooForm("bar"), '_label -> "Inline input text" )
 		}
-		
+
 		// with your own custom field constructor that extends BSFieldConstructor
 		@@defining(yourCustomFieldConstructor) { implicit myfc =>
 			@@b4.text( fooForm("bar"), '_label -> "Inline input text" )
