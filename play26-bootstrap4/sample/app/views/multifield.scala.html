@@ -337,18 +337,18 @@
 
 		@bsExampleWithCode {
 			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
-				fooForm("dateEnd"), 'value -> "31-10-2014" )(
-				'_label -> "Date range", '_error -> "error!" )
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_error -> "error!" )(
+				'_label -> "Date range" )
 
-			@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
+			@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect" )(
 				fooForm("fooSelected") )(
 				'_label -> "New task" )
 		}{
-			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014", '_error -> true )(
-				fooForm("dateEnd"), 'value -> "31-10-2014" )(
+			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_error -> "error!" )(
 				'_label -> "Date range" )
 
-			@@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect", '_showIconOnError -> true )(
+			@@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect" )(
 				fooForm("fooSelected") )(
 				'_label -> "New task" )
 		}
