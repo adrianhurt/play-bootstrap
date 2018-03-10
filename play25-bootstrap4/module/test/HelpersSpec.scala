@@ -31,17 +31,19 @@ object HelpersSpec extends Specification {
   val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
   implicit val messages = messagesApi.preferred(Seq.empty)
 
-  val vfc = b4.vertical.fieldConstructor
+  val vfc = b4.vertical.fieldConstructor()
   val (colLabel, colInput) = ("col-md-2", "col-md-10")
   val hfc = b4.horizontal.fieldConstructor(colLabel, colInput)
-  val ifc = b4.inline.fieldConstructor
-  val cfc = b4.clear.fieldConstructor
+  val ifc = b4.inline.fieldConstructor()
+  val cfc = b4.clear.fieldConstructor()
 
   /**
    * A test field constructor that simply renders the input
    */
   implicit val testFieldConstructor = new B4FieldConstructor {
     val formClass = ""
+    val isCustom = false
+    val withFeedbackTooltip = false
     def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = inputHtml
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = contentHtml
   }

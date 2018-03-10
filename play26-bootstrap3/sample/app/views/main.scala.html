@@ -47,18 +47,14 @@
 						<li@if(tab == "extendit"){ class="active"}><a href="@routes.Application.extendIt">Extend it!</a></li>
 						<li@if(tab == "docs"){ class="active"}><a href="@routes.Application.docs">Documentation</a></li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown play-version"><a>@versionBadge(explicit = true)</a></li>
-						<li class="github">@repository.home("""<i class="fa fa-github fa-2x"></i> Github""")</li>
-					</ul>
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="container">
 			@content
 		</div>
-		
+
 		<div class="footer">
 			<div class="container">
 				<p>@repository.home("""<i class="fa fa-github fa-2x"></i> View on Github""")</p>

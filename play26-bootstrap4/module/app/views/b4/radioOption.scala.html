@@ -1,4 +1,4 @@
-@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, b4.B4FieldInfo), msgsProv: MessagesProvider)
+@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, B4FieldInfo), fc: B4FieldConstructor, msgsProv: MessagesProvider)
 @displayLabelWithInput(inputClass: String, labelClass: String, fieldInfo: b4.B4FieldInfo) = {
 	<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, inputClass))>
   <label class="@labelClass" for="@(fieldInfo.id)_@inputValue">

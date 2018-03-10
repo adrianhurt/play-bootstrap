@@ -9,13 +9,14 @@
 }
 @defining({
 	val argsMap = args.toMap
+	val inline = bs.ArgsMap.isTrue(argsMap, '_inline) || fc.formClass == "form-inline"
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
-	(argsMap, disabled)
-}) { case (argsMap, disabled) =>
+	(argsMap, inline, disabled)
+}) { case (argsMap, inline, disabled) =>
 	@inputFormGroup(field, withFeedback = false, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
 		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
-      @content(bs.ArgsMap.isTrue(argsMap, '_inline), disabled, fieldInfo)
+      		@content(inline, disabled, fieldInfo)
 		}
 	}(fc, messages)
 }

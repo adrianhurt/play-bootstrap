@@ -21,15 +21,16 @@ package object vertical {
   import play.api.mvc.{ Call, RequestHeader }
   import play.api.i18n.Messages
   import views.html.helper._
+  import views.html.bs.Args.{ inner, isTrue }
 
   /**
    * Declares the class for the Vertical FieldConstructor.
    */
-  class VerticalFieldConstructor extends B4FieldConstructor {
+  class VerticalFieldConstructor(val isCustom: Boolean = false, val withFeedbackTooltip: Boolean = false) extends B4FieldConstructor {
     /* Define the class of the corresponding form */
     val formClass = "form-vertical"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(messages)
+    def apply(fieldInfo: B4FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(this, messages)
     /* Renders the corresponding template of the form group */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap)(messages)
   }
@@ -39,21 +40,27 @@ package object vertical {
    * If a default B4FieldConstructor and a specific VerticalFieldConstructor are within the same scope, the more
    * specific will be chosen.
    */
-  val fieldConstructorSpecific: VerticalFieldConstructor = new VerticalFieldConstructor()
+  def fieldConstructorSpecific(isCustom: Boolean = false, withFeedbackTooltip: Boolean = false): VerticalFieldConstructor =
+    new VerticalFieldConstructor(isCustom, withFeedbackTooltip)
 
   /**
    * Returns it as a B4FieldConstructor to use it as default within a template
    */
-  implicit val fieldConstructor: B4FieldConstructor = fieldConstructorSpecific
+  def fieldConstructor(isCustom: Boolean = false, withFeedbackTooltip: Boolean = false): B4FieldConstructor =
+    fieldConstructorSpecific(isCustom, withFeedbackTooltip)
 
   /**
    * **********************************************************************************************************************************
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def form(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html) =
-    views.html.b4.form(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific)
-  def formCSRF(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html)(implicit request: RequestHeader) =
-    views.html.b4.formCSRF(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific, request)
+  def form(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html) = {
+    val vfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    views.html.b4.form(action, args: _*)(body(vfc))(vfc)
+  }
+  def formCSRF(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html)(implicit request: RequestHeader) = {
+    val vfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    views.html.b4.formCSRF(action, args: _*)(body(vfc))(vfc, request)
+  }
 
 }

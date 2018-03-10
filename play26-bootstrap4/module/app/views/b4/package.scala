@@ -46,20 +46,23 @@ package object b4 {
     }
 
     /* Indicates if it's a custom element */
-    val isCustom: Boolean = isTrue(argsMap, '_custom)
+    def isCustom(implicit fc: b4.B4FieldConstructor): Boolean = fc.isCustom || isTrue(argsMap, '_custom)
 
     /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    def statusB4Feedback(implicit fc: b4.B4FieldConstructor): Option[String] = B4FieldInfo.statusB4Feedback(status, fc.withFeedbackTooltip)
+
     /* List of every ARIA id */
-    override val ariaIds: Seq[String] = feedbackInfos.map(_._1) ++ helpInfos.map(_._1)
+    val ariaIds: Seq[String] = feedbackInfos.map(_._1) ++ helpInfos.map(_._1)
 
     /*
     * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
     * It adds the ARIA attributes and removes the underscored reserved for the field constructor and the `id and `value ones that are
     * managed independently.
     */
-    override lazy val innerArgsMap: Map[Symbol, Any] = (
+    lazy val innerArgsMap: Map[Symbol, Any] = (
       (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, msgsProv) ++
@@ -90,6 +93,12 @@ package object b4 {
       else
         None
     }
+    /* The corresponding feedback class for helpers */
+    def statusB4Feedback(status: Option[String], withFeedbackTooltip: Boolean): Option[String] = status.map {
+      case "success" => "valid"
+      case "warning" => "warning"
+      case _ => "invalid"
+    }.map(_ + (if (withFeedbackTooltip) "-tooltip" else "-feedback"))
   }
 
   /**
@@ -121,6 +130,9 @@ package object b4 {
     /* The optional validation state ("success", "warning" or "danger") */
     override lazy val status: Option[String] = B4FieldInfo.status(hasErrors, argsMap)
 
+    /* The corresponding optional validation feedback for B4 ("valid-feedback", "warning-feedback" or "invalid-feedback") */
+    def statusB4Feedback(implicit fc: b4.B4FieldConstructor): Option[String] = B4FieldInfo.statusB4Feedback(status, fc.withFeedbackTooltip)
+
     override lazy val globalArgs = {
       val withoutHelp = Args.remove(globalArguments, '_help)
       val withStatus = status.map(s => Args.withDefault(withoutHelp, '_class -> s"has-$s")).getOrElse(withoutHelp)
@@ -134,6 +146,8 @@ package object b4 {
   trait B4FieldConstructor extends BSFieldConstructor[B4FieldInfo] {
     /* Define the class of the corresponding form (ex: "form-horizontal", "form-inline", ...) */
     val formClass: String
+    val isCustom: Boolean
+    val withFeedbackTooltip: Boolean
   }
 
   /**

@@ -12,10 +12,9 @@
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
 	val multiple = bs.ArgsMap.isTrue(argsMap, 'multiple)
-  val defaultClass = if (bs.ArgsMap.isTrue(argsMap, '_custom)) "custom-select" else "form-control"
-	(argsMap, disabled, multiple, defaultClass)
-}) { case (argsMap, disabled, multiple, defaultClass) =>
-	@inputFormGroup(field, withLabelFor = true, bs.Args.withDefault(bs.Args.withAddingStringValue(args, 'class, defaultClass), 'disabled -> disabled)) { fieldInfo =>
+	(argsMap, disabled, multiple)
+}) { case (argsMap, disabled, multiple) =>
+	@inputFormGroup(field, withLabelFor = true, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
 		@defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
 			@defining( ( !field.indexes.isEmpty && multiple ) match {
 				case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
@@ -23,7 +22,7 @@
 				case _ => fieldInfo.value.toSet
 			}){ implicit values =>
 				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
-					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
+					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, if (fieldInfo.isCustom) "custom-select" else "form-control"))>
 						@argsMap.get('_default).map { v =>
 							@selectOption("", bs.Args.msg(v)(msgsProv), 'class -> "blank", 'selected -> true, 'disabled -> "disabled")
 						}

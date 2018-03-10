@@ -1,8 +1,8 @@
 @(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
 @defining({
 	val argsMap = args.toMap
-  val value = argsMap.get('value).getOrElse("true").toString
-  val checked = argsMap.get('checked).orElse(field.value.map(_ == value).orElse(argsMap.get('_default))).map(_.toString == "true").getOrElse(false)
+	val value = argsMap.get('value).getOrElse("true").toString
+	val checked = argsMap.get('checked).orElse(field.value.map(_ == value).orElse(argsMap.get('_default))).map(_.toString == "true").getOrElse(false)
 	val containsReadonly = argsMap.contains('readonly)
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)

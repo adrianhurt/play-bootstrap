@@ -11,20 +11,7 @@
 	<h1 id="mixed-forms" class="page-header">Mixed Forms</h1>
 	<p class="lead">This page its an example to show how to mix different forms within the same view.</p>
 
-	<p>
-		This page will use a horizontal form as default. So first of all, it declares an implicit horizontal field constructor.
-		With that, every helper will take it implicitly.
-	</p>
-	@code {
-		@@implicitFC = @@{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
-	}
-
-
 	<h3 id="simple-form">A simple horizontal form</h3>
-	<p>
-		As we declared on top of the page an implicit horizontal field constructor, we can forget the field constructors
-		for a while.
-	</p>
 	@bsExampleWithCode {
 		@b4.form(routes.Application.mixed) {
 			@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
@@ -43,10 +30,6 @@
 
 
 	<h3 id="inline-form">The typical inline login form on top</h3>
-	<p>
-		Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor
-		(and the @BSVersion.msgsName, which is normally taken implicitly). The helper <code>b4.inline.form</code> makes it easier.
-	</p>
 	@bsExampleWithCode {
 		@b4.inline.form(routes.Application.mixed) { implicit ifc =>
 			@b4.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
@@ -63,10 +46,6 @@
 
 
 	<h3 id="vertical-form">The typical vertical contact form on one side</h3>
-	<p>
-		In this case you need a contact form on one side. Now we need a vertical form. Here you can use the helper
-		<code>b4.vertical.form</code>.
-	</p>
 	@bsExampleWithCode {
 		<div class="row">
 		<div class="col-md-4">
@@ -91,10 +70,6 @@
 
 
 	<h3 id="horizontal-form">A different horizontal form</h3>
-	<p>
-		And what happens if I need a horizontal form but with other column widths. Simple, create your own with
-		the helper <code>b4.horizontal.form</code>.
-	</p>
 	@bsExampleWithCode {
 		@b4.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =>
 			@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
@@ -113,11 +88,6 @@
 
 
 	<h3 id="clear-form">A clear field constructor</h3>
-	<p>
-		Finally, if you would need to render a simple input, without any field constructor, you can use
-		the helper <code>b4.clear.form</code>. This is a field constructor that doesn't add any code,
-		just the input.
-	</p>
 	@bsExampleWithCode {
 		@b4.clear.form(routes.Application.mixed) { implicit cfc =>
 			@b4.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
@@ -150,29 +120,5 @@
 
 
 	<h3 id="mixed-within-form">Mixed FieldConstructors within the same form</h3>
-	<p>
-		If you would need to that, you can make an <em>"inner section"</em> like this:
-	</p>
-	@code {
-		@@defining(b4.inline.fieldConstructorSpecific) { implicit ifc =>
-			@@b4.text( fooForm("bar"), '_label -> "Inline input text" )
-		}
-
-		// with your own custom field constructor that extends BSFieldConstructor
-		@@defining(yourCustomFieldConstructor) { implicit myfc =>
-			@@b4.text( fooForm("bar"), '_label -> "Inline input text" )
-		}
-	}
-	<p>
-		Or simply:
-	</p>
-	@code {
-		@@b4.text( fooForm("bar"), '_label -> "Inline input text" )(b4.inline.fieldConstructor, implicitly[@BSVersion.msgsClass])
-	}
-	<p>
-		But remember that horizontal and inline controls need to be inside their corresponding
-		<code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to
-		wrap them with a <code>div</code> with these classes.
-	</p>
 
 }

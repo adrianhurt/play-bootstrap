@@ -21,15 +21,16 @@ package object inline {
   import play.api.mvc.{ Call, RequestHeader }
   import play.api.i18n.Messages
   import views.html.helper._
+  import views.html.bs.Args.{ inner, isTrue }
 
   /**
    * Declares the class for the Inline FieldConstructor.
    */
-  class InlineFieldConstructor extends B3FieldConstructor {
+  class InlineFieldConstructor(val withFeedbackIcons: Boolean = false) extends B3FieldConstructor {
     /* Define the class of the corresponding form */
     val formClass = "form-inline"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(messages)
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(this, messages)
     /* Renders the corresponding template of the form group */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap)(messages)
   }
@@ -39,21 +40,27 @@ package object inline {
    * If a default B3FieldConstructor and a specific InlineFieldConstructor are within the same scope, the more
    * specific will be chosen.
    */
-  val fieldConstructorSpecific: InlineFieldConstructor = new InlineFieldConstructor()
+  def fieldConstructorSpecific(withFeedbackIcons: Boolean = false): InlineFieldConstructor =
+    new InlineFieldConstructor(withFeedbackIcons)
 
   /**
    * Returns it as a B3FieldConstructor to use it as default within a template
    */
-  implicit val fieldConstructor: B3FieldConstructor = fieldConstructorSpecific
+  def fieldConstructor(withFeedbackIcons: Boolean = false): B3FieldConstructor =
+    fieldConstructorSpecific(withFeedbackIcons)
 
   /**
    * **********************************************************************************************************************************
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def form(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html) =
-    views.html.b3.form(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific)
-  def formCSRF(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html)(implicit request: RequestHeader) =
-    views.html.b3.formCSRF(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific, request)
+  def form(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html) = {
+    val ifc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackTooltip))
+    views.html.b3.form(action, inner(args): _*)(body(ifc))(ifc)
+  }
+  def formCSRF(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html)(implicit request: RequestHeader) = {
+    val ifc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackTooltip))
+    views.html.b3.formCSRF(action, inner(args): _*)(body(ifc))(ifc, request)
+  }
 
 }

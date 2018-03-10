@@ -60,10 +60,10 @@ package object b3 {
     }
 
     /* Indicates if any of the previous feedback icons should be shown */
-    val hasFeedback: Boolean = showIconError || showIconWarning || showIconValid
+    def hasFeedback(implicit fc: B3FieldConstructor): Boolean = withFeedback && (fc.withFeedbackIcons || showIconError || showIconWarning || showIconValid)
 
     /* The optional validation state for the form-group ("has-success", "has-warning", "has-error") with the optional "has-feedback" */
-    def statusWithFeedback: Option[String] = B3FieldInfo.statusWithFeedback(status, hasFeedback)
+    def statusWithFeedback(implicit fc: B3FieldConstructor): Option[String] = B3FieldInfo.statusWithFeedback(status, hasFeedback)
 
     /* Returns the corresponding icon from the validation status */
     def feedbackIcon: Option[String] = status.map {
@@ -78,7 +78,24 @@ package object b3 {
     def ariaFeedbackId: String = id + "_status"
 
     /* List of every ARIA id */
-    override val ariaIds: Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ infos.map(_._1) ++ errors.map(_._1)
+    def ariaIds(implicit fc: B3FieldConstructor): Seq[String] = (if (hasFeedback) Seq(ariaFeedbackId) else Nil) ++ infos.map(_._1) ++ errors.map(_._1)
+
+    /*
+    * Map with the inner args, i.e. those args for the helper itself removing those ones reserved for the field constructor.
+    * It adds the ARIA attributes and removes the underscored reserved for the field constructor and the `id and `value ones that are
+    * managed independently.
+    */
+    def innerArgsMap(implicit fc: B3FieldConstructor): Map[Symbol, Any] = (
+      (if (ariaIds.size > 0) Seq(Symbol("aria-describedby") -> ariaIds.mkString(" ")) else Nil) ++
+      (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
+      BSFieldInfo.constraintsArgs(field, messages) ++
+      Args.inner(
+        Args.remove(args, 'id, 'value).map {
+          case arg if arg._1 == 'placeholder => Args.msg(arg)(messages)
+          case other => other
+        }
+      )
+    ).toMap
   }
 
   /**
@@ -148,6 +165,7 @@ package object b3 {
   trait B3FieldConstructor extends BSFieldConstructor[B3FieldInfo] {
     /* Define the class of the corresponding form (ex: "form-horizontal", "form-inline", ...) */
     val formClass: String
+    val withFeedbackIcons: Boolean
   }
 
   /**

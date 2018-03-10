@@ -37,8 +37,8 @@ object FieldConstructorsSpec extends Specification {
   val messagesApi = new DefaultMessagesApiProvider(environment, conf, langs, httpConfiguration).get
   implicit val msgsProv: MessagesProvider = messagesApi.preferred(Seq.empty)
 
-  def testFielConstructor(implicit fc: B4FieldConstructor) = {
-
+  def testFielConstructor(fcDefault: B4FieldConstructor, fcWithCustomFields: B4FieldConstructor, fcWithFeedbackTooltip: B4FieldConstructor) = {
+    implicit val fc = fcDefault
     val testInputString = "<input>"
     def testInput(field: Field, args: (Symbol, Any)*) =
       b4.inputFormGroup(field, true, args) { _ => Html(testInputString) }
@@ -47,8 +47,8 @@ object FieldConstructorsSpec extends Specification {
     val fooField = fooForm("foo")
 
     val simpleInput = testInput(fooField).body
-    def simpleInputWithArgs(args: (Symbol, Any)*) = b4.text(fooField, args: _*).body
-    def simpleInputWithError(args: (Symbol, Any)*) = b4.text(fooForm.withError("foo", "test-error-0").withError("foo", "test-error-1")("foo"), args: _*).body
+    def simpleInputWithArgs(args: (Symbol, Any)*)(implicit fc: B4FieldConstructor) = b4.text(fooField, args: _*).body
+    def simpleInputWithError(args: (Symbol, Any)*)(implicit fc: B4FieldConstructor) = b4.text(fooForm.withError("foo", "test-error-0").withError("foo", "test-error-1")("foo"), args: _*).body
 
     val fieldsetExtraClasses = fc match {
       case hfc: b4.horizontal.HorizontalFieldConstructor => " row"
@@ -64,7 +64,8 @@ object FieldConstructorsSpec extends Specification {
       simpleInput must not contain ("has-danger")
       simpleInput must not contain ("aria-invalid")
       simpleInput must contain(testInputString)
-      simpleInput must not contain ("class=\"form-control-feedback\"")
+      simpleInput must not contain ("class=\"-feedback\"")
+      simpleInput must not contain ("class=\"-tooltip\"")
       simpleInput must not contain ("class=\"form-text text-muted\"")
     }
 
@@ -165,13 +166,49 @@ object FieldConstructorsSpec extends Specification {
       test2 must contain("<small id=\"foo_info_0\"")
       test2 must not contain ("<div id=\"foo_feedback")
     }
+
+    "allow to set all its helpers as bootstrap custom fields" in {
+      val customFile1 = b4.file(fooField, '_custom -> true).body.trim
+      val customFile2 = b4.file(fooField)(fcWithCustomFields, msgsProv).body.trim
+      customFile1 must be equalTo customFile2
+
+      val boolField = Form(single("foo" -> Forms.boolean))("foo")
+      val customCheckbox1 = b4.checkbox(boolField, '_custom -> true, '_text -> "theText").body.trim
+      val customCheckbox2 = b4.checkbox(boolField, '_text -> "theText")(fcWithCustomFields, msgsProv).body.trim
+      customCheckbox1 must be equalTo customCheckbox2
+
+      val fruits = Seq("A" -> "Apples", "P" -> "Pears", "B" -> "Bananas")
+      val customRadio1 = b4.radio(fooField, fruits, '_custom -> true).body.trim
+      val customRadio2 = b4.radio(fooField, fruits)(fcWithCustomFields, msgsProv).body.trim
+      customRadio1 must be equalTo customRadio2
+
+      val customSelect1 = b4.select(fooField, fruits, '_custom -> true).body.trim
+      val customSelect2 = b4.select(fooField, fruits)(fcWithCustomFields, msgsProv).body.trim
+      customSelect1 must be equalTo customSelect2
+    }
+
+    "allow rendering with feedback tooltips" in {
+      val test1 = simpleInputWithError()(fc)
+      val test2 = simpleInputWithError()(fcWithFeedbackTooltip)
+      test1.replaceAll("-feedback", "-tooltip") must be equalTo test2
+
+      val test3 = simpleInputWithArgs('_success -> "test-help")(fc)
+      val test4 = simpleInputWithArgs('_success -> "test-help")(fcWithFeedbackTooltip)
+      test3.replaceAll("-feedback", "-tooltip") must be equalTo test4
+
+      val test5 = simpleInputWithArgs('_warning -> "test-help")(fc)
+      val test6 = simpleInputWithArgs('_warning -> "test-help")(fcWithFeedbackTooltip)
+      test6.replaceAll("-feedback", "-tooltip") must be equalTo test6
+    }
   }
 
   "horizontal field constructor" should {
     val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    implicit val horizontalFieldConstructor = b4.horizontal.fieldConstructor(colLabel, colInput)
+    implicit val horizontalFieldConstructor = new b4.horizontal.HorizontalFieldConstructor(colLabel, colInput)
+    val fcWithCustomFields = new b4.horizontal.HorizontalFieldConstructor(colLabel, colInput, isCustom = true)
+    val fcWithFeedbackTooltip = new b4.horizontal.HorizontalFieldConstructor(colLabel, colInput, withFeedbackTooltip = true)
 
-    testFielConstructor(horizontalFieldConstructor)
+    testFielConstructor(horizontalFieldConstructor, fcWithCustomFields, fcWithFeedbackTooltip)
 
     "render columns for horizontal form" in {
       val body = b4.text(Form(single("foo" -> Forms.text))("foo"), '_label -> "theLabel").body
@@ -181,17 +218,21 @@ object FieldConstructorsSpec extends Specification {
   }
 
   "vertical field constructor" should {
-    implicit val verticalFieldConstructor = b4.vertical.fieldConstructor
-    testFielConstructor(verticalFieldConstructor)
+    implicit val verticalFieldConstructor = new b4.vertical.VerticalFieldConstructor()
+    val fcWithCustomFields = new b4.vertical.VerticalFieldConstructor(isCustom = true)
+    val fcWithFeedbackTooltip = new b4.vertical.VerticalFieldConstructor(withFeedbackTooltip = true)
+    testFielConstructor(verticalFieldConstructor, fcWithCustomFields, fcWithFeedbackTooltip)
   }
 
   "inline field constructor" should {
-    implicit val inlineFieldConstructor = b4.inline.fieldConstructor
-    testFielConstructor(inlineFieldConstructor)
+    implicit val inlineFieldConstructor = new b4.inline.InlineFieldConstructor()
+    val fcWithCustomFields = new b4.inline.InlineFieldConstructor(isCustom = true)
+    val fcWithFeedbackTooltip = new b4.inline.InlineFieldConstructor(withFeedbackTooltip = true)
+    testFielConstructor(inlineFieldConstructor, fcWithCustomFields, fcWithFeedbackTooltip)
   }
 
   "clear field constructor" should {
-    implicit val clearFieldConstructor = b4.clear.fieldConstructor
+    implicit val clearFieldConstructor = b4.clear.fieldConstructor()
 
     "simply render the input" in {
       val simpleInput = b4.text(Form(single("foo" -> Forms.text))("foo")).body.trim

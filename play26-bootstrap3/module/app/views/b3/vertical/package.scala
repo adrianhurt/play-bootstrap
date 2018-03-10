@@ -21,15 +21,16 @@ package object vertical {
   import play.api.mvc.{ Call, RequestHeader }
   import play.api.i18n.MessagesProvider
   import views.html.helper._
+  import views.html.bs.Args.{ inner, isTrue }
 
   /**
    * Declares the class for the Vertical FieldConstructor.
    */
-  class VerticalFieldConstructor extends B3FieldConstructor {
+  class VerticalFieldConstructor(val withFeedbackIcons: Boolean = false) extends B3FieldConstructor {
     /* Define the class of the corresponding form */
     val formClass = "form-vertical"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = bsFieldConstructor(fieldInfo, inputHtml)(msgsProv)
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider) = bsFieldConstructor(fieldInfo, inputHtml)(this, msgsProv)
     /* Renders the corresponding template of the form group */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit msgsProv: MessagesProvider) = bsFormGroup(contentHtml, argsMap)(msgsProv)
   }
@@ -39,21 +40,27 @@ package object vertical {
    * If a default B3FieldConstructor and a specific VerticalFieldConstructor are within the same scope, the more
    * specific will be chosen.
    */
-  val fieldConstructorSpecific: VerticalFieldConstructor = new VerticalFieldConstructor()
+  def fieldConstructorSpecific(withFeedbackIcons: Boolean = false): VerticalFieldConstructor =
+    new VerticalFieldConstructor(withFeedbackIcons)
 
   /**
    * Returns it as a B3FieldConstructor to use it as default within a template
    */
-  implicit val fieldConstructor: B3FieldConstructor = fieldConstructorSpecific
+  def fieldConstructor(withFeedbackIcons: Boolean = false): B3FieldConstructor =
+    fieldConstructorSpecific(withFeedbackIcons)
 
   /**
    * **********************************************************************************************************************************
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def form(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html) =
-    views.html.b3.form(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific)
-  def formCSRF(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html)(implicit request: RequestHeader) =
-    views.html.b3.formCSRF(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific, request)
+  def form(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html) = {
+    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    views.html.b3.form(action, args: _*)(body(vfc))(vfc)
+  }
+  def formCSRF(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html)(implicit request: RequestHeader) = {
+    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    views.html.b3.formCSRF(action, args: _*)(body(vfc))(vfc, request)
+  }
 
 }

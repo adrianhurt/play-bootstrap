@@ -43,18 +43,14 @@
 						<li class="nav-item @("active".when(tab == "extendit"))"><a class="nav-link" href="@routes.Application.extendIt">Extend it!</a></li>
 						<li class="nav-item @("active".when(tab == "docs"))"><a class="nav-link" href="@routes.Application.docs">Documentation</a></li>
           </ul>
-					<ul class="nav navbar-nav pull-right">
-						<li class="nav-item dropdown play-version"><a class="nav-link">@versionBadge(explicit = true)</a></li>
-						<li class="nav-item github">@repository.home("""<i class="fa fa-github fa-2x"></i> Github""", "nav-link")</li>
-					</ul>
         </div>
 			</div>
 		</nav>
-	
+
 		<div class="container">
 			@content
 		</div>
-		
+
 		<div class="footer">
 			<div class="container">
 				<p>@repository.home("""<i class="fa fa-github fa-2x"></i> View on Github""")</p>

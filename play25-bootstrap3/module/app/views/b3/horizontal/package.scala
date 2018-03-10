@@ -21,12 +21,13 @@ package object horizontal {
   import play.api.mvc.{ Call, RequestHeader }
   import play.api.i18n.Messages
   import views.html.helper._
+  import views.html.bs.Args.{ inner, isTrue }
 
   /**
    * Declares the class for the Horizontal FieldConstructor.
    * It needs the column widths for the corresponding Bootstrap3 form-group
    */
-  case class HorizontalFieldConstructor(colLabel: String, colInput: String) extends B3FieldConstructor {
+  case class HorizontalFieldConstructor(colLabel: String, colInput: String, val withFeedbackIcons: Boolean = false) extends B3FieldConstructor {
     /* The equivalent offset if label is not present (ex: colLabel = "col-md-2"  =>  colOffset = "col-md-offset-2") */
     val colOffset: String = {
       val chunks = colLabel.split("-")
@@ -35,7 +36,7 @@ package object horizontal {
     /* Define the class of the corresponding form */
     val formClass = "form-horizontal"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(messages)
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml, colLabel, colOffset, colInput)(this, messages)
     /* Renders the corresponding template of the form group */
     def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap, colLabel, colOffset, colInput)(messages)
   }
@@ -45,12 +46,14 @@ package object horizontal {
    * If a default B3FieldConstructor and a specific HorizontalFieldConstructor are within the same scope, the more
    * specific will be chosen.
    */
-  def fieldConstructorSpecific(colLabel: String, colInput: String): HorizontalFieldConstructor = new HorizontalFieldConstructor(colLabel, colInput)
+  def fieldConstructorSpecific(colLabel: String, colInput: String, withFeedbackIcons: Boolean = false): HorizontalFieldConstructor =
+    new HorizontalFieldConstructor(colLabel, colInput, withFeedbackIcons)
 
   /**
    * Returns it as a B3FieldConstructor to use it as default within a template
    */
-  def fieldConstructor(colLabel: String, colInput: String): B3FieldConstructor = fieldConstructorSpecific(colLabel, colInput)
+  def fieldConstructor(colLabel: String, colInput: String, withFeedbackIcons: Boolean = false): B3FieldConstructor =
+    fieldConstructorSpecific(colLabel, colInput, withFeedbackIcons)
 
   /**
    * **********************************************************************************************************************************
@@ -58,12 +61,12 @@ package object horizontal {
    * *********************************************************************************************************************************
    */
   def form(action: Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: HorizontalFieldConstructor => Html) = {
-    val hfc = fieldConstructorSpecific(colLabel, colInput)
-    views.html.b3.form(action, args: _*)(body(hfc))(hfc)
+    val hfc = fieldConstructorSpecific(colLabel, colInput, withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    views.html.b3.form(action, inner(args): _*)(body(hfc))(hfc)
   }
   def formCSRF(action: Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: HorizontalFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val hfc = fieldConstructorSpecific(colLabel, colInput)
-    views.html.b3.formCSRF(action, args: _*)(body(hfc))(hfc, request)
+    val hfc = fieldConstructorSpecific(colLabel, colInput, withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    views.html.b3.formCSRF(action, inner(args): _*)(body(hfc))(hfc, request)
   }
 
 }

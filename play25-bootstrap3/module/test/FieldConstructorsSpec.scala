@@ -31,8 +31,8 @@ object FieldConstructorsSpec extends Specification {
   val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
   implicit val messages = messagesApi.preferred(Seq.empty)
 
-  def testFielConstructor(implicit fc: B3FieldConstructor) = {
-
+  def testFielConstructor(fcDefault: B3FieldConstructor, fcWithFeedbackIcons: B3FieldConstructor) = {
+    implicit val fc = fcDefault
     val testInputString = "<input>"
     def testInput(field: Field, args: (Symbol, Any)*) =
       b3.inputFormGroup(field, false, true, args) { _ => Html(testInputString) }
@@ -41,8 +41,8 @@ object FieldConstructorsSpec extends Specification {
     val fooField = fooForm("foo")
 
     val simpleInput = testInput(fooField).body
-    def simpleInputWithArgs(args: (Symbol, Any)*) = b3.text(fooField, args: _*).body
-    def simpleInputWithError(args: (Symbol, Any)*) = b3.text(fooForm.withError("foo", "test-error-0").withError("foo", "test-error-1")("foo"), args: _*).body
+    def simpleInputWithArgs(args: (Symbol, Any)*)(implicit fc: B3FieldConstructor) = b3.text(fooField, args: _*).body
+    def simpleInputWithError(args: (Symbol, Any)*)(implicit fc: B3FieldConstructor) = b3.text(fooForm.withError("foo", "test-error-0").withError("foo", "test-error-1")("foo"), args: _*).body
 
     val labelExtraClasses = fc match {
       case hfc: b3.horizontal.HorizontalFieldConstructor => " " + hfc.colLabel
@@ -125,7 +125,7 @@ object FieldConstructorsSpec extends Specification {
         <span class="glyphicon glyphicon-${glyphicon(status)} form-control-feedback" aria-hidden="true"></span>
         <span id="foo_status" class="sr-only">($status)</span>"""
       ))
-      def testStatus(status: String, withIcon: Boolean, args: (Symbol, Any)*) = {
+      def testStatus(status: String, withIcon: Boolean, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor) = {
         val test = clean(simpleInputWithArgs(args: _*))
         test must withStatus(status, withIcon)
         if (withIcon) {
@@ -149,6 +149,13 @@ object FieldConstructorsSpec extends Specification {
         testStatus("warning", withIcon = true, '_warning -> "test-help", '_showIconWarning -> true)
         testStatus("error", withIcon = true, '_error -> true, '_showIconOnError -> true)
         testStatus("error", withIcon = true, '_error -> "test-help", '_showIconOnError -> true)
+      }
+
+      "with automatic feedback icons" in {
+        testStatus("success", withIcon = true, '_success -> "test-help")(fcWithFeedbackIcons)
+        testStatus("warning", withIcon = true, '_warning -> "test-help")(fcWithFeedbackIcons)
+        testStatus("error", withIcon = true, '_error -> true)(fcWithFeedbackIcons)
+        testStatus("error", withIcon = true, '_error -> "test-help")(fcWithFeedbackIcons)
       }
     }
 
@@ -181,9 +188,10 @@ object FieldConstructorsSpec extends Specification {
   "horizontal field constructor" should {
 
     val (colLabel, colInput) = ("col-md-2", "col-md-10")
-    implicit val horizontalFieldConstructor = b3.horizontal.fieldConstructor(colLabel, colInput)
+    implicit val horizontalFieldConstructor = new b3.horizontal.HorizontalFieldConstructor(colLabel, colInput)
+    val fcWithFeedbackIcons = new b3.horizontal.HorizontalFieldConstructor(colLabel, colInput, withFeedbackIcons = true)
 
-    testFielConstructor(horizontalFieldConstructor)
+    testFielConstructor(horizontalFieldConstructor, fcWithFeedbackIcons)
 
     "render columns for horizontal form" in {
       val body = b3.text(Form(single("foo" -> Forms.text))("foo"), '_label -> "theLabel").body
@@ -193,17 +201,19 @@ object FieldConstructorsSpec extends Specification {
   }
 
   "vertical field constructor" should {
-    implicit val verticalFieldConstructor = b3.vertical.fieldConstructor
-    testFielConstructor(verticalFieldConstructor)
+    implicit val verticalFieldConstructor = new b3.vertical.VerticalFieldConstructor()
+    val fcWithFeedbackIcons = new b3.vertical.VerticalFieldConstructor(withFeedbackIcons = true)
+    testFielConstructor(verticalFieldConstructor, fcWithFeedbackIcons)
   }
 
   "inline field constructor" should {
-    implicit val inlineFieldConstructor = b3.inline.fieldConstructor
-    testFielConstructor(inlineFieldConstructor)
+    implicit val inlineFieldConstructor = new b3.inline.InlineFieldConstructor()
+    val fcWithFeedbackIcons = new b3.inline.InlineFieldConstructor(withFeedbackIcons = true)
+    testFielConstructor(inlineFieldConstructor, fcWithFeedbackIcons)
   }
 
   "clear field constructor" should {
-    implicit val clearFieldConstructor = b3.clear.fieldConstructor
+    implicit val clearFieldConstructor = b3.clear.fieldConstructor()
 
     "simply render the input" in {
       val simpleInput = b3.text(Form(single("foo" -> Forms.text))("foo")).body.trim

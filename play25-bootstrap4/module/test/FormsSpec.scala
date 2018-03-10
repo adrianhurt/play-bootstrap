@@ -30,11 +30,11 @@ object FormsSpec extends Specification {
   val messagesApi = new DefaultMessagesApi(Environment.simple(), Configuration.reference, new DefaultLangs(Configuration.reference))
   implicit val messages = messagesApi.preferred(Seq.empty)
 
-  val vfc = b4.vertical.fieldConstructor
+  val vfc = b4.vertical.fieldConstructor()
   val (colLabel, colInput) = ("col-md-2", "col-md-10")
   val hfc = b4.horizontal.fieldConstructor(colLabel, colInput)
-  val ifc = b4.inline.fieldConstructor
-  val cfc = b4.clear.fieldConstructor
+  val ifc = b4.inline.fieldConstructor()
+  val cfc = b4.clear.fieldConstructor()
 
   val testContentString = "<content>"
 

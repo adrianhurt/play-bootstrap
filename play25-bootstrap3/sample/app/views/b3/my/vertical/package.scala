@@ -11,13 +11,13 @@ package object vertical {
   /**
    * Declares the class for the Vertical FieldConstructor.
    */
-  class VerticalFieldConstructor extends B3FieldConstructor {
+  class VerticalFieldConstructor(val withFeedbackIcons: Boolean = false) extends B3FieldConstructor {
     /* Define the default class of the corresponding form */
     val formClass = "form-my-vertical"
     /* Renders the corresponding template of the field constructor */
-    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)
+    def apply(fieldInfo: B3FieldInfo, inputHtml: Html)(implicit messages: Messages) = bsFieldConstructor(fieldInfo, inputHtml)(this, messages)
     /* Renders the corresponding template of the form group */
-    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap)
+    def apply(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit messages: Messages) = bsFormGroup(contentHtml, argsMap)(messages)
   }
 
   /**
@@ -30,7 +30,7 @@ package object vertical {
   /**
    * Returns it as a B3FieldConstructor to use it as default within a template
    */
-  implicit val fieldConstructor: B3FieldConstructor = fieldConstructorSpecific
+  val fieldConstructor: B3FieldConstructor = fieldConstructorSpecific
 
   /**
    * **********************************************************************************************************************************

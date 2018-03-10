@@ -21,11 +21,12 @@ package object clear {
   import play.api.i18n.MessagesProvider
   import play.api.mvc.{ Call, RequestHeader }
   import views.html.helper._
+  import views.html.bs.Args.{ inner, isTrue }
 
   /**
    * Declares the class for the Clear FieldConstructor.
    */
-  class ClearFieldConstructor extends B4FieldConstructor {
+  class ClearFieldConstructor(val isCustom: Boolean = false, val withFeedbackTooltip: Boolean = false) extends B4FieldConstructor {
     /* Define the class of the corresponding form */
     val formClass = "form-clear"
     /* Renders the corresponding template of the field constructor */
@@ -39,21 +40,27 @@ package object clear {
    * If a default B4FieldConstructor and a specific ClearFieldConstructor are within the same scope, the more
    * specific will be chosen.
    */
-  val fieldConstructorSpecific: ClearFieldConstructor = new ClearFieldConstructor()
+  def fieldConstructorSpecific(isCustom: Boolean = false, withFeedbackTooltip: Boolean = false): ClearFieldConstructor =
+    new ClearFieldConstructor(isCustom, withFeedbackTooltip)
 
   /**
    * Returns it as a B4FieldConstructor to use it as default within a template
    */
-  implicit val fieldConstructor: B4FieldConstructor = fieldConstructorSpecific
+  def fieldConstructor(isCustom: Boolean = false, withFeedbackTooltip: Boolean = false): B4FieldConstructor =
+    fieldConstructorSpecific(isCustom, withFeedbackTooltip)
 
   /**
    * **********************************************************************************************************************************
    * SHORTCUT HELPERS
    * *********************************************************************************************************************************
    */
-  def form(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html) =
-    views.html.b4.form(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific)
-  def formCSRF(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html)(implicit request: RequestHeader) =
-    views.html.b4.formCSRF(action, args: _*)(body(fieldConstructorSpecific))(fieldConstructorSpecific, request)
+  def form(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html) = {
+    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    views.html.b4.form(action, inner(args): _*)(body(cfc))(cfc)
+  }
+  def formCSRF(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html)(implicit request: RequestHeader) = {
+    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    views.html.b4.formCSRF(action, inner(args): _*)(body(cfc))(cfc, request)
+  }
 
 }

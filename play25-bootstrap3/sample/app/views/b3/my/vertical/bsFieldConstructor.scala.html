@@ -1,4 +1,4 @@
-@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(implicit messages: Messages)
+@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(implicit fc: b3.B3FieldConstructor, messages: Messages)
 @alertStatus = @{
 	if (fieldInfo.hasErrors)
 		"alert-danger"

@@ -9,7 +9,7 @@
 }
 @defining({
 	val argsMap = args.toMap
-  val inline = bs.ArgsMap.isTrue(argsMap, '_inline) || fc.formClass == "form-inline"
+	val inline = bs.ArgsMap.isTrue(argsMap, '_inline) || fc.formClass == "form-inline"
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
 	(argsMap, inline, disabled)

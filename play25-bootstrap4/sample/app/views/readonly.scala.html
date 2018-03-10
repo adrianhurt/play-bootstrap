@@ -14,28 +14,6 @@
 		<code>checkbox</code>, <code>radio</code> and <code>select</code> helpers.
 	</p>
 
-	<p>Taken from the docs:</p>
-	<div class="alert alert-info">
-		@docsReadonlyAttributes()
-	</div>
-
-	<p>
-		This demo shows a form with a text field that is always editable and readonly <code>checkbox</code>,
-		<code>radio</code> and <code>select</code> fields. Submit the form to see that the readonly fields are
-		correctly handled. You will see the fields rendered as GET params at the end of the URL of this page.
-    You can "unlock" or "lock" them with the corresponding button using javascript.
-	</p>
-
-	<div id="bound-data" class="alert alert-success" hidden role="alert">
-		<p>Bound data:</p>
-		<ul>
-			<li><strong>Input Text:</strong> <span id="data-text"></span></li>
-			<li><strong>Checkbox:</strong> <span id="data-checkbox"></span></li>
-			<li><strong>Radio Group:</strong> <span id="data-radio"></span></li>
-			<li><strong>Select:</strong> <span id="data-select"></span></li>
-		</ul>
-	</div>
-
   @b4.formCSRF(Call("GET", ""), 'id -> "form-readonly") {
 		@bsExampleWithCode {
 			@b4.text( fooForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
@@ -58,7 +36,4 @@
 		}
   }
 
-	<p>
-		Check @repository.file("sample/app/assets/javascripts/main.coffee", "here") the CoffeScript code used for lock and unlock the fields.
-	</p>
 }

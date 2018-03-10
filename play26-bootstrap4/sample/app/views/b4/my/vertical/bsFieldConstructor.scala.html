@@ -1,4 +1,4 @@
-@(fieldInfo: b4.B4FieldInfo, inputHtml: Html)(implicit msgsProv: MessagesProvider)
+@(fieldInfo: b4.B4FieldInfo, inputHtml: Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
 @alertStatus = @{
 	if (fieldInfo.hasErrors)
 		"alert-danger"
