@@ -62,6 +62,11 @@ object FormsSpec extends Specification {
       fooFormBody('class -> "customClass")(vfc) must contain("class=\"form-vertical customClass\"")
     }
 
+    "allow disabling default class" in {
+      fooFormBody('_disableDefaultClass -> true)(vfc) must not contain ("form-vertical")
+      fooFormBody('_disableDefaultClass -> true, 'class -> "customClass")(vfc) must contain("class=\"customClass\"")
+    }
+
     "add form role as default" in {
       simple must contain("role=\"form\"")
     }

@@ -1,7 +1,7 @@
 @(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: b4.clear.ClearFieldConstructor => Html)(implicit fc: b4.B4FieldConstructor, messages: Messages)
 @multifieldFormGroup(fields, globalArgs, fieldsArgs) { multifieldInfo =>
 	@inputsHtml(b4.clear.fieldConstructorSpecific)
-	@multifieldInfo.status.map {
+	@multifieldInfo.status.collect {
 		case "danger" => {<div class="form-control is-invalid d-none"></div>}
 		case "success" => {<div class="form-control is-valid d-none"></div>}
 	}
