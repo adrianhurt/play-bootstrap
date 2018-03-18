@@ -15,15 +15,18 @@ tab: docs
 			</h1>
       <p class="lead">This page explains each component in more details.</p>
 
-      
+
+      <div class="mt-4">
+        {% include buymeacoffe_button.html %}
+      </div>
 
 
       <h3 id="field-constructors">Field Constructors</h3>
       <p>
         There are 4 different field constructors you can use. You only need to declare any of them implicitly on top of your template. Then every input will take it by default. All of them extend the <code>b3.B3FieldConstructor</code> class.
       </p>
-      
-      
+
+
 
       <h4 id="field-constructors-vertical">Vertical forms</h4>
       <div class="highlight">
@@ -45,8 +48,8 @@ tab: docs
   &lt;span id="foo_info_0" class="help-block"&gt;This is a help text&lt;/span&gt;
 &lt;/div&gt;</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="field-constructors-horizontal">Horizontal forms</h4>
       <p>
@@ -67,8 +70,8 @@ tab: docs
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="field-constructors-inline">Inline forms</h4>
       <div class="highlight">
@@ -90,8 +93,8 @@ tab: docs
   &lt;span id="foo_info_0" class="help-block"&gt;This is a help text&lt;/span&gt;
 &lt;/div&gt;</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="field-constructors-clear">Clear field constructor</h4>
       <p>
@@ -100,8 +103,8 @@ tab: docs
       <div class="highlight">
 <pre><code>@import b3.clear.fieldConstructor</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="field-constructors-specific">Specific field constructors</h4>
       <p>
@@ -114,7 +117,7 @@ b3.inline.fieldConstructorSpecific
 b3.clear.fieldConstructorSpecific</code></pre>
       </div>
 
-      
+
 
 
       <h3 id="arguments">Arguments (<code>args</code>)</h3>
@@ -143,8 +146,8 @@ b3.clear.fieldConstructorSpecific</code></pre>
   &lt;span class="help-block"&gt;Maximum length: 10&lt;/span&gt;
 &lt;/div&gt;</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="arguments-special">Special arguments (the underscored ones)</h4>
       <p>
@@ -188,7 +191,7 @@ b3.clear.fieldConstructorSpecific</code></pre>
         <li><code>_showIconWarning</code>: a boolean indicating if a <em>warning</em> icon should be shown <strong>if there is no error</strong>.</li>
         <li><code>_showIconValid</code>: a boolean indicating if a <em>success</em> icon should be shown <strong>if there is no error</strong>.</li>
       </ul>
-      
+
 
       <h5 id="arguments-labels">About the labels</h5>
       <p>
@@ -218,9 +221,9 @@ b3.clear.fieldConstructorSpecific</code></pre>
           </div>
         </li>
       </ul>
-      
-      
-      
+
+
+
       <h4 id="arguments-validation">Validation arguments</h4>
       <p>
         If a field has <strong>validation constraints</strong> they will be added automatically as <strong>HTML5 data form validation</strong>
@@ -291,8 +294,8 @@ input:invalid { color: red; }</code></pre>
 @b3.number( validationForm("age"), '_label -&gt; "Age", '_help -&gt; "From 18 to 99 years old" )
 @b3.text( validationForm("color"), '_label -&gt; "Hexadecimal color", '_help -&gt; "Format is #CCC or #CCCCCC" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="arguments-optional">Optional arguments</h4>
       <p>
@@ -303,8 +306,8 @@ input:invalid { color: red; }</code></pre>
 'foo -&gt; None                // (this argument is omitted)
 'foo -&gt; maybeValue(...)     // foo="result-value"  or  it's ommited</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="arguments-boolean">Boolean arguments</h4>
       <p>
@@ -332,8 +335,8 @@ input:invalid { color: red; }</code></pre>
       <p>
         Note <strong>only regular arguments</strong> with <code>false</code> value are removed. It doesn't happen with the special ones (i.e. the <strong><em>underscored</em></strong> ones).
       </p>
-      
-      
+
+
 
       <h4 id="arguments-with-dashes">Arguments with dashes (e.g. <code>data-*</code> attributes)</h4>
       <p>
@@ -346,7 +349,7 @@ input:invalid { color: red; }</code></pre>
         </li>
       </ul>
 
-      
+
 
 
       <h3 id="aria">ARIA attributes</h3>
@@ -381,7 +384,7 @@ input:invalid { color: red; }</code></pre>
         <li>If there is any error, it is also added he <code>aria-invalid</code> attribute for the input setted to true.</li>
       </ul>
 
-      
+
 
 
       <h3 id="forms">Forms <span class="def">@(action: Call, args: (Symbol, Any)*)(body: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h3>
@@ -403,8 +406,8 @@ input:invalid { color: red; }</code></pre>
       <p>
         The helper also adds the <code>role="form"</code> attribute by default.
       </p>
-      
-      
+
+
 
       <h4 id="forms-specific">Forms with a specific <code>B3FieldConstructor</code></h4>
       <p>
@@ -461,8 +464,8 @@ input:invalid { color: red; }</code></pre>
         But remember that horizontal and inline controls need to be inside their corresponding
         <code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to wrap them with a <code>div</code> with these classes.
       </p>
-      
-      
+
+
 
       <h4 id="forms-csrf">Forms with CSRF token</h4>
       <p>
@@ -480,10 +483,10 @@ input:invalid { color: red; }</code></pre>
         It will simply add the helper <code>@helper.CSRF.formField(token)</code> within the form for you.
       </p>
 
-      
 
 
-      <h3 id="helpers">Input helpers</h3>      
+
+      <h3 id="helpers">Input helpers</h3>
 
       <h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
       <p>
@@ -502,8 +505,8 @@ input:invalid { color: red; }</code></pre>
       <p>
         You can see an example in the <a href="/readonly">Readonly Demo</a>.
       </p>
-      
-      
+
+
 
       <h4 id="helpers-validation-states">Validation states &amp; feedback icons</h4>
       <p>
@@ -589,8 +592,8 @@ input:invalid { color: red; }</code></pre>
 @b3.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
 @b3.text( fooForm("foo"), '_label -&gt; "Error", '_showIconOnError -&gt; true, '_error -&gt; "An error occurred!", 'placeholder -&gt; "Error text..." )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -616,8 +619,8 @@ input:invalid { color: red; }</code></pre>
 @b3.inputType( "email", fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
 @b3.inputType( "password", fooForm("password"), '_label -&gt; "Password", '_help -&gt; "With at least 8 characters" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-text"><code>b3.text</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -632,8 +635,8 @@ input:invalid { color: red; }</code></pre>
       <div class="highlight">
 <pre><code>@b3.text( fooForm("name"), '_label -&gt; "Name", 'placeholder -&gt; "John Doe" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-password"><code>b3.password</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -652,8 +655,8 @@ input:invalid { color: red; }</code></pre>
       <div class="highlight">
 <pre><code>@b3.password( fooForm("password"), '_label -&gt; "Password", '_help -&gt; "With at least 8 characters" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-file"><code>b3.file</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -673,8 +676,8 @@ input:invalid { color: red; }</code></pre>
 <pre><code>@b3.file( fooForm("file"), '_label -&gt; "File" )
 @b3.file( fooForm("file"), '_label -&gt; "File", 'class -&gt; "form-control" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-textarea"><code>b3.textarea</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -689,8 +692,8 @@ input:invalid { color: red; }</code></pre>
       <div class="highlight">
 <pre><code>@b3.textarea( fooForm("foo"), '_label -&gt; "Textarea", 'rows -&gt; 3 )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-checkbox"><code>b3.checkbox</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -718,7 +721,7 @@ input:invalid { color: red; }</code></pre>
 @b3.checkbox( fooForm("foo"), '_text -&gt; "Remember me", 'value -&gt; "bar" )
 // checked by default (if the form is filled, this value will be taken)
 @b3.checkbox( fooForm("foo"), '_text -&gt; "Remember me", 'value -&gt; true )
-        
+
 // always checked (even if the form has been filled with a false)
 @b3.checkbox( fooForm("foo"), '_text -&gt; "Remember me", 'checked -&gt; true )
 // disabled -&gt; it will NOT be sent within the POST request
@@ -741,8 +744,8 @@ input:invalid { color: red; }</code></pre>
       <div class="highlight">
 <pre><code>@b3.checkbox( fooForm("foo"), '_text -&gt; Html("Do you want a beer? &lt;i class=\"fa fa-beer\"&gt;&lt;/i&gt;") )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-radio"><code>b3.radio</code> <span class="def">@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -800,7 +803,7 @@ input:invalid { color: red; }</code></pre>
 <pre><code>@b3.radio( fooForm("foo"), options = Seq("B" -&gt; Html("Beer &lt;i class=\"fa fa-beer\"&gt;&lt;/i&gt;"), "C" -&gt; Html("Coffee &lt;i class=\"fa fa-coffee\"&gt;&lt;/i&gt;")), '_label -&gt; "What do you prefer?" )</code></pre>
       </div>
 
-      
+
 
       <h5 id="helper-radio-customizable" style="margin-top:40px"><code>b3.radio</code> <span class="def">@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] =&gt; Html)(implicit handler: B3FieldConstructor, lang: Lang)</span></h5>
       <h5><code>b3.radioOption</code> <span class="def">@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, String, String, Option[String], Map[Symbol,Any]))</span></h5>
@@ -828,8 +831,8 @@ input:invalid { color: red; }</code></pre>
   @b3.radioOption("B", Html("Coffee &lt;i class=\"fa fa-coffee\"&gt;&lt;/i&gt;"), 'disabled -&gt; true)
 }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-select"><code>b3.select</code> <span class="def">@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -921,7 +924,7 @@ input:invalid { color: red; }</code></pre>
 @b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Fruits", 'multiple -&gt; true, 'value -&gt; "A,B" )</code></pre>
       </div>
 
-      
+
 
       <h5 id="helper-select-customizable" style="margin-top:40px"><code>b3.select</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(content: Set[String] =&gt; Html)(implicit handler: B3FieldConstructor, lang: Lang)</span></h5>
       <h5><code>b3.selectOption</code> <span class="def">@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String])</span></h5>
@@ -991,8 +994,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
   &lt;/optgroup&gt;
 }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-hidden"><code>b3.hidden</code> <span class="def">@(name: Any, value: Any, args: (Symbol, Any)*)</span></h4>
       <p>
@@ -1005,8 +1008,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>&lt;input type="hidden" name="fooName" value="fooValue" fooAttr="fooAttrValue"&gt;</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="helper-hiddens"><code>b3.hiddens</code> <span class="def">@(namesAndValues: (Any, Any)*)</span></h4>
       <p>
@@ -1021,15 +1024,15 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 &lt;input type="hidden" name="barId" value="2"&gt;</code></pre>
       </div>
 
-      
+
 
 
       <h3 id="html5-helpers">New HTML5 helpers</h3>
       <p>
         <strong><i class="fa fa-warning"></i> Important note:</strong> the new HTML5 input types are not fully supported for web browsers. Those not supported by old web browsers, will behave as input type text.
       </p>
-      
-      
+
+
 
       <h4 id="html5-color"><code>b3.color</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1044,8 +1047,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.color( fooForm("color"), '_label -&gt; "Color", 'value -&gt; "#3264c8" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-date"><code>b3.date</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1060,8 +1063,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.date( fooForm("date"), '_label -&gt; "Date" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1076,8 +1079,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.datetime( fooForm("datetime"), '_label -&gt; "Datetime" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1092,8 +1095,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -&gt; "Datetime-Local" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-email"><code>b3.email</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1108,8 +1111,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-month"><code>b3.month</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1124,8 +1127,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.month( fooForm("month"), '_label -&gt; "Month" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-number"><code>b3.number</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1140,8 +1143,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.number( fooForm("number"), '_label -&gt; "Number", 'min -&gt; 0, 'max -&gt; 50, 'step -&gt; 5 )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-range"><code>b3.range</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1156,8 +1159,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.range( fooForm("range"), '_label -&gt; "Range", 'min -&gt; 0, 'max -&gt; 50 )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-search"><code>b3.search</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1172,8 +1175,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.search( fooForm("search"), '_label -&gt; "Search" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-tel"><code>b3.tel</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1188,8 +1191,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.tel( fooForm("tel"), '_label -&gt; "Telephone" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-time"><code>b3.time</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1204,8 +1207,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.time( fooForm("time"), '_label -&gt; "Time" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-url"><code>b3.url</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1220,8 +1223,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.url( fooForm("url"), '_label -&gt; "URL" )</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="html5-week"><code>b3.week</code> <span class="def">@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1237,7 +1240,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 <pre><code>@b3.week( fooForm("week"), '_label -&gt; "Week" )</code></pre>
       </div>
 
-      
+
 
 
       <h3 id="more-helpers">More helpers</h3>
@@ -1250,8 +1253,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
         <li><code>_label</code>: the text for the label.</li>
         <li><code>_help</code>: a help text below the input.</li>
       </ul>
-      
-      
+
+
 
       <h4 id="more-static"><code>b3.static</code> <span class="def">@(label: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
       <p>
@@ -1288,8 +1291,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 @b3.static("Hidden label", '_hideLabel -&gt; true){ &lt;a href="#"&gt;Basic control with hidden label&lt;/a&gt; }
 @b3.static(){ &lt;a href="#"&gt;Basic control without label&lt;/a&gt; }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="more-buttontype"><code>b3.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b3.B3FieldConstructor)</span></h4>
       <p>
@@ -1303,8 +1306,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.buttonType("submit", 'class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Sign in }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="more-submit"><code>b3.submit</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
       <p>
@@ -1318,8 +1321,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.submit('class -&gt; "btn btn-primary"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Sign in }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="more-reset"><code>b3.reset</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
       <p>
@@ -1333,8 +1336,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.reset('class -&gt; "btn btn-danger"){ &lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt; Reset }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="more-button"><code>b3.button</code> <span class="def">@(args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
       <p>
@@ -1348,8 +1351,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
       <div class="highlight">
 <pre><code>@b3.button('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-heart"&gt;&lt;/span&gt; Favorite }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="more-free"><code>b3.free</code> <span class="def">@(args: (Symbol,Any)*)(content: =&gt; Html)(implicit fc: B3FieldConstructor)</span></h4>
       <p>
@@ -1368,7 +1371,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 }</code></pre>
       </div>
 
-      
+
 
 
       <h3 id="your-helpers">Your own custom helpers</h3>
@@ -1376,8 +1379,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
         The purpose of these helpers is to be a tool for creating your own helpers. Please see more about creating new helpers
         <a href="/extend-it">here</a>.
       </p>
-      
-      
+
+
 
       <h4 id="your-inputwrapped"><code>b3.inputWrapped</code> <span class="def">@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html =&gt; Html)(implicit handler: B3FieldConstructor, lang: Lang)</span></h4>
       <p>
@@ -1425,8 +1428,8 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
   &lt;/div&gt;
 }</code></pre>
       </div>
-      
-      
+
+
 
       <h4 id="your-multifield"><code>b3.multifield</code> <span class="def">@(fields: Field*)(args: (Symbol,Any)*)(inputsHtml: (B3FieldConstructor, Lang) =&gt; Html)(implicit fc: B3FieldConstructor, lang: Lang)</span></h4>
       <p>

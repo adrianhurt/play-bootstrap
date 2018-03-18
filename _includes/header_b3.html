@@ -33,11 +33,16 @@
           {% assign versions = site.data.versions | where: "legacy", false %}
           {% for version in versions %}
             <li class="text-right"><a version="{{ version.code }}" href="{{ page.uri }}">{% include version_badge.html version=version %}</a></li>
-					{% endfor %}
+          {% endfor %}
           <li class="text-right"><a class="legacy" href="/changelog">View legacy versions</a></li>
         </ul>
       </li>
       <li class="github"><a href="https://github.com/adrianhurt/play-bootstrap" target="_blank"><i class="fa fa-github fa-2x"></i></a></li>
     </ul>
+  </div>
+  <div class="navbar-bmc-button">
+    <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/adrianhurt">
+      <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee">
+    </a>
   </div>
 </div>
