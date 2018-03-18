@@ -1,3 +1,28 @@
+- id: 1-4-P2X-BX
+  library: "1.4"
+  title: 1.4-P2X-BX
+  claim: Parameterizing Field Constructors
+  released: 19 March 2018
+  bullets:
+    - type: add
+      text: |
+        Now the field constructors can be parameterized to render every helper as B4 custom field or with feedback tooltips (instead of adding <code>'_custom</code> argument for every helper).
+  migration: |
+    Unfortunately, the new version breaks the way we usually imported field constructors. In the past we had the values <code>fieldConstructor</code> for "vertical", "inline" and "clear" versions of field constructors. However, now all of them are functions due to now we can parameterize them.
+
+    In short, you should change the following:
+    <div class="highlight">
+    <pre><code>@import b4.vertical.fieldConstructor</code></pre>
+    </div>
+    Into this:
+    <div class="highlight">
+    <pre><code>@implicitFieldConstructor = @{ b4.vertical.fieldConstructor() }</code></pre>
+    </div>
+
+    And the same for B3 versions and for "inline" and "clear" field constructors as well.
+
+
+
 - id: 1-3-P2X-BX
   library: "1.3"
   title: 1.3-P2X-BX

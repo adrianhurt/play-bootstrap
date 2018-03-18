@@ -1,7 +1,7 @@
-<nav class="navbar navbar-toggleable-md navbar-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar_collapse" aria-controls="navbar_collapse" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
   <a class="navbar-brand {% if page.tab == 'index' %}active{% endif %}" href="{{ site.baseurl }}/">Play-Bootstrap</a>
-  
+
   <div class="collapse navbar-collapse" id="navbar_collapse">
     <ul class="navbar-nav mr-auto">
 			<li class="nav-item dropdown {% assign my_array = "vertical|horizontal|inline|mixed" | split: "|" %}{% if my_array contains page.tab %}active{% endif %}">
@@ -10,7 +10,6 @@
 					<a class="dropdown-item {% if page.tab == 'vertical' %}active{% endif %}" href="{{ site.baseurl }}/vertical">Vertical</a>
 					<a class="dropdown-item {% if page.tab == 'horizontal' %}active{% endif %}" href="{{ site.baseurl }}/horizontal">Horizontal</a>
 					<a class="dropdown-item {% if page.tab == 'inline' %}active{% endif %}" href="{{ site.baseurl }}/inline">Inline</a>
-					<a class="dropdown-item {% if page.tab == 'mixed' %}active{% endif %}" href="{{ site.baseurl }}/mixed">Mix styles</a>
         </div>
 			</li>
 			<li class="nav-item {% if page.tab == 'multifield' %}active{% endif %}"><a class="versioned nav-link" href="{{ site.baseurl }}/multifield">Multifield</a></li>

@@ -40,9 +40,7 @@ tab: index
   It tries to follow the same rules as the helper library from Play Framework.
 </p>
 <div class="highlight">
-<pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
-
-@b3.form(routes.Application.login) {
+<pre><code>@b3.vertical.form(routes.Application.login) { implicit vfc =&gt;
   @b3.email( loginForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
   @b3.password( loginForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
   @b3.checkbox( loginForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
@@ -61,7 +59,6 @@ tab: index
   <li class="nav-item"><a data-toggle="tab" class="nav-link active" href="#vertical">Vertical</a></li>
   <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#horizontal">Horizontal</a></li>
   <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#inline">Inline</a></li>
-  <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#mixed">Mixed</a></li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active fade show active" id="vertical">
@@ -75,9 +72,7 @@ tab: index
         </form>
     </div>
     <div class="highlight">
-<pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
-
-@b3.form(routes.Application.index) {
+<pre><code>@b3.vertical.form(routes.Application.index) { implicit vfc =&gt;
   @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
   @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
   @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
@@ -104,9 +99,7 @@ tab: index
         </form>
     </div>
     <div class="highlight">
-<pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }  // Declares a horizontal field constructor as default
-
-@b3.form(routes.Application.index) {
+<pre><code>@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { implicit hfc =&gt;
   @b3.email( fooForm("email"), '_label -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
   @b3.password( fooForm("password"), '_label -&gt; "Password", 'placeholder -&gt; "Password" )
   @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
@@ -125,43 +118,11 @@ tab: index
         </form>
     </div>
     <div class="highlight">
-<pre><code>@import b3.inline.fieldConstructor  // Declares a inline field constructor as default
-
-@b3.form(routes.Application.index, 'class -&gt; "form-inline") {
+<pre><code>@b3.inline.form(routes.Application.index) { implicit ifc =&gt;
   @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
   @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
   @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
   @b3.submit('class -&gt; "btn btn-default"){ Sign in }
-}</code></pre>
-    </div>
-  </div>
-  <div class="tab-pane fade" id="mixed">
-      <div class="bd-example"><form class="form-inline " action="/" method="GET">
-        <div id="email_field" class="form-group "><label class="sr-only" for="email">Email</label> <input id="email" class="form-control" name="email" type="email" value="" placeholder="example@mail.com" /></div>
-        <div id="password_field" class="form-group "><label class="sr-only" for="password">Password</label> <input id="password" class="form-control" name="password" type="password" value="" placeholder="Password" /></div>
-        <div id="remember_field" class="form-group ">
-        <div class="form-check"><input id="remember" class="form-check-input" name="remember" type="checkbox" value="true" /> <label class="form-check-label" for="remember"> Remember me </label></div>
-        </div>
-        <div class="form-group "><button class="btn btn-secondary" type="submit"> Sign in </button></div>
-        </form><form action="/" method="GET">
-        <div id="foo_field" class="form-group "><label for="foo">Foo</label> <input id="foo" class="form-control" maxlength="20" name="foo" type="text" value="" placeholder="Foo placeholder..." /></div>
-        <div id="bar_field" class="form-group "><label for="bar">Bar</label> <input id="bar" class="form-control" name="bar" type="text" value="" placeholder="Bar placeholder..." /></div>
-        <div class="form-group "><button class="btn btn-secondary" type="submit"> Send </button></div>
-        </form>
-    </div>
-    <div class="highlight">
-<pre><code>@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
-
-@b3.inline.form(routes.Application.index, 'class -&gt; "form-inline") { implicit ifc =&gt;  // An inline form instead of the default one
-  @b3.email( fooForm("email"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
-  @b3.password( fooForm("password"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
-  @b3.checkbox( fooForm("remember"), '_text -&gt; "Remember me", 'value -&gt; true )
-  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
-}
-@b3.form(routes.Application.index) {  // Uses the default field constructor (vertical in that case)
-  @b3.text( fooForm("foo"), '_label -&gt; "Foo", 'placeholder -&gt; "Foo placeholder..." )
-  @b3.text( fooForm("bar"), '_label -&gt; "Bar", 'placeholder -&gt; "Bar placeholder..." )
-  @b3.submit('class -&gt; "btn btn-default"){ Send }
 }</code></pre>
     </div>
   </div>
@@ -230,10 +191,10 @@ tab: index
 </p>
 <div class="highlight">
 <pre><code>val validationForm = Form(tuple(
-"username" -&gt; nonEmptyText(maxLength = 20),
-"email" -&gt; email,
-"age" -&gt; number(min = 18, max = 99),
-"color" -&gt; nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
+  "username" -&gt; nonEmptyText(maxLength = 20),
+  "email" -&gt; email,
+  "age" -&gt; number(min = 18, max = 99),
+  "color" -&gt; nonEmptyText.verifying(pattern("^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$".r))
 ))</code></pre>
 </div>
 <p>

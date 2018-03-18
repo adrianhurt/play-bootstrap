@@ -119,7 +119,7 @@ b3.clear.fieldConstructorSpecific</code></pre>
 
       <h3 id="arguments">Arguments (<code>args</code>)</h3>
       <p>
-        For every component there is a list of arguments you can add and they will be put within the corresponding input tag as normal HTML. However it will only happen with those arguments without a prefixed underscore (_). The underscored arguments are used to complement the corresponding <code>form-group</code> or to parametrize its behaviour.
+        For every component there is a list of arguments you can add and they will be put within the corresponding input tag as normal HTML. However it will only happen with those arguments without a prefixed underscore (_). The underscored arguments are used to complement the corresponding <code>form-group</code> or to parameterize its behaviour.
       </p>
       <p>
         For example, the following component has the argument <code>placeholder</code> that will be added to the input text tag. The <code>_label</code> argument set the label for the form-group and the
@@ -149,7 +149,7 @@ b3.clear.fieldConstructorSpecific</code></pre>
 
       <h4 id="arguments-special">Special arguments (the underscored ones)</h4>
       <p>
-        As we see before, there are some special arguments that are reserved to parametrize the corresponding
+        As we see before, there are some special arguments that are reserved to parameterize the corresponding
         <code>form-group</code>'s behaviour. All of these special arguments are prefixed with an underscore (_). And the list is:
       </p>
       <ul>
@@ -418,7 +418,7 @@ input:invalid { color: red; }</code></pre>
   @b3.text( fooForm("foo"), '_label -&gt; "Input Text" )
   ...
 }
-@b3.inline.form(routes.Application.handleRequest) { implicit ifc // an inline form
+@b3.inline.form(routes.Application.handleRequest) { implicit ifc =&gt; // an inline form
   @b3.text( fooForm("foo"), '_label -&gt; "Input Text" )
   ...
 }</code></pre>
