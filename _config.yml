@@ -5,7 +5,7 @@ description: "Play-Bootstrap, a Play Framework library for Bootstrap that gives 
 subject: "Play-Bootstrap, a Play Framework library for Bootstrap."
 keywords: "Play-Bootstrap, play-bootstrap3, Play, framework, bootstrap, module, library, plugin, helpers, helper, field constructor, tag, template, HTML, CSS"
 
-url: https://adrianhurt.github.io/play-bootstrap
+url: https://adrianhurt.github.io
 baseurl: /play-bootstrap
 email: adrianhurt@gmail.com
 github_username:  adrianhurt
