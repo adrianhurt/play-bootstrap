@@ -59,7 +59,6 @@ if (typeof jQuery === 'undefined') {
   }
 
   Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
-    console.log("getState")
     var scrollTop    = this.$target.scrollTop()
     var position     = this.$element.offset()
     var targetHeight = this.$target.height()
@@ -82,7 +81,6 @@ if (typeof jQuery === 'undefined') {
   }
 
   Affix.prototype.getPinnedOffset = function () {
-    console.log("getPinnedOffset")
     if (this.pinnedOffset) return this.pinnedOffset
     this.$element.removeClass(Affix.RESET).addClass('affix')
     var scrollTop = this.$target.scrollTop()
@@ -91,12 +89,10 @@ if (typeof jQuery === 'undefined') {
   }
 
   Affix.prototype.checkPositionWithEventLoop = function () {
-    console.log("checkPositionWithEventLoop")
     setTimeout($.proxy(this.checkPosition, this), 1)
   }
 
   Affix.prototype.checkPosition = function () {
-    console.log("checkPosition")
     if (!this.$element.is(':visible')) return
 
     var height       = this.$element.height()
@@ -110,7 +106,6 @@ if (typeof jQuery === 'undefined') {
     if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
 
     var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
-    console.log(" -> " + affix)
 
     if (this.affixed != affix) {
       if (this.unpin != null) this.$element.css('top', '')
