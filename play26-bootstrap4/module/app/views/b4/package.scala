@@ -68,7 +68,7 @@ package object b4 {
       BSFieldInfo.constraintsArgs(field, msgsProv) ++
       Args.inner(
         Args.remove(
-          status.map(s => Args.withAddingStringValue(args, 'class, if (s == "danger") "is-invalid" else if (s == "success") "is-valid" else "")).getOrElse(args),
+          status.map(s => Args.withAddingStringValue(args, 'class, if (s == "danger") "is-invalid" else if (s == "success") "is-valid" else if (s == "warning") "is-warning" else "")).getOrElse(args),
           'id, 'value
         ).map {
             case arg if arg._1 == 'placeholder => Args.msg(arg)(msgsProv.messages)

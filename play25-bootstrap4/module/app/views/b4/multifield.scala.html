@@ -5,6 +5,7 @@
 	@multifieldInfo.status.collect {
 		case "danger" => {<div class="form-control is-invalid d-none"></div>}
 		case "success" => {<div class="form-control is-valid d-none"></div>}
+		case "warning" => {<div class="form-control is-warning d-none"></div>}
 	}
 	@multifieldInfo.feedbackInfos.map { text =>
 		<div class="@multifieldInfo.statusB4Feedback">@text</div>

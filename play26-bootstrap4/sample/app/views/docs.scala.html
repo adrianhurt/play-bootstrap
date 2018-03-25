@@ -76,7 +76,7 @@
 			<h3 id="helpers">Input helpers</h3>
 
 			<h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
-			<h4 id="helpers-validation-states">Validation states & feedback icons</h4>
+			<h4 id="helpers-validation-states">Validation states & feedback tooltips</h4>
 			@bsExampleWithCode {
 				@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_help -> "A help text", 'placeholder -> "Success text..." )
 				@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_help -> "A help text", 'placeholder -> "Warning text..." )
@@ -87,13 +87,17 @@
 				@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "A help text", 'placeholder -> "Error text..." )
 			}
 			@bsExampleWithCode {
-				@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_showIconValid -> true, '_help -> "A help text", 'placeholder -> "Success text..." )
-				@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, '_help -> "A help text", 'placeholder -> "Warning text..." )
-				@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_showIconOnError -> true, '_help -> "A help text", 'placeholder -> "Error text..." )
+				@b4.vertical.form(routes.Application.vertical, '_feedbackTooltip -> true) { implicit vfc =>
+					@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_help -> "A help text", 'placeholder -> "Success text...", '_class -> "position-relative" )
+					@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_help -> "A help text", 'placeholder -> "Warning text...", '_class -> "position-relative" )
+					@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "A help text", 'placeholder -> "Error text...", '_class -> "position-relative" )
+				}
 			}{
-				@@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_showIconValid -> true, '_help -> "A help text", 'placeholder -> "Success text..." )
-				@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, '_help -> "A help text", 'placeholder -> "Warning text..." )
-				@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_showIconOnError -> true, '_help -> "A help text", 'placeholder -> "Error text..." )
+				@@b4.vertical.form(routes.Application.vertical, '_feedbackTooltip -> true) { implicit vfc =>
+					@@b4.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", '_help -> "A help text", 'placeholder -> "Success text...", '_class -> "position-relative" )
+					@@b4.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_help -> "A help text", 'placeholder -> "Warning text...", '_class -> "position-relative" )
+					@@b4.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", '_help -> "A help text", 'placeholder -> "Error text...", '_class -> "position-relative" )
+				}
 			}
 
 
@@ -714,7 +718,7 @@
 			<h4 id="your-inputwrapped"><code>b4.inputWrapped</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit handler: BSFieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
 				This is the same as <code>b4.inputType</code> but specifying a custom wrapper for the input tag.
-				It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback icons</strong>.
+				It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback tooltips</strong>.
 			</p>
 			@bsExampleWithCode {
 				@b4.inputWrapped( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" ) { input =>
@@ -812,7 +816,7 @@
     			<a class="nav-link dropdown-toggle" href="#helpers">Input helpers</a>
     			<div class="bd-sublinks">
     				<a class="dropdown-item" href="#helpers-disabled-readonly">Disabled & Readonly</a>
-    				<a class="dropdown-item" href="#helpers-validation-states">Validation states & feedback icons</a>
+    				<a class="dropdown-item" href="#helpers-validation-states">Validation states & feedback tooltips</a>
     				<a class="dropdown-item" href="#helper-inputtype">b4.inputType</a>
     				<a class="dropdown-item" href="#helper-text">b4.text</a>
     				<a class="dropdown-item" href="#helper-password">b4.password</a>
