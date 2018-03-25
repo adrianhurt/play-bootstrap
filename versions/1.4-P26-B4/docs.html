@@ -30,10 +30,37 @@ tab: docs
         constructors you can use.
       </p>
 
-      <h4 id="create-your-own-default-field-constructor">How to create your own field constructor</h4>
+      <h4 id="field-constructors-using-form-helpers">Using form helpers</h4>
       <p>
-        Within your <em>views</em> folder, for example in <code>app/views/b4/myHorizontal/package.scala</code>, create
-        as implicit your own field constructor.
+        The simpler option is to use one of the specific <code>form</code> helpers that
+        create for you a new implicit field constructor.
+      </p>
+      <div class="highlight">
+<pre><code>@b4.horizontal.form(routes.Application.handleRequest) { implicit hfc =>
+  @b4.text( fooForm("foo"), '_label -> "Input Text" )
+  ...
+}</code></pre>
+      </div>
+
+
+      <h4 id="field-constructors-on-top-of-your-template">Declare it on top of your template</h4>
+      <p>
+        Another way is creating your field constructor on top of your template.
+      </p>
+      <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+@b4.form(routes.Application.handleRequest) {
+  @b4.text( fooForm("foo"), '_label -> "Input Text" )
+  ...
+}</code></pre>
+      </div>
+
+      <h4 id="field-constructors-your-default-field-constructor">Your default field constructor</h4>
+      <p>
+        Finally, you can create your own default field constructor in order to use it wherever you need.
+        Within your <em>views</em> folder, for example in <code>app/views/b4/myHorizontal/package.scala</code>,
+        create it as implicit.
       </p>
       <div class="highlight">
 <pre><code>package views.html.b4
@@ -53,32 +80,6 @@ package object myHorizontal {
 }</code></pre>
       </div>
 
-      <h4 id="create-field-constructor-for-template-scope">Create a default field constructor for your template's scope</h4>
-      <p>
-        Another way is creating your field constructor on top of your template.
-      </p>
-      <div class="highlight">
-<pre><code>@implicitFieldConstructor = @{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
-
-@b4.form(routes.Application.handleRequest) {
-  @b4.text( fooForm("foo"), '_label -> "Input Text" )
-  ...
-}</code></pre>
-      </div>
-
-      <h4 id="create-field-constructor-for-each-form">Create a field constructor for each form</h4>
-      <p>
-        Finally, the simpler option is to use one of the specific <code>form</code> helpers that
-        create for you a new implicit field constructor.
-      </p>
-      <div class="highlight">
-<pre><code>@b4.horizontal.form(routes.Application.handleRequest) { implicit hfc =>
-  @b4.text( fooForm("foo"), '_label -> "Input Text" )
-  ...
-}</code></pre>
-      </div>
-
-
 
       <h4 id="field-constructors-vertical">Vertical field constructor <span class="def">@(isCustom: Boolean = false, withFeedbackTooltip: Boolean = false)</span></h4>
       <p>For a simple vertical field constructor:</p>
@@ -96,7 +97,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 4 custom fields and feedback tooltips:
+        If you prefer to use <strong>Bootstrap 4 custom fields and feedback tooltips:</strong>
       </p>
       <div class="highlight">
 <pre><code>b4.vertical.fieldConstructor(isCustom = true, withFeedbackTooltip = true)</code></pre>
@@ -124,7 +125,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-          If you prefer to use Bootstrap 4 custom fields and feedback tooltips:
+          If you prefer to use <strong>Bootstrap 4 custom fields and feedback tooltips:</strong>
       </p>
       <div class="highlight">
 <pre><code>b4.horizontal.fieldConstructor("col-md-2", "col-md-10", isCustom = true, withFeedbackTooltip = true)</code></pre>
@@ -147,7 +148,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 4 custom fields and feedback tooltips:
+        If you prefer to use <strong>Bootstrap 4 custom fields and feedback tooltips:</strong>
       </p>
       <div class="highlight">
 <pre><code>b4.inline.fieldConstructor(isCustom = true, withFeedbackTooltip = true)</code></pre>
@@ -163,7 +164,7 @@ package object myHorizontal {
 <pre><code>b4.clear.fieldConstructor()</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 4 custom fields and feedback tooltips:
+        If you prefer to use <strong>Bootstrap 4 custom fields and feedback tooltips:</strong>
       </p>
       <div class="highlight">
 <pre><code>b4.clear.fieldConstructor(isCustom = true, withFeedbackTooltip = true)</code></pre>
@@ -591,7 +592,7 @@ input:invalid { color: red; }</code></pre>
 
 
 
-      <h4 id="helpers-validation-states">Validation states &amp; feedback icons</h4>
+      <h4 id="helpers-validation-states">Validation states &amp; feedback tooltips</h4>
       <p>
         You can set any validation state for a field with one of the following special arguments:
       </p>
@@ -619,11 +620,15 @@ input:invalid { color: red; }</code></pre>
           </ul>
         </li>
       </ul>
+      <p>
+        <span class="badge badge-info">Note!</span> warning state is no more supported by Bootstrap 4, so if you use it you would need to
+        add your own styling.
+      </p>
       <div class="bd-example">
           <div id="foo_field" class="form-group has-success"><label for="foo">Success</label> <input id="foo" class="is-valid form-control" maxlength="20" name="foo" type="text" value="" placeholder="Success text..." />
           <div id="foo_feedback_0" class="valid-feedback">Great!</div>
           <small id="foo_info_0" class="form-text text-muted">A help text</small></div>
-          <div id="foo_field" class="form-group has-warning"><label for="foo">Warning</label> <input id="foo" class=" form-control" maxlength="20" name="foo" type="text" value="" placeholder="Warning text..." />
+          <div id="foo_field" class="form-group has-warning"><label for="foo">Warning</label> <input id="foo" class="is-warning form-control" maxlength="20" name="foo" type="text" value="" placeholder="Warning text..." />
           <div id="foo_feedback_0" class="warning-feedback">Be carefull with this...</div>
           <small id="foo_info_0" class="form-text text-muted">A help text</small></div>
           <div id="foo_field" class="form-group has-danger"><label for="foo">Error</label> <input id="foo" class="is-invalid form-control" maxlength="20" name="foo" type="text" value="" placeholder="Error text..." />
@@ -634,6 +639,29 @@ input:invalid { color: red; }</code></pre>
 <pre><code>@b4.text( fooForm("foo"), '_label -&gt; "Success", '_success -&gt; "Great!", '_help -&gt; "A help text", 'placeholder -&gt; "Success text..." )
 @b4.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_help -&gt; "A help text", 'placeholder -&gt; "Warning text..." )
 @b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_help -&gt; "A help text", 'placeholder -&gt; "Error text..." )</code></pre>
+      </div>
+
+      <p>
+        If you prefer to use tooltips for your validations, you only need to parameterize the
+        wrapping field constructor. For example, using the form helper:
+      </p>
+      <div class="bd-example">
+        <div id="foo_field" class="form-group position-relative has-success"><label for="foo">Success</label> <input id="foo" class="is-valid form-control" maxlength="20" name="foo" type="text" value="" placeholder="Success text..." />
+        <div id="foo_feedback_0" class="valid-tooltip">Great!</div>
+        </div>
+        <div id="foo_field" class="form-group position-relative has-warning"><label for="foo">Warning</label> <input id="foo" class="is-warning form-control" maxlength="20" name="foo" type="text" value="" placeholder="Warning text..." />
+        <div id="foo_feedback_0" class="warning-tooltip">Be carefull with this...</div>
+        </div>
+        <div id="foo_field" class="form-group position-relative has-danger"><label for="foo">Error</label> <input id="foo" class="is-invalid form-control" maxlength="20" name="foo" type="text" value="" placeholder="Error text..." />
+        <div id="foo_error_0" class="invalid-tooltip">An error occurred!</div>
+        <small id="foo_info_0" class="form-text text-muted">Another help text</small></div>
+      </div>
+      <div class="highlight">
+<pre><code>@b4.vertical.form(routes.Application.vertical, '_feedbackTooltip -&gt; true) { implicit vfc =&gt;
+  @b4.text( fooForm("foo"), '_label -&gt; "Success", '_showIconValid -&gt; true, 'placeholder -&gt; "Success text..." )
+  @b4.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
+  @b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_showIconOnError -&gt; true, '_help -&gt; "Another help text", 'placeholder -&gt; "Error text..." )
+}</code></pre>
       </div>
 
 
@@ -728,6 +756,10 @@ input:invalid { color: red; }</code></pre>
       <h5 id="helper-file-b4-custom">Bootstrap 4 custom file</h5>
       <p>
         For new Bootstrap 4 custom file, you only need to add <code>'_custom -&gt; true</code>.
+        Remember that you can also parameterize the wrapping <a href="#field-constructors">form constructor</a>
+        in order every helper will behave as "custom", or simply adding <code>'_custom -&gt; true</code> to a <a href="#forms-parameters">form</a>.
+      </p>
+      <p>
         Additionally, you can use the argument <code>'placeholder</code>.
       </p>
       <div class="bd-example">
@@ -817,6 +849,8 @@ input:invalid { color: red; }</code></pre>
       <h5 id="helper-checkbox-b4-custom">Bootstrap 4 custom checkbox</h5>
       <p>
         For new Bootstrap 4 custom checkbox, you only need to add <code>'_custom -&gt; true</code>.
+        Remember that you can also parameterize the wrapping <a href="#field-constructors">form constructor</a>
+        in order every helper will behave as "custom", or simply adding <code>'_custom -&gt; true</code> to a <a href="#forms-parameters">form</a>.
       </p>
       <div class="bd-example">
           <div id="foo_checkbox_custom_field" class="form-group ">
@@ -890,6 +924,8 @@ input:invalid { color: red; }</code></pre>
       <h5 id="helper-radio-b4-custom">Bootstrap 4 custom radio</h5>
       <p>
         For new Bootstrap 4 custom radio, you only need to add <code>'_custom -&gt; true</code>.
+        Remember that you can also parameterize the wrapping <a href="#field-constructors">form constructor</a>
+        in order every helper will behave as "custom", or simply adding <code>'_custom -&gt; true</code> to a <a href="#forms-parameters">form</a>.
       </p>
       <div class="bd-example">
           <div id="foo_radio_custom_field" class="form-group "><label>What do you prefer?</label>
@@ -1034,6 +1070,8 @@ input:invalid { color: red; }</code></pre>
       <h5 id="helper-select-b4-custom">Bootstrap 4 custom select</h5>
       <p>
         For new Bootstrap 4 custom select, you only need to add <code>'_custom -&gt; true</code>.
+        Remember that you can also parameterize the wrapping <a href="#field-constructors">form constructor</a>
+        in order every helper will behave as "custom", or simply adding <code>'_custom -&gt; true</code> to a <a href="#forms-parameters">form</a>.
       </p>
       <div class="bd-example">
           <div id="foo_select_custom_field" class="form-group "><label for="foo_select_custom">Custom Select</label><select id="foo_select_custom" class="custom-select" name="foo_select_custom">
@@ -1587,6 +1625,9 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#field-constructors">Field Constructors</a>
           <div class="bd-sublinks">
+            <a class="dropdown-item" href="#field-constructors-using-form-helpers">Using form helpers</a>
+            <a class="dropdown-item" href="#field-constructors-on-top-of-your-template">Declare it on top of your template</a>
+            <a class="dropdown-item" href="#field-constructors-your-default-field-constructor">Your default field constructor</a>
             <a class="dropdown-item" href="#field-constructors-vertical">Vertical forms</a>
             <a class="dropdown-item" href="#field-constructors-horizontal">Horizontal forms</a>
             <a class="dropdown-item" href="#field-constructors-inline">Inline forms</a>
@@ -1610,6 +1651,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
           <a class="nav-link dropdown-toggle" href="#forms">Forms</a>
           <div class="bd-sublinks">
             <a class="dropdown-item" href="#forms-specific">Forms with a specific BSFieldConstructor</a>
+            <a class="dropdown-item" href="#forms-parameters">Forms with B4 custom fields and feedback tooltips</a>
             <a class="dropdown-item" href="#forms-csrf">Forms with CSRF token</a>
           </div>
         </li>
@@ -1617,7 +1659,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
           <a class="nav-link dropdown-toggle" href="#helpers">Input helpers</a>
           <div class="bd-sublinks">
             <a class="dropdown-item" href="#helpers-disabled-readonly">Disabled &amp; Readonly</a>
-            <a class="dropdown-item" href="#helpers-validation-states">Validation states &amp; feedback icons</a>
+            <a class="dropdown-item" href="#helpers-validation-states">Validation states &amp; feedback tooltips</a>
             <a class="dropdown-item" href="#helper-inputtype">b4.inputType</a>
             <a class="dropdown-item" href="#helper-text">b4.text</a>
             <a class="dropdown-item" href="#helper-password">b4.password</a>

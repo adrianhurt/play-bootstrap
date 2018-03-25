@@ -29,10 +29,37 @@ tab: docs
         constructors you can use.
       </p>
 
-      <h4 id="create-your-own-default-field-constructor">How to create your own field constructor</h4>
+      <h4 id="field-constructors-using-form-helpers">Using form helpers</h4>
       <p>
-        Within your <em>views</em> folder, for example in <code>app/views/b3/myHorizontal/package.scala</code>, create
-        as implicit your own field constructor.
+        The simpler option is to use one of the specific <code>form</code> helpers that
+        create for you a new implicit field constructor.
+      </p>
+      <div class="highlight">
+<pre><code>@b3.horizontal.form(routes.Application.handleRequest) { implicit hfc =>
+  @b3.text( fooForm("foo"), '_label -> "Input Text" )
+  ...
+}</code></pre>
+      </div>
+
+
+      <h4 id="field-constructors-on-top-of-your-template">Declare it on top of your template</h4>
+      <p>
+        Another way is creating your field constructor on top of your template.
+      </p>
+      <div class="highlight">
+<pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+@b3.form(routes.Application.handleRequest) {
+  @b3.text( fooForm("foo"), '_label -> "Input Text" )
+  ...
+}</code></pre>
+      </div>
+
+      <h4 id="field-constructors-your-default-field-constructor">Create your own default field constructor</h4>
+      <p>
+        Finally, you can create your own default field constructor in order to use it wherever you need.
+        Within your <em>views</em> folder, for example in <code>app/views/b4/myHorizontal/package.scala</code>,
+        create it as implicit.
       </p>
       <div class="highlight">
 <pre><code>package views.html.b3
@@ -47,31 +74,6 @@ package object myHorizontal {
 <pre><code>@import b3.myHorizontal.fieldConstructor    // Declare it as default
 
 @b3.form(routes.Application.handleRequest) {
-  @b3.text( fooForm("foo"), '_label -> "Input Text" )
-  ...
-}</code></pre>
-      </div>
-
-      <h4 id="create-field-constructor-for-template-scope">Create a default field constructor for your template's scope</h4>
-      <p>
-        Another way is creating your field constructor on top of your template.
-      </p>
-      <div class="highlight">
-<pre><code>@implicitFieldConstructor = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }
-
-@b3.form(routes.Application.handleRequest) {
-  @b3.text( fooForm("foo"), '_label -> "Input Text" )
-  ...
-}</code></pre>
-      </div>
-
-      <h4 id="create-field-constructor-for-each-form">Create a field constructor for each form</h4>
-      <p>
-        Finally, the simpler option is to use one of the specific <code>form</code> helpers that
-        create for you a new implicit field constructor.
-      </p>
-      <div class="highlight">
-<pre><code>@b3.horizontal.form(routes.Application.handleRequest) { implicit hfc =>
   @b3.text( fooForm("foo"), '_label -> "Input Text" )
   ...
 }</code></pre>
@@ -95,7 +97,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 3 validation feedback icons:
+        If you prefer to use <strong>Bootstrap 3 validation feedback icons:</strong>
       </p>
       <div class="highlight">
 <pre><code>b3.vertical.fieldConstructor(withFeedbackIcons = true)</code></pre>
@@ -123,7 +125,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-          If you prefer to use Bootstrap 3 validation feedback icons:
+          If you prefer to use <strong>Bootstrap 3 validation feedback icons:</strong>
       </p>
       <div class="highlight">
 <pre><code>b3.horizontal.fieldConstructor("col-md-2", "col-md-10", withFeedbackIcons = true)</code></pre>
@@ -146,7 +148,7 @@ package object myHorizontal {
 &lt;/div&gt;</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 3 validation feedback icons:
+        If you prefer to use <strong>Bootstrap 3 validation feedback icons:</strong>
       </p>
       <div class="highlight">
 <pre><code>b3.inline.fieldConstructor(withFeedbackIcons = true)</code></pre>
@@ -162,7 +164,7 @@ package object myHorizontal {
 <pre><code>b3.clear.fieldConstructor()</code></pre>
       </div>
       <p>
-        If you prefer to use Bootstrap 3 validation feedback icons:
+        If you prefer to use <strong>Bootstrap 3 validation feedback icons:</strong>
       </p>
       <div class="highlight">
 <pre><code>b3.clear.fieldConstructor(withFeedbackIcons = true)</code></pre>
@@ -1603,6 +1605,9 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
         <li>
           <a href="#field-constructors">Field Constructors</a>
           <ul class="nav">
+            <li><a href="#field-constructors-using-form-helpers">Using form helpers</a></li>
+            <li><a href="#field-constructors-on-top-of-your-template">Declare it on top of your template</a></li>
+            <li><a href="#field-constructors-your-default-field-constructor">Your default field constructor</a></li>
             <li><a href="#field-constructors-vertical">Vertical forms</a></li>
             <li><a href="#field-constructors-horizontal">Horizontal forms</a></li>
             <li><a href="#field-constructors-inline">Inline forms</a></li>
@@ -1627,6 +1632,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
           <a href="#forms">Forms</a>
           <ul class="nav">
             <li><a href="#forms-specific">Forms with a specific B3FieldConstructor</a></li>
+            <li><a href="#forms-parameters">Forms with B3 validation feedback icons</a></li>
             <li><a href="#forms-csrf">Forms with CSRF token</a></li>
           </ul>
         </li>
