@@ -1,6 +1,0 @@
-@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
-@radioWithContent(field, bs.Args.withDefault(args, '_hiddenValue -> options.headOption.map(_._1)):_*) { implicit extraInfo =>
-	@options.map { v =>
-		@radioOption(v._1, bs.Args.msg(v._2)(messages))
-	}
-}(fc, messages)

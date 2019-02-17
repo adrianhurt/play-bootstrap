@@ -1,6 +1,0 @@
-@(field: Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: Messages)
-@selectWithContent(field, bs.Args.withDefault(args, '_hiddenValue -> bs.Args.get(args, '_default).map(bs.Args.msg(_)(messages)).orElse(options.headOption.map(_._1))):_*) { implicit values =>
-	@options.map { v =>
-		@selectOption(v._1, bs.Args.msg(v._2)(messages))
-	}
-}(fc, messages)

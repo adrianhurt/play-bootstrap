@@ -1,8 +1,0 @@
-@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, msgsProv: MessagesProvider)
-@b3.multifield( fieldsWithArgs.map(_._1):_* )(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =>
-	<div @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
-		@fieldsWithArgs.map { case (field, fieldArgs) =>
-			@b3.checkbox(field, fieldArgs:_*)
-		}
-	</div>
-}

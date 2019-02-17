@@ -1,4 +1,0 @@
-@(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
-@inputFormGroup(field, withFeedback = true, withLabelFor = true, args) { fieldInfo =>
-    <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
-}(fc, messages)

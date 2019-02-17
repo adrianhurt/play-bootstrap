@@ -1,2 +1,0 @@
-@(value: Any, name: Any, args: (Symbol, Any)*)(implicit values: Set[String], messages: MessagesProvider)
-<option value="@value"@if(values.contains(value.toString)){ selected} @toHtmlArgs(args.toMap)>@bs.Args.msg(name)(messages)</option>

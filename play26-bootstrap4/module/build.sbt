@@ -1,10 +1,10 @@
 name := """play-bootstrap"""
 
-version := "1.4-P26-B4-SNAPSHOT"
+version := "1.5-P26-B4-SNAPSHOT"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.8"
 
-crossScalaVersions := Seq("2.12.4", "2.11.12")
+crossScalaVersions := Seq("2.12.8", "2.11.12")
 
 resolvers ++= Seq(
   "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases",
@@ -13,7 +13,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.4-P26-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.5-P26-SNAPSHOT",
   specs2 % Test
 )
 

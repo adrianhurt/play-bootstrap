@@ -1,4 +1,0 @@
-@(field: Field, args: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
-@inputFormGroup(field, withLabelFor = true, bs.Args.withAddingStringValue(args, 'class, "form-control")) { fieldInfo =>
-    <textarea id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap)>@fieldInfo.value</textarea>
-}(fc, messages)

@@ -1,9 +1,0 @@
-@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(wrap: Html => Html)(implicit fc: b3.B3FieldConstructor)
-<div class="form-group @fieldInfo.argsMap.get('_class) @fieldInfo.statusWithFeedback" id="@fieldInfo.idFormField">
-	@wrap {
-		@inputHtml
-		@fieldInfo.errorsAndInfos.map { case (id, text) =>
-			<span id="@id" class="help-block">@text</span>
-		}
-	}
-</div>

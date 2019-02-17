@@ -1,7 +1,0 @@
-@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: b3.clear.ClearFieldConstructor => Html)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
-@multifieldFormGroup(fields, globalArgs, fieldsArgs) { multifieldInfo =>
-	@inputsHtml(b3.clear.fieldConstructorSpecific())
-	@multifieldInfo.errorsAndInfos.map { errorOrInfo =>
-		<span class="help-block">@errorOrInfo</span>
-	}
-}(fc, messages)

@@ -1,4 +1,0 @@
-@(args: (Symbol,Any)*)(text: => Html)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
-@freeFormGroup(bs.Args.withAddingStringValue(args, 'class, "form-control-static")) { innerArgsMap =>
-	<p @toHtmlArgs(innerArgsMap)>@text</p>
-}(fc, messages)

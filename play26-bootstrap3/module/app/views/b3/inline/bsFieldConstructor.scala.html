@@ -1,7 +1,0 @@
-@(fieldInfo: b3.B3FieldInfo, inputHtml: Html)(implicit fc: b3.B3FieldConstructor, msgsProv: MessagesProvider)
-@b3.bsFieldConstructorCommon(fieldInfo, inputHtml) { content =>
-	@fieldInfo.labelOpt.map { label =>
-		<label class="control-label@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@bs.Args.msg(label)(msgsProv)</label>
-	}
-	@content
-}
