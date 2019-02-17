@@ -1,6 +1,6 @@
 name := """play-bootstrap"""
 
-version := "1.4-P25-B3-SNAPSHOT"
+version := "1.4-P25-B3"
 
 scalaVersion := "2.11.11"
 
@@ -13,7 +13,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.4-P25-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.4-P25",
   specs2 % Test
 )
 

@@ -13,7 +13,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 libraryDependencies ++= Seq(
   filters,
-  "com.adrianhurt" %% "play-bootstrap" % "1.4-P25-B4-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap" % "1.4-P25-B4",
   "org.webjars" % "bootstrap" % "4.0.0-1" exclude("org.webjars", "jquery"),
   "org.webjars" % "jquery" % "3.3.1-1",
   "org.webjars" % "font-awesome" % "4.7.0",
