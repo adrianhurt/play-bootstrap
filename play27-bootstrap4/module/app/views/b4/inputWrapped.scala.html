@@ -1,0 +1,6 @@
+@(inputType: String, field: Field, args: (Symbol,Any)*)(inputGroup: Html => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@inputFormGroup(field, withLabelFor = true, bs.Args.withAddingStringValue(args, 'class, "form-control")) { fieldInfo =>
+	@inputGroup {
+    <input type="@inputType" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
+	}
+}(fc, msgsProv)

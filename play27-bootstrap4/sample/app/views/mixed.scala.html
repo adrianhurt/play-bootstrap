@@ -1,0 +1,124 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@implicitFC = @{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+@fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+
+@main("Mixed Forms", tab = "mixed") {
+
+	<h1 id="mixed-forms" class="page-header">Mixed Forms</h1>
+	<p class="lead">This page its an example to show how to mix different forms within the same view.</p>
+
+	<h3 id="simple-form">A simple horizontal form</h3>
+	@bsExampleWithCode {
+		@b4.form(routes.Application.mixed) {
+			@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b4.select( fooForm("foo"), options = fruits, '_label -> "Select a fruit" )
+			@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+			@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
+		}
+	}{
+		@@b4.form(routes.Application.mixed) {
+			@@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b4.select( fooForm("foo"), options = fruits, '_label -> "Select a fruit" )
+			@@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
+		}
+	}
+
+
+	<h3 id="inline-form">The typical inline login form on top</h3>
+	@bsExampleWithCode {
+		@b4.inline.form(routes.Application.mixed) { implicit ifc =>
+			@b4.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
+			@b4.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+			@b4.submit('class -> "btn btn-secondary"){ Sign in }
+		}
+	}{
+		@@b4.inline.form(routes.Application.mixed) { implicit ifc =>
+			@@b4.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
+			@@b4.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+			@@b4.submit('class -> "btn btn-secondary"){ Sign in }
+		}
+	}
+
+
+	<h3 id="vertical-form">The typical vertical contact form on one side</h3>
+	@bsExampleWithCode {
+		<div class="row">
+		<div class="col-md-4">
+			@b4.vertical.form(routes.Application.mixed) { implicit vfc =>
+				@b4.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
+				@b4.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@mail.com" )
+				@b4.textarea( fooForm("foo"), '_label -> "What happened?", 'rows -> 3 )
+				@b4.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
+				@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-envelope"></i> Send }
+			}
+		</div>
+		</div>
+	}{
+		@@b4.vertical.form(routes.Application.mixed) { implicit vfc =>
+			@@b4.text( fooForm("foo"), '_label -> "Your name", 'placeholder -> "Your contact name" )
+			@@b4.email( fooForm("foo"), '_label -> "Your email", 'placeholder -> "example@@mail.com" )
+			@@b4.textarea( fooForm("foo"), '_label -> "What happened?", 'rows -> 3 )
+			@@b4.checkbox( fooForm("foo"), '_text -> "Send me a copy to my email", 'checked -> true )
+			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-envelope"></i> Send }
+		}
+	}
+
+
+	<h3 id="horizontal-form">A different horizontal form</h3>
+	@bsExampleWithCode {
+		@b4.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =>
+			@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@b4.file( fooForm("foo"), '_label -> "File" )
+			@b4.checkbox( fooForm("foo"), '_text -> "Checkbox" )
+			@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
+		}
+	}{
+		@@b4.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =>
+			@@b4.text( fooForm("foo"), '_label -> "Input Text", 'placeholder -> "A simple text..." )
+			@@b4.file( fooForm("foo"), '_label -> "File" )
+			@@b4.checkbox( fooForm("foo"), '_text -> "Checkbox" )
+			@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Save changes }
+		}
+	}
+
+
+	<h3 id="clear-form">A clear field constructor</h3>
+	@bsExampleWithCode {
+		@b4.clear.form(routes.Application.mixed) { implicit cfc =>
+			@b4.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-search"></i></span>
+					</div>
+					@input
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button">Search</button>
+					</div>
+				</div>
+			}
+		}
+	}{
+		@@b4.clear.form(routes.Application.mixed) { implicit cfc =>
+			@@b4.inputWrapped( "search", fooForm("foo"), 'placeholder -> "Text to search..." ) { input =>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-search"></i></span>
+					</div>
+					@@input
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button">Search</button>
+					</div>
+				</div>
+			}
+		}
+	}
+
+
+	<h3 id="mixed-within-form">Mixed FieldConstructors within the same form</h3>
+
+}

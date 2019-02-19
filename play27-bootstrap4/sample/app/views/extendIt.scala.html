@@ -1,0 +1,81 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@import helper.Implicits._
+@implicitFieldConstructor = @{ b4.vertical.fieldConstructor() }
+
+
+@main("Extend it", tab = "extendit") {
+
+	@b4.form(routes.Application.extendIt) {
+
+		<h1 id="extend-it" class="page-header">Implement your own helpers or field constructors</h1>
+		<p class="lead">
+			This library tries to be an out-of-the-box plugin. You simply need to install the library and you can
+			start to write your forms. However, although it is a very versatile library, you may have different
+			necessities. Thus, let's see some examples to know how you could extend it.
+		</p>
+
+		<h2 id="create-helper">Create your own helper</h2>
+		@bsExample {
+			@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+		}
+		@code {
+			@@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+		}
+
+		<h3 id="input-wrapped">The use of <code>b4.inputWrapped</code></h3>
+		@bsExampleWithCode {
+			@b4.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+		}{
+			@@b4.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+		}
+
+		<h3 id="multifield">Create your multifield helper</h3>
+
+	}
+
+
+	<h2 id="create-field-constructor">Create your own field constructor</h2>
+	@bsExampleWithCode {
+		@b4.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
+			@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@mail.com" )
+			@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", 'placeholder -> "Select a file...", '_success -> "Great!!" )
+		}
+	}{
+		<div class="my-form-group form-group has-danger" id="foo_field">
+			<div class="field-container">
+				<label class="form-control-label" for="foo">Email</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@</span>
+					</div>
+					<input type="email" id="foo" name="foo" value="" aria-describedby="foo_info_0 foo_error_0" aria-invalid="true" class="form-control" placeholder="example@@mail.com">
+				</div>
+			</div>
+			<div class="alert alert-danger" role="alert">
+				<ul>
+					<li><span id="foo_error_0" class="help-error"><i class="fa fa-remove"></i> And error occurred!</span></li>
+					<li><span id="foo_info_0" class="help-info"><i class="fa fa-warning-sign"></i> Maximum length: 10</span></li>
+				</ul>
+			</div>
+		</div>
+	}
+	<p>
+		And that's all, you now can use your own field constructor as any other with:
+	</p>
+	@code {
+		@@import b4.my.vertical.fieldConstructor		// Declare it as default
+
+		@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+	}
+	<p>
+		Or even using it for specific forms:
+	</p>
+	@code {
+		@@b4.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
+			@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+		}
+	}
+
+}

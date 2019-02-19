@@ -1,0 +1,39 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@implicitFC = @{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+@fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+
+@main("Demo for Readonly Attributes", tab = "readonly") {
+
+	<h1 id="readonly-attributes" class="page-header">Demo for Readonly Attributes</h1>
+	<p class="lead">
+		This page its an example to show how to use the <strong>readonly attribute</strong> for
+		<code>checkbox</code>, <code>radio</code> and <code>select</code> helpers.
+	</p>
+
+  @b4.formCSRF(Call("GET", ""), 'id -> "form-readonly") {
+		@bsExampleWithCode {
+			@b4.text( fooForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
+			@b4.checkbox( fooForm("checkbox"), '_text -> "Checkbox", 'value -> true, 'readonly -> true )
+			@b4.radio( fooForm("radio"), options = Seq("M"->"Male","F"->"Female"), 'value -> "M", '_label -> "Radio Group", 'readonly -> true )
+			@b4.select( fooForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
+			@b4.free() {
+				<button type="submit" class="btn btn-secondary"><i class="fa fa-ok"></i> Submit me!</button>
+				<a class="btn btn-primary btn-readonly-unlock locked" href>Unlock readonly fields</a>
+			}
+		}{
+			@@b4.text( fooForm("text"), '_label -> "Always editable", '_class -> "always-editable", 'value -> "demo text", 'placeholder -> "A simple text..." )
+			@@b4.checkbox( fooForm("checkbox"), '_text -> "Checkbox", 'value -> true, 'readonly -> true )
+			@@b4.radio( fooForm("radio"), options = Seq("M"->"Male","F"->"Female"), 'value -> "M", '_label -> "Radio Group", 'readonly -> true )
+			@@b4.select( fooForm("select"), options = fruits, '_label -> "Select", 'value -> "A", 'readonly -> true )
+			@@b4.free() {
+				<button type="submit" class="btn btn-secondary"><i class="fa fa-ok"></i> Submit me!</button>
+				<a class="btn btn-primary btn-readonly-unlock locked" href>Unlock readonly fields</a>
+			}
+		}
+  }
+
+}

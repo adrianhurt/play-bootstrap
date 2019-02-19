@@ -1,0 +1,16 @@
+@(contentHtml: Html, argsMap: Map[Symbol, Any])(implicit msgsProv: MessagesProvider)
+<div class="my-form-group form-group @argsMap.get('_class)" id="@argsMap.get('_id)">
+	<div class="field-container">
+		@argsMap.get('_label).map { label =>
+			<label>@bs.Args.msg(label)(msgsProv)</label>
+		}
+		@contentHtml
+	</div>
+	<div class="alert alert-info" role="alert">
+		<ul>
+			@argsMap.get('_help).map { help =>
+				<li><span class="help-info"><i class="fa fa-warning-sign"> @bs.Args.msg(help)(msgsProv)</i></li>
+			}
+		</ul>
+	</div>
+</div>

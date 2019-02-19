@@ -1,0 +1,4 @@
+@(action: Call, args: (Symbol, Any)*)(body: => Html)(implicit fc: b4.B4FieldConstructor)
+<form action="@action.toString" method="@action.method" @toHtmlArgs(bs.Args.withAddingStringValue(bs.Args.inner(args, 'role -> "form"), 'class, if (bs.Args.isTrue(args, '_disableDefaultClass)) None else Some(fc.formClass)).toMap)>
+	@body
+</form>

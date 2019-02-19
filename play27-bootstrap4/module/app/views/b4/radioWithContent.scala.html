@@ -1,0 +1,22 @@
+@(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, b4.B4FieldInfo] => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@readonlyWrapper(name: String, value: Option[String], argsMap: Map[Symbol, Any], disabled: Boolean)(contentWrapped: Html) = {
+	@if(argsMap.contains('readonly)) {
+		<div class="radio-group">
+			@contentWrapped
+			<input type="hidden" name="@name" value="@{value.orElse(argsMap.get('_hiddenValue)).get}"@if(!disabled){ disabled}/>
+		</div>
+	} else { @contentWrapped }
+}
+@defining({
+	val argsMap = args.toMap
+	val inline = bs.ArgsMap.isTrue(argsMap, '_inline) || fc.formClass == "form-inline"
+	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
+	(argsMap, inline, disabled)
+}) { case (argsMap, inline, disabled) =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
+			@content(inline, disabled, fieldInfo)
+		}
+	}(fc, msgsProv)
+}

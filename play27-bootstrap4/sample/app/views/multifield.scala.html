@@ -1,0 +1,83 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@import helper.Implicits._
+@implicitFC = @{ b4.horizontal.fieldConstructor("col-md-2", "col-md-10") }
+
+
+@main("Multifield", tab = "multifield") {
+
+	@b4.form(routes.Application.multifield) {
+
+		<h1 id="multifield-support" class="page-header">Multifield support</h1>
+		<p class="lead">
+			Sometimes you may need two or more fields within the same line in a horizontal or vertical form (for a set of
+			checkboxes, a date range, ...). That is the purpose of the helper <code>b4.multifield</code>.
+		</p>
+
+		<h2 id="examples">Let's see a couple of examples</h2>
+
+		<h3 id="daterange">A date range</h3>
+		@bsExampleWithCode {
+			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-12-2014" )(
+				'_label -> "Date range", "data-date-start-date" -> "10-11-2014", '_help -> "Select a date range from 10-11-2014" )
+		}{
+			@@b4.datepicker( fooForm("dateStart"), 'value -> "31-10-2014" )(
+				fooForm("dateEnd"), 'value -> "31-12-2014" )(
+				'_label -> "Date range", "data-date-start-date" -> "01-01-2014", '_help -> "Select a date range from 10-11-2014" )
+		}
+
+		<h3 id="set-checkboxes">A set of checkboxes</h3>
+		@bsExampleWithCode {
+			@b4.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)( '_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want" )
+			@b4.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+		}{
+			@@b4.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Checkboxes", 'class -> "multi-checkbox-list", '_help -> "Mark what you want")
+			@@b4.multiCheckbox(
+				(fooForm("foo"), Seq('_text -> "Foo")),
+				(fooForm("bar"), Seq('_text -> "Bar")),
+				(fooForm("beer"), Seq('_text -> "Beer"))
+				)('_label -> "Inline", 'class -> "multi-checkbox-list inline", '_help -> "Mark what you want")
+		}
+
+		<h3 id="text-with-checkbox">A textfield with a checkbox addon</h3>
+		@bsExampleWithCode {
+			@b4.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+		}{
+			@@b4.textWithCheckbox( fooForm("foo"), 'placeholder -> "a foo value" )( fooForm("fooSelected") )('_label -> "New task" )
+		}
+
+		<h3 id="validation-states">Validation states and feedback icons</h3>
+		@bsExampleWithCode {
+			@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_error -> "error!" )(
+				'_label -> "Date range" )
+
+			@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect" )(
+				fooForm("fooSelected") )(
+				'_label -> "New task" )
+		}{
+			@@b4.datepicker( fooForm("dateStart"), 'value -> "15-11-2014" )(
+				fooForm("dateEnd"), 'value -> "31-10-2014", '_error -> "error!" )(
+				'_label -> "Date range" )
+
+			@@b4.textWithCheckbox( fooForm("foo"), 'value -> "an incorrect value", '_error -> "The value is incorrect" )(
+				fooForm("fooSelected") )(
+				'_label -> "New task" )
+		}
+
+	}
+}

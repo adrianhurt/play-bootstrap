@@ -1,0 +1,12 @@
+@(fieldInfo: b4.B4FieldInfo, inputHtml: Html, extraClasses: Option[String] = None)(wrap: Html => Html)(implicit fc: b4.B4FieldConstructor)
+<div class="form-group @extraClasses @fieldInfo.argsMap.get('_class) @fieldInfo.status.map("has-"+_)" id="@fieldInfo.idFormField">
+	@wrap {
+		@inputHtml
+		@fieldInfo.feedbackInfos.map { case (id, text) =>
+			<div id="@id" class="@fieldInfo.statusB4Feedback">@text</div>
+		}
+		@fieldInfo.helpInfos.map { case (id, text) =>
+			<small id="@id" class="form-text text-muted">@text</small>
+		}
+	}
+</div>

@@ -1,0 +1,13 @@
+@(contentHtml: Html, argsMap: Map[Symbol, Any], colLabel: String, colOffset: String, colInput: String)(implicit msgsProv: MessagesProvider)
+@b4.bsFormGroupCommon(contentHtml, bs.ArgsMap.withAddingStringValue(argsMap, '_class, "row")) { content =>
+	@argsMap.get('_label).map { label =>
+		<label class="col-form-label @colLabel@if(bs.ArgsMap.isTrue(argsMap, '_hideLabel)){ sr-only}">@bs.Args.msg(label)(msgsProv)</label>
+		<div class="@colInput">
+			@content
+		</div>
+	}.getOrElse {
+		<div class="@colInput @colOffset">
+			@content
+		</div>
+	}
+}

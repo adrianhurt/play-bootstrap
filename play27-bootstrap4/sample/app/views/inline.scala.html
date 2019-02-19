@@ -1,0 +1,227 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@implicitFieldConstructor = @{ b4.inline.fieldConstructor() }
+
+@fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+
+@main("Inline Form", tab = "inline") {
+
+	<h1 id="inline-form" class="page-header">Inline Form</h1>
+
+	<h3 id="simple-inputs">Simple inputs</h3>
+	@bsExampleWithCode {
+		<div class="form-inline">
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
+			@b4.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
+			@b4.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+			@b4.file( fooForm("foo"), '_hiddenLabel -> "File" )
+		</div>
+	}{
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
+		@@b4.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
+		@@b4.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
+		@@b4.file( fooForm("foo"), '_hiddenLabel -> "File" )
+	}
+
+	<h3 id="more-options">More options</h3>
+	@bsExampleWithCode {
+		<div class="form-inline">
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
+			@b4.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+			@b4.text( fooForm("foo"), 'placeholder -> "Without label" )
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "A big text", 'class -> "form-control form-control-lg", 'placeholder -> "An awesome field..." )
+		</div>
+	}{
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
+		@@b4.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+		@@b4.text( fooForm("foo"), 'placeholder -> "Without label" )
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "A big text", 'class -> "form-control form-control-lg", 'placeholder -> "An awesome field..." )
+	}
+
+
+	<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
+	@bsExampleWithCode {
+		<div class="form-inline">
+			@b4.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
+			@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+			@b4.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
+			@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select" )
+			@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Multiple Select", 'multiple -> true )
+		</div>
+	}{
+		@@b4.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
+		@@b4.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+		@@b4.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
+
+		@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+		...
+		@@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select" )
+		@@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Multiple Select", 'multiple -> true )
+	}
+
+	<h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
+	@bsExampleWithCode {
+		<div class="form-inline">
+			@b4.text( fooForm("foo"), '_hiddenLabel -> "Disabled", 'disabled -> true, 'placeholder -> "Disabled text..." )
+			@b4.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
+			@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+		</div>
+	}{
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Disabled", 'disabled -> true, 'placeholder -> "Disabled text..." )
+		@@b4.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
+		@@b4.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+	}
+
+	<h3 id="validation-states">Validation states</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-12 form-inline">
+				@b4.text( fooForm("foo"), '_hiddenLabel -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
+				@b4.text( fooForm("foo"), '_hiddenLabel -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
+				@b4.text( fooForm("foo"), '_hiddenLabel -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form-inline">
+				@b4.inline.form(routes.Application.inline, '_feedbackTooltip -> true) { implicit fc =>
+					@b4.text( fooForm("foo"), '_hiddenLabel -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
+					@b4.text( fooForm("foo"), '_hiddenLabel -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
+					@b4.text( fooForm("foo"), '_hiddenLabel -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				}
+			</div>
+		</div>
+
+	}{
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
+		@@b4.text( fooForm("foo"), '_hiddenLabel -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+
+		// With feedback tooltips
+		@@b4.inline.form(routes.Application.inline, '_feedbackTooltip -> true) { implicit fc =>
+			@@b4.text( fooForm("foo"), '_hiddenLabel -> "Success", '_success -> true, 'placeholder -> "Success text...", '_class -> "position-relative" )
+			@@b4.text( fooForm("foo"), '_hiddenLabel -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text...", '_class -> "position-relative" )
+			@@b4.text( fooForm("foo"), '_hiddenLabel -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text...", '_class -> "position-relative" )
+		}
+	}
+
+	<h3 id="b4-custom">Bootstrap 4 custom forms</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-12 form-inline">
+				@b4.checkbox( fooForm("foo_check_custom_1"), '_text -> "Checkbox", 'checked -> true, '_custom -> true )
+				@b4.radio( fooForm("foo_radio_custom_1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group", '_custom -> true )
+			</div>
+			<div class="col-md-12 form-inline">
+				@b4.inline.form(routes.Application.inline, '_custom -> true) { implicit fc =>
+					@b4.select( fooForm("foo_select_custom_1"), options = fruits, '_label -> "Select" )
+					@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", 'placeholder -> "Select a file..." )
+				}
+			</div>
+		</div>
+}{
+		@@b4.checkbox( fooForm("foo_check_custom_1"), '_text -> "Checkbox", 'checked -> true, '_custom -> true )
+		@@b4.radio( fooForm("foo_radio_custom_1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group", '_custom -> true )
+		@@b4.select( fooForm("foo_select_custom_1"), options = fruits, '_label -> "Select", '_custom -> true )
+		@@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", 'placeholder -> "Select a file...", '_custom -> true )
+
+		Or
+
+		@@b4.inline.form(routes.Application.inline, '_custom -> true) { implicit fc =>
+			@@b4.checkbox( fooForm("foo_check_custom_1"), '_text -> "Checkbox", 'checked -> true )
+			@@b4.radio( fooForm("foo_radio_custom_1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+			@@b4.select( fooForm("foo_select_custom_1"), options = fruits, '_label -> "Select" )
+			@@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", 'placeholder -> "Select a file..." )
+		}
+}
+
+	<h3 id="customize">Customize them</h3>
+	@bsExampleWithCode {
+		<div class="form-inline">
+			@b4.inputWrapped( "email", fooForm("foo"), '_hiddenLabel -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@@</span>
+					</div>
+					@input
+				</div>
+			}
+			@b4.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-star"></i></span>
+					</div>
+					@input
+					<div class="input-group-append">
+						<button type="button" class="btn btn-outline-secondary" tabindex="-1">Action</button>
+						<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" tabindex="-1">
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right" role="menu">
+							<a class="dropdown-item" href="#">Action</a>
+							<a class="dropdown-item" href="#">Another action</a>
+							<a class="dropdown-item" href="#">Something else here</a>
+							<div role="separator" class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Separated link</a>
+						</div>
+					</div>
+				</div>
+			}
+			@b4.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Number", 'value -> 0 ) { input =>
+				<div class="input-number input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+					</div>
+					@input
+					<div class="input-group-append">
+						<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+					</div>
+				</div>
+			}
+		</div>
+	}{
+		@@b4.inputWrapped( "email", fooForm("foo"), '_hiddenLabel -> "Simple input group", 'placeholder -> "Custom input group for email..." ) { input =>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">@@@@</span>
+				</div>
+				@@input
+			</div>
+		}
+		@@b4.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fa fa-star"></i></span>
+				</div>
+				@@input
+				<div class="input-group-append">
+					<!-- Button and dropdown menu -->
+				</div>
+			</div>
+		}
+		@@b4.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Number", 'value -> 0 ) { input =>
+			<div class="input-number input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text input-number-minus"><i class="fa fa-minus"></i></span>
+				</div>
+				@@input
+				<div class="input-group-append">
+					<span class="input-group-text input-number-plus"><i class="fa fa-plus"></i></span>
+				</div>
+			</div>
+		}
+	}
+
+	<h3 id="more-helpers">More helpers</h3>
+	@bsExampleWithCode {
+		@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Submit me! }
+	}{
+		@@b4.submit('class -> "btn btn-secondary"){ <i class="fa fa-ok"></i> Submit me! }
+	}
+
+}

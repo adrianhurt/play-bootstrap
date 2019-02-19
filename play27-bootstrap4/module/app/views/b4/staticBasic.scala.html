@@ -1,0 +1,4 @@
+@(args: (Symbol,Any)*)(text: => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@freeFormGroup(bs.Args.withAddingStringValue(args, 'class, "form-control-static")) { innerArgsMap =>
+	<p @toHtmlArgs(innerArgsMap)>@text</p>
+}(fc, msgsProv)

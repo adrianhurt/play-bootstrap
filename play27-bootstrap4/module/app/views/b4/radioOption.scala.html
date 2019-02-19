@@ -1,0 +1,18 @@
+@(inputValue: Any, label: Any, args: (Symbol, Any)*)(implicit extraInfo: (Boolean, Boolean, B4FieldInfo), fc: B4FieldConstructor, msgsProv: MessagesProvider)
+@displayLabelWithInput(inputClass: String, labelClass: String, fieldInfo: b4.B4FieldInfo) = {
+	<input type="radio" id="@(fieldInfo.id)_@inputValue" name="@fieldInfo.name" value="@inputValue"@if(fieldInfo.value == Some(inputValue)){ checked} @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap ++ args.toMap, 'class, inputClass))>
+  <label class="@labelClass" for="@(fieldInfo.id)_@inputValue">
+		@bs.Args.msg(label)(msgsProv)
+	</label>
+}
+@defining(extraInfo) { case (inline, disabled, fieldInfo) =>
+  @if(fieldInfo.isCustom) {
+    <div class="custom-control custom-radio@if(inline){ custom-control-inline}">
+      @displayLabelWithInput("custom-control-input", "custom-control-label", fieldInfo)
+    </div>
+  } else {
+    <div class="form-check@if(inline){ form-check-inline}">
+      @displayLabelWithInput("form-check-input", "form-check-label", fieldInfo)
+    </div>
+  }
+}

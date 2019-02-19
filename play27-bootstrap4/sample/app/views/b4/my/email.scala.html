@@ -1,0 +1,9 @@
+@(field: Field, args: (Symbol,Any)*)(implicit handler: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@b4.inputFormGroup(field, withLabelFor = true, bs.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+	<div class="input-group">
+		<div class="input-group-prepend">
+			<span class="input-group-text">@@</span>
+		</div>
+		<input type="email" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
+	</div>
+}

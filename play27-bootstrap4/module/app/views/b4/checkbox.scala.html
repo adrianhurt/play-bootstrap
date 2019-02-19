@@ -1,0 +1,34 @@
+@(field: Field, args: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@displayLabelWithInput(inputClass: String, labelClass: String, textOpt: Option[Any], value: Any, fieldInfo: b4.B4FieldInfo) = {
+	<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="@value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, inputClass + (if (textOpt.isEmpty) " position-static" else "")))>
+	@textOpt.map { text =>
+		<label class="@labelClass" for="@fieldInfo.id">
+			@text
+		</label>
+	}
+}
+@defining({
+	val argsMap = args.toMap
+	val textOpt = argsMap.get('_text).map(bs.Args.msg(_)(msgsProv))
+	val value = argsMap.get('value).getOrElse("true").toString
+	val checked = argsMap.get('checked).orElse(field.value.map(_ == value).orElse(argsMap.get('_default))).map(_.toString == "true").getOrElse(false)
+	val containsReadonly = argsMap.contains('readonly)
+	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
+	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
+	(argsMap, textOpt, value, checked, containsReadonly, readonly, disabled)
+}){ case (argsMap, textOpt, value, checked, containsReadonly, readonly, disabled) =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args.filterNot(_._1 == 'checked), 'checked -> checked, 'disabled -> disabled)) { fieldInfo =>
+		@defining(fieldInfo.isCustom) { isCustom =>
+			<div class="@if(isCustom){custom-control custom-checkbox}else{form-check}@if(containsReadonly){ checkbox-group}">
+				@if(isCustom) {
+					@displayLabelWithInput("custom-control-input", "custom-control-label", textOpt, value, fieldInfo)
+				} else {
+					@displayLabelWithInput("form-check-input", "form-check-label", textOpt, value, fieldInfo)
+				}
+				@if(containsReadonly) {
+					<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse(if (checked) value else "")}"@if(!disabled){ disabled}/>
+				}
+			</div>
+		}
+	}(fc, msgsProv)
+}
