@@ -210,7 +210,7 @@ tab: multifield
   <div class="highlight">
 <pre><code>@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
 @b4.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =&gt;
-  &lt;div @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
+  &lt;div @toHtmlArgs(bs.Args.inner(globalArgs).toMap)&gt;
     @fieldsWithArgs.map { case (field, fieldArgs) =&gt;
       @b4.checkbox(field, fieldArgs:_*)
     }
