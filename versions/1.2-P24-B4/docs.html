@@ -23,7 +23,7 @@ tab: docs
 
       <h3 id="field-constructors">Field Constructors</h3>
       <p>
-        There are 4 different field constructors you can use. You only need to declare any of them implicitly on top of your template. Then every input will take it by default. All of them extend the <code>b4.BSFieldConstructor</code> class.
+        There are 4 different field constructors you can use. You only need to declare any of them implicitly on top of your template. Then every input will take it by default. All of them extend the <code>b4.B4FieldConstructor</code> class.
       </p>
 
       
@@ -1418,7 +1418,7 @@ class Fruit (id: Long, name: String, isCitrus: Boolean)
 
       
 
-      <h4 id="more-buttontype"><code>b4.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b4.BSFieldConstructor, messages: Messages)</span></h4>
+      <h4 id="more-buttontype"><code>b4.buttonType</code> <span class="def">@(buttonType: String, args: (Symbol,Any)*)(text: =&gt; Html)(implicit fc: b4.B4FieldConstructor, messages: Messages)</span></h4>
       <p>
         It renders a simple button to place within your form. It takes a <code>HTML</code> as parameter, so you can render whatever you want.
       </p>

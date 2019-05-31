@@ -111,7 +111,7 @@ tab: multifield
     <code>b4/datepicker.scala.html</code> within our <code>views</code> folder with the following code:
   </p>
   <div class="highlight">
-<pre><code>@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+<pre><code>@(startField: Field, startArgs: (Symbol,Any)*)(endField: Field, endArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
 @b4.multifield(startField, endField)(globalArgs, startArgs ++ endArgs) { implicit cfc =&gt;
   &lt;div class="input-daterange input-group" @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
     @b4.text(startField, startArgs:_*)
@@ -201,7 +201,7 @@ tab: multifield
     <code>b4/multiCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
   </p>
   <div class="highlight">
-<pre><code>@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+<pre><code>@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
 @b4.multifield(fieldsWithArgs.map(_._1):_*)(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =&gt;
   &lt;div @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
     @fieldsWithArgs.map { case (field, fieldArgs) =&gt;
@@ -293,7 +293,7 @@ tab: multifield
     <code>b4/textWithCheckbox.scala.html</code> within our <code>views</code> folder with the following code:
   </p>
   <div class="highlight">
-<pre><code>@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.BSFieldConstructor, messages: Messages)
+<pre><code>@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, messages: Messages)
 @b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =&gt;
   &lt;div class="input-text-checkbox input-group" @toHtmlArgs(b4.Args.inner(globalArgs).toMap)&gt;
     &lt;div class="input-group-prepend"&gt;
