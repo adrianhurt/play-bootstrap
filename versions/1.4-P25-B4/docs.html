@@ -692,9 +692,9 @@ input:invalid { color: red; }</code></pre>
       </div>
       <div class="highlight">
 <pre><code>@b4.vertical.form(routes.Application.vertical, '_feedbackTooltip -&gt; true) { implicit vfc =&gt;
-  @b4.text( fooForm("foo"), '_label -&gt; "Success", '_showIconValid -&gt; true, 'placeholder -&gt; "Success text..." )
-  @b4.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_showIconWarning -&gt; true, 'placeholder -&gt; "Warning text..." )
-  @b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_showIconOnError -&gt; true, '_help -&gt; "Another help text", 'placeholder -&gt; "Error text..." )
+  @b4.text( fooForm("foo"), '_label -&gt; "Success", '_showIconValid -&gt; true, '_class -&gt; "position-relative", 'placeholder -&gt; "Success text..." )
+  @b4.text( fooForm("foo"), '_label -&gt; "Warning", '_warning -&gt; "Be carefull with this...", '_showIconWarning -&gt; true, '_class -&gt; "position-relative", 'placeholder -&gt; "Warning text..." )
+  @b4.text( fooForm("foo"), '_label -&gt; "Error", '_error -&gt; "An error occurred!", '_showIconOnError -&gt; true, '_help -&gt; "Another help text", '_class -&gt; "position-relative", 'placeholder -&gt; "Error text..." )
 }</code></pre>
       </div>
 
