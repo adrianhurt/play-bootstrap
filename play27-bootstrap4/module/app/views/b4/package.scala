@@ -32,7 +32,7 @@ package object b4 {
   case class B4FieldInfo(field: Field, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSFieldInfo(field, args, msgsProv) {
 
     /* List with every "feedback info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val feedbackInfos: Seq[(String, String)] =
+    val feedbackInfos: Seq[(String, Any)] =
       if (errors.size > 0)
         errors
       else
@@ -41,7 +41,7 @@ package object b4 {
         }
 
     /* List with every "help info" (i.e. a help text or constraints) and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val helpInfos: Seq[(String, String)] = BSFieldInfo.helpInfos(Some(field), argsMap, msgsProv).zipWithIndex.map {
+    val helpInfos: Seq[(String, Any)] = BSFieldInfo.helpInfos(Some(field), argsMap, msgsProv).zipWithIndex.map {
       case (info, i) => (id + "_info_" + i, info)
     }
 
@@ -109,7 +109,7 @@ package object b4 {
   case class B4MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, msgsProv) {
 
     /* List with every "feedback info"  */
-    val feedbackInfos: Seq[String] = {
+    val feedbackInfos: Seq[Any] = {
       if (errors.size > 0)
         errors
       else
@@ -117,7 +117,7 @@ package object b4 {
     }
 
     /* List with every "help info" (i.e. a help text or constraints) */
-    val helpInfos: Seq[String] = {
+    val helpInfos: Seq[Any] = {
       val globalHelpInfos = BSFieldInfo.helpInfos(None, argsMap, msgsProv)
       if (globalHelpInfos.size > 0)
         globalHelpInfos

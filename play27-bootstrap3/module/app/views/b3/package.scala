@@ -33,7 +33,7 @@ package object b3 {
   case class B3FieldInfo(field: Field, withFeedback: Boolean, withLabelFor: Boolean, args: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSFieldInfo(field, args, msgsProv) {
 
     /* List with every "info" and its corresponding ARIA id. Ex: ("foo_info_0" -> "foo constraint")  */
-    val infos: Seq[(String, String)] = {
+    val infos: Seq[(String, Any)] = {
       val feedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, msgsProv).zipWithIndex.map {
         case (info, i) => (id + "_info_" + i, info)
       }
@@ -127,7 +127,7 @@ package object b3 {
   case class B3MultifieldInfo(fields: Seq[Field], globalArguments: Seq[(Symbol, Any)], fieldsArguments: Seq[(Symbol, Any)], override val msgsProv: MessagesProvider) extends BSMultifieldInfo(fields, globalArguments, fieldsArguments, msgsProv) {
 
     /* List with every "info" */
-    val infos: Seq[String] = {
+    val infos: Seq[Any] = {
       val globalFeedbackInfosButErrors = BSFieldInfo.feedbackInfosButErrors(argsMap, msgsProv)
       if (globalFeedbackInfosButErrors.size > 0)
         globalFeedbackInfosButErrors
@@ -144,7 +144,7 @@ package object b3 {
     }
 
     /* List with the errors and infos */
-    def errorsAndInfos: Seq[String] = errors ++ infos
+    def errorsAndInfos: Seq[Any] = errors ++ infos
 
     /* The optional validation state ("success", "warning" or "error") */
     override lazy val status: Option[String] = B3FieldInfo.status(hasErrors, argsMap)

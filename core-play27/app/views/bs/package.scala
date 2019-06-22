@@ -51,7 +51,7 @@ package object bs {
     val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
 
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
-    val errors: Seq[(String, String)] = BSFieldInfo.errors(Some(field), argsMap, msgsProv).zipWithIndex.map {
+    val errors: Seq[(String, Any)] = BSFieldInfo.errors(Some(field), argsMap, msgsProv).zipWithIndex.map {
       case (error, i) => (id + "_error_" + i, error)
     }
 
@@ -73,7 +73,7 @@ package object bs {
     }
 
     /* List with every error */
-    def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
+    def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
           case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
@@ -87,14 +87,14 @@ package object bs {
     }
 
     /* List with every "feedback info" except "errors" */
-    def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
+    def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
       argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(
         argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(Nil)
       )
     }
 
     /* List with every "help info", i.e. a help text or constraints */
-    def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
+    def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
       argsMap.get('_help).map(m => Seq(msgsProv.messages(m.toString))).getOrElse {
         maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
           field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translate(a)(msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translate(a)(msgsProv)): _*))
@@ -142,7 +142,7 @@ package object bs {
     val argsMap: Map[Symbol, Any] = Args.withoutNones(fieldsArguments ++ globalArguments).toMap
 
     /* List with every error */
-    val errors: Seq[String] = {
+    val errors: Seq[Any] = {
       val globalErrors = BSFieldInfo.errors(None, argsMap, msgsProv)
       if (globalErrors.size > 0)
         globalErrors
