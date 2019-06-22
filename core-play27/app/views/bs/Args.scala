@@ -18,6 +18,7 @@ package views.html.bs
 object Args {
 
   import play.api.i18n.MessagesProvider
+  import play.api.templates.PlayMagic.translate
 
   /**
    * Adds some default arguments to the parameter 'args'
@@ -66,18 +67,12 @@ object Args {
   /**
    * Localizes an argument
    */
-  def msg(arg: (Symbol, Any))(implicit msgsProv: MessagesProvider): (Symbol, Any) = arg match {
-    case (sym, str: String) => (sym, msgsProv.messages(str))
-    case _                  => arg
-  }
+  def msg(arg: (Symbol, Any))(implicit msgsProv: MessagesProvider): (Symbol, Any) = (arg._1, translate(arg._2)(msgsProv))
 
   /**
    * Localizes a value
    */
-  def msg(a: Any)(implicit msgsProv: MessagesProvider): Any = a match {
-    case str: String => msgsProv.messages(str)
-    case _           => a
-  }
+  def msg(a: Any)(implicit msgsProv: MessagesProvider): Any = translate(a)(msgsProv)
 }
 
 object ArgsMap {

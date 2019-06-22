@@ -77,7 +77,8 @@ package object bs {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
           case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
-          case message                           => Seq(msgsProv.messages(message.toString))
+          case FormError(_, message, args)       => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
+          case message                           => Seq(translate(message)(msgsProv))
         }
       }.getOrElse {
         maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
@@ -88,14 +89,14 @@ package object bs {
 
     /* List with every "feedback info" except "errors" */
     def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
-      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(
-        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(Nil)
+      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(
+        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(Nil)
       )
     }
 
     /* List with every "help info", i.e. a help text or constraints */
     def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
-      argsMap.get('_help).map(m => Seq(msgsProv.messages(m.toString))).getOrElse {
+      argsMap.get('_help).map(m => Seq(translate(m)(msgsProv))).getOrElse {
         maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
           field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translate(a)(msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translate(a)(msgsProv)): _*))
         }.getOrElse(Nil)
