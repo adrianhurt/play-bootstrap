@@ -4,7 +4,7 @@ name := """play-bootstrap-sample"""
 
 version := "1.5"
 
-scalaVersion := "2.13.0-M5"
+scalaVersion := "2.13.0"
 
 routesGenerator := InjectedRoutesGenerator
 
