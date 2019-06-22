@@ -20,8 +20,8 @@ package object bs {
   import play.api.data.{ Field, FormError }
   import play.twirl.api.Html
   import play.api.i18n.MessagesProvider
+  import play.api.templates.PlayMagic.translate
   import bs.ArgsMap.isTrue
-  import play.api.mvc.Call
 
   /**
    * Class with relevant variables for a field to pass it to the helper and field constructor
@@ -76,12 +76,12 @@ package object bs {
     def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
-          case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translateMsgArg(a, msgsProv)): _*))
+          case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
           case message                           => Seq(msgsProv.messages(message.toString))
         }
       }.getOrElse {
         maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
-          field.errors.map { e => msgsProv.messages(e.message, e.args.map(a => translateMsgArg(a, msgsProv)): _*) }
+          field.errors.map { e => msgsProv.messages(e.message, e.args.map(a => translate(a)(msgsProv)): _*) }
         }.getOrElse(Nil)
       }
     }
@@ -97,7 +97,7 @@ package object bs {
     def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
       argsMap.get('_help).map(m => Seq(msgsProv.messages(m.toString))).getOrElse {
         maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
-          field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translateMsgArg(a, msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translateMsgArg(a, msgsProv)): _*))
+          field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translate(a)(msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translate(a)(msgsProv)): _*))
         }.getOrElse(Nil)
       }
     }
@@ -128,12 +128,6 @@ package object bs {
       }
       case _ => None
     }.flatten
-
-    private def translateMsgArg(msgArg: Any, msgsProv: MessagesProvider) = msgArg match {
-      case key: String  => msgsProv.messages(key)
-      case keys: Seq[_] => keys.map(key => msgsProv.messages(key.toString))
-      case _            => msgArg
-    }
   }
 
   /**
