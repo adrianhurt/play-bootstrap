@@ -20,8 +20,8 @@ package object bs {
   import play.api.data.{ Field, FormError }
   import play.twirl.api.Html
   import play.api.i18n.MessagesProvider
+  import play.api.templates.PlayMagic.translate
   import bs.ArgsMap.isTrue
-  import play.api.mvc.Call
 
   /**
    * Class with relevant variables for a field to pass it to the helper and field constructor
@@ -51,7 +51,7 @@ package object bs {
     val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
 
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
-    val errors: Seq[(String, String)] = BSFieldInfo.errors(Some(field), argsMap, msgsProv).zipWithIndex.map {
+    val errors: Seq[(String, Any)] = BSFieldInfo.errors(Some(field), argsMap, msgsProv).zipWithIndex.map {
       case (error, i) => (id + "_error_" + i, error)
     }
 
@@ -73,31 +73,32 @@ package object bs {
     }
 
     /* List with every error */
-    def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
+    def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
       argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
-          case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translateMsgArg(a, msgsProv)): _*))
-          case message                           => Seq(msgsProv.messages(message.toString))
+          case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
+          case FormError(_, message, args)       => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
+          case message                           => Seq(translate(message)(msgsProv))
         }
       }.getOrElse {
         maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
-          field.errors.map { e => msgsProv.messages(e.message, e.args.map(a => translateMsgArg(a, msgsProv)): _*) }
+          field.errors.map { e => msgsProv.messages(e.message, e.args.map(a => translate(a)(msgsProv)): _*) }
         }.getOrElse(Nil)
       }
     }
 
     /* List with every "feedback info" except "errors" */
-    def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
-      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(
-        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(msgsProv.messages(m.toString))).getOrElse(Nil)
+    def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
+      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(
+        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(Nil)
       )
     }
 
     /* List with every "help info", i.e. a help text or constraints */
-    def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[String] = {
-      argsMap.get('_help).map(m => Seq(msgsProv.messages(m.toString))).getOrElse {
+    def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
+      argsMap.get('_help).map(m => Seq(translate(m)(msgsProv))).getOrElse {
         maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
-          field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translateMsgArg(a, msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translateMsgArg(a, msgsProv)): _*))
+          field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translate(a)(msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translate(a)(msgsProv)): _*))
         }.getOrElse(Nil)
       }
     }
@@ -128,12 +129,6 @@ package object bs {
       }
       case _ => None
     }.flatten
-
-    private def translateMsgArg(msgArg: Any, msgsProv: MessagesProvider) = msgArg match {
-      case key: String  => msgsProv.messages(key)
-      case keys: Seq[_] => keys.map(key => msgsProv.messages(key.toString))
-      case _            => msgArg
-    }
   }
 
   /**
@@ -148,7 +143,7 @@ package object bs {
     val argsMap: Map[Symbol, Any] = Args.withoutNones(fieldsArguments ++ globalArguments).toMap
 
     /* List with every error */
-    val errors: Seq[String] = {
+    val errors: Seq[Any] = {
       val globalErrors = BSFieldInfo.errors(None, argsMap, msgsProv)
       if (globalErrors.size > 0)
         globalErrors
