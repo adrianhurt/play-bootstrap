@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 
 name := """play-bootstrap"""
 
-version := "1.5-P27-B4-SNAPSHOT"
+version := "1.5-P27-B4-RC-SNAPSHOT"
 
 scalaVersion := "2.13.0"
 
@@ -15,7 +15,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.5-P27-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.5-P27-RC-SNAPSHOT",
   specs2 % Test
 )
 
