@@ -1,4 +1,4 @@
-- code: "1.5-P27-B4"
+- code: "1.5-P27-B4-RC"
   library: "1.5"
   play: "2.7"
   play_full: "2.7.2"
@@ -10,7 +10,7 @@
   snapshot: true
   legacy: false
 
-- code: "1.5-P26-B4"
+- code: "1.5-P26-B4-RC"
   library: "1.5"
   play: "2.6"
   play_full: "2.6.23"
@@ -22,7 +22,7 @@
   snapshot: true
   legacy: false
   
-- code: "1.5-P27-B3"
+- code: "1.5-P27-B3-RC"
   library: "1.5"
   play: "2.7"
   play_full: "2.7.2"
@@ -34,7 +34,7 @@
   snapshot: true
   legacy: false
 
-- code: "1.5-P26-B3"
+- code: "1.5-P26-B3-RC"
   library: "1.5"
   play: "2.6"
   play_full: "2.6.23"

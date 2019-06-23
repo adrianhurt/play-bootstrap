@@ -1,12 +1,12 @@
-- id: 1-5-P2X-BX-SNAPSHOT
+- id: 1-5-P2X-BX-RC-SNAPSHOT
   library: "1.5"
-  title: 1.5-P2X-BX
+  title: 1.5-P2X-BX-RC
   claim: Update to Play 2.7
   released: 28 May 2019
   bullets:
     - type: change
       text: |
-        Update to Play 2.7.2 / 2.6.23.
+        Update to Play 2.7.3 (with Scala 2.13) / 2.6.23.
   migration: |
     Nothing relevant
 
