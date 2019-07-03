@@ -1,8 +1,8 @@
-- id: 1-5-P2X-BX-RC-SNAPSHOT
+- id: 1-5-P2X-BX
   library: "1.5"
-  title: 1.5-P2X-BX-RC
+  title: 1.5-P2X-BX
   claim: Update to Play 2.7
-  released: 28 May 2019
+  released: 3 Jul 2019
   bullets:
     - type: change
       text: |

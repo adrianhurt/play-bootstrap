@@ -1,0 +1,94 @@
+---
+redirect_from: "/readonly/"
+title: "Play-Bootstrap 1.5-P26-B4 | Readonly attributes example"
+layout: default_b4
+permalink: /1.5-P26-B4/readonly/
+version: "1.5-P26-B4"
+uri: /readonly/
+tab: readonly
+---
+<h1 id="readonly-attributes" class="page-header">Demo for Readonly Attributes</h1>
+<p class="lead">
+  This page is an example to show how to use the <strong>readonly attribute</strong> for
+  <code>checkbox</code>, <code>radio</code> and <code>select</code> helpers.
+</p>
+<p>Taken from the docs:</p>
+<div class="alert alert-info">
+  <p>
+    Both the <code>disabled</code> and <code>readonly</code> attributes for an input prevent the user from modify it. However, the <code>disabled</code> attribute means this input will NOT be sent within the POST request, whereas the <code>readonly</code> one means it will.
+  </p>
+  <p>
+    Nevertheless, for <code>checkbox</code>, <code>radio</code> and <code>select</code> tags it doesn't happen. To support the <code>readonly</code> attribute for these tags, the corresponding helpers have been adapted to behave as would be expected. To do that, when the <code>readonly</code> attribute appears the helper will:
+  </p>
+  <ul>
+    <li>add an additional <code>disabled</code> attribute</li>
+    <li>add an additional <code>&lt;input type="hidden"&gt;</code> with the desired value</li>
+    <li>wraps them with in a div (with class <code>checkbox-group</code>, <code>radio-group</code> or <code>select-group</code>)</li>
+  </ul>
+  Note it only happens when the <code>readonly</code> attribute is present, even with a <em>false</em> value. It is done to make it easier to modify its <code>readonly</code> behaviour using javascript.
+  <p></p>
+</div>
+<p>
+  This demo shows a form with a text field that is always editable and readonly <code>checkbox</code>,
+  <code>radio</code> and <code>select</code> fields. Submit the form to see that the readonly fields are correctly handled. You will see the fields rendered as GET params at the end of the URL of this page. You can "unlock" or "lock" them with the corresponding button using javascript.
+</p>
+<div id="bound-data" class="alert alert-success" hidden="" role="alert">
+  <p>Bound data:</p>
+  <ul>
+    <li><strong>Input Text:</strong> <span id="data-text"></span>
+    </li>
+    <li><strong>Checkbox:</strong> <span id="data-checkbox"></span>
+    </li>
+    <li><strong>Radio Group:</strong> <span id="data-radio"></span>
+    </li>
+    <li><strong>Select:</strong> <span id="data-select"></span>
+    </li>
+  </ul>
+</div>
+<form action="" method="GET" class="form-horizontal " role="form" id="form-readonly">
+    <div class="bd-example">
+        <div id="text_field" class="form-group row always-editable "><label class="col-form-label col-md-2" for="text">Always editable</label>
+        <div class="col-md-10"><input id="text" class="form-control" name="text" type="text" value="demo text" placeholder="A simple text..." /></div>
+        </div>
+        <div id="checkbox_field" class="form-group row ">
+        <div class="col-md-10 offset-md-2">
+        <div class="form-check checkbox-group"><input id="checkbox" class="form-check-input" disabled="disabled" name="checkbox" readonly="readonly" type="checkbox" value="true" /> <label class="form-check-label" for="checkbox"> Checkbox </label> <input name="checkbox" type="hidden" value="true" /></div>
+        </div>
+        </div>
+        <div id="radio_field" class="form-group row "><label class="col-form-label col-md-2">Radio Group</label>
+        <div class="col-md-10">
+        <div class="radio-group">
+        <div class="form-check"><input id="radio_M" class="form-check-input" checked="checked" disabled="disabled" name="radio" readonly="readonly" type="radio" value="M" /> <label class="form-check-label" for="radio_M"> Male </label></div>
+        <div class="form-check"><input id="radio_F" class="form-check-input" disabled="disabled" name="radio" readonly="readonly" type="radio" value="F" /> <label class="form-check-label" for="radio_F"> Female </label></div>
+        <input name="radio" type="hidden" value="M" /></div>
+        </div>
+        </div>
+        <div id="select_field" class="form-group row "><label class="col-form-label col-md-2" for="select">Select</label>
+        <div class="col-md-10">
+        <div class="select-group"><select id="select" class="form-control" disabled="disabled" name="select">
+        <option selected="selected" value="A">Apples</option>
+        <option value="P">Pears</option>
+        <option value="B">Bananas</option>
+        </select><input name="select" type="hidden" value="A" /></div>
+        </div>
+        </div>
+        <div class="form-group row">
+        <div class="col-md-10 offset-md-2"><button class="btn btn-secondary" type="submit"> Submit me!</button> <a class="btn btn-primary btn-readonly-unlock locked" href>Unlock readonly fields</a></div>
+        </div>
+  </div>
+  <div class="highlight">
+<pre><code>@b4.text( fooForm("text"), '_label -&gt; "Always editable", '_class -&gt; "always-editable", 'value -&gt; "demo text", 'placeholder -&gt; "A simple text..." )
+@b4.checkbox( fooForm("checkbox"), '_text -&gt; "Checkbox", 'value -&gt; true, 'readonly -&gt; true )
+@b4.radio( fooForm("radio"), options = Seq("M"-&gt;"Male","F"-&gt;"Female"), 'value -&gt; "M", '_label -&gt; "Radio Group", 'readonly -&gt; true )
+@b4.select( fooForm("select"), options = fruits, '_label -&gt; "Select", 'value -&gt; "A", 'readonly -&gt; true )
+@b4.free() {
+  &lt;button type="submit" class="btn btn-secondary"&gt;&lt;i class="fa fa-ok"&gt;&lt;/i&gt; Submit me!&lt;/button&gt;
+  &lt;a class="btn btn-primary btn-readonly-unlock locked" href&gt;Unlock readonly fields&lt;/a&gt;
+}</code></pre>
+  </div>
+  <input type="hidden" name="csrfToken" value="f9aca003bec64a832c7b56518390ee4004f1aca9-1448848197689-19223a16d1ea75b16b8f4d98">
+</form>
+<p>
+  Check
+  <a href="https://github.com/adrianhurt/play-bootstrap/blob/master/play25-bootstrap4/module/sample/app/assets/javascripts/main.coffee" target="_blank">here</a> the CoffeScript code used for lock and unlock the fields.
+</p>
