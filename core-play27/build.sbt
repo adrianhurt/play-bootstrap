@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 
 name := """play-bootstrap-core"""
 
-version := "1.5-P27-RC-SNAPSHOT"
+version := "1.5-P27"
 
 scalaVersion := "2.13.0"
 
@@ -54,20 +54,6 @@ publishTo := {
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
-
-pomExtra := (
-  <scm>
-    <url>git@github.com:adrianhurt/play-bootstrap.git</url>
-    <connection>scm:git:git@github.com:adrianhurt/play-bootstrap.git</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>adrianhurt</id>
-      <name>Adrian Hurtado</name>
-      <url>https://github.com/adrianhurt</url>
-    </developer>
-  </developers>
-)
 
 credentials += Credentials(Path.userHome / ".sbt" / "sonatype.credentials")
 
