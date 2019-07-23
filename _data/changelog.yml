@@ -1,3 +1,15 @@
+- id: 1-5-1-P2X-BX
+  library: "1.5.1"
+  title: 1.5.1-P2X-BX-SNAPSHOT
+  claim: Update to Play 2.7
+  released: not yet...
+  bullets:
+    - type: change
+      text: |
+        Removed superfluous translation calls on `radioWithOptions`, `selectWithOptions` and `selectWithContent`.
+  migration: |
+    Nothing relevant
+    
 - id: 1-5-P2X-BX
   library: "1.5"
   title: 1.5-P2X-BX
