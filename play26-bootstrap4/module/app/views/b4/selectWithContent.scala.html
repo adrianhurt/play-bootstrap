@@ -24,7 +24,7 @@
 				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
 					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, if (fieldInfo.isCustom) "custom-select" else "form-control"))>
 						@argsMap.get('_default).map { v =>
-							@selectOption("", bs.Args.msg(v)(msgsProv), 'class -> "blank", 'selected -> true, 'disabled -> "disabled")
+							@selectOption("", v, 'class -> "blank", 'selected -> true, 'disabled -> "disabled")
 						}
 						@content(values)
 					</select>
