@@ -2,10 +2,10 @@
 @inputFormGroup(field, withLabelFor = true, args) { fieldInfo =>
 	@if(fieldInfo.isCustom) {
     <div class="custom-file">
-      <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, "custom-file-input"))>
+      <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, Symbol("class"), "custom-file-input"))>
       <label class="custom-file-label">@fieldInfo.innerArgsMap.get(Symbol("placeholder"))</label>
     </div>
   } else {
-    <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, 'class, "form-control-file"))>
+    <input type="file" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, Symbol("class"), "form-control-file"))>
 	}
 }(fc, msgsProv)
