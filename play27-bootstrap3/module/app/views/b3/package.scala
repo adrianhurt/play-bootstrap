@@ -92,7 +92,7 @@ package object b3 {
       Args.inner(
         Args.remove(args, Symbol("id"), Symbol("value")).map {
           case arg if arg._1 == Symbol("placeholder") => Args.msg(arg)(msgsProv.messages)
-          case other                         => other
+          case other                                  => other
         }
       )
     ).toMap
