@@ -9,9 +9,9 @@
 }
 @defining({
 	val argsMap = args.toMap
-	val textOpt = argsMap.get('_text).map(bs.Args.msg(_)(msgsProv))
-	val value = argsMap.get('value).getOrElse("true").toString
-	val checked = argsMap.get('checked).orElse(field.value.map(_ == value).orElse(argsMap.get('_default))).map(_.toString == "true").getOrElse(false)
+	val textOpt = argsMap.get(Symbol("_text")).map(bs.Args.msg(_)(msgsProv))
+	val value = argsMap.get(Symbol("value")).getOrElse("true").toString
+	val checked = argsMap.get(Symbol("checked")).orElse(field.value.map(_ == value).orElse(argsMap.get(Symbol("_default")))).map(_.toString == "true").getOrElse(false)
 	val containsReadonly = argsMap.contains('readonly)
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)

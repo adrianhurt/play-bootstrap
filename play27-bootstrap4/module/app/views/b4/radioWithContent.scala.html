@@ -3,7 +3,7 @@
 	@if(argsMap.contains('readonly)) {
 		<div class="radio-group">
 			@contentWrapped
-			<input type="hidden" name="@name" value="@{value.orElse(argsMap.get('_hiddenValue)).get}"@if(!disabled){ disabled}/>
+			<input type="hidden" name="@name" value="@{value.orElse(argsMap.get(Symbol("_hiddenValue"))).get}"@if(!disabled){ disabled}/>
 		</div>
 	} else { @contentWrapped }
 }

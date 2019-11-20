@@ -1,8 +1,8 @@
 @(field: Field, args: (Symbol,Any)*)(implicit fc: b3.B3FieldConstructor, messages: MessagesProvider)
 @defining({
 	val argsMap = args.toMap
-	val value = argsMap.get('value).getOrElse("true").toString
-	val checked = argsMap.get('checked).orElse(field.value.map(_ == value).orElse(argsMap.get('_default))).map(_.toString == "true").getOrElse(false)
+	val value = argsMap.get(Symbol("value")).getOrElse("true").toString
+	val checked = argsMap.get(Symbol("checked")).orElse(field.value.map(_ == value).orElse(argsMap.get(Symbol("_default")))).map(_.toString == "true").getOrElse(false)
 	val containsReadonly = argsMap.contains('readonly)
 	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
@@ -12,7 +12,7 @@
 		<div class="checkbox@if(containsReadonly){ checkbox-group}@if(disabled){ disabled}">
 			<label for="@fieldInfo.id">
 				<input type="checkbox" id="@fieldInfo.id" name="@fieldInfo.name" value="@value" @toHtmlArgs(fieldInfo.innerArgsMap)>
-				@argsMap.get('_text).map(bs.Args.msg(_)(messages))
+				@argsMap.get(Symbol("_text")).map(bs.Args.msg(_)(messages))
 			</label>
 			@if(containsReadonly) {
 				<input type="hidden" name="@fieldInfo.name" value="@{fieldInfo.value.getOrElse(if (checked) value else "")}"@if(!disabled){ disabled}/>

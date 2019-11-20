@@ -3,7 +3,7 @@
 	@if(argsMap.contains('readonly)) {
 		<div class="select-group">
 			@contentWrapped
-			<input type="hidden" name="@selectName" value="@{value.orElse(argsMap.get('_hiddenValue)).get}"@if(!disabled){ disabled}/>
+			<input type="hidden" name="@selectName" value="@{value.orElse(argsMap.get(Symbol("_hiddenValue"))).get}"@if(!disabled){ disabled}/>
 		</div>
 	} else { @contentWrapped }
 }
@@ -23,7 +23,7 @@
 			}){ implicit values =>
 				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
 					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(fieldInfo.innerArgsMap)>
-						@argsMap.get('_default).map { v =>
+						@argsMap.get(Symbol("_default")).map { v =>
 							@selectOption("", v, Symbol("class") -> "blank", Symbol("selected") -> true, Symbol("disabled") -> "disabled")
 						}
 						@content(values)
