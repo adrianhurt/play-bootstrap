@@ -2,7 +2,7 @@
 @alertStatus = @{
 	if (fieldInfo.hasErrors)
 		"alert-danger"
-	else if (bs.ArgsMap.isTrue(fieldInfo.argsMap, '_success))
+	else if (bs.ArgsMap.isTrue(fieldInfo.argsMap, Symbol("_success")))
 		"alert-success"
 	else
 		"alert-info"

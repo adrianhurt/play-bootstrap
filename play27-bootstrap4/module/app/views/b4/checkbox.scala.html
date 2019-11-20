@@ -12,12 +12,12 @@
 	val textOpt = argsMap.get(Symbol("_text")).map(bs.Args.msg(_)(msgsProv))
 	val value = argsMap.get(Symbol("value")).getOrElse("true").toString
 	val checked = argsMap.get(Symbol("checked")).orElse(field.value.map(_ == value).orElse(argsMap.get(Symbol("_default")))).map(_.toString == "true").getOrElse(false)
-	val containsReadonly = argsMap.contains('readonly)
-	val readonly = bs.ArgsMap.isTrue(argsMap, 'readonly)
-	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
+	val containsReadonly = argsMap.contains(Symbol("readonly"))
+	val readonly = bs.ArgsMap.isTrue(argsMap, Symbol("readonly"))
+	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, Symbol("disabled"))
 	(argsMap, textOpt, value, checked, containsReadonly, readonly, disabled)
 }){ case (argsMap, textOpt, value, checked, containsReadonly, readonly, disabled) =>
-	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args.filterNot(_._1 == 'checked), Symbol("checked") -> checked, Symbol("disabled") -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args.filterNot(_._1 == Symbol("checked")), Symbol("checked") -> checked, Symbol("disabled") -> disabled)) { fieldInfo =>
 		@defining(fieldInfo.isCustom) { isCustom =>
 			<div class="@if(isCustom){custom-control custom-checkbox}else{form-check}@if(containsReadonly){ checkbox-group}">
 				@if(isCustom) {
