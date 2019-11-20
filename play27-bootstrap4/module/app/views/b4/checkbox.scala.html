@@ -17,7 +17,7 @@
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
 	(argsMap, textOpt, value, checked, containsReadonly, readonly, disabled)
 }){ case (argsMap, textOpt, value, checked, containsReadonly, readonly, disabled) =>
-	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args.filterNot(_._1 == 'checked), 'checked -> checked, 'disabled -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args.filterNot(_._1 == 'checked), Symbol("checked") -> checked, Symbol("disabled") -> disabled)) { fieldInfo =>
 		@defining(fieldInfo.isCustom) { isCustom =>
 			<div class="@if(isCustom){custom-control custom-checkbox}else{form-check}@if(containsReadonly){ checkbox-group}">
 				@if(isCustom) {

@@ -14,7 +14,7 @@
 	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, 'disabled)
 	(argsMap, inline, disabled)
 }) { case (argsMap, inline, disabled) =>
-	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args, 'disabled -> disabled)) { fieldInfo =>
+	@inputFormGroup(field, withLabelFor = false, bs.Args.withDefault(args, Symbol("disabled") -> disabled)) { fieldInfo =>
 		@readonlyWrapper(fieldInfo.name, fieldInfo.value, argsMap, disabled) {
 			@content(inline, disabled, fieldInfo)
 		}

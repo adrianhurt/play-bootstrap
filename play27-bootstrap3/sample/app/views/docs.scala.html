@@ -38,9 +38,9 @@
 
 			<h3 id="arguments">Arguments (<code>args</code>)</h3>
 			@bsExampleWithCode {
-				@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
 			}{
-				@@b3.text( fooForm("foo"), '_label -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
 			}
 
 			<h4 id="arguments-special">Special arguments (the underscored ones)</h4>
@@ -48,16 +48,16 @@
 			<h4 id="arguments-validation">Validation arguments</h4>
 			@bsExampleWithCode {
         <div class="example-html5-validation">
-          @b3.text( validationForm("username"), '_label -> "Username", '_help -> "A username between 1 and 20 characters" )
-          @b3.email( validationForm("email"), '_label -> "Email" )
-          @b3.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
-          @b3.text( validationForm("color"), '_label -> "Hexadecimal color", '_help -> "Format is #CCC or #CCCCCC" )
+          @b3.text( validationForm("username"), Symbol("_label") -> "Username", Symbol("_help") -> "A username between 1 and 20 characters" )
+          @b3.email( validationForm("email"), Symbol("_label") -> "Email" )
+          @b3.number( validationForm("age"), Symbol("_label") -> "Age", Symbol("_help") -> "From 18 to 99 years old" )
+          @b3.text( validationForm("color"), Symbol("_label") -> "Hexadecimal color", Symbol("_help") -> "Format is #CCC or #CCCCCC" )
         </div>
 			}{
-				@@b3.text( validationForm("username"), '_label -> "Username", '_help -> "A username between 1 and 20 characters" )
-				@@b3.email( validationForm("email"), '_label -> "Email" )
-				@@b3.number( validationForm("age"), '_label -> "Age", '_help -> "From 18 to 99 years old" )
-				@@b3.text( validationForm("color"), '_label -> "Hexadecimal color", '_help -> "Format is #CCC or #CCCCCC" )
+				@@b3.text( validationForm("username"), Symbol("_label") -> "Username", Symbol("_help") -> "A username between 1 and 20 characters" )
+				@@b3.email( validationForm("email"), Symbol("_label") -> "Email" )
+				@@b3.number( validationForm("age"), Symbol("_label") -> "Age", Symbol("_help") -> "From 18 to 99 years old" )
+				@@b3.text( validationForm("color"), Symbol("_label") -> "Hexadecimal color", Symbol("_help") -> "Format is #CCC or #CCCCCC" )
 			}
 
 
@@ -79,38 +79,38 @@
 			<h4 id="helpers-disabled-readonly">About <code>disabled</code> and <code>readonly</code> attributes</h4>
 			<h4 id="helpers-validation-states">Validation states & feedback icons</h4>
 			@bsExampleWithCode {
-				@b3.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
-				@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-				@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> true, Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			}{
-				@@b3.text( fooForm("foo"), '_label -> "Success", '_success -> true, 'placeholder -> "Success text..." )
-				@@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-				@@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> true, Symbol("placeholder") -> "Success text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			}
 			@bsExampleWithCode {
-				@b3.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
-				@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-				@b3.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			}{
-				@@b3.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
-				@@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-				@@b3.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+				@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			}
 
 
 
 			<h4 id="helper-inputtype"><code>b3.inputType</code> <span class="def">@@(inputType: String, field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
 			<p>
-				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default, but you can add an extra class with <code>'class -> "extra_class"</code>.
+				It renders a simple input with a specific type attribute and it adds <code>class="form-control"</code> by default, but you can add an extra class with <code>Symbol("class") -> "extra_class"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.inputType( "text", fooForm("name"), 'class -> "extra_class", '_label -> "Name", 'placeholder -> "John Doe" )
-				@b3.inputType( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
-				@b3.inputType( "password", fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
+				@b3.inputType( "text", fooForm("name"), Symbol("class") -> "extra_class", Symbol("_label") -> "Name", Symbol("placeholder") -> "John Doe" )
+				@b3.inputType( "email", fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+				@b3.inputType( "password", fooForm("password"), Symbol("_label") -> "Password", Symbol("_help") -> "With at least 8 characters" )
 			}{
-				@@b3.inputType( "text", fooForm("name"), 'class -> "extra_class", '_label -> "Name", 'placeholder -> "John Doe" )
-				@@b3.inputType( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
-				@@b3.inputType( "password", fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
+				@@b3.inputType( "text", fooForm("name"), Symbol("class") -> "extra_class", Symbol("_label") -> "Name", Symbol("placeholder") -> "John Doe" )
+				@@b3.inputType( "email", fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+				@@b3.inputType( "password", fooForm("password"), Symbol("_label") -> "Password", Symbol("_help") -> "With at least 8 characters" )
 			}
 
 
@@ -119,9 +119,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="text"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.text( fooForm("name"), '_label -> "Name", 'placeholder -> "John Doe" )
+				@b3.text( fooForm("name"), Symbol("_label") -> "Name", Symbol("placeholder") -> "John Doe" )
 			}{
-				@@b3.text( fooForm("name"), '_label -> "Name", 'placeholder -> "John Doe" )
+				@@b3.text( fooForm("name"), Symbol("_label") -> "Name", Symbol("placeholder") -> "John Doe" )
 			}
 
 
@@ -133,9 +133,9 @@
 				For security reasons, this helper doesn't display the possible value the field could have (for example when the form is reloaded after a validation failure).
 			</p>
 			@bsExampleWithCode {
-				@b3.password( fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
+				@b3.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("_help") -> "With at least 8 characters" )
 			}{
-				@@b3.password( fooForm("password"), '_label -> "Password", '_help -> "With at least 8 characters" )
+				@@b3.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("_help") -> "With at least 8 characters" )
 			}
 
 
@@ -144,11 +144,11 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="file"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.file( fooForm("file"), '_label -> "File" )
-				@b3.file( fooForm("file"), '_label -> "File", 'class -> "form-control" )
+				@b3.file( fooForm("file"), Symbol("_label") -> "File" )
+				@b3.file( fooForm("file"), Symbol("_label") -> "File", Symbol("class") -> "form-control" )
 			}{
-				@@b3.file( fooForm("file"), '_label -> "File" )
-				@@b3.file( fooForm("file"), '_label -> "File", 'class -> "form-control" )
+				@@b3.file( fooForm("file"), Symbol("_label") -> "File" )
+				@@b3.file( fooForm("file"), Symbol("_label") -> "File", Symbol("class") -> "form-control" )
 			}
 
 
@@ -158,9 +158,9 @@
 				It renders a textarea and it adds <code>class="form-control"</code> by default.
 			</p>
 			@bsExampleWithCode {
-				@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
+				@b3.textarea( fooForm("foo"), Symbol("_label") -> "Textarea", Symbol("rows") -> 3 )
 			}{
-				@@b3.textarea( fooForm("foo"), '_label -> "Textarea", 'rows -> 3 )
+				@@b3.textarea( fooForm("foo"), Symbol("_label") -> "Textarea", Symbol("rows") -> 3 )
 			}
 
 
@@ -173,7 +173,7 @@
 				The special <code>'_text</code> argument lets you put a text after the checkbox.
 			</p>
       <p>
-        Regarding to the <code>checked</code> attribute, if you want to set it to <strong>true</strong> as default, use <code>'_default -> true</code>.
+        Regarding to the <code>checked</code> attribute, if you want to set it to <strong>true</strong> as default, use <code>Symbol("_default") -> true</code>.
         And if you need to force its value use directly the <code>'checked</code> argument.
       </p>
 			<p>
@@ -181,32 +181,32 @@
 				<code>&lt;input type="hidden"&gt;</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.checkbox( fooForm("foo"), '_text -> "Remember me" )
+				@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me" )
 			}{
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me" )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me" )
 
 				// uses "bar" as value for the checkbox
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'value -> "bar" )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me", Symbol("value") -> "bar" )
 
 				// checked by default (if the form is filled, this value will be taken)
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", '_default -> true )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me", Symbol("_default") -> true )
 
 				// always checked (even if the form has been filled with a false)
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'checked -> true )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me", Symbol("checked") -> true )
 
 				// disabled -> it will NOT be sent within the POST request
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'disabled -> true )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me", Symbol("disabled") -> true )
 
 				// readonly -> it will be sent within the POST request
-				@@b3.checkbox( fooForm("foo"), '_text -> "Remember me", 'readonly -> true )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Remember me", Symbol("readonly") -> true )
 			}
 			<p>
 				Note you can use any value for the <code>_text</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.checkbox( fooForm("foo"), '_text -> Html("""Do you want a beer? <i class="fa fa-beer"></i>""") )
+				@b3.checkbox( fooForm("foo"), Symbol("_text") -> Html("""Do you want a beer? <i class="fa fa-beer"></i>""") )
 			}{
-				@@b3.checkbox( fooForm("foo"), '_text -> Html("Do you want a beer? <i class=\"fa fa-beer\"></i>") )
+				@@b3.checkbox( fooForm("foo"), Symbol("_text") -> Html("Do you want a beer? <i class=\"fa fa-beer\"></i>") )
 			}
 
 
@@ -219,31 +219,31 @@
 				It has an additional special <code>_inline</code> argument to make it an inline radio (for vertical and horizontal forms).
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo_radio1"), options = Seq("M"->"Male","F"->"Female"), '_label -> "Radio Group" )
+				@b3.radio( fooForm("foo_radio1"), options = Seq("M"->"Male","F"->"Female"), Symbol("_label") -> "Radio Group" )
 			}{
 				@@opts = @@{ Seq("M"->"Male","F"->"Female") }
 
-				@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group" )
+				@@b3.radio( fooForm("foo"), options = opts, Symbol("_label") -> "Radio Group" )
 
 				// an inline radio within a vertical or horizontal form
-				@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group", '_inline -> true )
+				@@b3.radio( fooForm("foo"), options = opts, Symbol("_label") -> "Radio Group", Symbol("_inline") -> true )
 
 				// with value "F" by default (if the form is filled, this value will be taken)
-				@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group", 'value -> "F" )
+				@@b3.radio( fooForm("foo"), options = opts, Symbol("_label") -> "Radio Group", Symbol("value") -> "F" )
 
 				// disabled -> it will NOT be sent within the POST request
-				@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group", 'disabled -> true )
+				@@b3.radio( fooForm("foo"), options = opts, Symbol("_label") -> "Radio Group", Symbol("disabled") -> true )
 
 				// readonly -> it will be sent within the POST request
-				@@b3.radio( fooForm("foo"), options = opts, '_label -> "Radio Group", 'readonly -> true )
+				@@b3.radio( fooForm("foo"), options = opts, Symbol("_label") -> "Radio Group", Symbol("readonly") -> true )
 			}
 			<p>
 				Note you can use any value for the <code>options</code> argument.
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo_radio2"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), '_label -> "What do you prefer?" )
+				@b3.radio( fooForm("foo_radio2"), options = Seq("B" -> Html("""Beer <i class="fa fa-beer"></i>"""), "C" -> Html("""Coffee <i class="fa fa-coffee"></i>""")), Symbol("_label") -> "What do you prefer?" )
 			}{
-				@@b3.radio( fooForm("foo"), options = Seq("B" -> Html("Beer <i class=\"fa fa-beer\"></i>"), "C" -> Html("Coffee <i class=\"fa fa-coffee\"></i>")), '_label -> "What do you prefer?" )
+				@@b3.radio( fooForm("foo"), options = Seq("B" -> Html("Beer <i class=\"fa fa-beer\"></i>"), "C" -> Html("Coffee <i class=\"fa fa-coffee\"></i>")), Symbol("_label") -> "What do you prefer?" )
 			}
 
 			<h5 id="helper-radio-customizable" style="margin-top:40px"><code>b3.radio</code> <span class="def">@@(field: Field, args: (Symbol, Any)*)(content: Tuple6[Boolean, Boolean, String, String, Option[String], Map[Symbol, Any]] => Html)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h5>
@@ -252,14 +252,14 @@
 				If you need more versatility you can fully customize your radio options:
 			</p>
 			@bsExampleWithCode {
-				@b3.radio( fooForm("foo_radio3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+				@b3.radio( fooForm("foo_radio3"), Symbol("_label") -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
 					@b3.radioOption("B", Html("""Beer <i class="fa fa-beer"></i>"""))
-					@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), 'disabled -> true)
+					@b3.radioOption("B", Html("""Coffee <i class="fa fa-coffee"></i>"""), Symbol("disabled") -> true)
 				}
 			}{
-				@@b3.radio( fooForm("foo3"), '_label -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
+				@@b3.radio( fooForm("foo3"), Symbol("_label") -> "Ok, now that we're alone, what do you really prefer?" ) { implicit extraInfo =>
 					@@b3.radioOption("B", Html("Beer <i class=\"fa fa-beer\"></i>"))
-					@@b3.radioOption("B", Html("Coffee <i class=\"fa fa-coffee\"></i>"), 'disabled -> true)
+					@@b3.radioOption("B", Html("Coffee <i class=\"fa fa-coffee\"></i>"), Symbol("disabled") -> true)
 				}
 			}
 
@@ -272,19 +272,19 @@
 				one and a <code>&lt;input type="hidden"&gt;</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "Disabled", 'disabled -> true )
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "Readonly", 'readonly -> true )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select" )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Disabled", Symbol("disabled") -> true )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Readonly", Symbol("readonly") -> true )
 			}{
 				@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select" )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select" )
 
 				// disabled -> it will NOT be sent within the POST request
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'disabled -> true )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select", Symbol("disabled") -> true )
 
 				// readonly -> it will be sent within the POST request
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", 'readonly -> true )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select", Symbol("readonly") -> true )
 			}
 			<p>
 				You can add a default first value using the argument <code>'_default</code> with a string.
@@ -294,11 +294,11 @@
 				and if any other option is selected this default one will not appear at all.
 			</p>
 			@bsExampleWithCode {
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "With default", '_default -> "Select an option" )
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "With default and Pears as value", '_default -> "Select an option", 'value -> "P" )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "With default", Symbol("_default") -> "Select an option" )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "With default and Pears as value", Symbol("_default") -> "Select an option", Symbol("value") -> "P" )
 			}{
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Select", '_default -> "Select an option" )
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "With default and Pears as value", '_default -> "Select an option", 'value -> "P" )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select", Symbol("_default") -> "Select an option" )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "With default and Pears as value", Symbol("_default") -> "Select an option", Symbol("value") -> "P" )
 			}
 
 			<p>
@@ -306,15 +306,15 @@
 				In that case, the <code>'_default</code> argument will be ignored.
 			</p>
 			@bsExampleWithCode {
-				@b3.select( fooForm("foo"), options = fruits, '_label -> "Select Multiple", 'multiple -> true )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select Multiple", Symbol("multiple") -> true )
 			}{
 				@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Fruits", Symbol("multiple") -> true )
 
 				// with value "A" and "B" by default
 				// it is a string with every value separated by commas
-				@@b3.select( fooForm("foo"), options = fruits, '_label -> "Fruits", 'multiple -> true, 'value -> "A,B" )
+				@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Fruits", Symbol("multiple") -> true, Symbol("value") -> "A,B" )
 			}
 
 			<h5 id="helper-select-customizable" style="margin-top:40px"><code>b3.select</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h5>
@@ -323,22 +323,22 @@
 				If you need more versatility you can fully customize your select options:
 			</p>
 			@bsExampleWithCode {
-				@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				@b3.select( fooForm("foo"), Symbol("_label") -> "Grouped select" ) { implicit values =>
 				  <optgroup label="Group 1">
 				    @b3.selectOption("opt_1-1", "Option 1.1")
-				    @b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @b3.selectOption("opt_1-2", "Option 1.2", Symbol("disabled") -> true)
 				    @b3.selectOption("opt_1-3", "Option 1.3")
 				  </optgroup>
 				  <optgroup label="Group 2">
-				    @b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @b3.selectOption("opt_2-1", "Option 2.1", Symbol("disabled") -> true)
 				    @b3.selectOption("opt_2-2", "Option 2.2")
 				  </optgroup>
 				}
 
-				@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
+				@b3.select( fooForm("foo"), Symbol("_label") -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
-				      @b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
+				      @b3.selectOption(citrus.id, citrus.name, Symbol("selected") -> (citrus.name == "Lemon"))
 				    }
 					</optgroup>
 					<optgroup label="Rest of fruits">
@@ -348,14 +348,14 @@
 					</optgroup>
 				}
 			}{
-				@@b3.select( fooForm("foo"), '_label -> "Grouped select" ) { implicit values =>
+				@@b3.select( fooForm("foo"), Symbol("_label") -> "Grouped select" ) { implicit values =>
 				  <optgroup label="Group 1">
 				    @@b3.selectOption("opt_1-1", "Option 1.1")
-				    @@b3.selectOption("opt_1-2", "Option 1.2", 'disabled -> true)
+				    @@b3.selectOption("opt_1-2", "Option 1.2", Symbol("disabled") -> true)
 				    @@b3.selectOption("opt_1-3", "Option 1.3")
 				  </optgroup>
 				  <optgroup label="Group 2">
-				    @@b3.selectOption("opt_2-1", "Option 2.1", 'disabled -> true)
+				    @@b3.selectOption("opt_2-1", "Option 2.1", Symbol("disabled") -> true)
 				    @@b3.selectOption("opt_2-2", "Option 2.2")
 				  </optgroup>
 				}
@@ -370,10 +370,10 @@
 					Fruit(5L, "Banana", false)
 				)}
 
-				@@b3.select( fooForm("foo"), '_label -> "Fruits select (lemon preselected)" ) { implicit values =>
+				@@b3.select( fooForm("foo"), Symbol("_label") -> "Fruits select (lemon preselected)" ) { implicit values =>
 					<optgroup label="Citrus fruits">
 				    @@fruitsWithCitrus.filter(_.isCitrus).map { citrus =>
-				      @@b3.selectOption(citrus.id, citrus.name, 'selected -> (citrus.name == "Lemon"))
+				      @@b3.selectOption(citrus.id, citrus.name, Symbol("selected") -> (citrus.name == "Lemon"))
 				    }
 					</optgroup>
 					<optgroup label="Rest of fruits">
@@ -390,7 +390,7 @@
 				It simply renders a hidden input.
 			</p>
 			@code {
-				@@b3.hidden("fooName", "fooValue", 'fooAttr -> "fooAttrValue")
+				@@b3.hidden("fooName", "fooValue", Symbol("fooAttr") -> "fooAttrValue")
 			}
 			<p>Renders to:</p>
 			@code {
@@ -406,7 +406,7 @@
         <code>'value</code>. Finally, take into account that every "underscored" argument (with "_" as preffix) will be removed.
       </p>
 			@code {
-				@@b3.hidden( fooForm("name"), '_label -> "Name", 'value -> "defaultValue", 'placeholder -> "John Doe" )
+				@@b3.hidden( fooForm("name"), Symbol("_label") -> "Name", Symbol("value") -> "defaultValue", Symbol("placeholder") -> "John Doe" )
 			}
 			<p>Renders to:</p>
 			@code {
@@ -439,9 +439,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="color"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
+				@b3.color( fooForm("color"), Symbol("_label") -> "Color", Symbol("value") -> "#3264c8" )
 			}{
-				@@b3.color( fooForm("color"), '_label -> "Color", 'value -> "#3264c8" )
+				@@b3.color( fooForm("color"), Symbol("_label") -> "Color", Symbol("value") -> "#3264c8" )
 			}
 
 			<h4 id="html5-date"><code>b3.date</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -449,9 +449,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="date"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.date( fooForm("date"), '_label -> "Date" )
+				@b3.date( fooForm("date"), Symbol("_label") -> "Date" )
 			}{
-				@@b3.date( fooForm("date"), '_label -> "Date" )
+				@@b3.date( fooForm("date"), Symbol("_label") -> "Date" )
 			}
 
 			<h4 id="html5-datetime"><code>b3.datetime</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -459,9 +459,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
+				@b3.datetime( fooForm("datetime"), Symbol("_label") -> "Datetime" )
 			}{
-				@@b3.datetime( fooForm("datetime"), '_label -> "Datetime" )
+				@@b3.datetime( fooForm("datetime"), Symbol("_label") -> "Datetime" )
 			}
 
 			<h4 id="html5-datetime-local"><code>b3.datetimeLocal</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -469,9 +469,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="datetime-local"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
+				@b3.datetimeLocal( fooForm("datetimeLocal"), Symbol("_label") -> "Datetime-Local" )
 			}{
-				@@b3.datetimeLocal( fooForm("datetimeLocal"), '_label -> "Datetime-Local" )
+				@@b3.datetimeLocal( fooForm("datetimeLocal"), Symbol("_label") -> "Datetime-Local" )
 			}
 
 			<h4 id="html5-email"><code>b3.email</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -479,9 +479,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="email"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+				@b3.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
 			}{
-				@@b3.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+				@@b3.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
 			}
 
 			<h4 id="html5-month"><code>b3.month</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -489,9 +489,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="month"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.month( fooForm("month"), '_label -> "Month" )
+				@b3.month( fooForm("month"), Symbol("_label") -> "Month" )
 			}{
-				@@b3.month( fooForm("month"), '_label -> "Month" )
+				@@b3.month( fooForm("month"), Symbol("_label") -> "Month" )
 			}
 
 			<h4 id="html5-number"><code>b3.number</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -499,9 +499,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="number"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.number( fooForm("number"), '_label -> "Number (0 to 50 with intervals of 5)", 'min -> 0, 'max -> 50, 'step -> 5 )
+				@b3.number( fooForm("number"), Symbol("_label") -> "Number (0 to 50 with intervals of 5)", Symbol("min") -> 0, Symbol("max") -> 50, Symbol("step") -> 5 )
 			}{
-				@@b3.number( fooForm("number"), '_label -> "Number", 'min -> 0, 'max -> 50, 'step -> 5 )
+				@@b3.number( fooForm("number"), Symbol("_label") -> "Number", Symbol("min") -> 0, Symbol("max") -> 50, Symbol("step") -> 5 )
 			}
 
 			<h4 id="html5-range"><code>b3.range</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -509,9 +509,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="range"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.range( fooForm("range"), '_label -> "Range (0 to 50)", 'min -> 0, 'max -> 50 )
+				@b3.range( fooForm("range"), Symbol("_label") -> "Range (0 to 50)", Symbol("min") -> 0, Symbol("max") -> 50 )
 			}{
-				@@b3.range( fooForm("range"), '_label -> "Range", 'min -> 0, 'max -> 50 )
+				@@b3.range( fooForm("range"), Symbol("_label") -> "Range", Symbol("min") -> 0, Symbol("max") -> 50 )
 			}
 
 			<h4 id="html5-search"><code>b3.search</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -519,9 +519,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="search"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.search( fooForm("search"), '_label -> "Search" )
+				@b3.search( fooForm("search"), Symbol("_label") -> "Search" )
 			}{
-				@@b3.search( fooForm("search"), '_label -> "Search" )
+				@@b3.search( fooForm("search"), Symbol("_label") -> "Search" )
 			}
 
 			<h4 id="html5-tel"><code>b3.tel</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -529,9 +529,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="tel"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.tel( fooForm("tel"), '_label -> "Telephone" )
+				@b3.tel( fooForm("tel"), Symbol("_label") -> "Telephone" )
 			}{
-				@@b3.tel( fooForm("tel"), '_label -> "Telephone" )
+				@@b3.tel( fooForm("tel"), Symbol("_label") -> "Telephone" )
 			}
 
 			<h4 id="html5-time"><code>b3.time</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -539,9 +539,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="time"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.time( fooForm("time"), '_label -> "Time" )
+				@b3.time( fooForm("time"), Symbol("_label") -> "Time" )
 			}{
-				@@b3.time( fooForm("time"), '_label -> "Time" )
+				@@b3.time( fooForm("time"), Symbol("_label") -> "Time" )
 			}
 
 			<h4 id="html5-url"><code>b3.url</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -549,9 +549,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="url"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.url( fooForm("url"), '_label -> "URL" )
+				@b3.url( fooForm("url"), Symbol("_label") -> "URL" )
 			}{
-				@@b3.url( fooForm("url"), '_label -> "URL" )
+				@@b3.url( fooForm("url"), Symbol("_label") -> "URL" )
 			}
 
 			<h4 id="html5-week"><code>b3.week</code> <span class="def">@@(field: Field, args: (Symbol,Any)*)(implicit handler: B3FieldConstructor, @BSVersion.msgsArg)</span></h4>
@@ -559,9 +559,9 @@
 				It is a short version of <code>b3.inputType</code> for <code>type="week"</code>.
 			</p>
 			@bsExampleWithCode {
-				@b3.week( fooForm("week"), '_label -> "Week" )
+				@b3.week( fooForm("week"), Symbol("_label") -> "Week" )
 			}{
-				@@b3.week( fooForm("week"), '_label -> "Week" )
+				@@b3.week( fooForm("week"), Symbol("_label") -> "Week" )
 			}
 
 
@@ -595,11 +595,11 @@
 			</p>
 			@bsExampleWithCode {
 				@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
-				@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@b3.static("Hidden label", Symbol("_hideLabel") -> true){ <a href="#">Basic control with hidden label</a> }
 				@b3.static(){ <a href="#">Basic control without label</a> }
 			}{
 				@@b3.static(Html("Label with icon <i class=\"fa fa-beer\"></i>")){ <a href="#">Basic control with label</a> }
-				@@b3.static("Hidden label", '_hideLabel -> true){ <a href="#">Basic control with hidden label</a> }
+				@@b3.static("Hidden label", Symbol("_hideLabel") -> true){ <a href="#">Basic control with hidden label</a> }
 				@@b3.static(){ <a href="#">Basic control without label</a> }
 			}
 
@@ -610,9 +610,9 @@
 				render whatever you want.
 			</p>
 			@bsExampleWithCode {
-				@b3.buttonType("submit", 'class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@b3.buttonType("submit", Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}{
-				@@b3.buttonType("submit", 'class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@@b3.buttonType("submit", Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}
 
 			<h4 id="more-submit"><code>b3.submit</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
@@ -620,9 +620,9 @@
 				It is a short version of b3.buttonType for type="submit".
 			</p>
 			@bsExampleWithCode {
-				@b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@b3.submit(Symbol("class") -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}{
-				@@b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
+				@@b3.submit(Symbol("class") -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Sign in }
 			}
 
 
@@ -631,9 +631,9 @@
 				It is a short version of b3.buttonType for type="reset".
 			</p>
 			@bsExampleWithCode {
-				@b3.reset('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+				@b3.reset(Symbol("class") -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
 			}{
-				@@b3.reset('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
+				@@b3.reset(Symbol("class") -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Reset }
 			}
 
 			<h4 id="more-button"><code>b3.button</code> <span class="def">@@(args: (Symbol,Any)*)(text: => Html)(implicit fc: B3FieldConstructor)</span></h4>
@@ -641,9 +641,9 @@
 				It is a short version of b3.buttonType for type="button".
 			</p>
 			@bsExampleWithCode {
-				@b3.button('class -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
+				@b3.button(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
 			}{
-				@@b3.button('class -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
+				@@b3.button(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-heart"></span> Favorite }
 			}
 
 
@@ -652,12 +652,12 @@
 				It renders whatever you want within a <code>form-group</code> div.
 			</p>
 			@bsExampleWithCode {
-				@b3.free('_id -> "idFormGroup") {
+				@b3.free(Symbol("_id") -> "idFormGroup") {
 					<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
 					<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
 				}
 			}{
-				@@b3.free('_id -> "idFormGroup") {
+				@@b3.free(Symbol("_id") -> "idFormGroup") {
 					<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
 					<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
 				}
@@ -682,7 +682,7 @@
 				It is useful for <strong>input groups</strong> and <strong>inputs with validation states and feedback icons</strong>.
 			</p>
 			@bsExampleWithCode {
-				@b3.inputWrapped( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" ) { input =>
+				@b3.inputWrapped( "email", fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" ) { input =>
 					<div class="input-group">
 					  <span class="input-group-addon">@@</span>
 					  @input
@@ -699,7 +699,7 @@
 					</div>
 				}
 			}{
-				@@b3.inputWrapped( "email", fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" ) { input =>
+				@@b3.inputWrapped( "email", fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" ) { input =>
 				  <div class="input-group">
 				    <span class="input-group-addon">@@@@</span>
 				    @@input

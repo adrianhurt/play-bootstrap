@@ -18,17 +18,17 @@
 
 		<h2 id="create-helper">Create your own helper</h2>
 		@bsExample {
-			@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@mail.com" )
+			@b4.my.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
 		}
 		@code {
-			@@b4.my.email( fooForm("foo"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
+			@@b4.my.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
 		}
 
 		<h3 id="input-wrapped">The use of <code>b4.inputWrapped</code></h3>
 		@bsExampleWithCode {
-			@b4.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+			@b4.my.number( fooForm("foo"), Symbol("_label") -> "Number", Symbol("value") -> 0 )
 		}{
-			@@b4.my.number( fooForm("foo"), '_label -> "Number", 'value -> 0 )
+			@@b4.my.number( fooForm("foo"), Symbol("_label") -> "Number", Symbol("value") -> 0 )
 		}
 
 		<h3 id="multifield">Create your multifield helper</h3>
@@ -39,8 +39,8 @@
 	<h2 id="create-field-constructor">Create your own field constructor</h2>
 	@bsExampleWithCode {
 		@b4.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
-			@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@mail.com" )
-			@b4.file( fooForm("foo_file_custom_1"), '_label -> "File", 'placeholder -> "Select a file...", '_success -> "Great!!" )
+			@b4.my.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("_error") -> "And error occurred!", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "example@mail.com" )
+			@b4.file( fooForm("foo_file_custom_1"), Symbol("_label") -> "File", Symbol("placeholder") -> "Select a file...", Symbol("_success") -> "Great!!" )
 		}
 	}{
 		<div class="my-form-group form-group has-danger" id="foo_field">
@@ -67,14 +67,14 @@
 	@code {
 		@@import b4.my.vertical.fieldConstructor		// Declare it as default
 
-		@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+		@@b4.my.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("_error") -> "And error occurred!", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "example@@mail.com" )
 	}
 	<p>
 		Or even using it for specific forms:
 	</p>
 	@code {
 		@@b4.my.vertical.form(routes.Application.extendIt) { implicit myfc =>
-			@@b4.my.email( fooForm("foo"), '_label -> "Email", '_error -> "And error occurred!", '_showConstraints -> true, 'placeholder -> "example@@mail.com" )
+			@@b4.my.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("_error") -> "And error occurred!", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "example@@mail.com" )
 		}
 	}
 

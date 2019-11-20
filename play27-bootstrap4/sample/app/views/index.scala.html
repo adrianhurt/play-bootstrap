@@ -40,51 +40,51 @@
 		<div class="tab-pane active" id="vertical" role="tabpanel">
 			@bsExampleWithCode {
 				@b4.vertical.form(routes.Application.index) { implicit vfc =>
-					@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
-					@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-					@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@b4.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+					@b4.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+					@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}{
 				@@b4.vertical.form(routes.Application.index) { implicit vfc =>
-					@@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
-					@@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-					@@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@@b4.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+					@@b4.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+					@@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}
 		</div>
 		<div class="tab-pane" id="horizontal" role="tabpanel">
 			@bsExampleWithCode {
 				@b4.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { implicit hfc =>
-					@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@mail.com" )
-					@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-					@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@b4.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+					@b4.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+					@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}{
 				@@b3.horizontal.form(routes.Application.index, "col-md-2", "col-md-10") { implicit hfc =>
-					@@b4.email( fooForm("email"), '_label -> "Email", 'placeholder -> "example@@mail.com" )
-					@@b4.password( fooForm("password"), '_label -> "Password", 'placeholder -> "Password" )
-					@@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@@b4.email( fooForm("email"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+					@@b4.password( fooForm("password"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+					@@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}
 		</div>
 		<div class="tab-pane" id="inline" role="tabpanel">
 			@bsExampleWithCode {
 				@b4.inline.form(routes.Application.index) { implicit ifc =>
-					@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
-					@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
-					@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@b4.email( fooForm("email"), Symbol("_hiddenLabel") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+					@b4.password( fooForm("password"), Symbol("_hiddenLabel") -> "Password", Symbol("placeholder") -> "Password" )
+					@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}{
 				@@b4.inline.form(routes.Application.index) { implicit ifc =>
-					@@b4.email( fooForm("email"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
-					@@b4.password( fooForm("password"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
-					@@b4.checkbox( fooForm("remember"), '_text -> "Remember me", 'value -> true )
-					@@b4.submit('class -> "btn btn-secondary"){ Sign in }
+					@@b4.email( fooForm("email"), Symbol("_hiddenLabel") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+					@@b4.password( fooForm("password"), Symbol("_hiddenLabel") -> "Password", Symbol("placeholder") -> "Password" )
+					@@b4.checkbox( fooForm("remember"), Symbol("_text") -> "Remember me", Symbol("value") -> true )
+					@@b4.submit(Symbol("class") -> "btn btn-secondary"){ Sign in }
 				}
 			}
 		</div>
