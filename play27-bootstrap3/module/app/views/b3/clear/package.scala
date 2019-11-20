@@ -55,11 +55,11 @@ package object clear {
    * *********************************************************************************************************************************
    */
   def form(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html) = {
-    val cfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    val cfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, Symbol("_feedbackIcons")))
     views.html.b3.form(action, inner(args): _*)(body(cfc))(cfc)
   }
   def formCSRF(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val cfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    val cfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, Symbol("_feedbackIcons")))
     views.html.b3.formCSRF(action, inner(args): _*)(body(cfc))(cfc, request)
   }
 

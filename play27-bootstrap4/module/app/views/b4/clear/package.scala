@@ -55,11 +55,11 @@ package object clear {
    * *********************************************************************************************************************************
    */
   def form(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html) = {
-    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.form(action, inner(args): _*)(body(cfc))(cfc)
   }
   def formCSRF(action: Call, args: (Symbol, Any)*)(body: ClearFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val cfc = fieldConstructorSpecific(isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.formCSRF(action, inner(args): _*)(body(cfc))(cfc, request)
   }
 

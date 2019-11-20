@@ -58,11 +58,11 @@ package object horizontal {
    * *********************************************************************************************************************************
    */
   def form(action: Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: HorizontalFieldConstructor => Html) = {
-    val hfc = fieldConstructorSpecific(colLabel, colInput, isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val hfc = fieldConstructorSpecific(colLabel, colInput, isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.form(action, inner(args): _*)(body(hfc))(hfc)
   }
   def formCSRF(action: Call, colLabel: String, colInput: String, args: (Symbol, Any)*)(body: HorizontalFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val hfc = fieldConstructorSpecific(colLabel, colInput, isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val hfc = fieldConstructorSpecific(colLabel, colInput, isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.formCSRF(action, inner(args): _*)(body(hfc))(hfc, request)
   }
 

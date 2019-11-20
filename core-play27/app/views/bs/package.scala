@@ -33,22 +33,22 @@ package object bs {
     val argsMap: Map[Symbol, Any] = Args.withoutNones(args).toMap
 
     /* Id of the input */
-    val id: String = argsMap.get('id).map(_.toString).getOrElse(field.id)
+    val id: String = argsMap.get(Symbol("id")).map(_.toString).getOrElse(field.id)
 
     /* Id of the form-group */
-    val idFormField: String = argsMap.get('_id).map(_.toString).getOrElse(id + "_field")
+    val idFormField: String = argsMap.get(Symbol("_id")).map(_.toString).getOrElse(id + "_field")
 
     /* The optional label */
-    val labelOpt: Option[Any] = argsMap.get('_label).orElse(argsMap.get('_hiddenLabel))
+    val labelOpt: Option[Any] = argsMap.get(Symbol("_label")).orElse(argsMap.get(Symbol("_hiddenLabel")))
 
     /* Indicates if the label must be hidden */
-    val hideLabel: Boolean = isTrue(argsMap, '_hideLabel) || argsMap.contains('_hiddenLabel)
+    val hideLabel: Boolean = isTrue(argsMap, Symbol("_hideLabel")) || argsMap.contains(Symbol("_hiddenLabel"))
 
     /* Name of the input */
     def name: String = field.name
 
     /* Value of the input */
-    val value: Option[String] = field.value.orElse(argsMap.get('value).map(_.toString))
+    val value: Option[String] = field.value.orElse(argsMap.get(Symbol("value")).map(_.toString))
 
     /* List with every error and its corresponding ARIA id. Ex: ("foo_error_0" -> "foo error")  */
     val errors: Seq[(String, Any)] = BSFieldInfo.errors(Some(field), argsMap, msgsProv).zipWithIndex.map {
@@ -56,7 +56,7 @@ package object bs {
     }
 
     /* Indicates if there is any error */
-    val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, '_error)
+    val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, Symbol("_error"))
 
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)
@@ -74,14 +74,14 @@ package object bs {
 
     /* List with every error */
     def errors(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
-      argsMap.get('_error).filter(!_.isInstanceOf[Boolean]).map {
+      argsMap.get(Symbol("_error")).filter(!_.isInstanceOf[Boolean]).map {
         _ match {
           case Some(FormError(_, message, args)) => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
           case FormError(_, message, args)       => Seq(msgsProv.messages(message, args.map(a => translate(a)(msgsProv)): _*))
           case message                           => Seq(translate(message)(msgsProv))
         }
       }.getOrElse {
-        maybeField.filter(_ => argsMap.get('_showErrors) != Some(false)).map { field =>
+        maybeField.filter(_ => argsMap.get(Symbol("_showErrors")) != Some(false)).map { field =>
           field.errors.map { e => msgsProv.messages(e.message, e.args.map(a => translate(a)(msgsProv)): _*) }
         }.getOrElse(Nil)
       }
@@ -89,15 +89,15 @@ package object bs {
 
     /* List with every "feedback info" except "errors" */
     def feedbackInfosButErrors(argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
-      argsMap.get('_warning).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(
-        argsMap.get('_success).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(Nil)
+      argsMap.get(Symbol("_warning")).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(
+        argsMap.get(Symbol("_success")).filter(!_.isInstanceOf[Boolean]).map(m => Seq(translate(m)(msgsProv))).getOrElse(Nil)
       )
     }
 
     /* List with every "help info", i.e. a help text or constraints */
     def helpInfos(maybeField: Option[Field], argsMap: Map[Symbol, Any], msgsProv: MessagesProvider): Seq[Any] = {
-      argsMap.get('_help).map(m => Seq(translate(m)(msgsProv))).getOrElse {
-        maybeField.filter(_ => argsMap.get('_showConstraints) == Some(true)).map { field =>
+      argsMap.get(Symbol("_help")).map(m => Seq(translate(m)(msgsProv))).getOrElse {
+        maybeField.filter(_ => argsMap.get(Symbol("_showConstraints")) == Some(true)).map { field =>
           field.constraints.map(c => msgsProv.messages(c._1, c._2.map(a => translate(a)(msgsProv)): _*)) ++ field.format.map(f => msgsProv.messages(f._1, f._2.map(a => translate(a)(msgsProv)): _*))
         }.getOrElse(Nil)
       }
@@ -107,9 +107,9 @@ package object bs {
     def status(hasErrors: Boolean, argsMap: Map[Symbol, Any]): Option[String] = {
       if (hasErrors)
         Some("error")
-      else if (ArgsMap.isNotFalse(argsMap, '_warning))
+      else if (ArgsMap.isNotFalse(argsMap, Symbol("_warning")))
         Some("warning")
-      else if (ArgsMap.isNotFalse(argsMap, '_success))
+      else if (ArgsMap.isNotFalse(argsMap, Symbol("_success")))
         Some("success")
       else
         None
@@ -117,14 +117,14 @@ package object bs {
 
     /* Generates automatically the input attributes for the constraints of a field */
     def constraintsArgs(field: Field, msgsProv: MessagesProvider): Seq[(Symbol, Any)] = field.constraints.map {
-      case ("constraint.required", params)            => Some(('required -> true))
-      case ("constraint.min", params: Seq[Any])       => Some(('min -> msgsProv.messages(params.head.toString)))
-      case ("constraint.max", params: Seq[Any])       => Some(('max -> msgsProv.messages(params.head.toString)))
-      case ("constraint.minLength", params: Seq[Any]) => Some(('minlength -> msgsProv.messages(params.head.toString)))
-      case ("constraint.maxLength", params: Seq[Any]) => Some(('maxlength -> msgsProv.messages(params.head.toString)))
+      case ("constraint.required", params)            => Some((Symbol("required") -> true))
+      case ("constraint.min", params: Seq[Any])       => Some((Symbol("min") -> msgsProv.messages(params.head.toString)))
+      case ("constraint.max", params: Seq[Any])       => Some((Symbol("max") -> msgsProv.messages(params.head.toString)))
+      case ("constraint.minLength", params: Seq[Any]) => Some((Symbol("minlength") -> msgsProv.messages(params.head.toString)))
+      case ("constraint.maxLength", params: Seq[Any]) => Some((Symbol("maxlength") -> msgsProv.messages(params.head.toString)))
       case ("constraint.pattern", params: Seq[Any]) => params.head match {
-        case str: String        => Some(('pattern -> msgsProv.messages(str)))
-        case func: Function0[_] => Some(('pattern -> msgsProv.messages(func.asInstanceOf[() => scala.util.matching.Regex]().toString)))
+        case str: String        => Some((Symbol("pattern") -> msgsProv.messages(str)))
+        case func: Function0[_] => Some((Symbol("pattern") -> msgsProv.messages(func.asInstanceOf[() => scala.util.matching.Regex]().toString)))
         case _                  => None
       }
       case _ => None
@@ -154,7 +154,7 @@ package object bs {
     }
 
     /* Indicates if there is any error */
-    val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, '_error)
+    val hasErrors: Boolean = !errors.isEmpty || ArgsMap.isNotFalse(argsMap, Symbol("_error"))
 
     /* The optional validation state ("success", "warning" or "error") */
     lazy val status: Option[String] = BSFieldInfo.status(hasErrors, argsMap)

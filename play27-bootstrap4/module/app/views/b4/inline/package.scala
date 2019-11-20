@@ -55,11 +55,11 @@ package object inline {
    * *********************************************************************************************************************************
    */
   def form(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html) = {
-    val ifc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val ifc = fieldConstructorSpecific(isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.form(action, inner(args): _*)(body(ifc))(ifc)
   }
   def formCSRF(action: Call, args: (Symbol, Any)*)(body: InlineFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val ifc = fieldConstructorSpecific(isCustom = isTrue(args, '_custom), withFeedbackTooltip = isTrue(args, '_feedbackTooltip))
+    val ifc = fieldConstructorSpecific(isCustom = isTrue(args, Symbol("_custom")), withFeedbackTooltip = isTrue(args, Symbol("_feedbackTooltip")))
     views.html.b4.formCSRF(action, inner(args): _*)(body(ifc))(ifc, request)
   }
 

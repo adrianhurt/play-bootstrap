@@ -74,21 +74,21 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow setting a custom id" in {
-      simpleInputWithArgs('_id -> "customid") must contain("id=\"customid\"")
+      simpleInputWithArgs(Symbol("_id") -> "customid") must contain("id=\"customid\"")
     }
 
     "allow setting extra classes form-group" in {
-      clean(simpleInputWithArgs('_class -> "extra_class another_class")) must contain(s"""<div class="form-group$fieldsetExtraClasses extra_class another_class" """)
+      clean(simpleInputWithArgs(Symbol("_class") -> "extra_class another_class")) must contain(s"""<div class="form-group$fieldsetExtraClasses extra_class another_class" """)
     }
 
     "render the label" in {
-      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(if (labelExtraClasses == "") """<label for="foo">theLabel</label>""" else s"""<label class="$labelExtraClasses" for="foo">theLabel</label>""")
+      clean(simpleInputWithArgs(Symbol("_label") -> "theLabel")) must contain(if (labelExtraClasses == "") """<label for="foo">theLabel</label>""" else s"""<label class="$labelExtraClasses" for="foo">theLabel</label>""")
     }
 
     "allow hide the label" in {
       val labelString = if (labelExtraClasses == "") """<label class="sr-only" for="foo">theLabel</label>""" else s"""<label class="$labelExtraClasses sr-only" for="foo">theLabel</label>"""
-      clean(simpleInputWithArgs('_label -> "theLabel", '_hideLabel -> true)) must contain(labelString)
-      clean(simpleInputWithArgs('_hiddenLabel -> "theLabel")) must contain(labelString)
+      clean(simpleInputWithArgs(Symbol("_label") -> "theLabel", Symbol("_hideLabel") -> true)) must contain(labelString)
+      clean(simpleInputWithArgs(Symbol("_hiddenLabel") -> "theLabel")) must contain(labelString)
     }
 
     "allow render without label" in {
@@ -103,7 +103,7 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow showing constraints" in {
-      val test = simpleInputWithArgs('_showConstraints -> true)
+      val test = simpleInputWithArgs(Symbol("_showConstraints") -> true)
       test must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">")
       test must contain("<small id=\"foo_info_1\" class=\"form-text text-muted\">")
       test must contain("class=\"form-text text-muted\">" + msgsProv.messages("constraint.required") + "</small>")
@@ -111,19 +111,19 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "localize placeholder property" in {
-      val test = simpleInputWithArgs('placeholder -> "simpleInputWithArgs.placeholder.value")
+      val test = simpleInputWithArgs(Symbol("placeholder") -> "simpleInputWithArgs.placeholder.value")
       test must contain("placeholder=\"Placeholder value\"")
     }
 
     "allow showing help info" in {
-      simpleInputWithArgs('_help -> "test-help") must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
-      simpleInputWithArgs('_success -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"valid-feedback\">test-help</div>")
-      simpleInputWithArgs('_warning -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"warning-feedback\">test-help</div>")
-      simpleInputWithArgs('_error -> "test-help") must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-help</div>")
+      simpleInputWithArgs(Symbol("_help") -> "test-help") must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
+      simpleInputWithArgs(Symbol("_success") -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"valid-feedback\">test-help</div>")
+      simpleInputWithArgs(Symbol("_warning") -> "test-help") must contain("<div id=\"foo_feedback_0\" class=\"warning-feedback\">test-help</div>")
+      simpleInputWithArgs(Symbol("_error") -> "test-help") must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-help</div>")
     }
 
     "allow rendering erros and hide constraints when help info is present" in {
-      val test = simpleInputWithError('_showConstraints -> true, '_help -> "test-help")
+      val test = simpleInputWithError(Symbol("_showConstraints") -> true, Symbol("_help") -> "test-help")
       test must contain("<div id=\"foo_error_0\" class=\"invalid-feedback\">test-error-0</div>")
       test must contain("<div id=\"foo_error_1\" class=\"invalid-feedback\">test-error-1</div>")
       test must contain("<small id=\"foo_info_0\" class=\"form-text text-muted\">test-help</small>")
@@ -137,12 +137,12 @@ object FieldConstructorsSpec extends Specification {
         test must withStatus(status)
       }
 
-      testStatus("success", '_success -> true)
-      testStatus("success", '_success -> "test-help")
-      testStatus("warning", '_warning -> true)
-      testStatus("warning", '_warning -> "test-help")
-      testStatus("danger", '_error -> true)
-      testStatus("danger", '_error -> "test-help")
+      testStatus("success", Symbol("_success") -> true)
+      testStatus("success", Symbol("_success") -> "test-help")
+      testStatus("warning", Symbol("_warning") -> true)
+      testStatus("warning", Symbol("_warning") -> "test-help")
+      testStatus("danger", Symbol("_error") -> true)
+      testStatus("danger", Symbol("_error") -> "test-help")
     }
 
     "render aria attributes" in {
@@ -153,7 +153,7 @@ object FieldConstructorsSpec extends Specification {
       test0 must not contain ("<span id=\"foo_info")
       test0 must not contain ("<span id=\"foo_error")
 
-      val test1 = simpleInputWithError('_showConstraints -> true)
+      val test1 = simpleInputWithError(Symbol("_showConstraints") -> true)
       test1 must contain("aria-invalid=\"true\"")
       test1 must contain("aria-describedby=\"foo_error_0 foo_error_1 foo_info_0 foo_info_1\"")
       test1 must contain("<small id=\"foo_info_0\"")
@@ -161,28 +161,28 @@ object FieldConstructorsSpec extends Specification {
       test1 must contain("<div id=\"foo_error_0\"")
       test1 must contain("<div id=\"foo_error_1\"")
 
-      val test2 = simpleInputWithArgs('_help -> "test-help")
+      val test2 = simpleInputWithArgs(Symbol("_help") -> "test-help")
       test2 must contain("aria-describedby=\"foo_info_0\"")
       test2 must contain("<small id=\"foo_info_0\"")
       test2 must not contain ("<div id=\"foo_feedback")
     }
 
     "allow to set all its helpers as bootstrap custom fields" in {
-      val customFile1 = b4.file(fooField, '_custom -> true).body.trim
+      val customFile1 = b4.file(fooField, Symbol("_custom") -> true).body.trim
       val customFile2 = b4.file(fooField)(fcWithCustomFields, msgsProv).body.trim
       customFile1 must be equalTo customFile2
 
       val boolField = Form(single("foo" -> Forms.boolean))("foo")
-      val customCheckbox1 = b4.checkbox(boolField, '_custom -> true, '_text -> "theText").body.trim
-      val customCheckbox2 = b4.checkbox(boolField, '_text -> "theText")(fcWithCustomFields, msgsProv).body.trim
+      val customCheckbox1 = b4.checkbox(boolField, Symbol("_custom") -> true, Symbol("_text") -> "theText").body.trim
+      val customCheckbox2 = b4.checkbox(boolField, Symbol("_text") -> "theText")(fcWithCustomFields, msgsProv).body.trim
       customCheckbox1 must be equalTo customCheckbox2
 
       val fruits = Seq("A" -> "Apples", "P" -> "Pears", "B" -> "Bananas")
-      val customRadio1 = b4.radio(fooField, fruits, '_custom -> true).body.trim
+      val customRadio1 = b4.radio(fooField, fruits, Symbol("_custom") -> true).body.trim
       val customRadio2 = b4.radio(fooField, fruits)(fcWithCustomFields, msgsProv).body.trim
       customRadio1 must be equalTo customRadio2
 
-      val customSelect1 = b4.select(fooField, fruits, '_custom -> true).body.trim
+      val customSelect1 = b4.select(fooField, fruits, Symbol("_custom") -> true).body.trim
       val customSelect2 = b4.select(fooField, fruits)(fcWithCustomFields, msgsProv).body.trim
       customSelect1 must be equalTo customSelect2
     }
@@ -192,12 +192,12 @@ object FieldConstructorsSpec extends Specification {
       val test2 = simpleInputWithError()(fcWithFeedbackTooltip)
       test1.replaceAll("-feedback", "-tooltip") must be equalTo test2
 
-      val test3 = simpleInputWithArgs('_success -> "test-help")(fc)
-      val test4 = simpleInputWithArgs('_success -> "test-help")(fcWithFeedbackTooltip)
+      val test3 = simpleInputWithArgs(Symbol("_success") -> "test-help")(fc)
+      val test4 = simpleInputWithArgs(Symbol("_success") -> "test-help")(fcWithFeedbackTooltip)
       test3.replaceAll("-feedback", "-tooltip") must be equalTo test4
 
-      val test5 = simpleInputWithArgs('_warning -> "test-help")(fc)
-      val test6 = simpleInputWithArgs('_warning -> "test-help")(fcWithFeedbackTooltip)
+      val test5 = simpleInputWithArgs(Symbol("_warning") -> "test-help")(fc)
+      val test6 = simpleInputWithArgs(Symbol("_warning") -> "test-help")(fcWithFeedbackTooltip)
       test6.replaceAll("-feedback", "-tooltip") must be equalTo test6
     }
   }
@@ -211,7 +211,7 @@ object FieldConstructorsSpec extends Specification {
     testFielConstructor(horizontalFieldConstructor, fcWithCustomFields, fcWithFeedbackTooltip)
 
     "render columns for horizontal form" in {
-      val body = b4.text(Form(single("foo" -> Forms.text))("foo"), '_label -> "theLabel").body
+      val body = b4.text(Form(single("foo" -> Forms.text))("foo"), Symbol("_label") -> "theLabel").body
       body must contain(colLabel)
       body must contain(colInput)
     }

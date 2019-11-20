@@ -65,12 +65,12 @@ object FormsSpec extends Specification {
     }
 
     "allow setting custom class" in {
-      fooFormBody('class -> "customClass")(vfc) must contain("class=\"form-vertical customClass\"")
+      fooFormBody(Symbol("class") -> "customClass")(vfc) must contain("class=\"form-vertical customClass\"")
     }
 
     "allow disabling default class" in {
-      fooFormBody('_disableDefaultClass -> true)(vfc) must not contain ("form-vertical")
-      fooFormBody('_disableDefaultClass -> true, 'class -> "customClass")(vfc) must contain("class=\"customClass\"")
+      fooFormBody(Symbol("_disableDefaultClass") -> true)(vfc) must not contain ("form-vertical")
+      fooFormBody(Symbol("_disableDefaultClass") -> true, Symbol("class") -> "customClass")(vfc) must contain("class=\"customClass\"")
     }
 
     "add form role as default" in {
@@ -78,7 +78,7 @@ object FormsSpec extends Specification {
     }
 
     "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
-      val body = fooFormBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(vfc)
+      val body = fooFormBody(Symbol("extra_attr") -> "test", Symbol("true_attr") -> true, Symbol("fase_attr") -> false, Symbol("_underscored_attr") -> "test")(vfc)
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
