@@ -9,9 +9,11 @@ crossScalaVersions := Seq("2.12.8", "2.11.12")
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters)
+lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters, PlayLogback, PlayAkkaHttpServer)
 
-
+libraryDependencies := libraryDependencies.value.filterNot(m => m.name == "twirl-api" || m.name == "play-server") ++ Seq(
+  playCore % "provided"
+)
 
 scalariformSettings
 

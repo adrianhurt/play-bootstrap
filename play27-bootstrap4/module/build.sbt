@@ -13,13 +13,14 @@ resolvers ++= Seq(
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 )
 
-libraryDependencies ++= Seq(
+libraryDependencies := libraryDependencies.value.filterNot(m => m.name == "twirl-api" || m.name == "play-server") ++ Seq(
+  playCore % "provided",
   filters % "provided",
   "com.adrianhurt" %% "play-bootstrap-core" % "1.5.1-P27",
   specs2 % Test
 )
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters)
+lazy val root = (project in file(".")).enablePlugins(PlayScala).disablePlugins(PlayFilters, PlayLogback, PlayAkkaHttpServer)
 
 scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
