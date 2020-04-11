@@ -60,7 +60,7 @@ object HelpersSpec extends Specification {
   "@inputType" should {
 
     "allow setting a custom id" in {
-      val body = b4.inputType("text", fooField, 'id -> "someid").body
+      val body = b4.inputType("text", fooField, Symbol("id") -> "someid").body
       val idAttr = "id=\"someid\""
       body must contain(idAttr)
       // Make sure it doesn't have it twice
@@ -80,11 +80,11 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting additional classes" in {
-      b4.inputType("text", fooField, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
+      b4.inputType("text", fooField, Symbol("class") -> "extra_class").body must contain("class=\"form-control extra_class\"")
     }
 
     "allow setting a default value" in {
-      val body = b4.inputType("text", fooField, 'value -> "defaultvalue").body
+      val body = b4.inputType("text", fooField, Symbol("value") -> "defaultvalue").body
       val valueAttr = "value=\"defaultvalue\""
       body must contain(valueAttr)
       // Make sure it doesn't contain it twice
@@ -92,7 +92,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow being filled with a value" in {
-      val body = b4.inputType("text", fooFieldFilled("filledvalue"), 'value -> "defaultvalue").body
+      val body = b4.inputType("text", fooFieldFilled("filledvalue"), Symbol("value") -> "defaultvalue").body
       val valueAttr = "value=\"filledvalue\""
       body must contain(valueAttr)
       // Make sure it doesn't contain it twice
@@ -102,7 +102,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
-      val body = b4.inputType("text", fooField, 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test").body
+      val body = b4.inputType("text", fooField, Symbol("extra_attr") -> "test", Symbol("true_attr") -> true, Symbol("fase_attr") -> false, Symbol("_underscored_attr") -> "test").body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
@@ -110,7 +110,7 @@ object HelpersSpec extends Specification {
     }
   }
 
-  val sampleArgs = Seq[(Symbol, Any)]('id -> "someid", 'foo -> "fooValue")
+  val sampleArgs = Seq[(Symbol, Any)](Symbol("id") -> "someid", Symbol("foo") -> "fooValue")
   def sampleInputTypeBody(theType: String) = b4.inputType(theType, fooField, sampleArgs: _*).body.trim
 
   "@text" should {
@@ -134,7 +134,7 @@ object HelpersSpec extends Specification {
       file must contain("""foo="fooValue"""")
     }
     "render custom file properly" in {
-      val customFile = b4.file(fooField, (('_custom -> true) +: sampleArgs): _*).body.trim
+      val customFile = b4.file(fooField, ((Symbol("_custom") -> true) +: sampleArgs): _*).body.trim
       customFile must contain("""<div class="custom-file">""")
       customFile must contain("""<input type="file" id="someid" name="foo" value=""""")
       customFile must contain("""class="custom-file-input"""")
@@ -146,7 +146,7 @@ object HelpersSpec extends Specification {
   "@textarea" should {
 
     "allow setting a custom id" in {
-      val body = b4.textarea(fooField, 'id -> "someid").body
+      val body = b4.textarea(fooField, Symbol("id") -> "someid").body
       val idAttr = "id=\"someid\""
       body must contain(idAttr)
       // Make sure it doesn't have it twice
@@ -158,11 +158,11 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting additional classes" in {
-      b4.textarea(fooField, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
+      b4.textarea(fooField, Symbol("class") -> "extra_class").body must contain("class=\"form-control extra_class\"")
     }
 
     "allow setting a default value" in {
-      val body = b4.textarea(fooField, 'value -> "defaultvalue").body
+      val body = b4.textarea(fooField, Symbol("value") -> "defaultvalue").body
       body must contain(">defaultvalue</textarea>")
       body must not contain ("value=\"defaultvalue\"")
     }
@@ -175,7 +175,7 @@ object HelpersSpec extends Specification {
     def stringFieldFilled(v: String) = Form(single("foo" -> Forms.text)).fill(v)("foo")
 
     "allow setting a custom id" in {
-      val body = b4.checkbox(boolField, 'id -> "someid").body
+      val body = b4.checkbox(boolField, Symbol("id") -> "someid").body
       val idAttr = "id=\"someid\""
       body must contain(idAttr)
       // Make sure it doesn't have it twice
@@ -189,19 +189,19 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting a default custom value" in {
-      val body = b4.checkbox(boolField, 'value -> "bar").body
+      val body = b4.checkbox(boolField, Symbol("value") -> "bar").body
       body must not contain ("checked")
       body must contain("value=\"bar\"")
     }
 
     "allow setting a default value for checked attribute" in {
-      val body = b4.checkbox(boolField, '_default -> true).body
+      val body = b4.checkbox(boolField, Symbol("_default") -> true).body
       body must contain("checked")
       body must contain("value=\"true\"")
     }
 
     "allow setting a default value for checked attribute with a custom value" in {
-      val body = b4.checkbox(boolField, 'value -> "bar", '_default -> true).body
+      val body = b4.checkbox(boolField, Symbol("value") -> "bar", Symbol("_default") -> true).body
       body must contain("checked")
       body must contain("value=\"bar\"")
     }
@@ -213,66 +213,66 @@ object HelpersSpec extends Specification {
     }
 
     "allow being filled with a custom value" in {
-      val body = b4.checkbox(stringFieldFilled("bar"), 'value -> "bar").body
+      val body = b4.checkbox(stringFieldFilled("bar"), Symbol("value") -> "bar").body
       body must contain("checked")
       body must contain("value=\"bar\"")
     }
 
     "ignore default checked value if it is filled" in {
-      val body1 = b4.checkbox(boolFieldFilled(false), '_default -> true).body
+      val body1 = b4.checkbox(boolFieldFilled(false), Symbol("_default") -> true).body
       body1 must not contain ("checked")
       body1 must contain("value=\"true\"")
-      val body2 = b4.checkbox(stringFieldFilled(""), 'value -> "bar", '_default -> true).body
+      val body2 = b4.checkbox(stringFieldFilled(""), Symbol("value") -> "bar", Symbol("_default") -> true).body
       body2 must not contain ("checked")
       body2 must contain("value=\"bar\"")
     }
 
     "allow setting a forced value for checked attribute (always true)" in {
-      val body = b4.checkbox(boolField, 'checked -> true).body
+      val body = b4.checkbox(boolField, Symbol("checked") -> true).body
       body must contain("checked")
       body must contain("value=\"true\"")
     }
     "allow setting a forced value for checked attribute (always false)" in {
-      val body = b4.checkbox(boolField, 'checked -> false).body
+      val body = b4.checkbox(boolField, Symbol("checked") -> false).body
       body must not contain ("checked")
       body must contain("value=\"true\"")
     }
 
     "ignore default and filled checked value if it has forced checked" in {
-      val body1 = b4.checkbox(boolFieldFilled(false), '_default -> false, 'checked -> true).body
+      val body1 = b4.checkbox(boolFieldFilled(false), Symbol("_default") -> false, Symbol("checked") -> true).body
       body1 must contain("checked")
       body1 must contain("value=\"true\"")
-      val body2 = b4.checkbox(boolFieldFilled(true), '_default -> true, 'checked -> false).body
+      val body2 = b4.checkbox(boolFieldFilled(true), Symbol("_default") -> true, Symbol("checked") -> false).body
       body2 must not contain ("checked")
       body2 must contain("value=\"true\"")
-      val body3 = b4.checkbox(stringFieldFilled(""), 'value -> "bar", '_default -> false, 'checked -> true).body
+      val body3 = b4.checkbox(stringFieldFilled(""), Symbol("value") -> "bar", Symbol("_default") -> false, Symbol("checked") -> true).body
       body3 must contain("checked")
       body3 must contain("value=\"bar\"")
-      val body4 = b4.checkbox(stringFieldFilled("bar"), 'value -> "bar", '_default -> true, 'checked -> false).body
+      val body4 = b4.checkbox(stringFieldFilled("bar"), Symbol("value") -> "bar", Symbol("_default") -> true, Symbol("checked") -> false).body
       body4 must not contain ("checked")
       body4 must contain("value=\"bar\"")
     }
 
     "add support to readonly attribute" in {
-      val bodyWithoutReadonly = b4.checkbox(boolField, 'value -> true).body
+      val bodyWithoutReadonly = b4.checkbox(boolField, Symbol("value") -> true).body
       bodyWithoutReadonly must contain("<div class=\"form-check")
       bodyWithoutReadonly must not contain ("checkbox-group")
       bodyWithoutReadonly must not contain ("disabled")
       bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
 
-      val bodyReadonlyFalse = b4.checkbox(boolField, 'readonly -> false, 'value -> true).body
+      val bodyReadonlyFalse = b4.checkbox(boolField, Symbol("readonly") -> false, Symbol("value") -> true).body
       bodyReadonlyFalse must contain("<div class=\"form-check checkbox-group")
       bodyReadonlyFalse must not contain ("disabled=\"true\"")
       bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"true\" disabled/>")
 
-      val bodyReadonlyTrue = b4.checkbox(boolField, 'readonly -> true, 'value -> true).body
+      val bodyReadonlyTrue = b4.checkbox(boolField, Symbol("readonly") -> true, Symbol("value") -> true).body
       bodyReadonlyTrue must contain("<div class=\"form-check checkbox-group")
       bodyReadonlyTrue must contain("disabled=\"true\"")
       bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"true\"/>")
     }
 
     "render custom checkbox properly" in {
-      val body = clean(b4.checkbox(boolField, '_custom -> true, '_text -> "theText").body)
+      val body = clean(b4.checkbox(boolField, Symbol("_custom") -> true, Symbol("_text") -> "theText").body)
       body must contain("""<div class="custom-control custom-checkbox">""")
       body must contain("""<input type="checkbox" id="foo" name="foo" value="true" class="custom-control-input">""")
       body must contain("""<label class="custom-control-label" for="foo">theText</label>""")
@@ -284,7 +284,7 @@ object HelpersSpec extends Specification {
     val fruits = Seq("A" -> "Apples", "P" -> "Pears", "B" -> "Bananas")
 
     "allow setting a custom id" in {
-      val body = b4.radio(fooField, fruits, 'id -> "someid").body
+      val body = b4.radio(fooField, fruits, Symbol("id") -> "someid").body
       body must contain("id=\"someid_A\"")
       body must contain("id=\"someid_P\"")
       body must contain("id=\"someid_B\"")
@@ -295,7 +295,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting a default value" in {
-      val body = b4.radio(fooField, fruits, 'value -> "B").body
+      val body = b4.radio(fooField, fruits, Symbol("value") -> "B").body
       val checkedAttr = "checked"
       body must contain(checkedAttr)
       // Make sure it doesn't have it twice
@@ -315,22 +315,22 @@ object HelpersSpec extends Specification {
     }
 
     "allow be inline" in {
-      b4.radio(fooField, fruits, '_inline -> true).body must contain("form-check-inline")
+      b4.radio(fooField, fruits, Symbol("_inline") -> true).body must contain("form-check-inline")
     }
 
     "add support to readonly attribute" in {
-      val bodyWithoutReadonly = b4.radio(fooField, fruits, 'value -> "B").body
+      val bodyWithoutReadonly = b4.radio(fooField, fruits, Symbol("value") -> "B").body
       bodyWithoutReadonly must not contain ("radio-group")
       bodyWithoutReadonly must not contain ("disabled")
       bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
 
-      val bodyReadonlyFalse = b4.radio(fooField, fruits, 'readonly -> false, 'value -> "B").body
+      val bodyReadonlyFalse = b4.radio(fooField, fruits, Symbol("readonly") -> false, Symbol("value") -> "B").body
       bodyReadonlyFalse must contain("<div class=\"radio-group\">")
       bodyReadonlyFalse must not contain ("disabled=\"true\"")
       bodyReadonlyFalse must contain("<div class=\"form-check")
       bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" disabled/>")
 
-      val bodyReadonlyTrue = b4.radio(fooField, fruits, 'readonly -> true, 'value -> "B").body
+      val bodyReadonlyTrue = b4.radio(fooField, fruits, Symbol("readonly") -> true, Symbol("value") -> "B").body
       bodyReadonlyTrue must contain("<div class=\"radio-group\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
       bodyReadonlyTrue must contain("<div class=\"form-check\"")
@@ -338,7 +338,7 @@ object HelpersSpec extends Specification {
     }
 
     "render custom radio properly" in {
-      val body = clean(b4.radio(fooField, fruits, '_custom -> true).body)
+      val body = clean(b4.radio(fooField, fruits, Symbol("_custom") -> true).body)
       body must contain("""<div class="custom-control custom-radio">""")
       body must contain("""<input type="radio" id="foo_""")
       body must contain("""class="custom-control-input"""")
@@ -351,7 +351,7 @@ object HelpersSpec extends Specification {
     val fruits = Seq("A" -> "Apples", "P" -> "Pears", "B" -> "Bananas")
 
     "allow setting a custom id" in {
-      val body = b4.select(fooField, fruits, 'id -> "someid").body
+      val body = b4.select(fooField, fruits, Symbol("id") -> "someid").body
       body must contain("id=\"someid\"")
     }
 
@@ -360,7 +360,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting additional classes" in {
-      b4.select(fooField, fruits, 'class -> "extra_class").body must contain("class=\"form-control extra_class\"")
+      b4.select(fooField, fruits, Symbol("class") -> "extra_class").body must contain("class=\"form-control extra_class\"")
     }
 
     "be unselected by default" in {
@@ -368,7 +368,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting a default value" in {
-      val body = b4.select(fooField, fruits, 'value -> "B").body
+      val body = b4.select(fooField, fruits, Symbol("value") -> "B").body
       val selectedAttr = "selected"
       body must contain(selectedAttr)
       // Make sure it doesn't have it twice
@@ -384,24 +384,24 @@ object HelpersSpec extends Specification {
     }
 
     "add support to readonly attribute" in {
-      val bodyWithoutReadonly = b4.select(fooField, fruits, 'value -> "B").body
+      val bodyWithoutReadonly = b4.select(fooField, fruits, Symbol("value") -> "B").body
       bodyWithoutReadonly must not contain ("<div class=\"select-group\">")
       bodyWithoutReadonly must not contain ("disabled")
       bodyWithoutReadonly must not contain ("<input type=\"hidden\"")
 
-      val bodyReadonlyFalse = b4.select(fooField, fruits, 'readonly -> false, 'value -> "B").body
+      val bodyReadonlyFalse = b4.select(fooField, fruits, Symbol("readonly") -> false, Symbol("value") -> "B").body
       bodyReadonlyFalse must contain("<div class=\"select-group\">")
       bodyReadonlyFalse must not contain ("disabled=\"true\"")
       bodyReadonlyFalse must contain("<input type=\"hidden\" name=\"foo\" value=\"B\" disabled/>")
 
-      val bodyReadonlyTrue = b4.select(fooField, fruits, 'readonly -> true, 'value -> "B").body
+      val bodyReadonlyTrue = b4.select(fooField, fruits, Symbol("readonly") -> true, Symbol("value") -> "B").body
       bodyReadonlyTrue must contain("<div class=\"select-group\">")
       bodyReadonlyTrue must contain("disabled=\"true\"")
       bodyReadonlyTrue must contain("<input type=\"hidden\" name=\"foo\" value=\"B\"/>")
     }
 
     "allow multiple" in {
-      val body = b4.select(fooField, fruits, 'multiple -> true, 'value -> "P,B").body
+      val body = b4.select(fooField, fruits, Symbol("multiple") -> true, Symbol("value") -> "P,B").body
       body must contain("multiple=\"true\"")
       val selectedAttr = "selected"
       body must contain(selectedAttr)
@@ -412,22 +412,22 @@ object HelpersSpec extends Specification {
     }
 
     "render custom select properly" in {
-      val body = b4.select(fooField, fruits, '_custom -> true).body
+      val body = b4.select(fooField, fruits, Symbol("_custom") -> true).body
       body must contain("""<select id="foo" name="foo" class="custom-select">""")
     }
   }
 
   "@hidden" should {
     "be rendered correctly" in {
-      val body = clean(b4.hidden("testName", "testValue", 'foo -> "bar").body)
+      val body = clean(b4.hidden("testName", "testValue", Symbol("foo") -> "bar").body)
       body must be equalTo """<input type="hidden" name="testName" value="testValue" foo="bar">"""
     }
     "with Field object" in {
-      val body = clean(b4.hidden(fooField, 'value -> "testValue", 'foo -> "bar").body)
+      val body = clean(b4.hidden(fooField, Symbol("value") -> "testValue", Symbol("foo") -> "bar").body)
       body must be equalTo """<input type="hidden" name="foo" value="testValue" foo="bar">"""
     }
     "with filled Field object" in {
-      val body = clean(b4.hidden(fooFieldFilled("filledValue"), 'value -> "testValue", 'foo -> "bar").body)
+      val body = clean(b4.hidden(fooFieldFilled("filledValue"), Symbol("value") -> "testValue", Symbol("foo") -> "bar").body)
       body must be equalTo """<input type="hidden" name="foo" value="filledValue" foo="bar">"""
     }
   }
@@ -510,7 +510,7 @@ object HelpersSpec extends Specification {
       clean(b4.freeFormGroup(args)(innerArgs => Html("<content>"))(fc, msgsProv).body)
 
     "vertical: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(vfc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId", Symbol("_label") -> "theLabel")(vfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<label>theLabel</label>
 	  	<content>
@@ -518,14 +518,14 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "vertical: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(vfc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId")(vfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<content>
 	  </div>
 	  """)
     }
     "horizontal: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(hfc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId", Symbol("_label") -> "theLabel")(hfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group row theClass" id="theId">
 	  	<label class="col-form-label col-md-2">theLabel</label>
 	  	<div class="col-md-10">
@@ -535,7 +535,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "horizontal: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(hfc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId")(hfc, msgsProv) must be equalTo clean("""
 	  <div class="form-group row theClass" id="theId">
 	  	<div class="col-md-10 offset-md-2">
 	  	  <content>
@@ -544,7 +544,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "inline: show label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId", '_label -> "theLabel")(ifc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId", Symbol("_label") -> "theLabel")(ifc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
 	  	<label>theLabel</label>
       <content>
@@ -552,7 +552,7 @@ object HelpersSpec extends Specification {
 	  """)
     }
     "inline: without label" in {
-      testFormGroup('_class -> "theClass", '_id -> "theId")(ifc, msgsProv) must be equalTo clean("""
+      testFormGroup(Symbol("_class") -> "theClass", Symbol("_id") -> "theId")(ifc, msgsProv) must be equalTo clean("""
 	  <div class="form-group theClass" id="theId">
       <content>
 	  </div>
@@ -560,7 +560,7 @@ object HelpersSpec extends Specification {
     }
 
     "get the inner arguments for the content" in {
-      val body = b4.freeFormGroup(Seq('_class -> "theClass", '_underscored -> "underscored", 'foo -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc, msgsProv).body
+      val body = b4.freeFormGroup(Seq(Symbol("_class") -> "theClass", Symbol("_underscored") -> "underscored", Symbol("foo") -> "foo"))(innerArgsMap => Html(innerArgsMap.toSeq.map(a => s"""${a._1.name}="${a._2.toString}"""").mkString("<content ", " ", ">")))(vfc, msgsProv).body
       body must not contain "_class=\"theClass\""
       body must not contain "_underscored=\"underscored\""
       body must contain("foo=\"foo\"")
@@ -569,7 +569,7 @@ object HelpersSpec extends Specification {
 
   "@free" should {
     "be rendered correctly" in {
-      clean(b4.free('foo -> "fooValue")(Html("<content>"))(vfc, msgsProv).body) must be equalTo clean(b4.freeFormGroup(Seq('foo -> "fooValue"))(_ => Html("<content>"))(vfc, msgsProv).body)
+      clean(b4.free(Symbol("foo") -> "fooValue")(Html("<content>"))(vfc, msgsProv).body) must be equalTo clean(b4.freeFormGroup(Seq(Symbol("foo") -> "fooValue"))(_ => Html("<content>"))(vfc, msgsProv).body)
     }
   }
 
@@ -580,11 +580,11 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting additional classes" in {
-      b4.static("theLabel", 'class -> "extra_class")(Html("theText"))(vfc, msgsProv).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
+      b4.static("theLabel", Symbol("class") -> "extra_class")(Html("theText"))(vfc, msgsProv).body must contain("<p class=\"form-control-static extra_class\">theText</p>")
     }
 
     "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
-      val body = b4.static("theLabel", 'extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")(Html("theText"))(vfc, msgsProv).body
+      val body = b4.static("theLabel", Symbol("extra_attr") -> "test", Symbol("true_attr") -> true, Symbol("fase_attr") -> false, Symbol("_underscored_attr") -> "test")(Html("theText"))(vfc, msgsProv).body
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
@@ -610,7 +610,7 @@ object HelpersSpec extends Specification {
     }
 
     "allow setting extra arguments and remove those arguments with false values or with underscored names" in {
-      val body = buttonTypeBody('extra_attr -> "test", 'true_attr -> true, 'fase_attr -> false, '_underscored_attr -> "test")
+      val body = buttonTypeBody(Symbol("extra_attr") -> "test", Symbol("true_attr") -> true, Symbol("fase_attr") -> false, Symbol("_underscored_attr") -> "test")
       body must contain("extra_attr=\"test\"")
       body must contain("true_attr=\"true\"")
       body must not contain ("false_attr=\"false\"")
@@ -618,7 +618,7 @@ object HelpersSpec extends Specification {
     }
 
     "be rendered correctly" in {
-      val body = buttonTypeBody('id -> "someid", 'class -> "btn btn-default")
+      val body = buttonTypeBody(Symbol("id") -> "someid", Symbol("class") -> "btn btn-default")
       body must contain("<button type=\"" + sampleType + "\" id=\"someid\" class=\"btn btn-default\">" + sampleContent + "</button>")
     }
   }
@@ -644,16 +644,16 @@ object HelpersSpec extends Specification {
   "@inputWrapped" should {
 
     "be equivalent to inputType for an empty wrapper" in {
-      val bodyInputType = clean(b4.inputType("text", fooField, 'id -> "someid").body)
-      val body = clean(b4.inputWrapped("text", fooField, 'id -> "someid")(x => x).body)
+      val bodyInputType = clean(b4.inputType("text", fooField, Symbol("id") -> "someid").body)
+      val body = clean(b4.inputWrapped("text", fooField, Symbol("id") -> "someid")(x => x).body)
       body must be equalTo bodyInputType
     }
 
     "wrap the input" in {
-      val bodyInputType = clean(b4.inputType("text", fooField, 'id -> "someid").body)
+      val bodyInputType = clean(b4.inputType("text", fooField, Symbol("id") -> "someid").body)
       val (wrapperPre, wrapperPost) = ("<wrapper>", "</wrapper>")
       def wrap(input: Html) = HtmlFormat.fill(scala.collection.immutable.Seq(Html(wrapperPre), input, Html(wrapperPost)))
-      val body = clean(b4.inputWrapped("text", fooField, 'id -> "someid")(input => wrap(input)).body)
+      val body = clean(b4.inputWrapped("text", fooField, Symbol("id") -> "someid")(input => wrap(input)).body)
 
       val (indexOfWrapperPre, indexOfWrapperPost) = (body.indexOf(wrapperPre), body.indexOf(wrapperPost))
 
@@ -677,7 +677,7 @@ object HelpersSpec extends Specification {
     def fooMultifieldWithFielsArgs(fieldsArgs: (Symbol, Any)*) = multifield(fooForm, fieldsArgs = fieldsArgs)(vfc, msgsProv)
 
     "have the basic structure" in {
-      val body = fooMultifield('_label -> "theLabel")
+      val body = fooMultifield(Symbol("_label") -> "theLabel")
       body must contain("class=\"form-group")
       body must not contain ("has-danger")
       body must contain("<label>theLabel</label>")
@@ -687,22 +687,22 @@ object HelpersSpec extends Specification {
     }
 
     "behave as a horizontal field constructor" in {
-      val body = multifield(fooForm, Seq('_label -> "theLabel"))(hfc, msgsProv)
+      val body = multifield(fooForm, Seq(Symbol("_label") -> "theLabel"))(hfc, msgsProv)
       body must contain("<label class=\"col-form-label " + colLabel + "\">theLabel</label>")
       body must contain("<div class=\"" + colInput + "\">")
     }
 
     "allow setting a custom id" in {
-      fooMultifield('_id -> "customid") must contain("id=\"customid\"")
+      fooMultifield(Symbol("_id") -> "customid") must contain("id=\"customid\"")
     }
 
     "allow setting extra classes form-group" in {
-      fooMultifield('_class -> "extra_class another_class") must contain("class=\"form-group extra_class another_class")
+      fooMultifield(Symbol("_class") -> "extra_class another_class") must contain("class=\"form-group extra_class another_class")
     }
 
     "show label" in {
-      multifield(fooForm, Seq('_label -> "fooLabel"))(vfc, msgsProv) must contain("<label>fooLabel</label>")
-      multifield(fooForm, Seq('_label -> "fooLabel"))(hfc, msgsProv) must contain("<label class=\"col-form-label " + colLabel + "\">fooLabel</label>")
+      multifield(fooForm, Seq(Symbol("_label") -> "fooLabel"))(vfc, msgsProv) must contain("<label>fooLabel</label>")
+      multifield(fooForm, Seq(Symbol("_label") -> "fooLabel"))(hfc, msgsProv) must contain("<label class=\"col-form-label " + colLabel + "\">fooLabel</label>")
     }
 
     "without label" in {
@@ -717,17 +717,17 @@ object HelpersSpec extends Specification {
     }
 
     "allow showing constraints" in {
-      fooMultifield('_showConstraints -> true) must contain("<small class=\"form-text text-muted\">" + msgsProv.messages("constraint.required") + "</small>")
+      fooMultifield(Symbol("_showConstraints") -> true) must contain("<small class=\"form-text text-muted\">" + msgsProv.messages("constraint.required") + "</small>")
     }
 
     "allow showing help info" in {
-      fooMultifield('_help -> "test-help") must contain("""<small class="form-text text-muted">test-help</small>""")
-      fooMultifield('_success -> "test-help") must contain("""<div class="valid-feedback">test-help</div>""")
-      fooMultifieldWithFielsArgs('_success -> "test-help") must contain("""<div class="valid-feedback">test-help</div>""")
-      fooMultifield('_warning -> "test-help") must contain("""<div class="warning-feedback">test-help</div>""")
-      fooMultifieldWithFielsArgs('_warning -> "test-help") must contain("""<div class="warning-feedback">test-help</div>""")
-      fooMultifield('_error -> "test-help") must contain("""<div class="invalid-feedback">test-help</div>""")
-      fooMultifieldWithFielsArgs('_error -> "test-help") must contain("""<div class="invalid-feedback">test-help</div>""")
+      fooMultifield(Symbol("_help") -> "test-help") must contain("""<small class="form-text text-muted">test-help</small>""")
+      fooMultifield(Symbol("_success") -> "test-help") must contain("""<div class="valid-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs(Symbol("_success") -> "test-help") must contain("""<div class="valid-feedback">test-help</div>""")
+      fooMultifield(Symbol("_warning") -> "test-help") must contain("""<div class="warning-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs(Symbol("_warning") -> "test-help") must contain("""<div class="warning-feedback">test-help</div>""")
+      fooMultifield(Symbol("_error") -> "test-help") must contain("""<div class="invalid-feedback">test-help</div>""")
+      fooMultifieldWithFielsArgs(Symbol("_error") -> "test-help") must contain("""<div class="invalid-feedback">test-help</div>""")
     }
 
     "render validation states" in {
@@ -740,18 +740,18 @@ object HelpersSpec extends Specification {
         test must withStatus(status)
       }
 
-      testStatus("success", withFieldsArgs = false, '_success -> true)
-      testStatus("success", withFieldsArgs = true, '_success -> true)
-      testStatus("success", withFieldsArgs = false, '_success -> "test-help")
-      testStatus("success", withFieldsArgs = true, '_success -> "test-help")
-      testStatus("warning", withFieldsArgs = false, '_warning -> true)
-      testStatus("warning", withFieldsArgs = true, '_warning -> true)
-      testStatus("warning", withFieldsArgs = false, '_warning -> "test-help")
-      testStatus("warning", withFieldsArgs = true, '_warning -> "test-help")
-      testStatus("danger", withFieldsArgs = false, '_error -> true)
-      testStatus("danger", withFieldsArgs = true, '_error -> true)
-      testStatus("danger", withFieldsArgs = false, '_error -> "test-help")
-      testStatus("danger", withFieldsArgs = true, '_error -> "test-help")
+      testStatus("success", withFieldsArgs = false, Symbol("_success") -> true)
+      testStatus("success", withFieldsArgs = true, Symbol("_success") -> true)
+      testStatus("success", withFieldsArgs = false, Symbol("_success") -> "test-help")
+      testStatus("success", withFieldsArgs = true, Symbol("_success") -> "test-help")
+      testStatus("warning", withFieldsArgs = false, Symbol("_warning") -> true)
+      testStatus("warning", withFieldsArgs = true, Symbol("_warning") -> true)
+      testStatus("warning", withFieldsArgs = false, Symbol("_warning") -> "test-help")
+      testStatus("warning", withFieldsArgs = true, Symbol("_warning") -> "test-help")
+      testStatus("danger", withFieldsArgs = false, Symbol("_error") -> true)
+      testStatus("danger", withFieldsArgs = true, Symbol("_error") -> true)
+      testStatus("danger", withFieldsArgs = false, Symbol("_error") -> "test-help")
+      testStatus("danger", withFieldsArgs = true, Symbol("_error") -> "test-help")
     }
 
   }

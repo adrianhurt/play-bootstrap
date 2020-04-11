@@ -54,9 +54,9 @@ package object b3 {
     /* Each boolean indicate if a any of the corresponding feedback icons should be shown */
     val (showIconError, showIconWarning, showIconValid) = {
       if (!withFeedback) (false, false, false)
-      else if (hasErrors) (isTrue(argsMap, '_showIconOnError), false, false)
-      else if (isTrue(argsMap, '_showIconWarning)) (false, true, false)
-      else (false, false, isTrue(argsMap, '_showIconValid))
+      else if (hasErrors) (isTrue(argsMap, Symbol("_showIconOnError")), false, false)
+      else if (isTrue(argsMap, Symbol("_showIconWarning"))) (false, true, false)
+      else (false, false, isTrue(argsMap, Symbol("_showIconValid")))
     }
 
     /* Indicates if any of the previous feedback icons should be shown */
@@ -90,9 +90,9 @@ package object b3 {
       (if (hasErrors) Seq(Symbol("aria-invalid") -> "true") else Nil) ++
       BSFieldInfo.constraintsArgs(field, msgsProv) ++
       Args.inner(
-        Args.remove(args, 'id, 'value).map {
-          case arg if arg._1 == 'placeholder => Args.msg(arg)(msgsProv.messages)
-          case other                         => other
+        Args.remove(args, Symbol("id"), Symbol("value")).map {
+          case arg if arg._1 == Symbol("placeholder") => Args.msg(arg)(msgsProv.messages)
+          case other                                  => other
         }
       )
     ).toMap
@@ -106,9 +106,9 @@ package object b3 {
     def status(hasErrors: Boolean, argsMap: Map[Symbol, Any]): Option[String] = {
       if (hasErrors)
         Some("error")
-      else if (ArgsMap.isNotFalse(argsMap, '_warning) || isTrue(argsMap, '_showIconWarning))
+      else if (ArgsMap.isNotFalse(argsMap, Symbol("_warning")) || isTrue(argsMap, Symbol("_showIconWarning")))
         Some("warning")
-      else if (ArgsMap.isNotFalse(argsMap, '_success) || isTrue(argsMap, '_showIconValid))
+      else if (ArgsMap.isNotFalse(argsMap, Symbol("_success")) || isTrue(argsMap, Symbol("_showIconValid")))
         Some("success")
       else
         None
@@ -150,11 +150,11 @@ package object b3 {
     override lazy val status: Option[String] = B3FieldInfo.status(hasErrors, argsMap)
 
     /* The optional validation state for the form-group ("has-success", "has-warning", "has-error") with the optional "has-feedback" */
-    def statusWithFeedback: Option[String] = B3FieldInfo.statusWithFeedback(status, hasFeedback = isTrue(argsMap, '_hasFeedback))
+    def statusWithFeedback: Option[String] = B3FieldInfo.statusWithFeedback(status, hasFeedback = isTrue(argsMap, Symbol("_hasFeedback")))
 
     override lazy val globalArgs = {
-      val withoutHelp = Args.remove(globalArguments, '_help)
-      val withStatus = status.map(s => Args.withDefault(withoutHelp, '_class -> statusWithFeedback)).getOrElse(withoutHelp)
+      val withoutHelp = Args.remove(globalArguments, Symbol("_help"))
+      val withStatus = status.map(s => Args.withDefault(withoutHelp, Symbol("_class") -> statusWithFeedback)).getOrElse(withoutHelp)
       withStatus
     }
   }
@@ -213,7 +213,7 @@ package object b3 {
   def week(field: Field, args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = inputType("week", field, args: _*)(fc, msgsProv)
 
   def hidden(name: String, value: Any, args: (Symbol, Any)*) = hiddenInput(name, value, args: _*)
-  def hidden(field: Field, args: (Symbol, Any)*) = hiddenInput(name = field.name, value = field.value.orElse(bs.Args.get(args, 'value)), (bs.Args.inner(bs.Args.remove(args, 'value))): _*)
+  def hidden(field: Field, args: (Symbol, Any)*) = hiddenInput(name = field.name, value = field.value.orElse(bs.Args.get(args, Symbol("value"))), (bs.Args.inner(bs.Args.remove(args, Symbol("value")))): _*)
 
   def radio(field: Field, args: (Symbol, Any)*)(content: Tuple3[Boolean, Boolean, B3FieldInfo] => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = radioWithContent(field, args: _*)(content)(fc, msgsProv)
   def radio(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = radioWithOptions(field, options, args: _*)(fc, msgsProv)
@@ -226,8 +226,8 @@ package object b3 {
   def button(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = buttonType("button", args: _*)(text)(fc, msgsProv)
 
   def static(args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(args: _*)(text)(fc, msgsProv)
-  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, msgsProv)
-  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, '_label -> label): _*)(text)(fc, msgsProv)
+  def static(label: String, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, Symbol("_label") -> label): _*)(text)(fc, msgsProv)
+  def static(label: Html, args: (Symbol, Any)*)(text: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = staticBasic(Args.withDefault(args, Symbol("_label") -> label): _*)(text)(fc, msgsProv)
 
   def free(args: (Symbol, Any)*)(content: => Html)(implicit fc: B3FieldConstructor, msgsProv: MessagesProvider) = freeFormGroup(args)(_ => content)(fc, msgsProv)
 }

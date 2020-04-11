@@ -12,112 +12,112 @@
 
 	<h3 id="simple-inputs">Simple inputs</h3>
 	@bsExampleWithCode {
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
-		@b3.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@mail.com" )
-		@b3.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
-		@b3.file( fooForm("foo"), '_hiddenLabel -> "File" )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@b3.email( fooForm("foo"), Symbol("_hiddenLabel") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+		@b3.password( fooForm("foo"), Symbol("_hiddenLabel") -> "Password", Symbol("placeholder") -> "Password" )
+		@b3.file( fooForm("foo"), Symbol("_hiddenLabel") -> "File" )
 	}{
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
-		@@b3.email( fooForm("foo"), '_hiddenLabel -> "Email", 'placeholder -> "example@@mail.com" )
-		@@b3.password( fooForm("foo"), '_hiddenLabel -> "Password", 'placeholder -> "Password" )
-		@@b3.file( fooForm("foo"), '_hiddenLabel -> "File" )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@@b3.email( fooForm("foo"), Symbol("_hiddenLabel") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+		@@b3.password( fooForm("foo"), Symbol("_hiddenLabel") -> "Password", Symbol("placeholder") -> "Password" )
+		@@b3.file( fooForm("foo"), Symbol("_hiddenLabel") -> "File" )
 	}
 
 	<h3 id="more-options">More options</h3>
 	@bsExampleWithCode {
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
-		@b3.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
-		@b3.text( fooForm("foo"), 'placeholder -> "Without label" )
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "A big text", 'class -> "form-control input-lg", 'placeholder -> "An awesome field..." )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@b3.text( fooForm("foo"), Symbol("_label") -> "Show label", Symbol("_showLabel") -> true, Symbol("placeholder") -> "Show label" )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Help", Symbol("_help") -> "This is a help text", Symbol("placeholder") -> "A simple text showing a help..." )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
+		@b3.text( fooForm("foo"), Symbol("placeholder") -> "Without label" )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "A big text", Symbol("class") -> "form-control input-lg", Symbol("placeholder") -> "An awesome field..." )
 	}{
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "Input Text", 'placeholder -> "A simple text..." )
-		@@b3.text( fooForm("foo"), '_label -> "Show label", '_showLabel -> true, 'placeholder -> "Show label" )
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "Help", '_help -> "This is a help text", 'placeholder -> "A simple text showing a help..." )
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "Constraints", '_showConstraints -> true, 'placeholder -> "A simple text showing its constraints..." )
-		@@b3.text( fooForm("foo"), 'placeholder -> "Without label" )
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "A big text", 'class -> "form-control input-lg", 'placeholder -> "An awesome field..." )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Show label", Symbol("_showLabel") -> true, Symbol("placeholder") -> "Show label" )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Help", Symbol("_help") -> "This is a help text", Symbol("placeholder") -> "A simple text showing a help..." )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
+		@@b3.text( fooForm("foo"), Symbol("placeholder") -> "Without label" )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "A big text", Symbol("class") -> "form-control input-lg", Symbol("placeholder") -> "An awesome field..." )
 	}
 
 
 	<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
 	@bsExampleWithCode {
-		@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
-		@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+		@b3.textarea( fooForm("foo"), Symbol("_hiddenLabel") -> "Textarea", Symbol("rows") -> 3 )
+		@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Checkbox", Symbol("checked") -> true )
 		@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
-		@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select" )
-		@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Multiple Select", 'multiple -> true )
+		@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Select" )
+		@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Multiple Select", Symbol("multiple") -> true )
 	}{
-		@@b3.textarea( fooForm("foo"), '_hiddenLabel -> "Textarea", 'rows -> 3 )
-		@@b3.checkbox( fooForm("foo"), '_text -> "Checkbox", 'checked -> true )
+		@@b3.textarea( fooForm("foo"), Symbol("_hiddenLabel") -> "Textarea", Symbol("rows") -> 3 )
+		@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Checkbox", Symbol("checked") -> true )
 		@@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female") )
 
 		@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
 		...
-		@@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select" )
-		@@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Multiple Select", 'multiple -> true )
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Select" )
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Multiple Select", Symbol("multiple") -> true )
 	}
 
 	<h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
 	@bsExampleWithCode {
-		@b3.text( fooForm("foo"), '_hiddenLabel -> "Disabled", 'disabled -> true, 'placeholder -> "Disabled text..." )
-		@b3.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
-		@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+		@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Disabled", Symbol("disabled") -> true, Symbol("placeholder") -> "Disabled text..." )
+		@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Readonly checkbox", Symbol("readonly") -> true, Symbol("value") -> true )
+		@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Select", Symbol("multiple") -> true, Symbol("readonly") -> true, Symbol("value") -> "B,P" )
 	}{
-		@@b3.text( fooForm("foo"), '_hiddenLabel -> "Disabled", 'disabled -> true, 'placeholder -> "Disabled text..." )
-		@@b3.checkbox( fooForm("foo"), '_text -> "Readonly checkbox", 'readonly -> true, 'value -> true )
-		@@b3.select( fooForm("foo"), options = fruits, '_hiddenLabel -> "Select", 'multiple -> true, 'readonly -> true, 'value -> "B,P" )
+		@@b3.text( fooForm("foo"), Symbol("_hiddenLabel") -> "Disabled", Symbol("disabled") -> true, Symbol("placeholder") -> "Disabled text..." )
+		@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Readonly checkbox", Symbol("readonly") -> true, Symbol("value") -> true )
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_hiddenLabel") -> "Select", Symbol("multiple") -> true, Symbol("readonly") -> true, Symbol("value") -> "B,P" )
 	}
 
 	<h3 id="validation-states">Validation states</h3>
 	@bsExampleWithCode {
 		<div class="row">
 			<div class="col-md-6">
-				@b3.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
-				@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-				@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			</div>
 			<div class="col-md-6">
-				@b3.inline.form(routes.Application.inline, '_feedbackIcons -> true) { implicit fc =>
-					@b3.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
-					@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-					@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@b3.inline.form(routes.Application.inline, Symbol("_feedbackIcons") -> true) { implicit fc =>
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 				}
-				@b3.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
-				@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-				@b3.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 			</div>
 		</div>
 	}{
-		@@b3.text( fooForm("foo"), '_label -> "Success", '_success -> "Great!", 'placeholder -> "Success text..." )
-		@@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-		@@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 
 		// With feedback icons
-		@@b3.text( fooForm("foo"), '_label -> "Success", '_showIconValid -> true, 'placeholder -> "Success text..." )
-		@@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", '_showIconWarning -> true, 'placeholder -> "Warning text..." )
-		@@b3.text( fooForm("foo"), '_label -> "Error", '_showIconOnError -> true, '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 
 		Or
 
 		// With feedback icons
-		@@b3.inline.form(routes.Application.inline, '_feedbackIcons -> true) { implicit fc =>
-			@@b3.text( fooForm("foo"), '_label -> "Success", 'placeholder -> "Success text..." )
-			@@b3.text( fooForm("foo"), '_label -> "Warning", '_warning -> "Be carefull with this...", 'placeholder -> "Warning text..." )
-			@@b3.text( fooForm("foo"), '_label -> "Error", '_error -> "An error occurred!", 'placeholder -> "Error text..." )
+		@@b3.inline.form(routes.Application.inline, Symbol("_feedbackIcons") -> true) { implicit fc =>
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("placeholder") -> "Success text..." )
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
 		}
 	}
 
 	<h3 id="customize">Customize them</h3>
 	@bsExampleWithCode {
-		@b3.inputWrapped( "email", fooForm("foo"), '_hiddenLabel -> "Input group", 'placeholder -> "Custom input group for email..." ) { input =>
+		@b3.inputWrapped( "email", fooForm("foo"), Symbol("_hiddenLabel") -> "Input group", Symbol("placeholder") -> "Custom input group for email..." ) { input =>
 			<div class="input-group">
 				<span class="input-group-addon">@@</span>
 				@input
 			</div>
 		}
-		@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+		@b3.inputWrapped( "text", fooForm("foo"), Symbol("_hiddenLabel") -> "Fully customized", Symbol("placeholder") -> "A complicated one..." ) { input =>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
 				@input
@@ -137,7 +137,7 @@
 				</div>
 			</div>
 		}
-		@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Number", 'value -> 0 ) { input =>
+		@b3.inputWrapped( "text", fooForm("foo"), Symbol("_hiddenLabel") -> "Number", Symbol("value") -> 0 ) { input =>
 			<div class="input-number input-group">
 				<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
 				@input
@@ -145,13 +145,13 @@
 			</div>
 		}
 	}{
-		@@b3.inputWrapped( "email", fooForm("foo"), '_hiddenLabel -> "Simple input group", 'placeholder -> "Custom input group for email..." ) { input =>
+		@@b3.inputWrapped( "email", fooForm("foo"), Symbol("_hiddenLabel") -> "Simple input group", Symbol("placeholder") -> "Custom input group for email..." ) { input =>
 			<div class="input-group">
 				<span class="input-group-addon">@@@@</span>
 				@@input
 			</div>
 		}
-		@@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Fully customized", 'placeholder -> "A complicated one..." ) { input =>
+		@@b3.inputWrapped( "text", fooForm("foo"), Symbol("_hiddenLabel") -> "Fully customized", Symbol("placeholder") -> "A complicated one..." ) { input =>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
 				@@input
@@ -160,7 +160,7 @@
 				</div>
 			</div>
 		}
-		@@b3.inputWrapped( "text", fooForm("foo"), '_hiddenLabel -> "Number", 'value -> 0 ) { input =>
+		@@b3.inputWrapped( "text", fooForm("foo"), Symbol("_hiddenLabel") -> "Number", Symbol("value") -> 0 ) { input =>
 			<div class="input-number input-group">
 				<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
 				@@input
@@ -171,9 +171,9 @@
 
 	<h3 id="more-helpers">More helpers</h3>
 	@bsExampleWithCode {
-		@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		@b3.submit(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
 	}{
-		@@b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		@@b3.submit(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
 	}
 
 }

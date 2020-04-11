@@ -68,21 +68,21 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow setting a custom id" in {
-      simpleInputWithArgs('_id -> "customid") must contain("id=\"customid\"")
+      simpleInputWithArgs(Symbol("_id") -> "customid") must contain("id=\"customid\"")
     }
 
     "allow setting extra classes form-group" in {
-      clean(simpleInputWithArgs('_class -> "extra_class another_class")) must contain(s"""<div class="form-group extra_class another_class" """)
+      clean(simpleInputWithArgs(Symbol("_class") -> "extra_class another_class")) must contain(s"""<div class="form-group extra_class another_class" """)
     }
 
     "render the label" in {
-      clean(simpleInputWithArgs('_label -> "theLabel")) must contain(s"""<label class="control-label$labelExtraClasses" for="foo">theLabel</label>""")
+      clean(simpleInputWithArgs(Symbol("_label") -> "theLabel")) must contain(s"""<label class="control-label$labelExtraClasses" for="foo">theLabel</label>""")
     }
 
     "allow hide the label" in {
       val labelString = s"""<label class="control-label$labelExtraClasses sr-only" for="foo">theLabel</label>"""
-      clean(simpleInputWithArgs('_label -> "theLabel", '_hideLabel -> true)) must contain(labelString)
-      clean(simpleInputWithArgs('_hiddenLabel -> "theLabel")) must contain(labelString)
+      clean(simpleInputWithArgs(Symbol("_label") -> "theLabel", Symbol("_hideLabel") -> true)) must contain(labelString)
+      clean(simpleInputWithArgs(Symbol("_hiddenLabel") -> "theLabel")) must contain(labelString)
     }
 
     "allow render without label" in {
@@ -97,7 +97,7 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow showing constraints" in {
-      val test = simpleInputWithArgs('_showConstraints -> true)
+      val test = simpleInputWithArgs(Symbol("_showConstraints") -> true)
       test must contain("<span id=\"foo_info_0\" class=\"help-block\">")
       test must contain("<span id=\"foo_info_1\" class=\"help-block\">")
       test must contain("class=\"help-block\">" + msgsProv.messages("constraint.required") + "</span>")
@@ -105,14 +105,14 @@ object FieldConstructorsSpec extends Specification {
     }
 
     "allow showing help info" in {
-      simpleInputWithArgs('_help -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_success -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_warning -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
-      simpleInputWithArgs('_error -> "test-help") must contain("<span id=\"foo_error_0\" class=\"help-block\">test-help</span>")
+      simpleInputWithArgs(Symbol("_help") -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
+      simpleInputWithArgs(Symbol("_success") -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
+      simpleInputWithArgs(Symbol("_warning") -> "test-help") must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
+      simpleInputWithArgs(Symbol("_error") -> "test-help") must contain("<span id=\"foo_error_0\" class=\"help-block\">test-help</span>")
     }
 
     "allow rendering erros and hide constraints when help info is present" in {
-      val test = simpleInputWithError('_showConstraints -> true, '_help -> "test-help")
+      val test = simpleInputWithError(Symbol("_showConstraints") -> true, Symbol("_help") -> "test-help")
       test must contain("<span id=\"foo_error_0\" class=\"help-block\">test-error-0</span>")
       test must contain("<span id=\"foo_error_1\" class=\"help-block\">test-error-1</span>")
       test must contain("<span id=\"foo_info_0\" class=\"help-block\">test-help</span>")
@@ -141,27 +141,27 @@ object FieldConstructorsSpec extends Specification {
         }
       }
 
-      testStatus("success", withIcon = false, '_success -> true)
-      testStatus("success", withIcon = false, '_success -> "test-help")
-      testStatus("warning", withIcon = false, '_warning -> true)
-      testStatus("warning", withIcon = false, '_warning -> "test-help")
-      testStatus("error", withIcon = false, '_error -> true)
-      testStatus("error", withIcon = false, '_error -> "test-help")
+      testStatus("success", withIcon = false, Symbol("_success") -> true)
+      testStatus("success", withIcon = false, Symbol("_success") -> "test-help")
+      testStatus("warning", withIcon = false, Symbol("_warning") -> true)
+      testStatus("warning", withIcon = false, Symbol("_warning") -> "test-help")
+      testStatus("error", withIcon = false, Symbol("_error") -> true)
+      testStatus("error", withIcon = false, Symbol("_error") -> "test-help")
 
       "with feedback icons" in {
-        testStatus("success", withIcon = true, '_showIconValid -> true)
-        testStatus("success", withIcon = true, '_success -> "test-help", '_showIconValid -> true)
-        testStatus("warning", withIcon = true, '_showIconWarning -> true)
-        testStatus("warning", withIcon = true, '_warning -> "test-help", '_showIconWarning -> true)
-        testStatus("error", withIcon = true, '_error -> true, '_showIconOnError -> true)
-        testStatus("error", withIcon = true, '_error -> "test-help", '_showIconOnError -> true)
+        testStatus("success", withIcon = true, Symbol("_showIconValid") -> true)
+        testStatus("success", withIcon = true, Symbol("_success") -> "test-help", Symbol("_showIconValid") -> true)
+        testStatus("warning", withIcon = true, Symbol("_showIconWarning") -> true)
+        testStatus("warning", withIcon = true, Symbol("_warning") -> "test-help", Symbol("_showIconWarning") -> true)
+        testStatus("error", withIcon = true, Symbol("_error") -> true, Symbol("_showIconOnError") -> true)
+        testStatus("error", withIcon = true, Symbol("_error") -> "test-help", Symbol("_showIconOnError") -> true)
       }
 
       "with automatic feedback icons" in {
-        testStatus("success", withIcon = true, '_success -> "test-help")(fcWithFeedbackIcons)
-        testStatus("warning", withIcon = true, '_warning -> "test-help")(fcWithFeedbackIcons)
-        testStatus("error", withIcon = true, '_error -> true)(fcWithFeedbackIcons)
-        testStatus("error", withIcon = true, '_error -> "test-help")(fcWithFeedbackIcons)
+        testStatus("success", withIcon = true, Symbol("_success") -> "test-help")(fcWithFeedbackIcons)
+        testStatus("warning", withIcon = true, Symbol("_warning") -> "test-help")(fcWithFeedbackIcons)
+        testStatus("error", withIcon = true, Symbol("_error") -> true)(fcWithFeedbackIcons)
+        testStatus("error", withIcon = true, Symbol("_error") -> "test-help")(fcWithFeedbackIcons)
       }
     }
 
@@ -173,7 +173,7 @@ object FieldConstructorsSpec extends Specification {
       test0 must not contain ("<span id=\"foo_info")
       test0 must not contain ("<span id=\"foo_error")
 
-      val test1 = simpleInputWithError('_showConstraints -> true, '_showIconOnError -> true)
+      val test1 = simpleInputWithError(Symbol("_showConstraints") -> true, Symbol("_showIconOnError") -> true)
       test1 must contain("aria-invalid=\"true\"")
       test1 must contain("aria-describedby=\"foo_status foo_info_0 foo_info_1 foo_error_0 foo_error_1\"")
       test1 must contain("<span id=\"foo_status\"")
@@ -182,7 +182,7 @@ object FieldConstructorsSpec extends Specification {
       test1 must contain("<span id=\"foo_error_0\"")
       test1 must contain("<span id=\"foo_error_1\"")
 
-      val test2 = simpleInputWithArgs('_help -> "test-help", '_showIconValid -> true)
+      val test2 = simpleInputWithArgs(Symbol("_help") -> "test-help", Symbol("_showIconValid") -> true)
       test2 must not contain ("aria-invalid")
       test2 must contain("aria-describedby=\"foo_status foo_info_0\"")
       test2 must contain("<span id=\"foo_status\"")
@@ -200,7 +200,7 @@ object FieldConstructorsSpec extends Specification {
     testFielConstructor(horizontalFieldConstructor, fcWithFeedbackIcons)
 
     "render columns for horizontal form" in {
-      val body = b3.text(Form(single("foo" -> Forms.text))("foo"), '_label -> "theLabel").body
+      val body = b3.text(Form(single("foo" -> Forms.text))("foo"), Symbol("_label") -> "theLabel").body
       body must contain(colLabel)
       body must contain(colInput)
     }

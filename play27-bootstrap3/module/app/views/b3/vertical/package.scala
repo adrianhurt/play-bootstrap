@@ -55,11 +55,11 @@ package object vertical {
    * *********************************************************************************************************************************
    */
   def form(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html) = {
-    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, Symbol("_feedbackIcons")))
     views.html.b3.form(action, args: _*)(body(vfc))(vfc)
   }
   def formCSRF(action: Call, args: (Symbol, Any)*)(body: VerticalFieldConstructor => Html)(implicit request: RequestHeader) = {
-    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, '_feedbackIcons))
+    val vfc = fieldConstructorSpecific(withFeedbackIcons = isTrue(args, Symbol("_feedbackIcons")))
     views.html.b3.formCSRF(action, args: _*)(body(vfc))(vfc, request)
   }
 
