@@ -1,0 +1,218 @@
+@(fooForm: Form[String])(implicit request: MessagesRequestHeader)
+@import utils.BSVersion
+@import tags._
+@implicitFieldConstructor = @{ b3.vertical.fieldConstructor() }
+
+@fruits = @{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+
+
+@main("Vertical Form", tab = "styles") {
+
+	<h1 id="vertical-form" class="page-header">Vertical Form</h1>
+
+	<h3 id="simple-inputs">Simple inputs</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+				@b3.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@mail.com" )
+			</div>
+			<div class="col-md-6">
+				@b3.password( fooForm("foo"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+				@b3.file( fooForm("foo"), Symbol("_label") -> "File" )
+			</div>
+		</div>
+	}{
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@@b3.email( fooForm("foo"), Symbol("_label") -> "Email", Symbol("placeholder") -> "example@@mail.com" )
+		@@b3.password( fooForm("foo"), Symbol("_label") -> "Password", Symbol("placeholder") -> "Password" )
+		@@b3.file( fooForm("foo"), Symbol("_label") -> "File" )
+	}
+
+	<h3 id="more-options">More options</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Help", Symbol("_help") -> "This is a help text", Symbol("placeholder") -> "A simple text showing a help..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
+			</div>
+			<div class="col-md-6">
+				@b3.text( fooForm("foo"), Symbol("placeholder") -> "Without label" )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "A big text", Symbol("class") -> "form-control input-lg", Symbol("placeholder") -> "An awesome field..." )
+			</div>
+		</div>
+	}{
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Input Text", Symbol("placeholder") -> "A simple text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Help", Symbol("_help") -> "This is a help text", Symbol("placeholder") -> "A simple text showing a help..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Constraints", Symbol("_showConstraints") -> true, Symbol("placeholder") -> "A simple text showing its constraints..." )
+		@@b3.text( fooForm("foo"), Symbol("placeholder") -> "Without label" )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "A big text", Symbol("class") -> "form-control input-lg", Symbol("placeholder") -> "An awesome field..." )
+	}
+
+
+	<h3 id="textareas-checkboxes-radios-selects">Textareas, checkboxes, radio buttons and selects</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.textarea( fooForm("foo"), Symbol("_label") -> "Textarea", Symbol("rows") -> 3 )
+				@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Checkbox", Symbol("checked") -> true )
+				@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), Symbol("_label") -> "Radio Group" )
+			</div>
+			<div class="col-md-6">
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select" )
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Multiple Select", Symbol("multiple") -> true )
+			</div>
+		</div>
+	}{
+		@@b3.textarea( fooForm("foo"), Symbol("_label") -> "Textarea", Symbol("rows") -> 3 )
+		@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Checkbox", Symbol("checked") -> true )
+		@@b3.radio( fooForm("foo"), options = Seq("M"->"Male","F"->"Female"), Symbol("_label") -> "Radio Group" )
+
+		@@fruits = @@{ Seq("A"->"Apples","P"->"Pears","B"->"Bananas") }
+		...
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select" )
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Multiple Select", Symbol("multiple") -> true )
+	}
+
+	<h3 id="disabled-readonly-attributes">Disabled and readonly attributes</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Disabled", Symbol("disabled") -> true, Symbol("placeholder") -> "Disabled text..." )
+				@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Readonly checkbox", Symbol("readonly") -> true, Symbol("value") -> true )
+			</div>
+			<div class="col-md-6">
+				@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select", Symbol("multiple") -> true, Symbol("readonly") -> true, Symbol("value") -> "B,P" )
+			</div>
+		</div>
+	}{
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Disabled", Symbol("disabled") -> true, Symbol("placeholder") -> "Disabled text..." )
+		@@b3.checkbox( fooForm("foo"), Symbol("_text") -> "Readonly checkbox", Symbol("readonly") -> true, Symbol("value") -> true )
+		@@b3.select( fooForm("foo"), options = fruits, Symbol("_label") -> "Select", Symbol("multiple") -> true, Symbol("readonly") -> true, Symbol("value") -> "B,P" )
+	}
+
+	<h3 id="validation-states">Validation states</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+			</div>
+			<div class="col-md-6">
+				@b3.vertical.form(routes.Application.vertical, Symbol("_feedbackIcons") -> true) { implicit fc =>
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+					@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+				}
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+				@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+			</div>
+		</div>
+	}{
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_success") -> "Great!", Symbol("placeholder") -> "Success text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+
+		// With feedback icons
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("_showIconValid") -> true, Symbol("placeholder") -> "Success text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("_showIconWarning") -> true, Symbol("placeholder") -> "Warning text..." )
+		@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_showIconOnError") -> true, Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+
+		Or
+
+		// With feedback icons
+		@@b3.vertical.form(routes.Application.vertical, Symbol("_feedbackIcons") -> true) { implicit fc =>
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Success", Symbol("placeholder") -> "Success text..." )
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Warning", Symbol("_warning") -> "Be carefull with this...", Symbol("placeholder") -> "Warning text..." )
+			@@b3.text( fooForm("foo"), Symbol("_label") -> "Error", Symbol("_error") -> "An error occurred!", Symbol("placeholder") -> "Error text..." )
+		}
+	}
+
+
+	<h3 id="customize">Customize them</h3>
+	@bsExampleWithCode {
+		<div class="row">
+			<div class="col-md-6">
+				@b3.inputWrapped( "email", fooForm("foo"), Symbol("_label") -> "Input group", Symbol("placeholder") -> "Custom input group for email..." ) { input =>
+					<div class="input-group">
+						<span class="input-group-addon">@@</span>
+						@input
+					</div>
+				}
+				@b3.inputWrapped( "text", fooForm("foo"), Symbol("_label") -> "Number", Symbol("value") -> 0, Symbol("_help") -> "This needs some JavaScript and CSS" ) { input =>
+					<div class="input-number input-group">
+						<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+						@input
+						<span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+					</div>
+				}
+			</div>
+			<div class="col-md-6">
+				@b3.inputWrapped( "text", fooForm("foo"), Symbol("_label") -> "Fully customized", Symbol("placeholder") -> "A complicated one..." ) { input =>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+						@input
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default" tabindex="-1">Action</button>
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	}{
+		@@b3.inputWrapped( "email", fooForm("foo"), Symbol("_label") -> "Simple input group", Symbol("placeholder") -> "Custom input group for email..." ) { input =>
+			<div class="input-group">
+				<span class="input-group-addon">@@@@</span>
+				@@input
+			</div>
+		}
+		@@b3.inputWrapped( "text", fooForm("foo"), Symbol("_label") -> "Fully customized", Symbol("placeholder") -> "A complicated one..." ) { input =>
+			<div class="input-group">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
+				@@input
+				<div class="input-group-btn">
+					<!-- Button and dropdown menu -->
+				</div>
+			</div>
+		}
+		@@b3.inputWrapped( "text", fooForm("foo"), Symbol("_label") -> "Number", Symbol("value") -> 0, Symbol("_help") -> "This needs some JavaScript and CSS" ) { input =>
+			<div class="input-number input-group">
+				<span class="input-group-addon input-number-minus"><span class="glyphicon glyphicon-minus"></span></span>
+				@@input
+				<span class="input-group-addon input-number-plus"><span class="glyphicon glyphicon-plus"></span></span>
+			</div>
+		}
+	}
+
+	<h3 id="more-helpers">More helpers</h3>
+	@bsExampleWithCode {
+		@b3.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+		@b3.submit(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		@b3.free() {
+			<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+			<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+		}
+	}{
+		@@b3.static("Static HTML"){ <a href="#"><span class="glyphicon glyphicon-star"></span> This is a link</a> }
+		@@b3.submit(Symbol("class") -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit me! }
+		@@b3.free() {
+			<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Save changes</button>
+			<a class="btn btn-default"> <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+		}
+	}
+
+}

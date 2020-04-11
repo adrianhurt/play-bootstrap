@@ -1,0 +1,16 @@
+@(fields: Field*)(globalArgs: Seq[(Symbol,Any)], fieldsArgs: Seq[(Symbol,Any)])(inputsHtml: b4.clear.ClearFieldConstructor => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@multifieldFormGroup(fields, globalArgs, fieldsArgs) { multifieldInfo =>
+	@inputsHtml(b4.clear.fieldConstructorSpecific(isCustom = fc.isCustom))
+    @* renders a hidden form-control only to force visibility of the next feedback *@
+	@multifieldInfo.status.collect {
+		case "danger" => {<div class="form-control is-invalid d-none"></div>}
+		case "success" => {<div class="form-control is-valid d-none"></div>}
+		case "warning" => {<div class="form-control is-warning d-none"></div>}
+	}
+	@multifieldInfo.feedbackInfos.map { text =>
+		<div class="@multifieldInfo.statusB4Feedback">@text</div>
+	}
+	@multifieldInfo.helpInfos.map { text =>
+		<small class="form-text text-muted">@text</small>
+	}
+}(fc, msgsProv)

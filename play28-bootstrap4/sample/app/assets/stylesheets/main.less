@@ -1,0 +1,358 @@
+
+@nav-bg-color: #3264C8;
+@nav-color: rgba(255,255,255,.5);
+@nav-color-hover: rgba(255,255,255,.8);
+@nav-color-active: white;
+@bg-color: #fbfcfe;
+@footer-bg-color: lighten(@nav-bg-color, 45%);
+
+@code-bg-color: #eee;
+@code-color: #2f6f9f;
+
+@play-color: #93D53A;
+@boostrap-color: #5C3F83;
+
+
+// ------------------------
+// Warning state
+.custom-select.is-warning,
+.form-control.is-warning {
+	border-color: rgb(255, 174, 0);
+}
+.custom-select.is-warning~.warning-feedback,
+.custom-select.is-warning~.warning-tooltip,
+.form-control.is-warning~.warning-feedback,
+.form-control.is-warning~.warning-tooltip {
+	display: block;
+}
+.warning-feedback {
+	display: none;
+	width: 100%;
+	margin-top: .25rem;
+	font-size: 80%;
+	color: rgb(255, 174, 0);
+}
+.warning-tooltip {
+	position: absolute;
+	top: 100%;
+	z-index: 5;
+	display: none;
+	max-width: 100%;
+	padding: .5rem;
+	margin-top: .1rem;
+	font-size: .875rem;
+	line-height: 1;
+	color: #fff;
+	background-color: rgba(255, 174, 0, 0.8);
+	border-radius: .2rem;
+}
+// ------------------------
+
+body {
+  position: relative;
+	padding-top: 80px;
+	background-color: @bg-color;
+}
+
+.navbar {
+	background-color: @nav-bg-color;
+	.navbar-brand {
+		color: white;
+		&:hover, &:focus {
+			color: @nav-color-hover;
+		}
+		&.active {
+			color: @nav-color-active;
+		}
+	}
+	.navbar-nav {
+		& > li > a {
+			color: @nav-color;
+			&:hover, &:focus {
+				color: @nav-color-hover;
+			}
+		}
+		& > .active > a {
+			&, &:hover, &:focus {
+				color: @nav-color-active;
+			}
+		}
+		& > .open > a {
+			&, &:hover, &:focus {
+				color: @nav-color-active;
+			}
+		}
+	}
+	.dropdown-menu {
+		background-color: @nav-bg-color;
+		& > a {
+      background-color: @nav-bg-color !important;
+			color: @nav-color;
+			&:hover {
+				color: @nav-color-hover;
+			}
+			&.active {
+				color: @nav-color-active;
+			}
+		}
+	}
+	.github a {
+		color: white !important;
+    margin: -3px 0;
+	}
+  .version-badge .code {
+    color: white;
+  }
+
+  a[version] {
+    padding: 5px 20px;
+  }
+  a.legacy {
+    font-style: italic;
+    color: #ddd !important;
+  }
+}
+.container {
+	max-width: 960px;
+}
+.version-badge {
+  .code {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: @nav-bg-color;
+  }
+  .play-bootstrap {
+    & > span {
+      font-size: 0.9em;
+      font-weight: bold;
+      border: 1px solid @boostrap-color;
+      padding: 5px;
+    }
+    .play {
+      background-color: white;
+      color: @play-color;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    .bootstrap {
+      background-color: @boostrap-color;
+      color: white;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+  a[version] {
+    padding: 5px 20px;
+  }
+}
+h1 small .version-badge { font-size: 20px; }
+
+
+.header-with-logo {
+	& > div {
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 15px;
+	}
+}
+#github-buttons {
+	margin-top: 25px;
+	margin-bottom: 25px;
+	position: relative;
+	img {
+		position: absolute;
+		top: -5px;
+		left: 120px;
+	}
+}
+i.fa-github {
+	vertical-align: sub;
+}
+.footer {
+	background-color: @footer-bg-color;
+	margin-top: 20px;
+	padding: 20px 0;
+	line-height: 15px;
+}
+
+h3, h4 { margin-top: 35px; }
+h1 + h2, h2 + h3, h3 + h4 { margin-top: 15px; }
+
+input:invalid { color: red !important; }
+.example-html5-validation input:valid { color: green !important; }
+
+.bd-example {
+  border: 0.4rem solid @code-bg-color;
+  padding: 0.8rem 1.2rem;
+  .form-group:last-child { margin-bottom: 0; }
+}
+.highlight {
+  padding: 0.8em;
+	background-color: @code-bg-color;
+  border: 1px solid @code-bg-color;
+  pre code { color: @code-color; }
+}
+pre code {
+	white-space: pre;
+}
+span.def {
+	color: #888;
+	font-size: 0.6em;
+	font-style: italic;
+	margin-left: 20px;
+}
+
+.tab-pane > .bd-example {
+	border-top: 0;
+}
+
+.form-inline {
+	button.apply-tweak {
+		width: 100%;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+	.tweak .highlight {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		pre code {
+			color: #aaa;
+		}
+	}
+	&.align-top {
+		.form-group {
+			vertical-align: top;
+		}
+		.tweak .highlight pre code {
+			color: #d9534f;
+		}
+	}
+}
+
+[data-toggle="collapse"] {
+	.fa.fa-caret {
+		float: right;
+		margin-left: 15px;
+		&:before { content: "\f0d7" }
+	}
+	&[aria-expanded="true"] .fa.fa-caret:before { content: "\f0d8" }
+}
+
+
+.changelog {
+	h2 {
+		font-size: 24px;
+	}
+	.lead {
+		font-size: 18px;
+		font-style: italic;
+	}
+	ul {
+		list-style-type: none;
+		padding-left: 20px;
+		& > li {
+			font-size: 15px;
+		}
+	}
+  .panel ul { list-style-type: square; }
+}
+
+
+// For the examples:
+
+.multi-checkbox-list.inline > div {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.input-text-checkbox > .input-group-addon {
+	.form-check { display: inline; }
+	label {
+		display: inline;
+		padding: 0;
+		input {
+			position: relative;
+			margin-left: 0;
+		}
+	}
+}
+
+
+.input-number-plus, .input-number-minus { cursor: pointer; }
+
+.input-number {
+	width: 150px;
+	input {
+		text-align: center;
+		& + .form-control-feedback {
+			right: 40px;
+		}
+	}
+}
+
+.my-form-group {
+	white-space: nowrap;
+	& > div.field-container {
+		width: 50%;
+	}
+	& > div {
+		display: inline-block;
+		white-space: normal;
+		vertical-align: middle;
+		margin: 0;
+		ul {
+			padding-left: 0;
+			list-style-type: none;
+		}
+		.help-error {
+			color: #a94442
+		}
+		.help-info {
+			color: #8a6d3b;
+		}
+	}
+}
+
+
+
+
+
+// DOCS SIDEBAR
+
+@sidebar-color: #888;
+@sidebar-active-color: @nav-bg-color;
+
+
+[data-spy="scroll"] {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+.affix { position: fixed; }
+
+#sidebar {
+  .nav-link, .dropdown-item {
+    background-color: inherit;
+    color: @sidebar-color;
+    border-left: 2px solid transparent;
+    &.active, &:hover {
+      color: @sidebar-active-color;
+      border-color: @sidebar-active-color;
+    }
+  }
+  .nav-link {
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    &:after { border: none; }
+  }
+  .dropdown-item {
+    font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  .bd-sublinks { display: none; }
+  .nav-link.active + .bd-sublinks { display: inherit; }
+}

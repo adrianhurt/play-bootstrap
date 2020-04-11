@@ -1,0 +1,12 @@
+@(explicit: Boolean = false)
+@import utils.BSVersion._
+<span class="version-badge">
+  <span class="code">@code</span>
+  <span class="play-bootstrap">
+    @if(explicit) {
+      <span class="play">&nbsp;@play&nbsp;</span><span class="bootstrap">&nbsp;@bootstrap&nbsp;</span>
+    } else {
+      <span class="play">&nbsp;@play_code&nbsp;</span><span class="bootstrap">&nbsp;@bootstrap_code&nbsp;</span>
+    }
+  </span>
+</span>

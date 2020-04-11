@@ -1,0 +1,4 @@
+@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@freeFormGroup(args) { innerArgsMap =>
+	<button type="@buttonType" @toHtmlArgs(innerArgsMap)>@text</button>
+}(fc, msgsProv)

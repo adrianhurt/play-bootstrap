@@ -1,0 +1,13 @@
+@(fieldInfo: b4.B4FieldInfo, inputHtml: Html, colLabel: String, colOffset: String, colInput: String)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@b4.bsFieldConstructorCommon(fieldInfo, inputHtml, extraClasses = Some("row")) { content =>
+	@fieldInfo.labelOpt.map { label =>
+		<label class="col-form-label @colLabel@if(fieldInfo.hideLabel){ sr-only}"@if(fieldInfo.withLabelFor){ for="@fieldInfo.id"}>@bs.Args.msg(label)(msgsProv)</label>
+		<div class="@colInput">
+			@content
+		</div>
+	}.getOrElse {
+		<div class="@colInput @colOffset">
+			@content
+		</div>
+	}
+}

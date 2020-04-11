@@ -1,0 +1,8 @@
+@(fieldsWithArgs: (Field, Seq[(Symbol,Any)])*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@b4.multifield( fieldsWithArgs.map(_._1):_* )(globalArgs, fieldsWithArgs.map(_._2).flatten) { implicit cfc =>
+	<div @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+		@fieldsWithArgs.map { case (field, fieldArgs) =>
+			@b4.checkbox(field, fieldArgs:_*)
+		}
+	</div>
+}

@@ -1,0 +1,35 @@
+@(field: Field, args: (Symbol,Any)*)(content: Set[String] => Html)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@readonlyWrapper(selectName: String, value: Option[String], disabled: Boolean, argsMap: Map[Symbol, Any])(contentWrapped: Html) = {
+	@if(argsMap.contains(Symbol("readonly"))) {
+		<div class="select-group">
+			@contentWrapped
+			<input type="hidden" name="@selectName" value="@{value.orElse(argsMap.get(Symbol("_hiddenValue"))).get}"@if(!disabled){ disabled}/>
+		</div>
+	} else { @contentWrapped }
+}
+@defining({
+	val argsMap = args.toMap
+	val readonly = bs.ArgsMap.isTrue(argsMap, Symbol("readonly"))
+	val disabled = readonly || bs.ArgsMap.isTrue(argsMap, Symbol("disabled"))
+	val multiple = bs.ArgsMap.isTrue(argsMap, Symbol("multiple"))
+	(argsMap, disabled, multiple)
+}) { case (argsMap, disabled, multiple) =>
+	@inputFormGroup(field, withLabelFor = true, bs.Args.withDefault(args, Symbol("disabled") -> disabled)) { fieldInfo =>
+		@defining( if(multiple) "%s[]".format(fieldInfo.name) else fieldInfo.name ) { selectName =>
+			@defining( ( !field.indexes.isEmpty && multiple ) match {
+				case true => field.indexes.map( i => field("[%s]".format(i)).value ).flatten.toSet
+				case _ if multiple && fieldInfo.value.isDefined => fieldInfo.value.get.split(",").toSet
+				case _ => fieldInfo.value.toSet
+			}){ implicit values =>
+				@readonlyWrapper(selectName, fieldInfo.value, disabled, argsMap) {
+					<select id="@fieldInfo.id" name="@selectName" @toHtmlArgs(bs.ArgsMap.withAddingStringValue(fieldInfo.innerArgsMap, Symbol("class"), if (fieldInfo.isCustom) "custom-select" else "form-control"))>
+						@argsMap.get(Symbol("_default")).map { v =>
+							@selectOption("", v, Symbol("class") -> "blank", Symbol("selected") -> true, Symbol("disabled") -> "disabled")
+						}
+						@content(values)
+					</select>
+				}
+			}
+		}
+	}(fc, msgsProv)
+}

@@ -1,0 +1,11 @@
+@(textField: Field, textArgs: (Symbol,Any)*)(checkboxField: Field, checkboxArgs: (Symbol,Any)*)(globalArgs: (Symbol,Any)*)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@b4.multifield(textField, checkboxField)(globalArgs, textArgs ++ checkboxArgs) { implicit cfc =>
+	<div class="input-text-checkbox input-group" @toHtmlArgs(bs.Args.inner(globalArgs).toMap)>
+		<div class="input-group-prepend">
+			<div class="input-group-text">
+				@b4.checkbox(checkboxField, checkboxArgs:_*)
+			</div>
+		</div>
+		@b4.text(textField, bs.Args.withDefault(textArgs, Symbol("aria-describedby") -> "checkbox-addon"):_*)
+	</div>
+}

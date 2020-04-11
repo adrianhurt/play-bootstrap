@@ -1,0 +1,6 @@
+@(field: Field, options: Seq[(String, Any)], args: (Symbol, Any)*)(implicit fc: b4.B4FieldConstructor, msgsProv: MessagesProvider)
+@radioWithContent(field, bs.Args.withDefault(args, Symbol("_hiddenValue") -> options.headOption.map(_._1)):_*) { implicit extraInfo =>
+	@options.map { v =>
+		@radioOption(v._1, v._2)
+	}
+}(fc, msgsProv)
