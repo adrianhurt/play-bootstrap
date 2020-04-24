@@ -1,3 +1,151 @@
+- code: "1.6.1-P28-B4"
+  library: "1.6.1"
+  play: "2.8"
+  play_full: "2.8.1"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6.1-P27-B4"
+  library: "1.6.1"
+  play: "2.7"
+  play_full: "2.7.3"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6.1-P26-B4"
+  library: "1.6.1"
+  play: "2.6"
+  play_full: "2.6.23"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6.1-P28-B3"
+  library: "1.6.1"
+  play: "2.8"
+  play_full: "2.8.1"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6.1-P27-B3"
+  library: "1.6.1"
+  play: "2.7"
+  play_full: "2.7.3"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6.1-P26-B3"
+  library: "1.6.1"
+  play: "2.6"
+  play_full: "2.6.23"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+
+
+- code: "1.6-P28-B4"
+  library: "1.6"
+  play: "2.8"
+  play_full: "2.8.1"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6-P27-B4"
+  library: "1.6"
+  play: "2.7"
+  play_full: "2.7.3"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6-P26-B4"
+  library: "1.6"
+  play: "2.6"
+  play_full: "2.6.23"
+  bootstrap: "4"
+  with_dependencies: false
+  bootstrap_dependency: "4.0.0"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6-P28-B3"
+  library: "1.6"
+  play: "2.8"
+  play_full: "2.8.1"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6-P27-B3"
+  library: "1.6"
+  play: "2.7"
+  play_full: "2.7.3"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+- code: "1.6-P26-B3"
+  library: "1.6"
+  play: "2.6"
+  play_full: "2.6.23"
+  bootstrap: "3"
+  with_dependencies: false
+  bootstrap_dependency: "3.3.7"
+  jquery_dependency: "3.3.1"
+  artifact: "play-bootstrap"
+  snapshot: false
+  legacy: false
+
+
+
 - code: "1.5.1-P27-B4"
   library: "1.5.1"
   play: "2.7"
@@ -8,7 +156,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.5.1-P26-B4"
   library: "1.5.1"
@@ -20,8 +168,8 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
-  
+  legacy: true
+
 - code: "1.5.1-P27-B3"
   library: "1.5.1"
   play: "2.7"
@@ -32,7 +180,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.5.1-P26-B3"
   library: "1.5.1"
@@ -44,7 +192,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 
 
@@ -61,7 +209,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.5-P26-B4"
   library: "1.5"
@@ -73,8 +221,8 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
-  
+  legacy: true
+
 - code: "1.5-P27-B3"
   library: "1.5"
   play: "2.7"
@@ -85,7 +233,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.5-P26-B3"
   library: "1.5"
@@ -97,12 +245,12 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
-  
-  
-  
-  
-  
+  legacy: true
+
+
+
+
+
 
 - code: "1.4-P26-B4"
   library: "1.4"
@@ -114,7 +262,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.4-P25-B4"
   library: "1.4"
@@ -126,7 +274,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.4-P26-B3"
   library: "1.4"
@@ -138,7 +286,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 - code: "1.4-P25-B3"
   library: "1.4"
@@ -150,7 +298,7 @@
   jquery_dependency: "3.3.1"
   artifact: "play-bootstrap"
   snapshot: false
-  legacy: false
+  legacy: true
 
 
 

@@ -1,0 +1,251 @@
+---
+redirect_from:
+  - /1.6.1-P26-B3/mixed/
+title: "Play-Bootstrap 1.6-P26-B3 | Mixed forms examples (vertical, horizontal, inline and clear)"
+layout: default_b3
+permalink: /1.6-P26-B3/mixed/
+version: "1.6-P26-B3"
+uri: /mixed/
+tab: mixed
+---
+<h1 id="mixed-forms" class="page-header">Mixed Forms</h1>
+<p class="lead">This page is an example to show how to mix different forms within the same view.</p>
+<p>
+  This page will use a horizontal form as default. So first of all, it declares an implicit horizontal field constructor. With that, every helper will take it implicitly.
+</p>
+<div class="highlight">
+<pre><code>@implicitFC = @{ b3.horizontal.fieldConstructor("col-md-2", "col-md-10") }</code></pre>
+</div>
+
+
+
+
+<h3 id="simple-form">A simple horizontal form</h3>
+<p>
+  As we declared on top of the page an implicit horizontal field constructor, we can forget the field constructors for a while.
+</p>
+<div class="bs-example">
+  <form action="/mixed" method="GET" class="form-horizontal " role="form">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label col-md-2" for="foo">Input Text</label>
+      <div class="col-md-10">
+        <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label col-md-2" for="foo">Select a fruit</label>
+      <div class="col-md-10">
+        <select id="foo" name="foo" class="form-control">
+          <option value="A">Apples</option>
+          <option value="P">Pears</option>
+          <option value="B">Bananas</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <div class="col-md-10 col-md-offset-2">
+        <div class="checkbox">
+          <label for="foo">
+            <input type="checkbox" id="foo" name="foo" value="true" checked="true"> Checkbox
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <div class="col-md-10 col-md-offset-2">
+        <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-ok"></span> Save changes </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="highlight">
+<pre><code>@b3.form(routes.Application.mixed) {
+  @b3.text( fooForm("foo"), '_label -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+  @b3.select( fooForm("foo"), options = fruits, '_label -&gt; "Select a fruit" )
+  @b3.checkbox( fooForm("foo"), '_text -&gt; "Checkbox", 'checked -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Save changes }
+}</code></pre>
+</div>
+
+
+
+
+<h3 id="inline-form">The typical inline login form on top</h3>
+<p>
+  Imagine you need to insert an inline login form. You only need to insert explicitly an inline field constructor (and the messages, which is normally taken implicitly). The helper <code>b3.inline.form</code> makes it easier.
+</p>
+<div class="bs-example">
+  <form action="/mixed" method="GET" class="form-inline " role="form">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Email</label>
+      <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="example@mail.com">
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label sr-only" for="foo">Password</label>
+      <input type="password" id="foo" name="foo" value="" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group ">
+      <button type="submit" class="btn btn-default"> Sign in </button>
+    </div>
+  </form>
+</div>
+<div class="highlight">
+<pre><code>@b3.inline.form(routes.Application.mixed) { implicit ifc =&gt;
+  @b3.email( fooForm("foo"), '_hiddenLabel -&gt; "Email", 'placeholder -&gt; "example@mail.com" )
+  @b3.password( fooForm("foo"), '_hiddenLabel -&gt; "Password", 'placeholder -&gt; "Password" )
+  @b3.submit('class -&gt; "btn btn-default"){ Sign in }
+}</code></pre>
+</div>
+
+
+
+
+<h3 id="vertical-form">The typical vertical contact form on one side</h3>
+<p>
+  In this case you need a contact form on one side. Now we need a vertical form. Here you can use the helper
+  <code>b3.vertical.form</code>.
+</p>
+<div class="bs-example">
+  <div class="row">
+    <div class="col-md-4">
+      <form action="/mixed" method="GET" class="form-vertical " role="form">
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Your name</label>
+          <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="Your contact name">
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">Your email</label>
+          <input type="email" id="foo" name="foo" value="" class="form-control" placeholder="example@mail.com">
+        </div>
+        <div class="form-group  " id="foo_field">
+          <label class="control-label" for="foo">What happened?</label>
+          <textarea id="foo" name="foo" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group  " id="foo_field">
+          <div class="checkbox">
+            <label for="foo">
+              <input type="checkbox" id="foo" name="foo" value="true" checked="true"> Send me a copy to my email
+            </label>
+          </div>
+        </div>
+        <div class="form-group ">
+          <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-envelope"></span> Send </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="highlight">
+<pre><code>@b3.vertical.form(routes.Application.mixed) { implicit vfc =&gt;
+  @b3.text( fooForm("foo"), '_label -&gt; "Your name", 'placeholder -&gt; "Your contact name" )
+  @b3.email( fooForm("foo"), '_label -&gt; "Your email", 'placeholder -&gt; "example@mail.com" )
+  @b3.textarea( fooForm("foo"), '_label -&gt; "What happened?", 'rows -&gt; 3 )
+  @b3.checkbox( fooForm("foo"), '_text -&gt; "Send me a copy to my email", 'checked -&gt; true )
+  @b3.submit('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-envelope"&gt;&lt;/span&gt; Send }
+}</code></pre>
+</div>
+
+
+
+
+<h3 id="horizontal-form">A different horizontal form</h3>
+<p>
+  And what happens if I need a horizontal form but with other column widths. Simple, create your own with the helper <code>b3.horizontal.form</code>.
+</p>
+<div class="bs-example">
+  <form action="/mixed" method="GET" class="form-horizontal " role="form">
+    <div class="form-group  " id="foo_field">
+      <label class="control-label col-lg-4" for="foo">Input Text</label>
+      <div class="col-lg-8">
+        <input type="text" id="foo" name="foo" value="" class="form-control" placeholder="A simple text...">
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <label class="control-label col-lg-4" for="foo">File</label>
+      <div class="col-lg-8">
+        <input type="file" id="foo" name="foo" value="">
+      </div>
+    </div>
+    <div class="form-group  " id="foo_field">
+      <div class="col-lg-8 col-lg-offset-4">
+        <div class="checkbox">
+          <label for="foo">
+            <input type="checkbox" id="foo" name="foo" value="true"> Checkbox
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <div class="col-lg-8 col-lg-offset-4">
+        <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-ok"></span> Save changes </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="highlight">
+<pre><code>@b3.horizontal.form(routes.Application.mixed, "col-lg-4", "col-lg-8") { implicit hfc =&gt;
+  @b3.text( fooForm("foo"), '_label -&gt; "Input Text", 'placeholder -&gt; "A simple text..." )
+  @b3.file( fooForm("foo"), '_label -&gt; "File" )
+  @b3.checkbox( fooForm("foo"), '_text -&gt; "Checkbox" )
+  @b3.submit('class -&gt; "btn btn-default"){ &lt;span class="glyphicon glyphicon-ok"&gt;&lt;/span&gt; Save changes }
+}</code></pre>
+</div>
+
+
+
+
+<h3 id="clear-form">A clear field constructor</h3>
+<p>
+  Finally, if you would need to render a simple input, without any field constructor, you can use the helper <code>b3.clear.form</code>. This is a field constructor that doesn't add any code, just the input.
+</p>
+<div class="bs-example">
+  <form action="/mixed" method="GET" class="form-clear " role="form">
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      <input type="search" id="foo" name="foo" value="" class="form-control" placeholder="Text to search...">
+      <span class="input-group-btn">
+						<button class="btn btn-default" type="button">Search</button>
+					</span>
+    </div>
+  </form>
+</div>
+<div class="highlight">
+<pre><code>@b3.clear.form(routes.Application.mixed) { implicit cfc =&gt;
+  @b3.inputWrapped( "search", fooForm("foo"), 'placeholder -&gt; "Text to search..." ) { input =&gt;
+    &lt;div class="input-group"&gt;
+      &lt;span class="input-group-addon"&gt;&lt;span class="glyphicon glyphicon-search"&gt;&lt;/span&gt;&lt;/span&gt;
+      @input
+      &lt;span class="input-group-btn"&gt;
+        &lt;button class="btn btn-default" type="button"&gt;Search&lt;/button&gt;
+      &lt;/span&gt;
+    &lt;/div&gt;
+  }
+}</code></pre>
+</div>
+
+
+
+
+<h3 id="mixed-within-form">Mixed FieldConstructors within the same form</h3>
+<p>
+  If you would need to that, you can make an <em>"inner section"</em> like this:
+</p>
+<div class="highlight">
+<pre><code>@defining(b3.inline.fieldConstructorSpecific) { implicit ifc =&gt;
+  @b3.text( fooForm("bar"), '_label -&gt; "Inline input text" )
+}
+// with your own custom field constructor that extends B3FieldConstructor
+@defining(yourCustomFieldConstructor) { implicit myfc =&gt;
+  @b3.text( fooForm("bar"), '_label -&gt; "Inline input text" )
+}</code></pre>
+</div>
+<p>
+  Or simply:
+</p>
+<div class="highlight">
+<pre><code>@b3.text( fooForm("bar"), '_label -&gt; "Inline input text" )(b3.inline.fieldConstructor, implicitly[Messages])</code></pre>
+</div>
+<p>
+  But remember that horizontal and inline controls need to be inside their corresponding
+  <code>.form-horizontal</code> and <code>.form-inline</code> to be rendered correctly. So you may need to wrap them with a <code>div</code> with these classes.
+</p>

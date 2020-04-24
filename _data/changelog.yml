@@ -1,3 +1,27 @@
+- id: 1-6-1-P2X-BX
+  library: "1.6.1"
+  title: 1.6.1-P2X-BX
+  claim: Update to Play 2.8
+  released: 24 April 2020
+  bullets:
+    - type: change
+      text: |
+        Scala 2.13.2 / 2.12.11 & sbt 1.3.10
+  migration: |
+    Nothing relevant
+
+- id: 1-6-P2X-BX
+  library: "1.6"
+  title: 1.6-P2X-BX
+  claim: Update to Play 2.8
+  released: 24 April 2020
+  bullets:
+    - type: change
+      text: |
+        Update to Play 2.8.1
+  migration: |
+    Nothing relevant
+
 - id: 1-5-1-P2X-BX
   library: "1.5.1"
   title: 1.5.1-P2X-BX
@@ -9,7 +33,7 @@
         Removed superfluous translation calls on `radioWithOptions`, `selectWithOptions` and `selectWithContent`.
   migration: |
     Nothing relevant
-    
+
 - id: 1-5-P2X-BX
   library: "1.5"
   title: 1.5-P2X-BX
