@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 
 name := """play-bootstrap"""
 
-version := "1.6-P28-B4-SNAPSHOT"
+version := "1.6-P28-B4"
 
 scalaVersion := "2.13.1"
 
@@ -16,7 +16,7 @@ resolvers ++= Seq(
 libraryDependencies := libraryDependencies.value.filterNot(m => m.name == "twirl-api" || m.name == "play-server") ++ Seq(
   playCore % "provided",
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.6-P28-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.6-P28",
   specs2 % Test
 )
 

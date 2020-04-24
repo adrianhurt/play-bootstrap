@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 
 name := """play-bootstrap-core"""
 
-version := "1.6-P28-SNAPSHOT"
+version := "1.6-P28"
 
 scalaVersion := "2.13.1"
 

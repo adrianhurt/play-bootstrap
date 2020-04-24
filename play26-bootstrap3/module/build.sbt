@@ -1,6 +1,6 @@
 name := """play-bootstrap"""
 
-version := "1.6-P26-B3-SNAPSHOT"
+version := "1.6-P26-B3"
 
 scalaVersion := "2.12.8"
 
@@ -14,7 +14,7 @@ resolvers ++= Seq(
 libraryDependencies := libraryDependencies.value.filterNot(m => m.name == "twirl-api" || m.name == "play-server") ++ Seq(
   playCore % "provided",
   filters % "provided",
-  "com.adrianhurt" %% "play-bootstrap-core" % "1.6-P26-SNAPSHOT",
+  "com.adrianhurt" %% "play-bootstrap-core" % "1.6-P26",
   specs2 % Test
 )
 

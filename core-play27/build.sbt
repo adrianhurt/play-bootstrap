@@ -2,11 +2,11 @@ import scalariform.formatter.preferences._
 
 name := """play-bootstrap-core"""
 
-version := "1.6-P27-SNAPSHOT"
+version := "1.6-P27"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.1"
 
-crossScalaVersions := Seq("2.13.0", "2.12.8")
+crossScalaVersions := Seq("2.13.1", "2.12.8")
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
