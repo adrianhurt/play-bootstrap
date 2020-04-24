@@ -4,9 +4,9 @@ name := """play-bootstrap-core"""
 
 version := "1.6-P28"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.2"
 
-crossScalaVersions := Seq("2.13.1", "2.12.8")
+crossScalaVersions := Seq("2.13.2", "2.12.11")
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 

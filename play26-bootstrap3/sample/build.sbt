@@ -2,7 +2,7 @@ name := """play-bootstrap-sample"""
 
 version := "1.6"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.11"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
